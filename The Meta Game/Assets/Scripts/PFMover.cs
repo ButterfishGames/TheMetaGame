@@ -13,7 +13,7 @@ public class PFMover : Mover
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
-    public bool grounded;
+    private bool grounded;
 
     protected override void Update()
     {
@@ -40,7 +40,7 @@ public class PFMover : Mover
             return;
         }
 
-        rb.AddForce(new Vector2(0, jumpForce));
+        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         grounded = false;
     }
 
