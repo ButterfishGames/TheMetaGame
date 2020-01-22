@@ -10,11 +10,45 @@ public class PFMover : Mover
     [Tooltip("The force applied to the object when it jumps")]
     public float jumpForce;
 
+    /// <summary>
+    /// Tracks whether the player is currently on the ground
+    /// </summary>
+    public bool grounded;
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            Jump();
+        }
+    }
+
     protected override void Move(float h, float v)
     {
         float moveX = h * moveSpeed * Time.deltaTime;
         float moveY = rb.velocity.y;
 
         rb.velocity = new Vector2(moveX, moveY);
+    }
+
+    private void Jump()
+    {
+        if (!grounded)
+        {
+            return;
+        }
+
+        rb.AddForce(new Vector2(0, jumpForce));
+        grounded = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
     }
 }

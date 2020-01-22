@@ -16,7 +16,7 @@ public class GridMover : Mover
     private float inverseMoveTime;
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected override void Start()
     {
         base.Start();
 
