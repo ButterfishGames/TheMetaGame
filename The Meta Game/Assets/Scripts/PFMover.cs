@@ -31,6 +31,11 @@ public class PFMover : Mover
         float moveY = rb.velocity.y;
 
         rb.velocity = new Vector2(moveX, moveY);
+
+        if (v > 0)
+        {
+            Jump();
+        }
     }
 
     private void Jump()
@@ -40,6 +45,7 @@ public class PFMover : Mover
             return;
         }
 
+        rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         grounded = false;
     }
