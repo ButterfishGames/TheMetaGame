@@ -6,6 +6,9 @@ using UnityEngine;
 
 public abstract class Mover : MonoBehaviour
 {
+    [Tooltip("The layer on which normal level collision will be checked")]
+    public LayerMask blockingLayer;
+
     /// <summary>
     /// The BoxCollider2D component attached to this object
     /// </summary>

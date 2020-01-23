@@ -19,7 +19,7 @@ public class PFMover : Mover
     {
         base.Update();
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
         {
             Jump();
         }
@@ -31,11 +31,6 @@ public class PFMover : Mover
         float moveY = rb.velocity.y;
 
         rb.velocity = new Vector2(moveX, moveY);
-
-        if (v > 0)
-        {
-            Jump();
-        }
     }
 
     private void Jump()
@@ -50,11 +45,32 @@ public class PFMover : Mover
         grounded = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.collider.CompareTag("Ground"))
+        if (collision.CompareTag("Ground"))
         {
             grounded = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!grounded && collision.CompareTag("Ground"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);
+
+            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            {
+                grounded = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (grounded && collision.CompareTag("Ground"))
+        {
+            grounded = false;
         }
     }
 }

@@ -11,8 +11,7 @@ public class GameController : MonoBehaviour
     public enum GameMode
     {
         platformer,
-        rpg,
-        error
+        rpg
     };
 
     public GameMode equipped;
@@ -44,10 +43,10 @@ public class GameController : MonoBehaviour
 
         public void SwitchMode(string newMode)
     {
-        GameMode mode = Parse(newMode);
-        if (mode != GameMode.error)
+        GameMode? mode = Parse(newMode);
+        if (mode != null)
         {
-            SwitchMode(mode);
+            SwitchMode((GameMode)mode);
         }
     }
 
@@ -136,7 +135,7 @@ public class GameController : MonoBehaviour
         return pos;
     }
 
-    private GameMode Parse(string str)
+    private GameMode? Parse(string str)
     {
         try
         {
@@ -146,7 +145,7 @@ public class GameController : MonoBehaviour
         catch (System.Exception)
         {
             Debug.Log("ERROR: CANNOT CONVERT " + str + " TO ENUM");
-            return GameMode.error;
+            return null;
         }
     }
 

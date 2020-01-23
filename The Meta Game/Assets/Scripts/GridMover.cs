@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class GridMover : Mover
 {
-    [Tooltip("The layer on which normal level collision will be checked")]
-    public LayerMask blockingLayer;
-
     [Tooltip("The layer on which collision with camera bounds will be checked")]
     public LayerMask boundLayer;
 
@@ -26,6 +23,17 @@ public class GridMover : Mover
     /// </summary>
     private bool moving;
 
+    /// <summary>
+    /// Used to store directions to be passed to Smooth Movement
+    /// </summary>
+    private enum Direction
+    {
+        up,
+        down,
+        left,
+        right
+    };
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -37,6 +45,8 @@ public class GridMover : Mover
 
     protected override void Move(float h, float v)
     {
+        Direction? dir = null;
+
         if (moving)
         {
             return;
@@ -48,25 +58,26 @@ public class GridMover : Mover
 
         if (h < 0)
         {
-            h = -1;
+            h = -0.5f;
             v = 0;
+            dir = Direction.left;
         }
         else if (h > 0)
         {
-            h = 1;
+            h = 0.5f;
             v = 0;
+            dir = Direction.right;
         }
         else if (v < 0)
         {
-            v = -1;
+            v = -0.5f;
+            dir = Direction.down;
         }
         else if (v > 0)
         {
-            v = 1;
+            v = 0.5f;
+            dir = Direction.up;
         }
-
-        h *= 0.5f;
-        v *= 0.5f;
 
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(h, v);
@@ -76,9 +87,9 @@ public class GridMover : Mover
         hit = Physics2D.Linecast(start, end, blockingLayer);
         col.enabled = true;
 
-        if (hit.transform == null)
+        if (hit.transform == null && dir != null)
         {
-            StartCoroutine(SmoothMovement(end));
+            StartCoroutine(SmoothMovement(end, (Direction)dir));
         }
         else
         {
@@ -86,7 +97,7 @@ public class GridMover : Mover
         }
     }
 
-    protected IEnumerator SmoothMovement(Vector3 end)
+    private IEnumerator SmoothMovement(Vector3 end, Direction dir)
     {
         end.z = 1;
         float dist = (transform.position - end).sqrMagnitude;
@@ -95,6 +106,43 @@ public class GridMover : Mover
         {
             Vector3 newPos = Vector3.MoveTowards(rb.position, end, inverseMoveTime * Time.deltaTime);
             rb.MovePosition(newPos);
+            if (dist <= 0.5f)
+            {
+                switch (dir)
+                {
+                    case Direction.right:
+                        if (Input.GetAxisRaw("Horizontal") > 0)
+                        {
+                            end.x += 0.5f;
+                        }
+                        break;
+
+                    case Direction.left:
+                        if (Input.GetAxisRaw("Horizontal") < 0)
+                        {
+                            end.x -= 0.5f;
+                        }
+                        break;
+
+                    case Direction.up:
+                        if (Input.GetAxisRaw("Vertical") > 0)
+                        {
+                            end.y += 0.5f;
+                        }
+                        break;
+
+                    case Direction.down:
+                        if (Input.GetAxisRaw("Vertical") < 0)
+                        {
+                            end.y -= 0.5f;
+                        }
+                        break;
+
+                    default:
+                        Debug.Log("ERROR: INVALID DIRECTION PASSED TO SMOOTHMOVEMENT COROUTINE");
+                        break;
+                }
+            }
             dist = (transform.position - end).sqrMagnitude;
             yield return null;
         }
