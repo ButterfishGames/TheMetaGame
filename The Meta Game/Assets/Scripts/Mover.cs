@@ -27,7 +27,7 @@ public abstract class Mover : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (GameController.singleton.GetSwitchMenu().activeInHierarchy)
+        if (GameController.singleton.GetPaused())
         {
             return;
         }

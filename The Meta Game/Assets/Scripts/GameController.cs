@@ -51,6 +51,11 @@ public class GameController : MonoBehaviour
     public int floorDamage;
 
     /// <summary>
+    /// Determines whether the game is paused or not
+    /// </summary>
+    private bool paused;
+
+    /// <summary>
     /// Stores the player's current HP
     /// </summary>
     private int currHP;
@@ -204,6 +209,15 @@ public class GameController : MonoBehaviour
                 }
 
                 player = GameObject.FindGameObjectWithTag("Player");
+
+                RPGController rpgCon = player.GetComponent<RPGController>();
+                if (rpgCon.mvmtCoroutine != null)
+                {
+                    rpgCon.StopCoroutine(rpgCon.mvmtCoroutine);
+                    rpgCon.SetMoving(false);
+                    rpgCon.mvmtCoroutine = null;
+                }
+
                 player.GetComponent<Rigidbody2D>().gravityScale = 1;
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
@@ -291,10 +305,16 @@ public class GameController : MonoBehaviour
                 Destroy(button.gameObject);
             }
 
+            Time.timeScale = 1;
+            paused = false;
+
             switchMenu.SetActive(false);
         }
         else
         {
+            paused = true;
+            Time.timeScale = 0;
+
             switchMenu.SetActive(true);
             foreach(Mode mode in modes)
             {
@@ -352,13 +372,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public GameObject GetSwitchMenu()
-    {
-        return switchMenu;
-    }
-
     public void Die()
     {
+        paused = true;
         StartCoroutine(ReloadLevel());
         currHP = maxHP;
     }
@@ -369,6 +385,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         SwitchMode(GameMode.platformer);
+        ToggleSwitchMenu();
         StartCoroutine(LevelFade(true));
     }
 
@@ -398,5 +415,10 @@ public class GameController : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+    }
+
+    public bool GetPaused()
+    {
+        return paused;
     }
 }

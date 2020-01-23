@@ -17,7 +17,7 @@ public class PFController : Mover
 
     protected override void Update()
     {
-        if (GameController.singleton.GetSwitchMenu().activeInHierarchy)
+        if (GameController.singleton.GetPaused())
         {
             return;
         }

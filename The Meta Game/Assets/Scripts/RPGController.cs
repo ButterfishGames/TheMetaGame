@@ -11,6 +11,9 @@ public class RPGController : Mover
     [Range(0, 1)]
     public float moveTime = 0.1f;
 
+    [Tooltip("Movement coroutine for stopping from GameController. DO NOT EDIT, HANDLED BY CODE")]
+    public IEnumerator mvmtCoroutine;
+
     /// <summary>
     /// Used to make movement more efficient
     /// </summary>
@@ -93,7 +96,8 @@ public class RPGController : Mover
 
         if (hit.transform == null && dir != null)
         {
-            StartCoroutine(SmoothMovement(end, (Direction)dir));
+            mvmtCoroutine = SmoothMovement(end, (Direction)dir);
+            StartCoroutine(mvmtCoroutine);
         }
         else
         {
@@ -116,9 +120,13 @@ public class RPGController : Mover
             {
                 if (damage)
                 {
-                    GameController.singleton.FloorDamage();
                     rb.MovePosition(end);
-                    yield return new WaitForSeconds(GameController.singleton.damageFadeTime);
+                    yield return new WaitForSeconds(0.1f);
+                    if (onDamageFloor)
+                    {
+                        GameController.singleton.FloorDamage();
+                        yield return new WaitForSeconds(GameController.singleton.damageFadeTime);
+                    }
                     break;
                 }
 
@@ -207,6 +215,11 @@ public class RPGController : Mover
         }
 
         moving = false;
+    }
+
+    public void SetMoving(bool val)
+    {
+        moving = val;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
