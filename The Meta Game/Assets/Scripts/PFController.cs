@@ -10,6 +10,12 @@ public class PFController : Mover
     [Tooltip("The force applied to the object when it jumps")]
     public float jumpForce;
 
+    [Tooltip("The force applied for death animation")]
+    public float deathForce;
+
+    [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
+    public float deathWait;
+
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
@@ -81,5 +87,16 @@ public class PFController : Mover
         {
             grounded = false;
         }
+    }
+
+    public IEnumerator Die()
+    {
+        GameController.singleton.SetPaused(true);
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(1);
+        rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+        col.enabled = false;
+        yield return new WaitForSeconds(deathWait);
+        GameController.singleton.Die();
     }
 }

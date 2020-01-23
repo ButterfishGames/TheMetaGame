@@ -421,4 +421,9 @@ public class GameController : MonoBehaviour
     {
         return paused;
     }
+
+    public void SetPaused(bool val)
+    {
+        paused = val;
+    }
 }
