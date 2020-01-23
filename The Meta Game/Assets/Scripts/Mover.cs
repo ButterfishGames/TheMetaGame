@@ -27,6 +27,11 @@ public abstract class Mover : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (GameController.singleton.GetSwitchMenu().activeInHierarchy)
+        {
+            return;
+        }
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 

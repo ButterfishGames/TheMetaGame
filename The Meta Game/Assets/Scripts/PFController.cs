@@ -17,6 +17,11 @@ public class PFController : Mover
 
     protected override void Update()
     {
+        if (GameController.singleton.GetSwitchMenu().activeInHierarchy)
+        {
+            return;
+        }
+
         base.Update();
 
         if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
@@ -50,6 +55,10 @@ public class PFController : Mover
         if (collision.CompareTag("Ground"))
         {
             grounded = true;
+        }
+        else if (collision.CompareTag("Killbox"))
+        {
+            GameController.singleton.Die();
         }
     }
 

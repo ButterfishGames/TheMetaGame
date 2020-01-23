@@ -11,17 +11,6 @@ public class RPGController : Mover
     [Range(0, 1)]
     public float moveTime = 0.1f;
 
-    [Tooltip("The maximum HP for the player as an RPG character")]
-    public int maxHP;
-
-    [Tooltip("The amount of damage the player takes each step on a damage floor")]
-    public int floorDamage;
-
-    /// <summary>
-    /// Stores the player's current HP
-    /// </summary>
-    private int currHP;
-
     /// <summary>
     /// Used to make movement more efficient
     /// </summary>
@@ -54,8 +43,6 @@ public class RPGController : Mover
         base.Start();
 
         inverseMoveTime = 1.0f / moveTime;
-
-        currHP = maxHP;
         moving = false;
         onDamageFloor = false;
     }
@@ -127,6 +114,14 @@ public class RPGController : Mover
             rb.MovePosition(newPos);
             if (dist <= 0.1f)
             {
+                if (damage)
+                {
+                    GameController.singleton.FloorDamage();
+                    rb.MovePosition(end);
+                    yield return new WaitForSeconds(GameController.singleton.damageFadeTime);
+                    break;
+                }
+
                 Vector3 target;
                 switch (dir)
                 {
@@ -144,10 +139,6 @@ public class RPGController : Mover
                             if (hit.transform == null)
                             {
                                 end = target;
-                                if (damage)
-                                {
-                                    FloorDamage();
-                                }
                             }
                         }
                         break;
@@ -166,10 +157,6 @@ public class RPGController : Mover
                             if (hit.transform == null)
                             {
                                 end = target;
-                                if (damage)
-                                {
-                                    FloorDamage();
-                                }
                             }
                         }
                         break;
@@ -188,10 +175,6 @@ public class RPGController : Mover
                             if (hit.transform == null)
                             {
                                 end = target;
-                                if (damage)
-                                {
-                                    FloorDamage();
-                                }
                             }
                         }
                         break;
@@ -210,10 +193,6 @@ public class RPGController : Mover
                             if (hit.transform == null)
                             {
                                 end = target;
-                                if (damage)
-                                {
-                                    FloorDamage();
-                                }
                             }
                         }
                         break;
@@ -227,18 +206,7 @@ public class RPGController : Mover
             yield return null;
         }
 
-        if (onDamageFloor)
-        {
-            FloorDamage();
-        }
-
         moving = false;
-    }
-
-    private void FloorDamage()
-    {
-        currHP -= floorDamage;
-        Debug.Log(currHP);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

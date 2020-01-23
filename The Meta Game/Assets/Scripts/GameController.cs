@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -35,10 +36,49 @@ public class GameController : MonoBehaviour
     [Tooltip("Reference to prefab for game mode buttons in switch menu")]
     public GameObject modeButton;
 
+    [Tooltip("The time in seconds it takes for the flash from taking damage from damage floors to fade")]
+    [Range(0.5f, 3.0f)]
+    public float damageFadeTime;
+
+    [Tooltip("The time in seconds it takes for the black screen to fade in and out when the level reloads")]
+    [Range(0.5f, 3.0f)]
+    public float levelFadeTime;
+
+    [Tooltip("The maximum HP for the player (only used in certain gamemodes)")]
+    public int maxHP;
+
+    [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
+    public int floorDamage;
+
+    /// <summary>
+    /// Stores the player's current HP
+    /// </summary>
+    private int currHP;
+
+    /// <summary>
+    /// Used to make flash fade time calculation more efficient
+    /// </summary>
+    private float inverseDamageFadeTime;
+
+    /// <summary>
+    /// Used to make level fade time calculations more efficient
+    /// </summary>
+    private float inverseLevelFadeTime;
+
     /// <summary>
     /// Object reference to the UI object which will hold game mode buttons
     /// </summary>
     private GameObject switchMenu;
+
+    /// <summary>
+    /// Object reference to the UI object for the red flash when damage is taken from damage floors
+    /// </summary>
+    private GameObject damageFlash;
+
+    /// <summary>
+    /// Object reference to the UI object for the black fade when the player dies/the level reloads
+    /// </summary>
+    private GameObject levelFade;
 
     /// <summary>
     /// keeps track of the number of game modes unlocked
@@ -60,6 +100,12 @@ public class GameController : MonoBehaviour
 
         equipped = GameMode.platformer;
 
+        inverseDamageFadeTime = 1.0f / damageFadeTime;
+
+        inverseLevelFadeTime = 1.0f / levelFadeTime;
+
+        currHP = maxHP;
+
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
         foreach(RectTransform rect in rects)
@@ -68,7 +114,19 @@ public class GameController : MonoBehaviour
             {
                 switchMenu = rect.gameObject;
             }
+
+            if (rect.name.Equals("DamageFlash"))
+            {
+                damageFlash = rect.gameObject;
+            }
+
+            if (rect.name.Equals("LevelFade"))
+            {
+                levelFade = rect.gameObject;
+            }
         }
+
+        StartCoroutine(LevelFade(true));
 
         if (resetMode)
         {
@@ -169,7 +227,10 @@ public class GameController : MonoBehaviour
                 }
 
                 player = GameObject.FindGameObjectWithTag("Player");
+
                 player.GetComponent<Rigidbody2D>().gravityScale = 0;
+                player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
@@ -264,6 +325,78 @@ public class GameController : MonoBehaviour
         if (!found)
         {
             Debug.Log("ERROR: MODE STRING DID NOT MATCH ANY NAMES IN MODES ARRAY");
+        }
+    }
+
+    public void FloorDamage()
+    {
+        currHP = Mathf.Clamp(currHP - floorDamage, 0, maxHP);
+        StartCoroutine(DamageFlash());
+        if (currHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        Image img = damageFlash.GetComponent<Image>();
+        Color temp = img.color;
+        temp.a = 1;
+        img.color = temp;
+        while (img.color.a > 0)
+        {
+            temp.a -= inverseDamageFadeTime * Time.deltaTime;
+            img.color = temp;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public GameObject GetSwitchMenu()
+    {
+        return switchMenu;
+    }
+
+    public void Die()
+    {
+        StartCoroutine(ReloadLevel());
+        currHP = maxHP;
+    }
+
+    private IEnumerator ReloadLevel()
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SwitchMode(GameMode.platformer);
+        StartCoroutine(LevelFade(true));
+    }
+
+    private IEnumerator LevelFade(bool fadeIn)
+    {
+        Image img = levelFade.GetComponent<Image>();
+        Color temp = img.color;
+        if (fadeIn)
+        {
+            temp.a = 1;
+            img.color = temp;
+            while (img.color.a > 0)
+            {
+                temp.a -= inverseLevelFadeTime * Time.deltaTime;
+                img.color = temp;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else
+        {
+            temp.a = 0;
+            img.color = temp;
+            while (img.color.a < 1)
+            {
+                temp.a += inverseLevelFadeTime * Time.deltaTime;
+                img.color = temp;
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }
