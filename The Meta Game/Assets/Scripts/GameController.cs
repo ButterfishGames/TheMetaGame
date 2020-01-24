@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
@@ -107,8 +108,6 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        equipped = GameMode.platformer;
-
         inverseDamageFadeTime = 1.0f / damageFadeTime;
 
         inverseLevelFadeTime = 1.0f / levelFadeTime;
@@ -141,6 +140,7 @@ public class GameController : MonoBehaviour
         {
             equipped = GameMode.platformer;
         }
+        SwitchMode(equipped);
 
         if (resetUnlocks)
         {
@@ -165,6 +165,8 @@ public class GameController : MonoBehaviour
                 numUnlocked++;
             }
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -184,6 +186,15 @@ public class GameController : MonoBehaviour
             {
                 ToggleSwitchMenu();
             }
+            else
+            {
+                ExitGame();
+            }
+        }
+
+        if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
+        {
+            Cursor.visible = true;
         }
     }
 
@@ -264,7 +275,8 @@ public class GameController : MonoBehaviour
                         mover.enabled = false;
                     }
                 }
-                
+
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
@@ -316,7 +328,8 @@ public class GameController : MonoBehaviour
                 }
 
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 1);
-                
+
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
@@ -356,7 +369,12 @@ public class GameController : MonoBehaviour
                     mover.enabled = false;
                 }
 
-                Camera.main.projectionMatrix = Matrix4x4.Perspective(60, (float)Screen.width / (float)Screen.height, 0.3f, 1000.0f);
+                Camera.main.transform.position = new Vector3(
+                    Mathf.Clamp(player.transform.position.x, Camera.main.GetComponent<CameraScroll>().min.x, Camera.main.GetComponent<CameraScroll>().max.x), 
+                    Mathf.Clamp(player.transform.position.y, Camera.main.GetComponent<CameraScroll>().min.y, Camera.main.GetComponent<CameraScroll>().max.y) + Camera.main.GetComponent<CameraScroll>().yOffset, 
+                    Camera.main.transform.position.z);
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+                Camera.main.projectionMatrix = Matrix4x4.Perspective(60, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
                 break;
@@ -366,7 +384,10 @@ public class GameController : MonoBehaviour
                 break;
         }
 
-        ToggleSwitchMenu();
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
     }
 
     private float GridLocker(float pos)
@@ -409,6 +430,7 @@ public class GameController : MonoBehaviour
             paused = false;
 
             switchMenu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
@@ -423,8 +445,15 @@ public class GameController : MonoBehaviour
                     GameObject button = Instantiate(modeButton, switchMenu.transform);
                     button.GetComponent<Button>().onClick.AddListener(() => SwitchMode(mode.name));
                     button.GetComponentInChildren<Text>().text = mode.name;
+                    if (EventSystem.current.currentSelectedGameObject == null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(button);
+                    }
                 }
             }
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
         }
     }
 
@@ -485,7 +514,6 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         SwitchMode(GameMode.platformer);
-        ToggleSwitchMenu();
         StartCoroutine(LevelFade(true));
         paused = false;
     }
@@ -526,5 +554,48 @@ public class GameController : MonoBehaviour
     public void SetPaused(bool val)
     {
         paused = val;
+    }
+
+    public void Hit(int damage)
+    {
+        currHP -= damage;
+        StartCoroutine(SpriteDamageFlash());
+        if (currHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    private IEnumerator SpriteDamageFlash()
+    {
+        SpriteRenderer renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+        renderer.color = Color.red;
+        Color temp = renderer.color;
+        while (renderer.color.g < 1 || renderer.color.b < 1)
+        {
+            temp.g += inverseDamageFadeTime * Time.deltaTime;
+            temp.b = temp.g;
+            renderer.color = temp;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public bool IsUnlocked(string modeName)
+    {
+        for(int i = 0; i < modes.Length; i++)
+        {
+            if (modes[i].name.Equals(modeName))
+            {
+                return modes[i].unlocked;
+            }
+        }
+
+        Debug.Log("ERROR: MODE NAME PASSED DOES NOT MATCH ANY MODE IN MODES");
+        return false;
     }
 }

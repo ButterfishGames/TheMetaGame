@@ -25,6 +25,14 @@ public class PFEnemy : EnemyBehaviour
     [Tooltip("The max HP enemies have in gamemodes where they can take damage")]
     public int maxHP;
 
+    [Tooltip("The time in seconds it takes for the red flash when damaged to fade")]
+    public float damageFadeTime;
+
+    /// <summary>
+    /// Used to make damage flash calculations more efficient
+    /// </summary>
+    private float inverseDamageFadeTime;
+
     /// <summary>
     /// The current HP a given enemy has
     /// </summary>
@@ -73,6 +81,8 @@ public class PFEnemy : EnemyBehaviour
         mult = 1;
 
         currHP = maxHP;
+
+        inverseDamageFadeTime = 1.0f / damageFadeTime;
     }
 
     // Update is called once per frame
@@ -133,5 +143,29 @@ public class PFEnemy : EnemyBehaviour
         dir *= -1;
         mult = 1;
         transform.Rotate(0, 180, 0);
+    }
+
+    public void Hit(int damage)
+    {
+        currHP -= damage;
+        StartCoroutine(DamageFlash());
+        if (currHP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = Color.red;
+        Color temp = renderer.color;
+        while (renderer.color.g < 1 || renderer.color.b < 1)
+        {
+            temp.g += inverseDamageFadeTime * Time.deltaTime;
+            temp.b = temp.g;
+            renderer.color = temp;
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
