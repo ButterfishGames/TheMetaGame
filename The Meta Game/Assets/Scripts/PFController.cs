@@ -96,6 +96,7 @@ public class PFController : Mover
         yield return new WaitForSeconds(1);
         rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
         col.enabled = false;
+        GetComponentInChildren<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(deathWait);
         GameController.singleton.Die();
     }

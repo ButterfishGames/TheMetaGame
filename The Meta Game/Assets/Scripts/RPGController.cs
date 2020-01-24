@@ -7,6 +7,9 @@ public class RPGController : Mover
     [Tooltip("The layer on which collision with camera bounds will be checked")]
     public LayerMask boundLayer;
 
+    [Tooltip("The layer on which collision with enemies will be checked")]
+    public LayerMask enemyLayer;
+
     [Tooltip("The time it will take to move the object, in seconds")]
     [Range(0, 1)]
     public float moveTime = 0.1f;
@@ -30,7 +33,7 @@ public class RPGController : Mover
     public bool onDamageFloor;
 
     /// <summary>
-    /// Used to store directions to be passed to Smooth Movement
+    /// Used to store current direction facing
     /// </summary>
     private enum Direction
     {
@@ -40,6 +43,11 @@ public class RPGController : Mover
         right
     };
 
+    /// <summary>
+    /// Stores current direction facing
+    /// </summary>
+    private Direction dir;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -48,12 +56,22 @@ public class RPGController : Mover
         inverseMoveTime = 1.0f / moveTime;
         moving = false;
         onDamageFloor = false;
+
+        dir = Direction.down;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (!DialogueManager.singleton.GetDisplaying() && Input.GetButtonUp("Submit"))
+        {
+            Interact();
+        }
     }
 
     protected override void Move(float h, float v)
     {
-        Direction? dir = null;
-
         if (moving)
         {
             return;
@@ -85,18 +103,20 @@ public class RPGController : Mover
             v = 0.5f;
             dir = Direction.up;
         }
+        else
+        {
+            return;
+        }
 
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(h, v);
-
-        col.enabled = false;
+        
         RaycastHit2D hit;
-        hit = Physics2D.Linecast(start, end, blockingLayer + boundLayer);
-        col.enabled = true;
+        hit = Physics2D.Linecast(start, end, blockingLayer + boundLayer + enemyLayer);
 
-        if (hit.transform == null && dir != null)
+        if (hit.transform == null)
         {
-            mvmtCoroutine = SmoothMovement(end, (Direction)dir);
+            mvmtCoroutine = SmoothMovement(end);
             StartCoroutine(mvmtCoroutine);
         }
         else
@@ -106,7 +126,7 @@ public class RPGController : Mover
     }
 
     // This method is based heavily on the scripts presented in the Unit Mechanics section of the Unity Learn 2D Roguelike tutorial.
-    private IEnumerator SmoothMovement(Vector3 end, Direction dir)
+    private IEnumerator SmoothMovement(Vector3 end)
     {
         end.z = 1;
         float dist = (transform.position - end).sqrMagnitude;
@@ -138,11 +158,9 @@ public class RPGController : Mover
                         {
                             target = end;
                             target.x += 0.5f;
-
-                            col.enabled = false;
+                            
                             RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer);
-                            col.enabled = true;
+                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
 
                             if (hit.transform == null)
                             {
@@ -156,11 +174,9 @@ public class RPGController : Mover
                         {
                             target = end;
                             target.x -= 0.5f;
-
-                            col.enabled = false;
+                            
                             RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer);
-                            col.enabled = true;
+                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
 
                             if (hit.transform == null)
                             {
@@ -174,11 +190,9 @@ public class RPGController : Mover
                         {
                             target = end;
                             target.y += 0.5f;
-
-                            col.enabled = false;
+                            
                             RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer);
-                            col.enabled = true;
+                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
 
                             if (hit.transform == null)
                             {
@@ -192,11 +206,9 @@ public class RPGController : Mover
                         {
                             target = end;
                             target.y -= 0.5f;
-
-                            col.enabled = false;
+                            
                             RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer);
-                            col.enabled = true;
+                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
 
                             if (hit.transform == null)
                             {
@@ -215,6 +227,42 @@ public class RPGController : Mover
         }
 
         moving = false;
+    }
+
+    private void Interact()
+    {
+        Vector2 dVec = Vector3.zero;
+        switch (dir)
+        {
+            case Direction.right:
+                dVec = Vector2.right;
+                break;
+
+            case Direction.left:
+                dVec = Vector2.left;
+                break;
+
+            case Direction.up:
+                dVec = Vector2.up;
+                break;
+
+            case Direction.down:
+                dVec = Vector2.down;
+                break;
+
+            default:
+                Debug.Log("ERROR: INVALID DIRECTION PASSED TO INTERACT METHOD");
+                break;
+        }
+
+        Vector3 target = transform.position + (Vector3)dVec;
+        RaycastHit2D hit;
+        hit = Physics2D.Linecast(transform.position, target, enemyLayer);
+
+        if (hit.collider != null)
+        {
+            hit.collider.GetComponent<NPC>().Interact();
+        }
     }
 
     public void SetMoving(bool val)

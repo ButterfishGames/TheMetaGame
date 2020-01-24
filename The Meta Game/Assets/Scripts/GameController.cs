@@ -6,12 +6,16 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    /// <summary>
+    /// A static variable storing a reference to the GameController singleton
+    /// </summary>
     public static GameController singleton;
 
     public enum GameMode
     {
         platformer,
-        rpg
+        rpg,
+        fps
     };
 
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
@@ -95,7 +99,7 @@ public class GameController : MonoBehaviour
     {
         if (singleton == null)
         {
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
             singleton = this;
         }
         else if (singleton != this)
@@ -173,6 +177,14 @@ public class GameController : MonoBehaviour
                 ToggleSwitchMenu();
             }
         }
+
+        if (Input.GetButtonUp("Cancel"))
+        {
+            if (switchMenu.activeInHierarchy)
+            {
+                ToggleSwitchMenu();
+            }
+        }
     }
 
     public void SwitchMode(string newMode)
@@ -191,6 +203,10 @@ public class GameController : MonoBehaviour
         BoxCollider2D[] cameraWalls;
         GameObject player;
         Mover[] movers;
+        
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        float aspect = (float)Screen.width / (float)Screen.height;
 
         switch (equipped)
         {
@@ -205,6 +221,23 @@ public class GameController : MonoBehaviour
                     else
                     {
                         col.gameObject.SetActive(false);
+                    }
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(PFEnemy)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
                     }
                 }
 
@@ -231,6 +264,10 @@ public class GameController : MonoBehaviour
                         mover.enabled = false;
                     }
                 }
+                
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
                 break;
 
             case GameMode.rpg:
@@ -238,6 +275,26 @@ public class GameController : MonoBehaviour
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     col.gameObject.SetActive(true);
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(NPC)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+
+                    enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 1);
                 }
 
                 player = GameObject.FindGameObjectWithTag("Player");
@@ -259,6 +316,49 @@ public class GameController : MonoBehaviour
                 }
 
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 1);
+                
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
+                break;
+
+            case GameMode.fps:
+                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+                foreach(BoxCollider2D col in cameraWalls)
+                {
+                    col.gameObject.SetActive(false);
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(PFEnemy)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+                }
+
+                player = GameObject.FindGameObjectWithTag("Player");
+
+                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+
+                movers = player.GetComponents<Mover>();
+                foreach (Mover mover in movers)
+                {
+                    mover.enabled = false;
+                }
+
+                Camera.main.projectionMatrix = Matrix4x4.Perspective(60, (float)Screen.width / (float)Screen.height, 0.3f, 1000.0f);
+                Camera.main.GetComponent<CameraScroll>().enabled = false;
+                Camera.main.GetComponent<FPSController>().enabled = true;
                 break;
 
             default:
@@ -387,6 +487,7 @@ public class GameController : MonoBehaviour
         SwitchMode(GameMode.platformer);
         ToggleSwitchMenu();
         StartCoroutine(LevelFade(true));
+        paused = false;
     }
 
     private IEnumerator LevelFade(bool fadeIn)
