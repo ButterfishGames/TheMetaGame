@@ -78,8 +78,11 @@ public class FPSController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire"))
         {
+            LayerMask mask = (1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Player"));
             RaycastHit hit;
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 30, (1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Player")));
+            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 30, mask);
+
+            Debug.Log(hit.collider.name);
             
             if (hit.collider == null)
             {

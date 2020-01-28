@@ -55,6 +55,14 @@ public class GameController : MonoBehaviour
     [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
     public int floorDamage;
 
+
+    private HintDisp[] hints;
+
+    /// <summary>
+    /// Used to store between scenes whether the hints should be displayed
+    /// </summary>
+    private bool[] shouldDisp = { true, true, true, false, false, false };
+
     /// <summary>
     /// Determines whether the game is paused or not
     /// </summary>
@@ -116,7 +124,7 @@ public class GameController : MonoBehaviour
 
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
-        foreach(RectTransform rect in rects)
+        foreach (RectTransform rect in rects)
         {
             if (rect.name.Equals("SwitchMenu"))
             {
@@ -135,6 +143,22 @@ public class GameController : MonoBehaviour
         }
 
         StartCoroutine(LevelFade(true));
+
+        GameObject hintParent = GameObject.Find("Hints");
+        hints = hintParent.GetComponentsInChildren<HintDisp>(true);
+
+        for (int i = 0; i < hints.Length - 1; i++)
+        {
+            for (int j = i + 1; j < hints.Length; j++)
+            {
+                if (int.Parse(hints[i].gameObject.name.Substring(5)) > int.Parse(hints[j].gameObject.name.Substring(5)))
+                {
+                    HintDisp temp = hints[i];
+                    hints[i] = hints[j];
+                    hints[j] = temp;
+                }
+            }
+        }
 
         if (resetMode)
         {
@@ -158,7 +182,7 @@ public class GameController : MonoBehaviour
         }
 
         numUnlocked = 0;
-        foreach(Mode mode in modes)
+        foreach (Mode mode in modes)
         {
             if (mode.unlocked)
             {
@@ -214,7 +238,7 @@ public class GameController : MonoBehaviour
         BoxCollider2D[] cameraWalls;
         GameObject player;
         Mover[] movers;
-        
+
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         float aspect = (float)Screen.width / (float)Screen.height;
@@ -280,6 +304,15 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
+
+                FindHints();
+
+                SetHintDisp(0, true);
+                SetHintDisp(1, true);
+                SetHintDisp(2, shouldDisp[2]);
+                SetHintDisp(3, false);
+                SetHintDisp(4, false);
+                SetHintDisp(5, false);
                 break;
 
             case GameMode.rpg:
@@ -333,11 +366,20 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
+
+                FindHints();
+
+                SetHintDisp(0, false);
+                SetHintDisp(1, false);
+                SetHintDisp(2, shouldDisp[2]);
+                SetHintDisp(3, true);
+                SetHintDisp(4, true);
+                SetHintDisp(5, false);
                 break;
 
             case GameMode.fps:
                 cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
-                foreach(BoxCollider2D col in cameraWalls)
+                foreach (BoxCollider2D col in cameraWalls)
                 {
                     col.gameObject.SetActive(false);
                 }
@@ -370,13 +412,22 @@ public class GameController : MonoBehaviour
                 }
 
                 Camera.main.transform.position = new Vector3(
-                    Mathf.Clamp(player.transform.position.x, Camera.main.GetComponent<CameraScroll>().min.x, Camera.main.GetComponent<CameraScroll>().max.x), 
-                    Mathf.Clamp(player.transform.position.y, Camera.main.GetComponent<CameraScroll>().min.y, Camera.main.GetComponent<CameraScroll>().max.y) + Camera.main.GetComponent<CameraScroll>().yOffset, 
+                    Mathf.Clamp(player.transform.position.x, Camera.main.GetComponent<CameraScroll>().min.x, Camera.main.GetComponent<CameraScroll>().max.x),
+                    Mathf.Clamp(player.transform.position.y, Camera.main.GetComponent<CameraScroll>().min.y, Camera.main.GetComponent<CameraScroll>().max.y) + Camera.main.GetComponent<CameraScroll>().yOffset,
                     Camera.main.transform.position.z);
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Perspective(60, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
+
+                FindHints();
+
+                SetHintDisp(0, false);
+                SetHintDisp(1, false);
+                SetHintDisp(2, shouldDisp[2]);
+                SetHintDisp(3, false);
+                SetHintDisp(4, false);
+                SetHintDisp(5, true);
                 break;
 
             default:
@@ -438,7 +489,7 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
 
             switchMenu.SetActive(true);
-            foreach(Mode mode in modes)
+            foreach (Mode mode in modes)
             {
                 if (mode.unlocked)
                 {
@@ -454,6 +505,11 @@ public class GameController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = false;
+
+            if (shouldDisp[2])
+            {
+                SetHintDisp(2, false);
+            }
         }
     }
 
@@ -513,6 +569,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        yield return new WaitForEndOfFrame();
         SwitchMode(GameMode.platformer);
         StartCoroutine(LevelFade(true));
         paused = false;
@@ -559,6 +616,7 @@ public class GameController : MonoBehaviour
     public void Hit(int damage)
     {
         currHP -= damage;
+        Debug.Log(currHP);
         StartCoroutine(SpriteDamageFlash());
         if (currHP <= 0)
         {
@@ -597,5 +655,35 @@ public class GameController : MonoBehaviour
 
         Debug.Log("ERROR: MODE NAME PASSED DOES NOT MATCH ANY MODE IN MODES");
         return false;
+    }
+
+    public void SetHintDisp(int hint, bool val)
+    {
+        shouldDisp[hint] = val;
+        Debug.Log(hints[hint]);
+        hints[hint].SetDisplay(val);
+    }
+
+    private void FindHints()
+    {
+        while (hints[0] == null)
+        {
+            GameObject hintParent = GameObject.Find("Hints");
+            hints = hintParent.GetComponentsInChildren<HintDisp>(true);
+
+        }
+
+        for (int i = 0; i < hints.Length - 1; i++)
+        {
+            for (int j = i + 1; j < hints.Length; j++)
+            {
+                if (int.Parse(hints[i].gameObject.name.Substring(5)) > int.Parse(hints[j].gameObject.name.Substring(5)))
+                {
+                    HintDisp temp = hints[i];
+                    hints[i] = hints[j];
+                    hints[j] = temp;
+                }
+            }
+        }
     }
 }
