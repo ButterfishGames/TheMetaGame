@@ -660,7 +660,6 @@ public class GameController : MonoBehaviour
     public void SetHintDisp(int hint, bool val)
     {
         shouldDisp[hint] = val;
-        Debug.Log(hints[hint]);
         hints[hint].SetDisplay(val);
     }
 

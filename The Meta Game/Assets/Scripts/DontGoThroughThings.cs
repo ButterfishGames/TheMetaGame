@@ -23,8 +23,8 @@ public class DontGoThroughThings : MonoBehaviour
 	//initialize values 
 	private void Start() 
 	{ 
-	   rb = GetComponent<Rigidbody>();
-	   cols = GetComponentsInChildren<Collider>();
+	   rb = GetComponent<Rigidbody2D>();
+	   cols = GetComponentsInChildren<Collider2D>();
 	   previousPosition = rb.position;
 	   minimumExtent = MinColBounds();
 	   partialExtent = minimumExtent * (1.0f - skinWidth); 
@@ -34,30 +34,32 @@ public class DontGoThroughThings : MonoBehaviour
 	private void FixedUpdate() 
 	{ 
 	   //have we moved more than our minimum extent? 
-	   Vector3 movementThisStep = myRigidbody.position - previousPosition; 
+	   Vector3 movementThisStep = rb.position - (Vector2)previousPosition; 
 	   float movementSqrMagnitude = movementThisStep.sqrMagnitude;
  
 	   if (movementSqrMagnitude > sqrMinimumExtent) 
 		{ 
 	      float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
-	      RaycastHit hitInfo; 
- 
-	      //check for obstructions we might have missed 
-	      if (Physics.Raycast(previousPosition, movementThisStep, out hitInfo, movementMagnitude, layerMask.value))
+	      RaycastHit2D hitInfo;
+
+            //check for obstructions we might have missed 
+            hitInfo = Physics2D.Raycast(previousPosition, movementThisStep, movementMagnitude, layerMask.value);
+
+            if (hitInfo.collider != null)
               {
                  if (!hitInfo.collider)
                      return;
  
-                 if (hitInfo.collider.isTrigger) 
-                     hitInfo.collider.SendMessage("OnTriggerEnter", myCollider);
+                 //if (hitInfo.collider.isTrigger) 
+                     //hitInfo.collider.SendMessage("OnTriggerEnter", cols[0]);
  
                  if (!hitInfo.collider.isTrigger)
-                     myRigidbody.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent; 
+                     rb.position = hitInfo.point - (Vector2)((movementThisStep / movementMagnitude) * partialExtent); 
  
               }
 	   } 
  
-	   previousPosition = myRigidbody.position; 
+	   previousPosition = rb.position; 
 	}
 
 	private float MinColBounds()
@@ -65,7 +67,7 @@ public class DontGoThroughThings : MonoBehaviour
 		float min = Mathf.Infinity;
 		foreach(Collider2D col in cols)
 		{
-			float minBound = Mathf.Min(col.bounds.extents.x, col.bounds.extents.y)
+            float minBound = Mathf.Min(col.bounds.extents.x, col.bounds.extents.y);
 			if (minBound < min)
 			{
 				min = minBound;
