@@ -16,7 +16,8 @@ public class GameController : MonoBehaviour
     {
         platformer,
         rpg,
-        fps
+        fps,
+        fighting
     };
 
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
@@ -428,6 +429,68 @@ public class GameController : MonoBehaviour
                 SetHintDisp(3, false);
                 SetHintDisp(4, false);
                 SetHintDisp(5, true);
+                break;
+
+            case GameMode.fighting:
+                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.name.Equals("CameraWall_L") || col.name.Equals("CameraWall_R"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(FGEnemy)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+                }
+
+                player = GameObject.Find("Player");
+
+                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                movers = player.GetComponents<Mover>();
+                foreach (Mover mover in movers)
+                {
+                    if (mover.GetType().Equals(typeof(FGController)))
+                    {
+                        mover.enabled = true;
+                    }
+                    else
+                    {
+                        mover.enabled = false;
+                    }
+                }
+
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
+
+                FindHints();
+
+                SetHintDisp(0, false);
+                SetHintDisp(1, false);
+                SetHintDisp(2, shouldDisp[2]);
+                SetHintDisp(3, false);
+                SetHintDisp(4, false);
+                SetHintDisp(5, false);
                 break;
 
             default:
