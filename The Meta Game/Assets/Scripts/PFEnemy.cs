@@ -28,6 +28,8 @@ public class PFEnemy : EnemyBehaviour
     [Tooltip("The time in seconds it takes for the red flash when damaged to fade")]
     public float damageFadeTime;
 
+    public bool test = false;
+
     /// <summary>
     /// Used to make damage flash calculations more efficient
     /// </summary>
@@ -101,10 +103,18 @@ public class PFEnemy : EnemyBehaviour
 
         if (hit.collider == null)
         {
+            if (test)
+            {
+                Debug.Log("null");
+            }
             Turn();
         }
         else
         {
+            if (test)
+            {
+                Debug.Log(hit.collider.name);
+            }
             dVec = new Vector2(dir, 0);
             hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
             if (hit.collider != null)

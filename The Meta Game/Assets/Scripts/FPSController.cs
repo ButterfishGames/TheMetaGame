@@ -75,7 +75,6 @@ public class FPSController : MonoBehaviour
         if (Input.GetButtonUp("Zoom"))
         {
             zoomRet.SetActive(false);
-            Camera.main.fieldOfView = fovNormal;
             Camera.main.projectionMatrix = Matrix4x4.Perspective(fovNormal, aspect, 0.3f, 1000.0f);
         }
 
