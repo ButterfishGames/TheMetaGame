@@ -276,7 +276,7 @@ public class GameController : MonoBehaviour
                     }
                 }
 
-                player = GameObject.FindGameObjectWithTag("Player");
+                player = GameObject.Find("Player");
 
                 RPGController rpgCon = player.GetComponent<RPGController>();
                 if (rpgCon.mvmtCoroutine != null)
@@ -342,7 +342,7 @@ public class GameController : MonoBehaviour
                     enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 1);
                 }
 
-                player = GameObject.FindGameObjectWithTag("Player");
+                player = GameObject.Find("Player");
 
                 player.GetComponent<Rigidbody2D>().gravityScale = 0;
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -401,7 +401,7 @@ public class GameController : MonoBehaviour
                     }
                 }
 
-                player = GameObject.FindGameObjectWithTag("Player");
+                player = GameObject.Find("Player");
 
                 player.GetComponent<Rigidbody2D>().gravityScale = 1;
 
