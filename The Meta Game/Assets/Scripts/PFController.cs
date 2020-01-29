@@ -23,6 +23,11 @@ public class PFController : Mover
 
     protected override void Update()
     {
+        return;
+    }
+
+    private void FixedUpdate()
+    {
         if (GameController.singleton.GetPaused())
         {
             return;

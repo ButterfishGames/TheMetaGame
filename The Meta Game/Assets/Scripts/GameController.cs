@@ -56,7 +56,9 @@ public class GameController : MonoBehaviour
     [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
     public int floorDamage;
 
-
+    /// <summary>
+    /// Array of object references to HintDisp objects on in-game hints
+    /// </summary>
     private HintDisp[] hints;
 
     /// <summary>
@@ -145,21 +147,8 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(LevelFade(true));
 
-        GameObject hintParent = GameObject.Find("Hints");
-        hints = hintParent.GetComponentsInChildren<HintDisp>(true);
-
-        for (int i = 0; i < hints.Length - 1; i++)
-        {
-            for (int j = i + 1; j < hints.Length; j++)
-            {
-                if (int.Parse(hints[i].gameObject.name.Substring(5)) > int.Parse(hints[j].gameObject.name.Substring(5)))
-                {
-                    HintDisp temp = hints[i];
-                    hints[i] = hints[j];
-                    hints[j] = temp;
-                }
-            }
-        }
+        hints = new HintDisp[] { null };
+        FindHints();
 
         if (resetMode)
         {

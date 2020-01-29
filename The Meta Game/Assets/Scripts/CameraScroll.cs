@@ -40,12 +40,12 @@ public class CameraScroll : MonoBehaviour
                 {
                     posX = transform.position.x;
                 }
-                posY = player.position.y;
+                posY = player.position.y + yOffset;
                 break;
 
             case GameController.GameMode.rpg:
                 posX = player.position.x;
-                posY = player.position.y;
+                posY = player.position.y + yOffset;
                 break;
 
             default:
@@ -54,6 +54,6 @@ public class CameraScroll : MonoBehaviour
                 break;
         }
 
-        transform.position = new Vector3(Mathf.Clamp(posX, min.x, max.x), Mathf.Clamp(posY, min.y, max.y) + yOffset, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(posX, min.x, max.x), Mathf.Clamp(posY, min.y, max.y), transform.position.z);
     }
 }
