@@ -626,7 +626,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator SpriteDamageFlash()
     {
-        SpriteRenderer renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+        SpriteRenderer renderer = GameObject.Find("Player").GetComponentInChildren<SpriteRenderer>();
         renderer.color = Color.red;
         Color temp = renderer.color;
         while (renderer.color.g < 1 || renderer.color.b < 1)

@@ -16,6 +16,9 @@ public class FPSController : MonoBehaviour
     [Tooltip("The damage dealt when shot connects")]
     public int damage;
 
+    [Tooltip("Which layers can be shot by FPS mode")]
+    public LayerMask mask;
+
     /// <summary>
     /// Unzoomed camera field of view
     /// </summary>
@@ -78,9 +81,8 @@ public class FPSController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire"))
         {
-            LayerMask mask = (1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Player"));
             RaycastHit hit;
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 30, mask);
+            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, mask);
 
             Debug.Log(hit.collider.name);
             
