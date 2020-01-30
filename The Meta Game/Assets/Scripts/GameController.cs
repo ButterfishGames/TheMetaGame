@@ -126,6 +126,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     private int numUnlocked;
 
+    private int strength, magic;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -144,8 +146,9 @@ public class GameController : MonoBehaviour
         inverseLevelFadeTime = 1.0f / levelFadeTime;
 
         currHP = maxHP;
-
         currMP = maxMP;
+        strength = 10;
+        magic = 10;
 
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
@@ -694,12 +697,16 @@ public class GameController : MonoBehaviour
     public void Hit(int damage)
     {
         currHP -= damage;
-        Debug.Log(currHP);
         StartCoroutine(SpriteDamageFlash());
         if (currHP <= 0)
         {
             Die();
         }
+    }
+
+    public void Damage(int damage)
+    {
+        currHP -= damage;
     }
 
     private IEnumerator SpriteDamageFlash()
@@ -813,5 +820,15 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(errDispTime);
         errText.CrossFadeAlpha(0, errFadeTime, true);
+    }
+
+    public int GetStrength()
+    {
+        return strength;
+    }
+
+    public int GetMagic()
+    {
+        return magic;
     }
 }
