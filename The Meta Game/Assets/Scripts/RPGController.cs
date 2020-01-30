@@ -17,6 +17,9 @@ public class RPGController : Mover
     [Tooltip("Movement coroutine for stopping from GameController. DO NOT EDIT, HANDLED BY CODE")]
     public IEnumerator mvmtCoroutine;
 
+    [Tooltip("How many steps on average the player will go before encountering a battle")]
+    public int encRate;
+
     /// <summary>
     /// Used to make movement more efficient
     /// </summary>
@@ -30,7 +33,9 @@ public class RPGController : Mover
     /// <summary>
     /// Used to check if the player is currently on a damage floor
     /// </summary>
-    public bool onDamageFloor;
+    private bool onDamageFloor;
+
+    private bool encountering;
 
     /// <summary>
     /// Used to store current direction facing
@@ -56,6 +61,7 @@ public class RPGController : Mover
         inverseMoveTime = 1.0f / moveTime;
         moving = false;
         onDamageFloor = false;
+        encountering = false;
 
         dir = Direction.down;
     }
@@ -72,7 +78,7 @@ public class RPGController : Mover
 
     protected override void Move(float h, float v)
     {
-        if (moving)
+        if (moving || encountering)
         {
             return;
         }
@@ -117,6 +123,7 @@ public class RPGController : Mover
         if (hit.transform == null)
         {
             mvmtCoroutine = SmoothMovement(end);
+            EncCheck();
             StartCoroutine(mvmtCoroutine);
         }
         else
@@ -151,75 +158,82 @@ public class RPGController : Mover
                 }
 
                 Vector3 target;
-                switch (dir)
+                if (!encountering)
                 {
-                    case Direction.right:
-                        if (Input.GetAxisRaw("Horizontal") > 0)
-                        {
-                            target = end;
-                            target.x += 0.5f;
-                            
-                            RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
-
-                            if (hit.transform == null)
+                    switch (dir)
+                    {
+                        case Direction.right:
+                            if (Input.GetAxisRaw("Horizontal") > 0)
                             {
-                                end = target;
+                                target = end;
+                                target.x += 0.5f;
+
+                                RaycastHit2D hit;
+                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+
+                                if (hit.transform == null)
+                                {
+                                    EncCheck();
+                                    end = target;
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case Direction.left:
-                        if (Input.GetAxisRaw("Horizontal") < 0)
-                        {
-                            target = end;
-                            target.x -= 0.5f;
-                            
-                            RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
-
-                            if (hit.transform == null)
+                        case Direction.left:
+                            if (Input.GetAxisRaw("Horizontal") < 0)
                             {
-                                end = target;
+                                target = end;
+                                target.x -= 0.5f;
+
+                                RaycastHit2D hit;
+                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+
+                                if (hit.transform == null)
+                                {
+                                    EncCheck();
+                                    end = target;
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case Direction.up:
-                        if (Input.GetAxisRaw("Vertical") > 0)
-                        {
-                            target = end;
-                            target.y += 0.5f;
-                            
-                            RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
-
-                            if (hit.transform == null)
+                        case Direction.up:
+                            if (Input.GetAxisRaw("Vertical") > 0)
                             {
-                                end = target;
+                                target = end;
+                                target.y += 0.5f;
+
+                                RaycastHit2D hit;
+                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+
+                                if (hit.transform == null)
+                                {
+                                    EncCheck();
+                                    end = target;
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case Direction.down:
-                        if (Input.GetAxisRaw("Vertical") < 0)
-                        {
-                            target = end;
-                            target.y -= 0.5f;
-                            
-                            RaycastHit2D hit;
-                            hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
-
-                            if (hit.transform == null)
+                        case Direction.down:
+                            if (Input.GetAxisRaw("Vertical") < 0)
                             {
-                                end = target;
-                            }
-                        }
-                        break;
+                                target = end;
+                                target.y -= 0.5f;
 
-                    default:
-                        Debug.Log("ERROR: INVALID DIRECTION PASSED TO SMOOTHMOVEMENT COROUTINE");
-                        break;
+                                RaycastHit2D hit;
+                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+
+                                if (hit.transform == null)
+                                {
+                                    EncCheck();
+                                    end = target;
+                                }
+                            }
+                            break;
+
+                        default:
+                            Debug.Log("ERROR: INVALID DIRECTION PASSED TO SMOOTHMOVEMENT COROUTINE");
+                            break;
+                    }
                 }
             }
             dist = (transform.position - end).sqrMagnitude;
@@ -262,6 +276,17 @@ public class RPGController : Mover
         if (hit.collider != null)
         {
             hit.collider.GetComponent<NPC>().Interact();
+        }
+    }
+
+    private void EncCheck()
+    {
+        int det = Random.Range(0, encRate + 1);
+        if (det == encRate)
+        {
+            GameController.singleton.SetPaused(true);
+            encountering = true;
+            GameController.singleton.StartCoroutine(GameController.singleton.Battle());
         }
     }
 

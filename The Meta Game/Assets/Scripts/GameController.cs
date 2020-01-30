@@ -53,6 +53,9 @@ public class GameController : MonoBehaviour
     [Tooltip("The maximum HP for the player (only used in certain gamemodes)")]
     public int maxHP;
 
+    [Tooltip("The maximum MP for the player (only used in certain gamemodes)")]
+    public int maxMP;
+
     [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
     public int floorDamage;
 
@@ -75,6 +78,11 @@ public class GameController : MonoBehaviour
     /// Stores the player's current HP
     /// </summary>
     private int currHP;
+
+    /// <summary>
+    /// Stores the player's current MP
+    /// </summary>
+    private int currMP;
 
     /// <summary>
     /// Used to make flash fade time calculation more efficient
@@ -124,6 +132,8 @@ public class GameController : MonoBehaviour
         inverseLevelFadeTime = 1.0f / levelFadeTime;
 
         currHP = maxHP;
+
+        currMP = maxMP;
 
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
@@ -736,5 +746,24 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int GetHP()
+    {
+        return currHP;
+    }
+
+    public int GetMP()
+    {
+        return currMP;
+    }
+
+    public IEnumerator Battle()
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        yield return new WaitForEndOfFrame();
+        StartCoroutine(LevelFade(true));
     }
 }
