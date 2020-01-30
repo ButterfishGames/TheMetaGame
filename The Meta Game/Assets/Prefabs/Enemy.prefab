@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 1498483545563416926}
   - component: {fileID: 1498483545563416922}
   - component: {fileID: -324677560552814477}
+  - component: {fileID: 1499245470291664175}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
@@ -209,6 +210,7 @@ MonoBehaviour:
   startDir: 0
   maxHP: 30
   damageFadeTime: 0.5
+  test: 0
 --- !u!114 &-324677560552814477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +225,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueLines:
   - This is test dialogue
+--- !u!114 &1499245470291664175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498483545563416927}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822a56343f87116419e719420cbb7ee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDir: 0
+  maxHP: 30
+  damageFadeTime: 0.5
 --- !u!1 &4720640963120695446
 GameObject:
   m_ObjectHideFlags: 0

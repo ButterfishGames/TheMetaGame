@@ -137,9 +137,11 @@ public class PFEnemy : EnemyBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            rb.velocity = Vector2.zero;
-            PFController pfCon = collision.collider.GetComponent<PFController>();
-            pfCon.StartCoroutine(pfCon.Die());
+            if (collision.collider.gameObject.GetComponent<PFController>().enabled) {
+                rb.velocity = Vector2.zero;
+                PFController pfCon = collision.collider.GetComponent<PFController>();
+                pfCon.StartCoroutine(pfCon.Die());
+            }
         }
 
         if (collision.collider.CompareTag("Enemy"))

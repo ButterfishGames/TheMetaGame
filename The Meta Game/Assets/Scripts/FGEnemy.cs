@@ -47,7 +47,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// Used to determine current direction; 1 is right, -1 is left
     /// </summary>
-    private int dir = 1;
+    private int dir;
 
     /// <summary>
     /// Reference to Rigidbody2D component on object
@@ -59,14 +59,26 @@ public class FGEnemy : EnemyBehaviour
     /// </summary>
     private BoxCollider2D col;
 
+    /// <summary>
+    /// Main Camera to tell if enemy is within the viewport
+    /// </summary>
+    private Camera mainCamera;
+
+    /// <summary>
+    /// This variable is to determine whether the enemy started within the view when switching to fighting mode
+    /// </summary>
+    private bool changedInView;
+
     void Start()
     {
-        playerPosX = FindObjectOfType<FGController>().transform.position.x;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
+        playerPosX = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.x;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         if (spriteRenderer.isVisible)
         {
-            fighting = true;
+            //fighting = true;
             if (transform.position.x > playerPosX)
             {
                 startDir = Direction.left;
@@ -93,23 +105,31 @@ public class FGEnemy : EnemyBehaviour
         }
         else
         {
-            fighting = false;
+            //fighting = false;
         }
 
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
+        //Debug.Log(name + "Is visible");
     }
 
     void Update()
     {
-        if (fighting)
+        Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
+        if (changedInView == true) {
+            if (viewPos.y < 0.0f)
+            {
+                Destroy(gameObject);
+            }
+        }
+        if (fighting == true)
         {
-
+//            Debug.Log(name + "Is visible");
         }
         else
         {
-            
+
         }
     }
 }

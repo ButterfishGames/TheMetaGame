@@ -78,13 +78,15 @@ public class PFController : Mover
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!grounded && collision.CompareTag("Ground"))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);
-
-            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+        if (enabled) {
+            if (!grounded && collision.CompareTag("Ground"))
             {
-                grounded = true;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);
+
+                if (hit.collider != null && hit.collider.CompareTag("Ground"))
+                {
+                    grounded = true;
+                }
             }
         }
     }

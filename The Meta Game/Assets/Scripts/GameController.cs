@@ -301,6 +301,8 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").gameObject.SetActive(true);
+
                     if (mover.GetType().Equals(typeof(PFController)))
                     {
                         mover.enabled = true;
@@ -459,6 +461,7 @@ public class GameController : MonoBehaviour
                 {
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
+                    enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     foreach (EnemyBehaviour behaviour in behaviours)
                     {
                         if (behaviour.GetType().Equals(typeof(FGEnemy)))
@@ -478,6 +481,8 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").gameObject.SetActive(false);
+                    mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     if (mover.GetType().Equals(typeof(FGController)))
                     {
                         mover.enabled = true;
