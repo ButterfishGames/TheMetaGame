@@ -389,7 +389,10 @@ MonoBehaviour:
   damageFadeTime: 0.5
   levelFadeTime: 1
   maxHP: 100
+  maxMP: 10
   floorDamage: 8
+  errDispTime: 2
+  errFadeTime: 2
 --- !u!1 &6836962810868184634
 GameObject:
   m_ObjectHideFlags: 0

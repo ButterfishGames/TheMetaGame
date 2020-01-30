@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -59,6 +60,12 @@ public class GameController : MonoBehaviour
     [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
     public int floorDamage;
 
+    [Tooltip("The amount of time in seconds for which the error text will be displayed before it begins to fade")]
+    public float errDispTime;
+
+    [Tooltip("The amount of time in seconds over which the error text will fade")]
+    public float errFadeTime;
+
     /// <summary>
     /// Array of object references to HintDisp objects on in-game hints
     /// </summary>
@@ -110,6 +117,11 @@ public class GameController : MonoBehaviour
     private GameObject levelFade;
 
     /// <summary>
+    /// Object reference to the TextMeshPro UGUI component that will hold joke error text
+    /// </summary>
+    private TextMeshProUGUI errText;
+
+    /// <summary>
     /// keeps track of the number of game modes unlocked
     /// </summary>
     private int numUnlocked;
@@ -155,6 +167,8 @@ public class GameController : MonoBehaviour
             }
         }
 
+        errText = GetComponentInChildren<TextMeshProUGUI>();
+
         StartCoroutine(LevelFade(true));
 
         hints = new HintDisp[] { null };
@@ -196,12 +210,9 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Menu"))
+        if (Input.GetButtonDown("Menu") && numUnlocked > 1 && !paused)
         {
-            if (numUnlocked > 1)
-            {
-                ToggleSwitchMenu();
-            }
+            ToggleSwitchMenu();
         }
 
         if (Input.GetButtonUp("Cancel"))
@@ -764,6 +775,26 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
         yield return new WaitForEndOfFrame();
+        GameObject attackBtn = null;
+        while (attackBtn == null)
+        {
+            attackBtn = GameObject.Find("AttackButton");
+            yield return new WaitForEndOfFrame();
+        }
+        EventSystem.current.SetSelectedGameObject(attackBtn);
         StartCoroutine(LevelFade(true));
+    }
+
+    public void ErrDisp(string err)
+    {
+        errText.alpha = 1;
+        errText.text = err;
+        StartCoroutine(ErrFade());
+    }
+
+    private IEnumerator ErrFade()
+    {
+        yield return new WaitForSeconds(errDispTime);
+        errText.CrossFadeAlpha(0, errFadeTime, true);
     }
 }
