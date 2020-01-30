@@ -28,12 +28,20 @@ public class PFController : Mover
             return;
         }
 
-        base.Update();
-
         if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
         {
             Jump();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        base.Update();
     }
 
     protected override void Move(float h, float v)

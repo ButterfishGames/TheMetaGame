@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class GameController : MonoBehaviour
     {
         platformer,
         rpg,
-        fps
+        fps,
+        fighting
     };
 
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
@@ -52,10 +54,21 @@ public class GameController : MonoBehaviour
     [Tooltip("The maximum HP for the player (only used in certain gamemodes)")]
     public int maxHP;
 
+    [Tooltip("The maximum MP for the player (only used in certain gamemodes)")]
+    public int maxMP;
+
     [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
     public int floorDamage;
 
+    [Tooltip("The amount of time in seconds for which the error text will be displayed before it begins to fade")]
+    public float errDispTime;
 
+    [Tooltip("The amount of time in seconds over which the error text will fade")]
+    public float errFadeTime;
+
+    /// <summary>
+    /// Array of object references to HintDisp objects on in-game hints
+    /// </summary>
     private HintDisp[] hints;
 
     /// <summary>
@@ -72,6 +85,11 @@ public class GameController : MonoBehaviour
     /// Stores the player's current HP
     /// </summary>
     private int currHP;
+
+    /// <summary>
+    /// Stores the player's current MP
+    /// </summary>
+    private int currMP;
 
     /// <summary>
     /// Used to make flash fade time calculation more efficient
@@ -99,6 +117,11 @@ public class GameController : MonoBehaviour
     private GameObject levelFade;
 
     /// <summary>
+    /// Object reference to the TextMeshPro UGUI component that will hold joke error text
+    /// </summary>
+    private TextMeshProUGUI errText;
+
+    /// <summary>
     /// keeps track of the number of game modes unlocked
     /// </summary>
     private int numUnlocked;
@@ -122,6 +145,8 @@ public class GameController : MonoBehaviour
 
         currHP = maxHP;
 
+        currMP = maxMP;
+
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
         foreach (RectTransform rect in rects)
@@ -142,23 +167,12 @@ public class GameController : MonoBehaviour
             }
         }
 
+        errText = GetComponentInChildren<TextMeshProUGUI>();
+
         StartCoroutine(LevelFade(true));
 
-        GameObject hintParent = GameObject.Find("Hints");
-        hints = hintParent.GetComponentsInChildren<HintDisp>(true);
-
-        for (int i = 0; i < hints.Length - 1; i++)
-        {
-            for (int j = i + 1; j < hints.Length; j++)
-            {
-                if (int.Parse(hints[i].gameObject.name.Substring(5)) > int.Parse(hints[j].gameObject.name.Substring(5)))
-                {
-                    HintDisp temp = hints[i];
-                    hints[i] = hints[j];
-                    hints[j] = temp;
-                }
-            }
-        }
+        hints = new HintDisp[] { null };
+        FindHints();
 
         if (resetMode)
         {
@@ -196,12 +210,9 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Menu"))
+        if (Input.GetButtonDown("Menu") && numUnlocked > 1 && !paused)
         {
-            if (numUnlocked > 1)
-            {
-                ToggleSwitchMenu();
-            }
+            ToggleSwitchMenu();
         }
 
         if (Input.GetButtonUp("Cancel"))
@@ -428,6 +439,68 @@ public class GameController : MonoBehaviour
                 SetHintDisp(3, false);
                 SetHintDisp(4, false);
                 SetHintDisp(5, true);
+                break;
+
+            case GameMode.fighting:
+                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.name.Equals("CameraWall_L") || col.name.Equals("CameraWall_R"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(FGEnemy)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+                }
+
+                player = GameObject.Find("Player");
+
+                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                movers = player.GetComponents<Mover>();
+                foreach (Mover mover in movers)
+                {
+                    if (mover.GetType().Equals(typeof(FGController)))
+                    {
+                        mover.enabled = true;
+                    }
+                    else
+                    {
+                        mover.enabled = false;
+                    }
+                }
+
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
+
+                FindHints();
+
+                SetHintDisp(0, false);
+                SetHintDisp(1, false);
+                SetHintDisp(2, shouldDisp[2]);
+                SetHintDisp(3, false);
+                SetHintDisp(4, false);
+                SetHintDisp(5, false);
                 break;
 
             default:
@@ -684,5 +757,56 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int GetHP()
+    {
+        return currHP;
+    }
+
+    public int GetMP()
+    {
+        return currMP;
+    }
+
+    public IEnumerator Battle()
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        yield return new WaitForEndOfFrame();
+        GameObject attackBtn = null;
+        while (attackBtn == null)
+        {
+            attackBtn = GameObject.Find("AttackButton");
+            yield return new WaitForEndOfFrame();
+        }
+        EventSystem.current.SetSelectedGameObject(attackBtn);
+        StartCoroutine(LevelFade(true));
+    }
+
+    public IEnumerator UnloadBattle()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.UnloadSceneAsync(2);
+        yield return new WaitForEndOfFrame();
+        StartCoroutine(LevelFade(true));
+        GameObject.Find("Player").GetComponent<RPGController>().SetEncountering(false);
+        paused = false;
+    }
+
+    public void ErrDisp(string err)
+    {
+        errText.CrossFadeAlpha(1, 0, true);
+        errText.text = err;
+        StartCoroutine(ErrFade());
+    }
+
+    private IEnumerator ErrFade()
+    {
+        yield return new WaitForSeconds(errDispTime);
+        errText.CrossFadeAlpha(0, errFadeTime, true);
     }
 }
