@@ -785,9 +785,21 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(true));
     }
 
+    public IEnumerator UnloadBattle()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.UnloadSceneAsync(2);
+        yield return new WaitForEndOfFrame();
+        StartCoroutine(LevelFade(true));
+        GameObject.Find("Player").GetComponent<RPGController>().SetEncountering(false);
+        paused = false;
+    }
+
     public void ErrDisp(string err)
     {
-        errText.alpha = 1;
+        errText.CrossFadeAlpha(1, 0, true);
         errText.text = err;
         StartCoroutine(ErrFade());
     }

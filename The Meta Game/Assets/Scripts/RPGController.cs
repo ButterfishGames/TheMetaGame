@@ -318,4 +318,9 @@ public class RPGController : Mover
             onDamageFloor = false;
         }
     }
+
+    public void SetEncountering (bool val)
+    {
+        encountering = val;
+    }
 }

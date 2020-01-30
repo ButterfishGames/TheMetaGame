@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
 public class BattleController : MonoBehaviour
 {
+    [Range(0, 1)]
+    public float fleeChance;
+
     public TextMeshProUGUI playerStats;
 
     public GameObject enemyImgPrefab;
 
     public GameObject enemyStatPrefab;
+
+    public GameObject messagePanel;
 
     public Transform enemyCharSpace;
 
@@ -22,6 +26,8 @@ public class BattleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        messagePanel.SetActive(false);
+
         playerStats.text = "Player\n" 
             + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n" 
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
@@ -74,7 +80,15 @@ public class BattleController : MonoBehaviour
 
     public void FleeCmd()
     {
+        float det = Random.Range(0.0f, 1.0f);
 
+        messagePanel.SetActive(true);
+
+        if (det < fleeChance)
+        {
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You successfully escaped!";
+            GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
+        }
     }
 }
 
