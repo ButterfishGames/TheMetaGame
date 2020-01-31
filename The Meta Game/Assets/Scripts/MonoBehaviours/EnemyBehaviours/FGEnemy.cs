@@ -67,7 +67,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// This variable is to determine whether the enemy started within the view when switching to fighting mode
     /// </summary>
-    private bool changedInView;
+    public bool changedInView;
 
     void Start()
     {
@@ -118,16 +118,17 @@ public class FGEnemy : EnemyBehaviour
     {
         Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
         if (changedInView == true) {
+            fighting = true;
             if (viewPos.y < 0.0f)
             {
                 Destroy(gameObject);
             }
         }
-        if (fighting == true)
-        {
-//            Debug.Log(name + "Is visible");
-        }
         else
+        {
+            fighting = false;
+        }
+        if (fighting == true)
         {
 
         }

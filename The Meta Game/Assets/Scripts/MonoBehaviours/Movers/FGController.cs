@@ -28,6 +28,14 @@ public class FGController : Mover
 
     protected override void Update()
     {
+        Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
+        if (GameController.singleton.GetPaused() == false)
+        {
+            if (viewPos.y < 0.0f) {
+                GameController.singleton.Die();
+            }
+        }
+
         if (GameController.singleton.GetPaused())
         {
             return;

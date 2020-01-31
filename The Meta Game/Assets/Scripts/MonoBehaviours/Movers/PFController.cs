@@ -78,7 +78,7 @@ public class PFController : Mover
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (enabled) {
+        if (GetComponent<FGController>().enabled == false) {
             if (!grounded && collision.CompareTag("Ground"))
             {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);

@@ -260,6 +260,10 @@ public class GameController : MonoBehaviour
         switch (equipped)
         {
             case GameMode.platformer:
+                if (GameObject.Find("Killbox") != null)
+                {
+                    GameObject.Find("Killbox").tag = "Killbox";
+                }
                 cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
                 foreach (BoxCollider2D col in cameraWalls)
                 {
@@ -332,6 +336,10 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.rpg:
+                if (GameObject.Find("Killbox") != null)
+                {
+                    GameObject.Find("Killbox").tag = "Killbox";
+                }
                 cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
                 foreach (BoxCollider2D col in cameraWalls)
                 {
@@ -394,6 +402,10 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.fps:
+                if (GameObject.Find("Killbox") != null)
+                {
+                    GameObject.Find("Killbox").tag = "Killbox";
+                }
                 cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
                 foreach (BoxCollider2D col in cameraWalls)
                 {
@@ -447,6 +459,10 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.fighting:
+                if (GameObject.Find("Killbox") != null)
+                {
+                    GameObject.Find("Killbox").tag = "Untagged";
+                }
                 cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
                 foreach (BoxCollider2D col in cameraWalls)
                 {
@@ -462,6 +478,15 @@ public class GameController : MonoBehaviour
 
                 foreach (GameObject enemy in enemies)
                 {
+                    Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
+                    if(viewPos.x > 0.0f && viewPos.x < 1.0f && viewPos.y > 0.0f && viewPos.y < 1.0f)
+                    {
+                        enemy.GetComponent<FGEnemy>().changedInView = true;
+                    }
+                    else
+                    {
+                        enemy.GetComponent<FGEnemy>().changedInView = false;
+                    }
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
@@ -484,7 +509,6 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
-                    mover.transform.Find("GroundTrigger").gameObject.SetActive(false);
                     mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     if (mover.GetType().Equals(typeof(FGController)))
                     {
