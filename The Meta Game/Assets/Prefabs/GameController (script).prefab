@@ -382,7 +382,8 @@ MonoBehaviour:
   - name: RPG
     unlocked: 0
   - name: FPS
-    unlocked: 1
+    unlocked: 0
+  resetUnlocks: 1
   spellList:
   - spell: {fileID: 11400000, guid: bc21eb39d6540614f827ae91e7ddd107, type: 2}
     unlocked: 1
@@ -392,11 +393,8 @@ MonoBehaviour:
     unlocked: 1
   - spell: {fileID: 11400000, guid: deb54a3763be93a4d82573bd8d34c93d, type: 2}
     unlocked: 1
-  - spell: {fileID: 11400000, guid: d396c55f1ff2e77459829a6e648c2ab6, type: 2}
+  - spell: {fileID: 11400000, guid: c61fbec4479de684b9d5c1a295745fed, type: 2}
     unlocked: 1
-  - spell: {fileID: 11400000, guid: ed339848efd9c5e47bada33853233940, type: 2}
-    unlocked: 1
-  resetUnlocks: 0
   modeButton: {fileID: 298928068257910466, guid: 604fe63225006e9459c1331229b54399,
     type: 3}
   damageFadeTime: 0.5
