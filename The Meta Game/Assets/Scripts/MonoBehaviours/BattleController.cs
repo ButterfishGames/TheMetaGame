@@ -16,6 +16,8 @@ public class BattleController : MonoBehaviour
 
     public GameObject enemyStatPrefab;
 
+    public GameObject spellButtonPrefab;
+
     public GameObject messagePanel;
 
     public GameObject magicPanel;
@@ -94,8 +96,17 @@ public class BattleController : MonoBehaviour
 
         if (magicPanel.activeInHierarchy)
         {
-            magicScroll.content.localPosition = magicScroll.GetSnapToPositionToBringChildIntoView(
-                EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>());
+            RectTransform selected = EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>();
+            if (selected.localPosition.y > -45)
+            {
+                magicScroll.content.localPosition = new Vector3(magicScroll.content.localPosition.x, 
+                    magicScroll.content.localPosition.y - (selected.localPosition.y + 45), 0);
+            }
+            else if (selected.localPosition.y < -315)
+            {
+                magicScroll.content.localPosition = new Vector3(magicScroll.content.localPosition.x,
+                    magicScroll.content.localPosition.y - (selected.localPosition.y + 315), 0);
+            }
         }
     }
 
@@ -248,6 +259,22 @@ public class BattleController : MonoBehaviour
     public void MagicCmd()
     {
         magicPanel.SetActive(true);
+        GameObject spell1 = null;
+
+        foreach (GameController.SpellStr spell in GameController.singleton.spellList)
+        {
+            if (spell.unlocked)
+            {
+                GameObject spellButton = Instantiate(spellButtonPrefab, magicScroll.content);
+                spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName;
+                if (spell1 == null)
+                {
+                    spell1 = spellButton;
+                }
+            }
+        }
+
+        EventSystem.current.SetSelectedGameObject(spell1);
     }
 
     public void ItemCmd()

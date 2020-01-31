@@ -40,6 +40,16 @@ public class GameController : MonoBehaviour
     [Tooltip("Resets unlocked gamemodes to platformer only at start if enabled")]
     public bool resetUnlocks;
 
+    [System.Serializable]
+    public struct SpellStr
+    {
+        public Spell spell;
+        public bool unlocked;
+    }
+
+    [Tooltip("Spells unlocked. DO NOT DEFAULT TO ANY HEALING SPELLS")]
+    public SpellStr[] spellList;
+
     [Tooltip("Reference to prefab for game mode buttons in switch menu")]
     public GameObject modeButton;
 

@@ -641,7 +641,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 369484996}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1258299832}
+        m_MethodName: MagicCmd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &369484996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1821,12 +1832,14 @@ MonoBehaviour:
     type: 3}
   enemyStatPrefab: {fileID: 4829681231766578736, guid: f28bdf38acf975a488772cf2feee41ab,
     type: 3}
+  spellButtonPrefab: {fileID: 6185770510916088867, guid: 7a012381688c99d49aa4a2ffe4c2fb94,
+    type: 3}
   messagePanel: {fileID: 1595802615}
-  magicPanel: {fileID: 0}
-  attackButton: {fileID: 0}
+  magicPanel: {fileID: 1684087100}
+  attackButton: {fileID: 110575702}
   enemyCharSpace: {fileID: 602273616}
   enemyStatPanel: {fileID: 407846266}
-  magicScroll: {fileID: 0}
+  magicScroll: {fileID: 1684087102}
   troops:
   - enemies:
     - name: Charger
@@ -1836,10 +1849,10 @@ MonoBehaviour:
       attacks:
       - name: Bump
         baseDmg: 10
-        var: 0.8
+        var: 0.2
       - name: Charge
         baseDmg: 20
-        var: 0.25
+        var: 0.75
     - name: Charger
       sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
         type: 3}
@@ -1847,44 +1860,44 @@ MonoBehaviour:
       attacks:
       - name: Bump
         baseDmg: 10
-        var: 0.8
+        var: 0.2
       - name: Charge
         baseDmg: 20
-        var: 0.25
+        var: 0.75
   - enemies:
-    - name: Tim
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 20
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.8
-      - name: Charge
-        baseDmg: 20
-        var: 0.25
-    - name: Bob
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 45
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.8
-      - name: Charge
-        baseDmg: 20
-        var: 0.25
-    - name: Joe
+    - name: Charger
       sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
         type: 3}
       maxHP: 30
       attacks:
       - name: Bump
         baseDmg: 10
-        var: 0.8
+        var: 0.2
       - name: Charge
         baseDmg: 20
-        var: 0.25
+        var: 0.75
+    - name: Charger
+      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
+        type: 3}
+      maxHP: 30
+      attacks:
+      - name: Bump
+        baseDmg: 10
+        var: 0.2
+      - name: Charge
+        baseDmg: 20
+        var: 0.75
+    - name: Charger
+      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
+        type: 3}
+      maxHP: 30
+      attacks:
+      - name: Bump
+        baseDmg: 10
+        var: 0.2
+      - name: Charge
+        baseDmg: 20
+        var: 0.75
 --- !u!4 &1258299833
 Transform:
   m_ObjectHideFlags: 0
@@ -2501,11 +2514,11 @@ MonoBehaviour:
   m_Content: {fileID: 1041005893}
   m_Horizontal: 1
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 0
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 0
   m_Viewport: {fileID: 1684087101}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}

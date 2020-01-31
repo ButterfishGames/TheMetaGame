@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSpell", menuName = "ScriptableObjects/Spell", order=1)]
 public class Spell : ScriptableObject
 {
-    public string name;
+    public string spellName;
 
     public enum Type
     {
