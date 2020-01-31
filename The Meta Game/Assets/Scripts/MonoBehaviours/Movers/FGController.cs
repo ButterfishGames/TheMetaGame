@@ -55,6 +55,8 @@ public class FGController : Mover
     /// </summary>
     private bool attacking;
 
+    private bool attackCoRoutineRunning;
+
     /// <summary>
     /// A float to determine how much hitstun the player should have when hit
     /// </summary>
@@ -65,15 +67,23 @@ public class FGController : Mover
     /// </summary>
     private BoxCollider2D hitbox;
 
+    /// <summary>
+    /// float to determine the length at which the hitbox is out.
+    /// </summary>
+    private float hitBoxActivationTime;
+
     protected override void Start()
     {
         base.Start();
+
+        attacking = false;
 
         hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
     }
 
     protected override void Update()
     {
+        Debug.Log(attacking);
         Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
         if (GameController.singleton.GetPaused() == false)
         {
@@ -87,30 +97,24 @@ public class FGController : Mover
             return;
         }
 
-        if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
-        {
-            Jump();
-        }
+        AttackEnemy();
 
         if (attacking)
         {
-            switch (attackType)
+            if (!attackCoRoutineRunning)
             {
-                case Attack.light:
-
-                    break;
-
-                case Attack.medium:
-
-                    break;
-
-                case Attack.heavy:
-
-                    break;
-
-                default:
-                    break;
+                attackCoRoutineRunning = true;
+                StartCoroutine(AttackCoRoutine());
             }
+        }
+        else
+        {
+            if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
+            {
+                Jump();
+            }
+
+            hitbox.gameObject.SetActive(false);
         }
     }
 
@@ -131,13 +135,15 @@ public class FGController : Mover
 
         rb.velocity = new Vector2(moveX, moveY);
 
-        if(h < 0)
-        {
-            dir = Direction.left;
-        }
-        else if (h > 0)
-        {
-            dir = Direction.left;
+        if (!attacking) {
+            if (h < 0)
+            {
+                dir = Direction.left;
+            }
+            else if (h > 0)
+            {
+                dir = Direction.right;
+            }
         }
     }
 
@@ -173,8 +179,65 @@ public class FGController : Mover
         }
     }
 
-    private void HitBoxSize()
+    private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
-        
+        if(dir == Direction.left)
+        {
+            offsetX *= -1;
+            offsetY *= -1;
+        }
+        hitbox.offset = new Vector2(offsetX, offsetY);
+        hitbox.size = new Vector2(sizeX, sizeY);
+    }
+
+    private void AttackEnemy()
+    {
+        if (attacking == false)
+        {
+            if (Input.GetAxis("Light") > 0)
+            {
+                Debug.Log("Light");
+                attackType = Attack.light;
+                hitBoxActivationTime = 1;
+                attacking = true;
+            }
+            else if (Input.GetAxis("Medium") > 0)
+            {
+                Debug.Log("Medium");
+                attackType = Attack.medium;
+                hitBoxActivationTime = 1;
+                attacking = true;
+            }
+            else if (Input.GetAxis("Heavy") > 0)
+            {
+                Debug.Log("Heavy");
+                attackType = Attack.heavy;
+                hitBoxActivationTime = 1;
+                attacking = true;
+            }
+        }
+    }
+
+    private IEnumerator AttackCoRoutine()
+    {
+        switch (attackType)
+        {
+            case Attack.light:
+                HitBoxSizeAndPos(0.65f, 0.0f, 0.5f, 0.5f);
+                break;
+            case Attack.medium:
+                HitBoxSizeAndPos(1.0f, 0.0f, 1.0f, 0.5f);
+                break;
+            case Attack.heavy:
+                HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
+                break;
+            default:
+                Debug.Log("ERROR: INVALID STARTING ATTACK");
+                break;
+        }
+        hitbox.gameObject.SetActive(true);
+        yield return new WaitForSeconds(hitBoxActivationTime);
+        attacking = false;
+        attackCoRoutineRunning = false;
     }
 }
