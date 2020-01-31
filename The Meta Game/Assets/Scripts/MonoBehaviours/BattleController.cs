@@ -36,6 +36,8 @@ public class BattleController : MonoBehaviour
 
     private GameObject enemy1;
 
+    private int scrollOffset;
+
     private int currTurn;
 
     private bool onMain;
@@ -97,15 +99,18 @@ public class BattleController : MonoBehaviour
         if (magicPanel.activeInHierarchy)
         {
             RectTransform selected = EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>();
-            if (selected.localPosition.y > -45)
+            int posOffset = scrollOffset * 90;
+            if (selected.localPosition.y > (-45 - posOffset))
             {
                 magicScroll.content.localPosition = new Vector3(magicScroll.content.localPosition.x, 
-                    magicScroll.content.localPosition.y - (selected.localPosition.y + 45), 0);
+                    magicScroll.content.localPosition.y - (selected.localPosition.y + 45 + posOffset), 0);
+                scrollOffset--;
             }
-            else if (selected.localPosition.y < -315)
+            else if (selected.localPosition.y < (-315 - posOffset))
             {
                 magicScroll.content.localPosition = new Vector3(magicScroll.content.localPosition.x,
-                    magicScroll.content.localPosition.y - (selected.localPosition.y + 315), 0);
+                    magicScroll.content.localPosition.y - (selected.localPosition.y + 315 + posOffset), 0);
+                scrollOffset++;
             }
         }
     }
@@ -260,11 +265,13 @@ public class BattleController : MonoBehaviour
     {
         magicPanel.SetActive(true);
         GameObject spell1 = null;
+        int count = 0;
 
         foreach (GameController.SpellStr spell in GameController.singleton.spellList)
         {
             if (spell.unlocked)
             {
+                count++;
                 GameObject spellButton = Instantiate(spellButtonPrefab, magicScroll.content);
                 spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName;
                 if (spell1 == null)
@@ -280,6 +287,7 @@ public class BattleController : MonoBehaviour
     public void ItemCmd()
     {
         GameController.singleton.ErrDisp("Error: BattleController.cs does not contain a definition for 'ItemCmd'");
+        NextTurn();
     }
 
     public void FleeCmd()
@@ -292,6 +300,11 @@ public class BattleController : MonoBehaviour
         {
             messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You successfully escaped!";
             GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
+        }
+        else
+        {
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You failed to escape!";
+            NextTurn();
         }
     }
 
