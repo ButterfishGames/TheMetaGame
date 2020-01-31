@@ -576,6 +576,10 @@ public class BattleController : MonoBehaviour
 
         GameController.singleton.Damage(-amt);
 
+        playerStats.text = "Player\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+
         messagePanel.SetActive(false);
         ReturnToMain();
         NextTurn();
