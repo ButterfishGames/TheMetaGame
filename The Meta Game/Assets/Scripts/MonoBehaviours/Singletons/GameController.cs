@@ -744,7 +744,7 @@ public class GameController : MonoBehaviour
 
     public void Damage(int damage)
     {
-        currHP -= damage;
+        currHP = Mathf.Clamp(currHP - damage, 0, maxHP);
     }
 
     private IEnumerator SpriteDamageFlash()

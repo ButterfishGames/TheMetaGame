@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSpell", menuName = "ScriptableObjects/Spell", order=1)]
+[CreateAssetMenu(fileName = "NewSpell", menuName = "ScriptableObjects/Spell", order = 1)]
 public class Spell : ScriptableObject
 {
     public string spellName;
 
-    public enum Type
+    public enum SpellType
     {
         damage,
+        damageAll,
         heal
     }
-    public Type spellType;
+    public SpellType spellType;
 
     public enum DamageType
     {
@@ -24,6 +25,6 @@ public class Spell : ScriptableObject
 
     public int baseAmt;
 
-    [Range(0,1)]
+    [Range(0, 1)]
     public float var;
 }
