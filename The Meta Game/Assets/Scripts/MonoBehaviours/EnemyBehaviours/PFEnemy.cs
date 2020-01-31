@@ -150,6 +150,14 @@ public class PFEnemy : EnemyBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Killbox"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Turn()
     {
         dir *= -1;
