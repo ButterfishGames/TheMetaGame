@@ -318,6 +318,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.transform.Find("GroundTrigger").gameObject.SetActive(true);
 
                     if (mover.GetType().Equals(typeof(PFController)))
@@ -384,6 +385,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
                         mover.enabled = true;
@@ -446,6 +448,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.enabled = false;
                 }
 
@@ -519,6 +522,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("Hitbox").gameObject.SetActive(true);
                     mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     if (mover.GetType().Equals(typeof(FGController)))
                     {

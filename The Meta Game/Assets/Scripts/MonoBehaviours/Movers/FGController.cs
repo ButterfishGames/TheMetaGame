@@ -16,14 +16,60 @@ public class FGController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
+    [Tooltip("Players health")]
+    public float health;
+
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
     private bool grounded;
 
+    /// <summary>
+    /// Used to store current direction facing
+    /// </summary>
+    private enum Direction
+    {
+        left,
+        right
+    };
+
+    private enum Attack
+    {
+        light,
+        medium,
+        heavy
+    };
+
+    /// <summary>
+    /// Stores current direction facing
+    /// </summary>
+    private Direction dir;
+
+    /// <summary>
+    /// Stores current attack
+    /// </summary>
+    private Attack attackType;
+
+    /// <summary>
+    /// A bool to see whether the player is using an attack
+    /// </summary>
+    private bool attacking;
+
+    /// <summary>
+    /// A float to determine how much hitstun the player should have when hit
+    /// </summary>
+    private float hitstun;
+
+    /// <summary>
+    /// Hit box to hit enemies
+    /// </summary>
+    private BoxCollider2D hitbox;
+
     protected override void Start()
     {
         base.Start();
+
+        hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
     }
 
     protected override void Update()
@@ -45,6 +91,27 @@ public class FGController : Mover
         {
             Jump();
         }
+
+        if (attacking)
+        {
+            switch (attackType)
+            {
+                case Attack.light:
+
+                    break;
+
+                case Attack.medium:
+
+                    break;
+
+                case Attack.heavy:
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -63,6 +130,15 @@ public class FGController : Mover
         float moveY = rb.velocity.y;
 
         rb.velocity = new Vector2(moveX, moveY);
+
+        if(h < 0)
+        {
+            dir = Direction.left;
+        }
+        else if (h > 0)
+        {
+            dir = Direction.left;
+        }
     }
 
     private void Jump()
@@ -95,5 +171,10 @@ public class FGController : Mover
         {
             grounded = false;
         }
+    }
+
+    private void HitBoxSize()
+    {
+        
     }
 }
