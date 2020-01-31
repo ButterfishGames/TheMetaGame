@@ -64,9 +64,10 @@ public class BattleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainButtons = FindObjectsOfType<Button>();
-
         currCommand = Command.none;
+
+        mainButtons = FindObjectsOfType<Button>();
+        spellButtons = new Button[] { null };
 
         messagePanel.SetActive(false);
 
@@ -296,6 +297,11 @@ public class BattleController : MonoBehaviour
             Destroy(enemy.GetStats());
             Destroy(enemy.GetImg());
             currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.GetStats().GetComponent<Button>());
+            }
             yield return new WaitForSeconds(0.75f);
 
             if (currTroop.enemies.Length < 1)
@@ -461,6 +467,11 @@ public class BattleController : MonoBehaviour
             Destroy(enemy.GetStats());
             Destroy(enemy.GetImg());
             currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.GetStats().GetComponent<Button>());
+            }
             yield return new WaitForSeconds(0.75f);
 
             if (currTroop.enemies.Length < 1)
@@ -552,6 +563,11 @@ public class BattleController : MonoBehaviour
                 temp.Remove(deadEnemy);
             }
             currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.GetStats().GetComponent<Button>());
+            }
 
             if (replaceE1)
             {
