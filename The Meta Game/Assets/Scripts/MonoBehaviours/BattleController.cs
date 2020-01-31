@@ -18,11 +18,15 @@ public class BattleController : MonoBehaviour
 
     public GameObject messagePanel;
 
+    public GameObject magicPanel;
+
     public GameObject attackButton;
 
     public Transform enemyCharSpace;
 
     public Transform enemyStatPanel;
+
+    public ScrollRect magicScroll;
 
     public Troop[] troops;
 
@@ -86,6 +90,12 @@ public class BattleController : MonoBehaviour
         if (Input.GetButtonDown("Cancel") && !onMain)
         {
             ReturnToMain();
+        }
+
+        if (magicPanel.activeInHierarchy)
+        {
+            magicScroll.content.localPosition = magicScroll.GetSnapToPositionToBringChildIntoView(
+                EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>());
         }
     }
 
@@ -237,7 +247,7 @@ public class BattleController : MonoBehaviour
 
     public void MagicCmd()
     {
-
+        magicPanel.SetActive(true);
     }
 
     public void ItemCmd()
