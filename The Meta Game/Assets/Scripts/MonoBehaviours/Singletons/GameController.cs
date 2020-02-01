@@ -320,7 +320,7 @@ public class GameController : MonoBehaviour
                 {
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.transform.Find("GroundTrigger").gameObject.SetActive(true);
-
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
                     if (mover.GetType().Equals(typeof(PFController)))
                     {
                         mover.enabled = true;
@@ -385,6 +385,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
@@ -448,6 +449,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.enabled = false;
                 }
@@ -522,6 +524,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(true);
                     mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     if (mover.GetType().Equals(typeof(FGController)))

@@ -83,7 +83,6 @@ public class FGController : Mover
 
     protected override void Update()
     {
-        Debug.Log(attacking);
         Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
         if (GameController.singleton.GetPaused() == false)
         {
@@ -130,12 +129,14 @@ public class FGController : Mover
 
     protected override void Move(float h, float v)
     {
-        float moveX = h * moveSpeed * Time.deltaTime;
-        float moveY = rb.velocity.y;
+        if (!attacking)
+        {
+            float moveX = h * moveSpeed * Time.deltaTime;
+            float moveY = rb.velocity.y;
 
-        rb.velocity = new Vector2(moveX, moveY);
+            rb.velocity = new Vector2(moveX, moveY);
 
-        if (!attacking) {
+
             if (h < 0)
             {
                 dir = Direction.left;
