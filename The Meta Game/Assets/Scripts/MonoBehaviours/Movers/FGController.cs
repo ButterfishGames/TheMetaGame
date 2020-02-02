@@ -33,6 +33,33 @@ public class FGController : Mover
         right
     };
 
+    /// <summary>
+    /// Different inputs to find out if the special move has been performed
+    /// </summary>
+    private enum InputDirection
+    {
+        right,
+        rightDown,
+        down,
+        leftDown,
+        left,
+        none
+    };
+
+    /// <summary>
+    /// Used to store inputs done by the player to determine if the special move should happen.
+    /// </summary>
+    private InputDirection[] inputs;
+
+    private InputDirection[] specialRight = { InputDirection.down, InputDirection.rightDown, InputDirection.right };
+
+    private InputDirection[] specialLeft = { InputDirection.down, InputDirection.leftDown, InputDirection.left };
+
+    public GameObject special;
+
+    /// <summary>
+    /// Different kinds of attacks the player can do.
+    /// </summary>
     private enum Attack
     {
         light,
@@ -76,6 +103,12 @@ public class FGController : Mover
     {
         base.Start();
 
+        inputs = new InputDirection[3];
+
+        for (int i = 0; i < inputs.Length - 1; i++)
+        {
+            inputs[i] = InputDirection.none;
+        }
         attacking = false;
 
         hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
@@ -83,6 +116,9 @@ public class FGController : Mover
 
     protected override void Update()
     {
+        Debug.Log(inputs[0]);
+        Debug.Log(inputs[1]);
+        Debug.Log(inputs[2]);
         Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
         if (GameController.singleton.GetPaused() == false)
         {
@@ -146,6 +182,36 @@ public class FGController : Mover
                 dir = Direction.right;
             }
         }
+
+        for (int j = inputs.Length - 1; j > 1; j--)
+        {
+            inputs[j] = inputs[j-1];
+        }
+        
+        if(h > 0 && v < 0)
+        {
+            inputs[0] = InputDirection.rightDown;
+        }
+        else if(h < 0 && v < 0)
+        {
+            inputs[0] = InputDirection.leftDown;
+        }
+        else if (h > 0)
+        {
+            inputs[0] = InputDirection.right;
+        }
+        else if (h < 0)
+        {
+            inputs[0] = InputDirection.left;
+        }
+        else if (v < 0)
+        {
+            inputs[0] = InputDirection.down;
+        }
+        else
+        {
+            inputs[0] = InputDirection.none;
+        }
     }
 
     private void Jump()
@@ -195,7 +261,19 @@ public class FGController : Mover
     {
         if (attacking == false)
         {
-            if (Input.GetAxis("Light") > 0)
+            if ((Input.GetAxis("Light") > 0 || Input.GetAxis("Medium") > 0 || Input.GetAxis("Heavy") > 0) && 
+                (inputs.Equals(specialRight) || inputs.Equals(specialRight)))
+            {
+                if (dir == Direction.right)
+                {
+                    Instantiate<GameObject>(special, new Vector2(transform.position.x + 1, transform.position.y), Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate<GameObject>(special, new Vector2(transform.position.x - 1, transform.position.y), Quaternion.identity);
+                }
+            }
+            else if (Input.GetAxis("Light") > 0)
             {
                 Debug.Log("Light");
                 attackType = Attack.light;
