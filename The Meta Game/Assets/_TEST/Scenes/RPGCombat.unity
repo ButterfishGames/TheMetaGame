@@ -180,10 +180,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.7176931, g: 0.79011655, b: 0.7924528, a: 1}
+    m_SelectedColor: {r: 0.9433962, g: 0.9988448, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -322,10 +322,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.7176931, g: 0.79011655, b: 0.7924528, a: 1}
+    m_SelectedColor: {r: 0.9433962, g: 0.9988448, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -619,10 +619,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.7176931, g: 0.79011655, b: 0.7924528, a: 1}
+    m_SelectedColor: {r: 0.9433962, g: 0.9988448, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1826,7 +1826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2478b3b0b4cf5884ca9bf56e4b282d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fleeChance: 1
+  fleeChance: 0.3333333
   playerStats: {fileID: 812779897}
   enemyImgPrefab: {fileID: 2861942411257995413, guid: 7b8aa54b6f6757a4dbc68e2f97afee86,
     type: 3}
@@ -1842,62 +1842,17 @@ MonoBehaviour:
   magicScroll: {fileID: 1684087102}
   troops:
   - enemies:
-    - name: Charger
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 30
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.2
-      - name: Charge
-        baseDmg: 20
-        var: 0.75
-    - name: Charger
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 30
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.2
-      - name: Charge
-        baseDmg: 20
-        var: 0.75
+    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+    varNames: []
   - enemies:
-    - name: Charger
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 30
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.2
-      - name: Charge
-        baseDmg: 20
-        var: 0.75
-    - name: Charger
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 30
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.2
-      - name: Charge
-        baseDmg: 20
-        var: 0.75
-    - name: Charger
-      sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8,
-        type: 3}
-      maxHP: 30
-      attacks:
-      - name: Bump
-        baseDmg: 10
-        var: 0.2
-      - name: Charge
-        baseDmg: 20
-        var: 0.75
+    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+    varNames:
+    - Tim
+    - Bob
+    - Joe
 --- !u!4 &1258299833
 Transform:
   m_ObjectHideFlags: 0
@@ -2230,10 +2185,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.7176931, g: 0.79011655, b: 0.7924528, a: 1}
+    m_SelectedColor: {r: 0.9433962, g: 0.9988448, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

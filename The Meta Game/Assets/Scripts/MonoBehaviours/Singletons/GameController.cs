@@ -336,7 +336,10 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                FindHints();
+                while (hints[0] == null)
+                {
+                    FindHints();
+                }
 
                 SetHintDisp(0, true);
                 SetHintDisp(1, true);
@@ -404,7 +407,10 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                FindHints();
+                while (hints[0] == null)
+                {
+                    FindHints();
+                }
 
                 SetHintDisp(0, false);
                 SetHintDisp(1, false);
@@ -463,7 +469,10 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
 
-                FindHints();
+                while (hints[0] == null)
+                {
+                    FindHints();
+                }
 
                 SetHintDisp(0, false);
                 SetHintDisp(1, false);
@@ -542,7 +551,10 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                FindHints();
+                while (hints[0] == null)
+                {
+                    FindHints();
+                }
 
                 SetHintDisp(0, false);
                 SetHintDisp(1, false);
@@ -628,7 +640,7 @@ public class GameController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = false;
 
-            if (shouldDisp[2])
+            if (hints[2] != null && shouldDisp[2])
             {
                 SetHintDisp(2, false);
             }
