@@ -173,6 +173,7 @@ MonoBehaviour:
     m_Bits: 2048
   moveTime: 0.15
   encRate: 15
+  encGrace: 5
 --- !u!114 &-7817119665413950357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +194,8 @@ MonoBehaviour:
   deathForce: 0
   deathWait: 10
   health: 0
+  maxTimeTillReset: 0
+  special: {fileID: 0}
 --- !u!114 &2826980262528341211
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -76,10 +76,19 @@ public class PFController : Mover
 
         if (onGround)
         {
-            RaycastHit2D hit;
-            hit = Physics2D.Raycast(transform.position, Vector2.down, 0.2f,
+            float distX = groundTrigger.bounds.extents.x;
+            Vector3 origin, origin2;
+            origin = origin2 = transform.position;
+            origin.x -= distX;
+            origin2.x += distX;
+            RaycastHit2D hit, hit2;
+
+            hit = Physics2D.Raycast(origin, Vector2.down, 0.2f,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            if (hit.collider == null || !hit.collider.CompareTag("Ground"))
+            hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.2f,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+
+            if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
             {
                 onGround = false;
             }

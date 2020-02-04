@@ -23,6 +23,10 @@ public class RPGController : Mover
     [Tooltip("How many steps can you go with 0 chance of encounter after a battle")]
     public int encGrace;
 
+    private int grace;
+
+    private int chance;
+
     /// <summary>
     /// Used to make movement more efficient
     /// </summary>
@@ -65,6 +69,8 @@ public class RPGController : Mover
         moving = false;
         onDamageFloor = false;
         encountering = false;
+        grace = encGrace;
+        chance = encRate;
 
         dir = Direction.down;
     }
@@ -284,12 +290,24 @@ public class RPGController : Mover
 
     private void EncCheck()
     {
-        int det = Random.Range(0, encRate + 1);
-        if (det == encRate)
+        if (grace > 0)
+        {
+            grace--;
+            return;
+        }
+
+        int det = Random.Range(0, chance + 1);
+        if (det == chance)
         {
             GameController.singleton.SetPaused(true);
             encountering = true;
+            grace = encGrace;
+            chance = encRate;
             GameController.singleton.StartCoroutine(GameController.singleton.Battle());
+        }
+        else
+        {
+            chance--;
         }
     }
 

@@ -494,7 +494,6 @@ public class BattleController : MonoBehaviour
             Destroy(currTroop.enemies[enemyIndex].stats);
             Destroy(currTroop.enemies[enemyIndex].img);
             currTroop.enemies = temp.ToArray();
-            Debug.Log(currTroop.enemies.Length);
             List<Button> buttonList = new List<Button>();
             foreach (Enemy foe in currTroop.enemies)
             {

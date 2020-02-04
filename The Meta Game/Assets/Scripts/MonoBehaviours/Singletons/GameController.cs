@@ -80,6 +80,8 @@ public class GameController : MonoBehaviour
 
     public bool onMenu;
 
+    public TextMeshProUGUI codeText;
+
     /// <summary>
     /// Array of object references to HintDisp objects on in-game hints
     /// </summary>
@@ -253,6 +255,21 @@ public class GameController : MonoBehaviour
         if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             Cursor.visible = true;
+        }
+
+        if (switchMenu.activeInHierarchy)
+        {
+            string selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
+            Color keyword = new Color(77.0f / 255.0f, 136.0f / 255.0f, 183.0f / 255.0f);
+            Color type = new Color(68.0f / 255.0f, 182.0f / 255.0f, 166.0f / 255.0f);
+
+            switch (selected)
+            {
+                case "Platformer":
+                    codeText.text = "";
+                    codeText.text += "public class ".HexEmbed(keyword) + "GameController".HexEmbed(type) + " : ".HexEmbed(Color.white) + "MonoBehaviour".HexEmbed(type);
+                    break;
+            }
         }
     }
 
@@ -657,11 +674,12 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
 
             switchMenu.SetActive(true);
+            Transform contentPanel = switchMenu.GetComponentInChildren<GridLayoutGroup>().transform;
             foreach (Mode mode in modes)
             {
                 if (mode.unlocked)
                 {
-                    GameObject button = Instantiate(modeButton, switchMenu.transform);
+                    GameObject button = Instantiate(modeButton, contentPanel);
                     button.GetComponent<Button>().onClick.AddListener(() => SwitchMode(mode.name));
                     button.GetComponentInChildren<Text>().text = mode.name;
                     if (EventSystem.current.currentSelectedGameObject == null)
