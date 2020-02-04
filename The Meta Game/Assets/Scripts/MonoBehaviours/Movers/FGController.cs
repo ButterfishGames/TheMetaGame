@@ -51,9 +51,22 @@ public class FGController : Mover
     /// </summary>
     private InputDirection[] inputs;
 
-    private InputDirection[] specialRight = { InputDirection.down, InputDirection.rightDown, InputDirection.right };
+    private InputDirection[] specialRight = { InputDirection.right, InputDirection.rightDown, InputDirection.down };
 
-    private InputDirection[] specialLeft = { InputDirection.down, InputDirection.leftDown, InputDirection.left };
+    private InputDirection[] specialLeft = { InputDirection.left, InputDirection.leftDown, InputDirection.down };
+
+    /// <summary>
+    /// Bool to see if direction is being held so the input doesn't repeat every frame.
+    /// Left [0], LeftDown [1], Down [2], RightDown [3], Right [4]
+    /// </summary>
+    private bool[] inputsHeld;
+
+    /// <summary>
+    /// Timer to clear the input buffer
+    /// </summary>
+    private float inputResetTimer;
+
+    public float maxTimeTillReset;
 
     public GameObject special;
 
@@ -104,10 +117,15 @@ public class FGController : Mover
         base.Start();
 
         inputs = new InputDirection[3];
+        inputsHeld = new bool[5];
 
         for (int i = 0; i < inputs.Length - 1; i++)
         {
             inputs[i] = InputDirection.none;
+        }
+        for (int i = 0; i < inputsHeld.Length - 1; i++)
+        {
+            inputsHeld[i] = false;
         }
         attacking = false;
 
@@ -116,9 +134,26 @@ public class FGController : Mover
 
     protected override void Update()
     {
-        Debug.Log(inputs[0]);
-        Debug.Log(inputs[1]);
-        Debug.Log(inputs[2]);
+        Debug.Log(inputs[0] + " 0, " + inputs[1] + " 1, " + inputs[2] + " 2");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+
+        Move(h, v);
+
+        if (inputResetTimer < maxTimeTillReset/60)
+        {
+            //Debug.Log(inputResetTimer);
+            inputResetTimer += Time.deltaTime;
+        }
+        else
+        {
+            for (int k = 0; k > inputs.Length-1; k++)
+            {
+                inputs[k] = InputDirection.none;
+            }
+            inputResetTimer = 0;
+        }
+
         Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
         if (GameController.singleton.GetPaused() == false)
         {
@@ -183,35 +218,61 @@ public class FGController : Mover
             }
         }
 
-        for (int j = inputs.Length - 1; j > 1; j--)
+        inputsHeld[0] = CheckIfStillHeld(inputsHeld[0], h < 0);
+        inputsHeld[1] = CheckIfStillHeld(inputsHeld[1], h < 0 && v < 0);
+        inputsHeld[2] = CheckIfStillHeld(inputsHeld[2], v < 0);
+        inputsHeld[3] = CheckIfStillHeld(inputsHeld[3], h > 0 && v < 0);
+        inputsHeld[4] = CheckIfStillHeld(inputsHeld[4], h > 0);
+
+        Debug.Log(inputsHeld[0] + " 0, " + inputsHeld[1] + " 1, " + inputsHeld[2] + " 2, " + inputsHeld[3] + " 3, " + inputsHeld[4] + " 4");
+
+        if (h == 1 && v == -1)
         {
-            inputs[j] = inputs[j-1];
+            inputsHeld[3] = NewDirectionAndHeld(InputDirection.rightDown, inputsHeld[3]);
         }
-        
-        if(h > 0 && v < 0)
+        else if (h == -1 && v == -1)
         {
-            inputs[0] = InputDirection.rightDown;
+            inputsHeld[1] = NewDirectionAndHeld(InputDirection.leftDown, inputsHeld[1]);
         }
-        else if(h < 0 && v < 0)
+        else if (h == 1)
         {
-            inputs[0] = InputDirection.leftDown;
+            inputsHeld[4] = NewDirectionAndHeld(InputDirection.right, inputsHeld[4]);
         }
-        else if (h > 0)
+        else if (h == -1)
         {
-            inputs[0] = InputDirection.right;
+            inputsHeld[0] = NewDirectionAndHeld(InputDirection.left, inputsHeld[0]);
         }
-        else if (h < 0)
+        else if (v == -1)
         {
-            inputs[0] = InputDirection.left;
+            inputsHeld[2] = NewDirectionAndHeld(InputDirection.down, inputsHeld[2]);
         }
-        else if (v < 0)
+    }
+
+    private bool NewDirectionAndHeld(InputDirection input, bool held)
+    {
+        if (held == false)
         {
-            inputs[0] = InputDirection.down;
+            held = true;
+            for (int j = inputs.Length - 1; j > 0; j--)
+            {
+                inputs[j] = inputs[j - 1];
+            }
+            inputs[0] = input;
+            inputResetTimer = 0;
+
+            return held;
         }
-        else
+        return held;
+    }
+
+    private bool CheckIfStillHeld(bool held, bool hvdirection)
+    {
+        if(hvdirection == false)
         {
-            inputs[0] = InputDirection.none;
+            held = false;
+            return held;
         }
+        return held;
     }
 
     private void Jump()
@@ -266,10 +327,12 @@ public class FGController : Mover
             {
                 if (dir == Direction.right)
                 {
+                    Debug.Log("Special right");
                     Instantiate<GameObject>(special, new Vector2(transform.position.x + 1, transform.position.y), Quaternion.identity);
                 }
                 else
                 {
+                    Debug.Log("Special right");
                     Instantiate<GameObject>(special, new Vector2(transform.position.x - 1, transform.position.y), Quaternion.identity);
                 }
             }
