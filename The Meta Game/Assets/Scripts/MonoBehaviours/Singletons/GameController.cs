@@ -76,6 +76,10 @@ public class GameController : MonoBehaviour
     [Tooltip("The amount of time in seconds over which the error text will fade")]
     public float errFadeTime;
 
+    public bool ignoreHints;
+
+    public bool onMenu;
+
     /// <summary>
     /// Array of object references to HintDisp objects on in-game hints
     /// </summary>
@@ -184,8 +188,14 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(LevelFade(true));
 
-        hints = new HintDisp[] { null };
-        FindHints();
+        if (!ignoreHints)
+        {
+            hints = new HintDisp[] { null };
+            while (hints[0] == null)
+            {
+                StartCoroutine(FindHints());
+            }
+        }
 
         if (resetMode)
         {
@@ -334,19 +344,29 @@ public class GameController : MonoBehaviour
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
-                Camera.main.GetComponent<CameraScroll>().enabled = true;
-
-                while (hints[0] == null)
+                if (onMenu)
                 {
-                    FindHints();
+                    Camera.main.GetComponent<CameraScroll>().enabled = false;
+                }
+                else
+                {
+                    Camera.main.GetComponent<CameraScroll>().enabled = true;
                 }
 
-                SetHintDisp(0, true);
-                SetHintDisp(1, true);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, false);
-                SetHintDisp(4, false);
-                SetHintDisp(5, false);
+                if (!ignoreHints)
+                {
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
+
+                    SetHintDisp(0, true);
+                    SetHintDisp(1, true);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, false);
+                    SetHintDisp(4, false);
+                    SetHintDisp(5, false);
+                }
                 break;
 
             case GameMode.rpg:
@@ -407,17 +427,20 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                while (hints[0] == null)
+                if (!ignoreHints)
                 {
-                    FindHints();
-                }
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, false);
-                SetHintDisp(1, false);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, true);
-                SetHintDisp(4, true);
-                SetHintDisp(5, false);
+                    SetHintDisp(0, false);
+                    SetHintDisp(1, false);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, true);
+                    SetHintDisp(4, true);
+                    SetHintDisp(5, false);
+                }
                 break;
 
             case GameMode.fps:
@@ -469,17 +492,20 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
 
-                while (hints[0] == null)
+                if (!ignoreHints)
                 {
-                    FindHints();
-                }
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, false);
-                SetHintDisp(1, false);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, false);
-                SetHintDisp(4, false);
-                SetHintDisp(5, true);
+                    SetHintDisp(0, false);
+                    SetHintDisp(1, false);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, false);
+                    SetHintDisp(4, false);
+                    SetHintDisp(5, true);
+                }
                 break;
 
             case GameMode.fighting:
@@ -551,17 +577,20 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                while (hints[0] == null)
+                if (!ignoreHints)
                 {
-                    FindHints();
-                }
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, false);
-                SetHintDisp(1, false);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, false);
-                SetHintDisp(4, false);
-                SetHintDisp(5, false);
+                    SetHintDisp(0, false);
+                    SetHintDisp(1, false);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, false);
+                    SetHintDisp(4, false);
+                    SetHintDisp(5, false);
+                }
                 break;
 
             default:
@@ -603,6 +632,11 @@ public class GameController : MonoBehaviour
 
     public void ToggleSwitchMenu()
     {
+        if (onMenu)
+        {
+            return;
+        }
+
         if (switchMenu.activeInHierarchy)
         {
             Button[] buttons = switchMenu.GetComponentsInChildren<Button>();
@@ -640,9 +674,12 @@ public class GameController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = false;
 
-            if (hints[2] != null && shouldDisp[2])
+            if (!ignoreHints)
             {
-                SetHintDisp(2, false);
+                if (hints[2] != null && shouldDisp[2])
+                {
+                    SetHintDisp(2, false);
+                }
             }
         }
     }
@@ -696,6 +733,7 @@ public class GameController : MonoBehaviour
         paused = true;
         StartCoroutine(ReloadLevel());
         currHP = maxHP;
+        currMP = maxMP;
     }
 
     private IEnumerator ReloadLevel()
@@ -762,6 +800,11 @@ public class GameController : MonoBehaviour
         currHP = Mathf.Clamp(currHP - damage, 0, maxHP);
     }
 
+    public void Cast(int mana)
+    {
+        currMP = Mathf.Clamp(currMP - mana, 0, maxMP);
+    }
+
     private IEnumerator SpriteDamageFlash()
     {
         SpriteRenderer renderer = GameObject.Find("Player").GetComponentInChildren<SpriteRenderer>();
@@ -801,13 +844,16 @@ public class GameController : MonoBehaviour
         hints[hint].SetDisplay(val);
     }
 
-    private void FindHints()
+    private IEnumerator FindHints()
     {
         while (hints[0] == null)
         {
             GameObject hintParent = GameObject.Find("Hints");
-            hints = hintParent.GetComponentsInChildren<HintDisp>(true);
-
+            if (hintParent != null)
+            {
+                hints = hintParent.GetComponentsInChildren<HintDisp>(true);
+            }
+            yield return new WaitForEndOfFrame();
         }
 
         for (int i = 0; i < hints.Length - 1; i++)
@@ -832,6 +878,26 @@ public class GameController : MonoBehaviour
     public int GetMP()
     {
         return currMP;
+    }
+
+    public IEnumerator FadeAndLoad(int buildIndex)
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(buildIndex);
+        yield return new WaitForEndOfFrame();
+        if (!ignoreHints)
+        {
+            hints = new HintDisp[] { null };
+            while (hints[0] == null)
+            {
+                StartCoroutine(FindHints());
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        SwitchMode(GameMode.platformer);
+        StartCoroutine(LevelFade(true));
+        paused = false;
     }
 
     public IEnumerator Battle()

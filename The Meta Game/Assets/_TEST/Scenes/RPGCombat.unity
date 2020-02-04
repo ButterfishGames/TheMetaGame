@@ -1842,17 +1842,16 @@ MonoBehaviour:
   magicScroll: {fileID: 1684087102}
   troops:
   - enemies:
-    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
-    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
-    varNames: []
-  - enemies:
-    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
-    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
-    - {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
-    varNames:
-    - Tim
-    - Bob
-    - Joe
+    - name: 
+      source: {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+      stats: {fileID: 0}
+      img: {fileID: 0}
+      currHP: 0
+    - name: 
+      source: {fileID: 11400000, guid: cf17a71772fbd1c40b1764a0ce8e2d81, type: 2}
+      stats: {fileID: 0}
+      img: {fileID: 0}
+      currHP: 0
 --- !u!4 &1258299833
 Transform:
   m_ObjectHideFlags: 0

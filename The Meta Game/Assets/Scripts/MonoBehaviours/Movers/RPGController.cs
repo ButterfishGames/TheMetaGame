@@ -20,6 +20,9 @@ public class RPGController : Mover
     [Tooltip("How many steps on average the player will go before encountering a battle")]
     public int encRate;
 
+    [Tooltip("How many steps can you go with 0 chance of encounter after a battle")]
+    public int encGrace;
+
     /// <summary>
     /// Used to make movement more efficient
     /// </summary>

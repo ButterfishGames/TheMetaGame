@@ -38,7 +38,7 @@ public class BattleController : MonoBehaviour
 
     private Button[] spellButtons;
 
-    private Troop currTroop;
+    public Troop currTroop;
 
     private GameObject enemy1;
 
@@ -86,8 +86,9 @@ public class BattleController : MonoBehaviour
 
             GameObject stats = Instantiate(enemyStatPrefab, enemyStatPanel);
             currTroop.enemies[i].stats = stats;
-            
-            stats.GetComponent<Button>().onClick.AddListener(() => Target(currTroop.enemies[i]));
+
+            int enemyIndex = i;
+            stats.GetComponent<Button>().onClick.AddListener(() => Target(enemyIndex));
             buttonList.Add(stats.GetComponent<Button>());
 
             if (enemy1 == null)
@@ -103,12 +104,9 @@ public class BattleController : MonoBehaviour
                 {
                     if (currTroop.enemies[i].name.Equals(""))
                     {
-                        text.text = currTroop.enemies[i].source.name;
+                        currTroop.enemies[i].name = currTroop.enemies[i].source.name;
                     }
-                    else
-                    {
-                        text.text = currTroop.enemies[i].name;
-                    }
+                    text.text = currTroop.enemies[i].name;
                 }
                 else if (text.name.Equals("HPText"))
                 {
@@ -212,16 +210,16 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    public void Target(Enemy enemy)
+    public void Target(int enemyIndex)
     {
         switch (currCommand)
         {
             case Command.attack:
-                StartCoroutine(AttackRtn(enemy));
+                StartCoroutine(AttackRtn(enemyIndex));
                 break;
 
             case Command.magic:
-                StartCoroutine(DmgSpellRtn(currSpell, enemy));
+                StartCoroutine(DmgSpellRtn(currSpell, enemyIndex));
                 break;
 
             default:
@@ -266,7 +264,7 @@ public class BattleController : MonoBehaviour
         onMain = false;
     }
 
-    private IEnumerator AttackRtn(Enemy enemy)
+    private IEnumerator AttackRtn(int enemyIndex)
     {
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Attack!";
@@ -285,34 +283,42 @@ public class BattleController : MonoBehaviour
             crit = true;
         }
 
-        enemy.currHP -= dmg;
+        currTroop.enemies[enemyIndex].currHP -= dmg;
 
         if (crit)
         {
             yield return new WaitForSeconds(0.75f);
         }
 
-        if (enemy.currHP <= 0)
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
         {
-            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = enemy.name + " was defeated!";
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
             bool replaceE1 = false;
 
-            if (enemy.stats == enemy1)
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
             {
                 replaceE1 = true;
             }
 
             List<Enemy> temp = new List<Enemy>(currTroop.enemies);
-            temp.Remove(enemy);
-            Destroy(enemy.stats);
-            Destroy(enemy.img);
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
             currTroop.enemies = temp.ToArray();
             List<Button> buttonList = new List<Button>();
             foreach (Enemy foe in currTroop.enemies)
             {
                 buttonList.Add(foe.stats.GetComponent<Button>());
             }
+
             enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
             yield return new WaitForSeconds(0.75f);
 
             if (currTroop.enemies.Length < 1)
@@ -329,12 +335,12 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            TextMeshProUGUI[] texts = enemy.stats.GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
                 if (text.name.Equals("HPText"))
                 {
-                    text.text = enemy.currHP + "/" + enemy.source.maxHP;
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
                 }
             }
         }
@@ -368,7 +374,7 @@ public class BattleController : MonoBehaviour
             {
                 count++;
                 GameObject spellButton = Instantiate(spellButtonPrefab, magicScroll.content);
-                spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName;
+                spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName + " [" + spell.spell.manaCost + "]";
                 spellButton.GetComponent<Button>().onClick.AddListener(() => Cast(spell.spell));
                 buttonList.Add(spellButton.GetComponent<Button>());
                 if (spell1 == null)
@@ -401,6 +407,11 @@ public class BattleController : MonoBehaviour
 
     public void Cast(Spell spell)
     {
+        if (spell.manaCost > GameController.singleton.GetMP())
+        {
+            return;
+        }
+
         onMagic = false;
         foreach (Button button in spellButtons)
         {
@@ -449,8 +460,13 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    private IEnumerator DmgSpellRtn(Spell spell, Enemy enemy)
+    private IEnumerator DmgSpellRtn(Spell spell, int enemyIndex)
     {
+        GameController.singleton.Cast(spell.manaCost);
+        playerStats.text = "Player\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
         yield return new WaitForSeconds(0.75f);
@@ -461,29 +477,38 @@ public class BattleController : MonoBehaviour
 
         int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
 
-        enemy.currHP -= dmg;
+        currTroop.enemies[enemyIndex].currHP -= dmg;
 
-        if (enemy.currHP <= 0)
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
         {
-            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = enemy.name + " was defeated!";
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
             bool replaceE1 = false;
 
-            if (enemy.stats == enemy1)
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
             {
                 replaceE1 = true;
             }
 
             List<Enemy> temp = new List<Enemy>(currTroop.enemies);
-            temp.Remove(enemy);
-            Destroy(enemy.stats);
-            Destroy(enemy.img);
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
             currTroop.enemies = temp.ToArray();
+            Debug.Log(currTroop.enemies.Length);
             List<Button> buttonList = new List<Button>();
             foreach (Enemy foe in currTroop.enemies)
             {
                 buttonList.Add(foe.stats.GetComponent<Button>());
             }
+
             enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
             yield return new WaitForSeconds(0.75f);
 
             if (currTroop.enemies.Length < 1)
@@ -500,12 +525,12 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            TextMeshProUGUI[] texts = enemy.stats.GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
                 if (text.name.Equals("HPText"))
                 {
-                    text.text = enemy.currHP + "/" + enemy.source.maxHP;
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
                 }
             }
         }
