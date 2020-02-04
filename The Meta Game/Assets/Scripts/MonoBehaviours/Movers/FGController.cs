@@ -246,27 +246,6 @@ public class FGController : Mover
         {
             inputsHeld[2] = NewDirectionAndHeld(InputDirection.down, inputsHeld[2]);
         }
-
-        //if ((h > 0 && v < 0) == false)
-        //{
-        //    inputsHeld[3] = false;
-        //}
-        //if ((h < 0 && v < 0) == false)
-        //{
-        //    inputsHeld[1] = false;
-        //}
-        //if ((h > 0) == false)
-        //{
-        //    inputsHeld[4] = false;
-        //}
-        //if ((h < 0) == false)
-        //{
-        //    inputsHeld[0] = false;
-        //}
-        //if ((v < 0) == false)
-        //{
-        //    inputsHeld[2] = false;
-        //}
     }
 
     private bool NewDirectionAndHeld(InputDirection input, bool held)
@@ -274,7 +253,6 @@ public class FGController : Mover
         if (held == false)
         {
             held = true;
-            Debug.Log(input + " " + held);
             for (int j = inputs.Length - 1; j > 0; j--)
             {
                 inputs[j] = inputs[j - 1];
