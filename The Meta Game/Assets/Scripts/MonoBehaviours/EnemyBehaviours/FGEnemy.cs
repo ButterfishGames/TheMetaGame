@@ -25,8 +25,13 @@ public class FGEnemy : EnemyBehaviour
         left
     };
 
-    [Tooltip("The direction the enemy starts facing")]
-    public Direction startDir;
+    /// <summary>
+    /// To determine where the enemy should face too look at the player 
+    /// </summary>
+    private Direction facingDirection;
+
+    [Tooltip("The speed at which the enemy moves")]
+    public float speed;
 
     [Tooltip("The max HP enemies have in gamemodes where they can take damage")]
     public int maxHP;
@@ -88,6 +93,10 @@ public class FGEnemy : EnemyBehaviour
 
     private int randomInt;
 
+    private bool grounded;
+
+    private bool test = false;
+
     private enum EnemyState
     {
         offense,
@@ -105,42 +114,10 @@ public class FGEnemy : EnemyBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         state = EnemyState.neutral;
-        if (spriteRenderer.isVisible)
-        {
-            //fighting = true;
-            if (transform.position.x > playerPosX)
-            {
-                startDir = Direction.left;
-            }
-            else
-            {
-                startDir = Direction.right;
-            }
-
-            switch (startDir)
-            {
-                case Direction.right:
-                    dir = 1;
-                    break;
-
-                case Direction.left:
-                    dir = -1;
-                    break;
-
-                default:
-                    Debug.Log("ERROR: INVALID STARTING DIRECTION");
-                    break;
-            }
-        }
-        else
-        {
-            //fighting = false;
-        }
 
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
-        //Debug.Log(name + "Is visible");
     }
 
     void Update()
@@ -159,6 +136,29 @@ public class FGEnemy : EnemyBehaviour
         }
         if (fighting == true)
         {
+            if (transform.position.x > playerPosX)
+            {
+                facingDirection = Direction.left;
+            }
+            else
+            {
+                facingDirection = Direction.right;
+            }
+            switch (facingDirection)
+            {
+                case Direction.right:
+                    spriteRenderer.flipX = false;
+                    dir = 1;
+                    break;
+                case Direction.left:
+                    spriteRenderer.flipX = true;
+                    dir = -1;
+                    break;
+                default:
+                    Debug.Log("ERROR: INVALID DIRECTION");
+                    break;
+            }
+
             if (stateSwitchTime < secondsUntilStateSwitch)
             {
                 stateSwitchTime += Time.deltaTime;
@@ -184,16 +184,78 @@ public class FGEnemy : EnemyBehaviour
                 secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
                 stateSwitchTime = 0;
             }
+
+            RaycastHit2D hit;
+            Vector2 dVec = new Vector2(dir, -1).normalized;
+            LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
+
+            hit = Physics2D.Raycast(transform.position, dVec, 0.4f, mask);
+
+            if (hit.collider == null)
+            {
+                if (test)
+                {
+                    Debug.Log("null");
+                }
+                
+            }
+            else
+            {
+                if (test)
+                {
+                    Debug.Log(hit.collider.name);
+                }
+                dVec = new Vector2(dir, 0);
+                hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
+                if (hit.collider != null)
+                {
+                    
+                }
+                else
+                {
+                    hit = Physics2D.Raycast(transform.position, dVec, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
+                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    {
+
+                    }
+                    rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                }
+            }
+
             switch (state)
             {
                 case EnemyState.defense:
                     switch (difficultyLevel)
                     {
                         case 1:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         case 2:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         case 3:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         default:
                             Debug.Log("ERROR: LEVEL DOES NOT EXIST");
@@ -204,10 +266,34 @@ public class FGEnemy : EnemyBehaviour
                     switch (difficultyLevel)
                     {
                         case 1:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         case 2:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         case 3:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         default:
                             Debug.Log("ERROR: LEVEL DOES NOT EXIST");
@@ -218,10 +304,34 @@ public class FGEnemy : EnemyBehaviour
                     switch (difficultyLevel)
                     {
                         case 1:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         case 2:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         case 3:
+                            if (facingDirection == Direction.right)
+                            {
+
+                            }
+                            else if (facingDirection == Direction.left)
+                            {
+
+                            }
                             break;
                         default:
                             Debug.Log("ERROR: LEVEL DOES NOT EXIST");
