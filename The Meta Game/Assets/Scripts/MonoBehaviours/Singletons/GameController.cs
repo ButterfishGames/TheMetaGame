@@ -377,6 +377,7 @@ public class GameController : MonoBehaviour
                         StartCoroutine(FindHints());
                     }
 
+<<<<<<< Updated upstream
                     SetHintDisp(0, true);
                     SetHintDisp(1, true);
                     SetHintDisp(2, shouldDisp[2]);
@@ -384,6 +385,14 @@ public class GameController : MonoBehaviour
                     SetHintDisp(4, false);
                     SetHintDisp(5, false);
                 }
+=======
+                SetHintDisp(0, true);
+                SetHintDisp(1, true);
+                SetHintDisp(2, shouldDisp[2]);
+                SetHintDisp(3, false);
+                SetHintDisp(4, false);
+                //SetHintDisp(5, false);
+>>>>>>> Stashed changes
                 break;
 
             case GameMode.rpg:
