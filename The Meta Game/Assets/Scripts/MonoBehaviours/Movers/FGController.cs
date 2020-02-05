@@ -67,8 +67,10 @@ public class FGController : Mover
     /// </summary>
     private float inputResetTimer;
 
+    [Tooltip("The maximum time that is allowed to pass before the read inputs for the special move reset.")]
     public float maxTimeTillReset;
 
+    [Tooltip("Special GameObject to instantiate")]
     public GameObject special;
 
     /// <summary>
@@ -78,7 +80,8 @@ public class FGController : Mover
     {
         light,
         medium,
-        heavy
+        heavy,
+        special
     };
 
     /// <summary>
@@ -135,7 +138,6 @@ public class FGController : Mover
 
     protected override void Update()
     {
-        Debug.Log(inputs[0] + " 0, " + inputs[1] + " 1, " + inputs[2] + " 2");
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -315,7 +317,6 @@ public class FGController : Mover
 
     private void AttackEnemy()
     {
-        Debug.Log(inputs.SequenceEqual(specialRight) + " " + inputs.SequenceEqual(specialLeft));
         if (attacking == false)
         {
             if ((Input.GetAxis("Light") > 0 || Input.GetAxis("Medium") > 0 || Input.GetAxis("Heavy") > 0) && 
@@ -323,35 +324,34 @@ public class FGController : Mover
             {
                 if (dir == Direction.right)
                 {
-                    Debug.Log("Special right");
                     attacking = true;
                     Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity);
+                    inputs[0] = InputDirection.none;
+                    attackType = Attack.special;
                 }
                 else
                 {
-                    Debug.Log("Special left");
                     attacking = true;
                     GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
                     specialMove.gameObject.GetComponent<SpecialMove>().speed *= -1;
+                    inputs[0] = InputDirection.none;
+                    attackType = Attack.special;
                 }
             }
             else if (Input.GetAxis("Light") > 0)
             {
-                Debug.Log("Light");
                 attackType = Attack.light;
                 hitBoxActivationTime = 1;
                 attacking = true;
             }
             else if (Input.GetAxis("Medium") > 0)
             {
-                Debug.Log("Medium");
                 attackType = Attack.medium;
                 hitBoxActivationTime = 1;
                 attacking = true;
             }
             else if (Input.GetAxis("Heavy") > 0)
             {
-                Debug.Log("Heavy");
                 attackType = Attack.heavy;
                 hitBoxActivationTime = 1;
                 attacking = true;
@@ -375,6 +375,8 @@ public class FGController : Mover
                 break;
             case Attack.heavy:
                 HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
+                break;
+            case Attack.special:
                 break;
             default:
                 Debug.Log("ERROR: INVALID STARTING ATTACK");
