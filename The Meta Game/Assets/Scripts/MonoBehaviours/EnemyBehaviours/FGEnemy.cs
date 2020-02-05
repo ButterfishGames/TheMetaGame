@@ -67,7 +67,35 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// This variable is to determine whether the enemy started within the view when switching to fighting mode
     /// </summary>
-    public bool changedInView;
+    [HideInInspector]public bool changedInView;
+
+    [Tooltip("How difficult the enemy AI is")]
+    [Range(1,3)]
+    public int difficultyLevel;
+
+    /// <summary>
+    /// How long until the enemy switches it's state
+    /// </summary>
+    private float secondsUntilStateSwitch;
+
+    private float stateSwitchTime;
+
+    [Tooltip("Max time until the enemy switches their state")]
+    public float maxSecondsUntilStateSwitch;
+
+    [Tooltip("Minimum time until the enemy switches their state")]
+    public float minSecondsUntilStateSwitch;
+
+    private int randomInt;
+
+    private enum EnemyState
+    {
+        offense,
+        neutral,
+        defense
+    };
+
+    private EnemyState state;
 
     void Start()
     {
@@ -76,6 +104,7 @@ public class FGEnemy : EnemyBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+        state = EnemyState.neutral;
         if (spriteRenderer.isVisible)
         {
             //fighting = true;
@@ -130,7 +159,95 @@ public class FGEnemy : EnemyBehaviour
         }
         if (fighting == true)
         {
+            if (stateSwitchTime < secondsUntilStateSwitch)
+            {
+                stateSwitchTime += Time.deltaTime;
+            }
+            else
+            {
+                randomInt = Random.Range(1, 2);
+                switch(state)
+                {
+                    case EnemyState.defense:
+                        state = ChooseRandomState(EnemyState.neutral, EnemyState.offense);
+                        break;
+                    case EnemyState.neutral:
+                        state = ChooseRandomState(EnemyState.defense, EnemyState.offense);
+                        break;
+                    case EnemyState.offense:
+                        state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
+                        break;
+                    default:
+                        Debug.Log("ERROR: STATE DOES NOT EXIST");
+                        break;
+                }
+                secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
+                stateSwitchTime = 0;
+            }
+            switch (state)
+            {
+                case EnemyState.defense:
+                    switch (difficultyLevel)
+                    {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            Debug.Log("ERROR: LEVEL DOES NOT EXIST");
+                            break;
+                    }
+                    break;
+                case EnemyState.neutral:
+                    switch (difficultyLevel)
+                    {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            Debug.Log("ERROR: LEVEL DOES NOT EXIST");
+                            break;
+                    }
+                    break;
+                case EnemyState.offense:
+                    switch (difficultyLevel)
+                    {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            Debug.Log("ERROR: LEVEL DOES NOT EXIST");
+                            break;
+                    }
+                    break;
+                default:
+                    Debug.Log("ERROR: STATE DOES NOT EXIST");
+                    break;
+            }
+        }
+    }
 
+    private EnemyState ChooseRandomState(EnemyState state1, EnemyState state2)
+    {
+        if (randomInt == 1)
+        {
+            return state1;
+        }
+        else if (randomInt == 2)
+        {
+            return state2;
+        }
+        else
+        {
+            return EnemyState.neutral;
         }
     }
 }
