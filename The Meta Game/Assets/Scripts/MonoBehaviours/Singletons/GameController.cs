@@ -392,7 +392,6 @@ public class GameController : MonoBehaviour
                 SetHintDisp(3, false);
                 SetHintDisp(4, false);
                 //SetHintDisp(5, false);
->>>>>>> Stashed changes
                 break;
 
             case GameMode.rpg:
