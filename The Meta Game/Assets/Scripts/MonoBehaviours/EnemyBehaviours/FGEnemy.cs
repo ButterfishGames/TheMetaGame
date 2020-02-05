@@ -165,24 +165,27 @@ public class FGEnemy : EnemyBehaviour
             }
             else
             {
-                randomInt = Random.Range(1, 2);
-                switch(state)
+                if (!grounded)
                 {
-                    case EnemyState.defense:
-                        state = ChooseRandomState(EnemyState.neutral, EnemyState.offense);
-                        break;
-                    case EnemyState.neutral:
-                        state = ChooseRandomState(EnemyState.defense, EnemyState.offense);
-                        break;
-                    case EnemyState.offense:
-                        state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
-                        break;
-                    default:
-                        Debug.Log("ERROR: STATE DOES NOT EXIST");
-                        break;
+                    randomInt = Random.Range(1, 2);
+                    switch (state)
+                    {
+                        case EnemyState.defense:
+                            state = ChooseRandomState(EnemyState.neutral, EnemyState.offense);
+                            break;
+                        case EnemyState.neutral:
+                            state = ChooseRandomState(EnemyState.defense, EnemyState.offense);
+                            break;
+                        case EnemyState.offense:
+                            state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
+                            break;
+                        default:
+                            Debug.Log("ERROR: STATE DOES NOT EXIST");
+                            break;
+                    }
+                    secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
+                    stateSwitchTime = 0;
                 }
-                secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
-                stateSwitchTime = 0;
             }
 
             RaycastHit2D hit;
@@ -358,6 +361,22 @@ public class FGEnemy : EnemyBehaviour
         else
         {
             return EnemyState.neutral;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (grounded && collision.CompareTag("Ground"))
+        {
+            grounded = false;
         }
     }
 }
