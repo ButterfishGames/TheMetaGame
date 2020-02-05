@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FGController : Mover
@@ -142,15 +143,11 @@ public class FGController : Mover
 
         if (inputResetTimer < maxTimeTillReset/60)
         {
-            //Debug.Log(inputResetTimer);
             inputResetTimer += Time.deltaTime;
         }
         else
         {
-            for (int k = 0; k > inputs.Length-1; k++)
-            {
-                inputs[k] = InputDirection.none;
-            }
+            inputs[0] = InputDirection.none;
             inputResetTimer = 0;
         }
 
@@ -223,8 +220,6 @@ public class FGController : Mover
         inputsHeld[2] = CheckIfStillHeld(inputsHeld[2], v < 0);
         inputsHeld[3] = CheckIfStillHeld(inputsHeld[3], h > 0 && v < 0);
         inputsHeld[4] = CheckIfStillHeld(inputsHeld[4], h > 0);
-
-        Debug.Log(inputsHeld[0] + " 0, " + inputsHeld[1] + " 1, " + inputsHeld[2] + " 2, " + inputsHeld[3] + " 3, " + inputsHeld[4] + " 4");
 
         if (h == 1 && v == -1)
         {
@@ -320,20 +315,24 @@ public class FGController : Mover
 
     private void AttackEnemy()
     {
+        Debug.Log(inputs.SequenceEqual(specialRight) + " " + inputs.SequenceEqual(specialLeft));
         if (attacking == false)
         {
             if ((Input.GetAxis("Light") > 0 || Input.GetAxis("Medium") > 0 || Input.GetAxis("Heavy") > 0) && 
-                (inputs.Equals(specialRight) || inputs.Equals(specialRight)))
+                (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft)))
             {
                 if (dir == Direction.right)
                 {
                     Debug.Log("Special right");
-                    Instantiate<GameObject>(special, new Vector2(transform.position.x + 1, transform.position.y), Quaternion.identity);
+                    attacking = true;
+                    Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity);
                 }
                 else
                 {
-                    Debug.Log("Special right");
-                    Instantiate<GameObject>(special, new Vector2(transform.position.x - 1, transform.position.y), Quaternion.identity);
+                    Debug.Log("Special left");
+                    attacking = true;
+                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                    specialMove.gameObject.GetComponent<SpecialMove>().speed *= -1;
                 }
             }
             else if (Input.GetAxis("Light") > 0)
@@ -362,6 +361,10 @@ public class FGController : Mover
 
     private IEnumerator AttackCoRoutine()
     {
+        if (grounded)
+        {
+            rb.velocity = new Vector2(0.0f, rb.velocity.y);
+        }
         switch (attackType)
         {
             case Attack.light:

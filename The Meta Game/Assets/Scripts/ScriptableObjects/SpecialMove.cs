@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SpecialMove : MonoBehaviour
 {
-    public float timeInWorld;
-    public float addDistance;
+    private float timeInWorld;
+    public float maxTimeInWorld;
+    public float speed;
 
     private void Start()
     {
@@ -14,7 +15,7 @@ public class SpecialMove : MonoBehaviour
 
     void Update()
     {
-        if (timeInWorld > 10)
+        if (timeInWorld > maxTimeInWorld)
         {
             Destroy(gameObject);
         }
@@ -22,7 +23,7 @@ public class SpecialMove : MonoBehaviour
         {
             timeInWorld += Time.deltaTime;
         }
-        transform.Translate(new Vector2(transform.position.x + Time.deltaTime * addDistance, transform.position.y), Space.World);
+        transform.Translate(Time.deltaTime * speed, 0, 0);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

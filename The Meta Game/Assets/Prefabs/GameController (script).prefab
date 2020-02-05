@@ -383,6 +383,8 @@ MonoBehaviour:
     unlocked: 0
   - name: FPS
     unlocked: 0
+  - name: Fighting
+    unlocked: 0
   resetUnlocks: 1
   spellList:
   - spell: {fileID: 11400000, guid: bc21eb39d6540614f827ae91e7ddd107, type: 2}
@@ -404,6 +406,8 @@ MonoBehaviour:
   floorDamage: 8
   errDispTime: 2
   errFadeTime: 2
+  ignoreHints: 0
+  onMenu: 0
 --- !u!1 &6836962810868184634
 GameObject:
   m_ObjectHideFlags: 0
