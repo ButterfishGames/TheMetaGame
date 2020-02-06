@@ -52,7 +52,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// Used to determine current direction; 1 is right, -1 is left
     /// </summary>
-    private int dir;
+    [HideInInspector] public int dir;
 
     /// <summary>
     /// Reference to Rigidbody2D component on object
@@ -109,7 +109,6 @@ public class FGEnemy : EnemyBehaviour
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
-        playerPosX = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.x;
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
@@ -136,6 +135,7 @@ public class FGEnemy : EnemyBehaviour
         }
         if (fighting == true)
         {
+            playerPosX = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.x;
             if (transform.position.x > playerPosX)
             {
                 facingDirection = Direction.left;
@@ -147,11 +147,16 @@ public class FGEnemy : EnemyBehaviour
             switch (facingDirection)
             {
                 case Direction.right:
-                    spriteRenderer.flipX = false;
+                    if (dir == -1) {
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
                     dir = 1;
                     break;
                 case Direction.left:
-                    spriteRenderer.flipX = true;
+                    if (dir == 1)
+                    {
+                        transform.eulerAngles = new Vector3(0, 180, 0);
+                    }
                     dir = -1;
                     break;
                 default:
@@ -346,6 +351,7 @@ public class FGEnemy : EnemyBehaviour
                     break;
             }
         }
+        GetComponent<PFEnemy>().dir = dir;
     }
 
     private EnemyState ChooseRandomState(EnemyState state1, EnemyState state2)

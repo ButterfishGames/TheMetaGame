@@ -340,23 +340,28 @@ public class FGController : Mover
             }
             else if (Input.GetAxis("Light") > 0)
             {
-                attackType = Attack.light;
-                hitBoxActivationTime = 1;
-                attacking = true;
+                BasicAttack(Attack.light, 1.0f, 0.0f, 0.0f);
             }
             else if (Input.GetAxis("Medium") > 0)
             {
-                attackType = Attack.medium;
-                hitBoxActivationTime = 1;
-                attacking = true;
+                BasicAttack(Attack.medium, 1.0f, 0.0f, 0.0f);
             }
             else if (Input.GetAxis("Heavy") > 0)
             {
-                attackType = Attack.heavy;
-                hitBoxActivationTime = 1;
-                attacking = true;
+                BasicAttack(Attack.heavy, 1.0f, 0.0f, 0.0f);
             }
         }
+    }
+
+    private void BasicAttack(Attack attack, float hitboxTime, float xVelocity,  float yVelocity)
+    {
+        attackType = attack;
+        hitBoxActivationTime = hitboxTime;
+        if (grounded)
+        {
+            rb.velocity = new Vector2(xVelocity, yVelocity);
+        }
+        attacking = true;
     }
 
     private IEnumerator AttackCoRoutine()

@@ -237,9 +237,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822a56343f87116419e719420cbb7ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDir: 0
+  speed: 0
   maxHP: 30
   damageFadeTime: 0.5
+  changedInView: 0
+  difficultyLevel: 1
+  maxSecondsUntilStateSwitch: 0
+  minSecondsUntilStateSwitch: 0
 --- !u!1 &4720640963120695446
 GameObject:
   m_ObjectHideFlags: 0
