@@ -91,12 +91,18 @@ public class FGEnemy : EnemyBehaviour
     [Tooltip("Minimum time until the enemy switches their state")]
     public float minSecondsUntilStateSwitch;
 
+    /// <summary>
+    /// Int to randomly select a different state to go to
+    /// </summary>
     private int randomInt;
 
     private bool grounded;
 
     private bool test = false;
 
+    /// <summary>
+    /// Different enemy behaviors
+    /// </summary>
     private enum EnemyState
     {
         offense,
@@ -104,7 +110,16 @@ public class FGEnemy : EnemyBehaviour
         defense
     };
 
+    /// <summary>
+    /// What EnemyState is currently active
+    /// </summary>
     private EnemyState state;
+
+    [HideInInspector]public float hitstun;
+
+    private bool attacking;
+
+    private BoxCollider2D hitbox;
 
     void Start()
     {
@@ -113,6 +128,7 @@ public class FGEnemy : EnemyBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         state = EnemyState.neutral;
+        hitbox = transform.Find("hitbox").GetComponent<BoxCollider2D>();
 
         currHP = maxHP;
 
@@ -147,7 +163,8 @@ public class FGEnemy : EnemyBehaviour
             switch (facingDirection)
             {
                 case Direction.right:
-                    if (dir == -1) {
+                    if (dir == -1)
+                    {
                         transform.eulerAngles = new Vector3(0, 0, 0);
                     }
                     dir = 1;
@@ -170,186 +187,198 @@ public class FGEnemy : EnemyBehaviour
             }
             else
             {
-                if (!grounded)
+                if (hitstun <= 0)
                 {
-                    randomInt = Random.Range(1, 2);
-                    switch (state)
+                    if (grounded)
                     {
-                        case EnemyState.defense:
-                            state = ChooseRandomState(EnemyState.neutral, EnemyState.offense);
-                            break;
-                        case EnemyState.neutral:
-                            state = ChooseRandomState(EnemyState.defense, EnemyState.offense);
-                            break;
-                        case EnemyState.offense:
-                            state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
-                            break;
-                        default:
-                            Debug.Log("ERROR: STATE DOES NOT EXIST");
-                            break;
+                        randomInt = Random.Range(1, 2);
+                        switch (state)
+                        {
+                            case EnemyState.defense:
+                                state = ChooseRandomState(EnemyState.neutral, EnemyState.offense);
+                                break;
+                            case EnemyState.neutral:
+                                state = ChooseRandomState(EnemyState.defense, EnemyState.offense);
+                                break;
+                            case EnemyState.offense:
+                                state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
+                                break;
+                            default:
+                                Debug.Log("ERROR: STATE DOES NOT EXIST");
+                                break;
+                        }
+                        secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
+                        stateSwitchTime = 0;
                     }
-                    secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
-                    stateSwitchTime = 0;
                 }
             }
 
-            RaycastHit2D hit;
-            Vector2 dVec = new Vector2(dir, -1).normalized;
-            LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
-
-            hit = Physics2D.Raycast(transform.position, dVec, 0.4f, mask);
-
-            if (hit.collider == null)
+            if (hitstun <= 0)
             {
-                if (test)
+                RaycastHit2D hit;
+                Vector2 dVec = new Vector2(dir, -1).normalized;
+                LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
+
+                hit = Physics2D.Raycast(transform.position, dVec, 0.4f, mask);
+
+                if (hit.collider == null)
                 {
-                    Debug.Log("null");
-                }
-                
-            }
-            else
-            {
-                if (test)
-                {
-                    Debug.Log(hit.collider.name);
-                }
-                dVec = new Vector2(dir, 0);
-                hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
-                if (hit.collider != null)
-                {
-                    
+                    if (test)
+                    {
+                        Debug.Log("null");
+                    }
+
                 }
                 else
                 {
-                    hit = Physics2D.Raycast(transform.position, dVec, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
-                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    if (test)
+                    {
+                        Debug.Log(hit.collider.name);
+                    }
+                    dVec = new Vector2(dir, 0);
+                    hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
+                    if (hit.collider != null)
                     {
 
                     }
-                    rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                    else
+                    {
+                        hit = Physics2D.Raycast(transform.position, dVec, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
+                        if (hit.collider != null && hit.collider.CompareTag("Player"))
+                        {
+
+                        }
+                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                    }
+                }
+
+                switch (state)
+                {
+                    case EnemyState.defense:
+                        switch (difficultyLevel)
+                        {
+                            case 1:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            case 2:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            case 3:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            default:
+                                Debug.Log("ERROR: LEVEL DOES NOT EXIST");
+                                break;
+                        }
+                        break;
+                    case EnemyState.neutral:
+                        switch (difficultyLevel)
+                        {
+                            case 1:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            case 2:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            case 3:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            default:
+                                Debug.Log("ERROR: LEVEL DOES NOT EXIST");
+                                break;
+                        }
+                        break;
+                    case EnemyState.offense:
+                        switch (difficultyLevel)
+                        {
+                            case 1:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            case 2:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            case 3:
+                                if (facingDirection == Direction.right)
+                                {
+
+                                }
+                                else if (facingDirection == Direction.left)
+                                {
+
+                                }
+                                break;
+                            default:
+                                Debug.Log("ERROR: LEVEL DOES NOT EXIST");
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.Log("ERROR: STATE DOES NOT EXIST");
+                        break;
                 }
             }
-
-            switch (state)
-            {
-                case EnemyState.defense:
-                    switch (difficultyLevel)
-                    {
-                        case 1:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        case 2:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        case 3:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        default:
-                            Debug.Log("ERROR: LEVEL DOES NOT EXIST");
-                            break;
-                    }
-                    break;
-                case EnemyState.neutral:
-                    switch (difficultyLevel)
-                    {
-                        case 1:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        case 2:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        case 3:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        default:
-                            Debug.Log("ERROR: LEVEL DOES NOT EXIST");
-                            break;
-                    }
-                    break;
-                case EnemyState.offense:
-                    switch (difficultyLevel)
-                    {
-                        case 1:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        case 2:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        case 3:
-                            if (facingDirection == Direction.right)
-                            {
-
-                            }
-                            else if (facingDirection == Direction.left)
-                            {
-
-                            }
-                            break;
-                        default:
-                            Debug.Log("ERROR: LEVEL DOES NOT EXIST");
-                            break;
-                    }
-                    break;
-                default:
-                    Debug.Log("ERROR: STATE DOES NOT EXIST");
-                    break;
-            }
+        }
+        else
+        {
+            hitbox.gameObject.SetActive(false);
+            attacking = false;
+            hitstun -= Time.deltaTime;
         }
         GetComponent<PFEnemy>().dir = dir;
     }
@@ -375,6 +404,11 @@ public class FGEnemy : EnemyBehaviour
         if (collision.CompareTag("Ground"))
         {
             grounded = true;
+        }
+        else if (collision.CompareTag("PlayerHitbox"))
+        {
+            //hitstun = collision.GetComponent<>();
+            //health -= collision.GetComponent<>();
         }
     }
 

@@ -194,6 +194,9 @@ MonoBehaviour:
   deathForce: 0
   deathWait: 10
   health: 0
+  maxTimeTillReset: 0
+  special: {fileID: 0}
+  hitstun: 0
 --- !u!114 &2826980262528341211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +359,7 @@ GameObject:
   - component: {fileID: 747935941054579605}
   m_Layer: 9
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: PlayerHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

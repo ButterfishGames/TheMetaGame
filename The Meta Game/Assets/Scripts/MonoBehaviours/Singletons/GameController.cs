@@ -545,6 +545,7 @@ public class GameController : MonoBehaviour
 
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.GetComponent<FGEnemy>().hitstun = 0;
                     Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
                     if(viewPos.x > 0.0f && viewPos.x < 1.0f && viewPos.y > 0.0f && viewPos.y < 1.0f)
                     {
@@ -576,6 +577,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.GetComponent<FGController>().hitstun = 0;
                     mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(true);
                     mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);

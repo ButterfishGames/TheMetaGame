@@ -104,7 +104,7 @@ public class FGController : Mover
     /// <summary>
     /// A float to determine how much hitstun the player should have when hit
     /// </summary>
-    private float hitstun;
+    [HideInInspector]public float hitstun;
 
     /// <summary>
     /// Hit box to hit enemies
@@ -138,52 +138,62 @@ public class FGController : Mover
 
     protected override void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Move(h, v);
-
-        if (inputResetTimer < maxTimeTillReset/60)
+        if (hitstun <= 0)
         {
-            inputResetTimer += Time.deltaTime;
+            float h = Input.GetAxisRaw("Horizontal");
+            float v = Input.GetAxisRaw("Vertical");
+
+            Move(h, v);
+
+            if (inputResetTimer < maxTimeTillReset / 60)
+            {
+                inputResetTimer += Time.deltaTime;
+            }
+            else
+            {
+                inputs[0] = InputDirection.none;
+                inputResetTimer = 0;
+            }
+
+            Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
+            if (GameController.singleton.GetPaused() == false)
+            {
+                if (viewPos.y < 0.0f)
+                {
+                    GameController.singleton.Die();
+                }
+            }
+
+            if (GameController.singleton.GetPaused())
+            {
+                return;
+            }
+
+            AttackEnemy();
+
+            if (attacking)
+            {
+                if (!attackCoRoutineRunning)
+                {
+                    attackCoRoutineRunning = true;
+                    StartCoroutine(AttackCoRoutine());
+                }
+            }
+            else
+            {
+                if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
+                {
+                    Jump();
+                }
+
+                hitbox.gameObject.SetActive(false);
+            }
         }
         else
         {
-            inputs[0] = InputDirection.none;
-            inputResetTimer = 0;
-        }
-
-        Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
-        if (GameController.singleton.GetPaused() == false)
-        {
-            if (viewPos.y < 0.0f) {
-                GameController.singleton.Die();
-            }
-        }
-
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        AttackEnemy();
-
-        if (attacking)
-        {
-            if (!attackCoRoutineRunning)
-            {
-                attackCoRoutineRunning = true;
-                StartCoroutine(AttackCoRoutine());
-            }
-        }
-        else
-        {
-            if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
-            {
-                Jump();
-            }
-
             hitbox.gameObject.SetActive(false);
+            attacking = false;
+            hitstun -= Time.deltaTime;
         }
     }
 
@@ -289,6 +299,11 @@ public class FGController : Mover
         if (collision.CompareTag("Ground"))
         {
             grounded = true;
+        }
+        else if (collision.CompareTag("EnemyHitbox"))
+        {
+            //hitstun = collision.GetComponent<>();
+            //health -= collision.GetComponent<>();
         }
         else if (collision.CompareTag("Killbox"))
         {
