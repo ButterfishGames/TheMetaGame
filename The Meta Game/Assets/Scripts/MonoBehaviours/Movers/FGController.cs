@@ -18,7 +18,7 @@ public class FGController : Mover
     public float deathWait;
 
     [Tooltip("Players health")]
-    public float health;
+    public int health;
 
     /// <summary>
     /// Tracks whether the player is currently on the ground
@@ -106,6 +106,24 @@ public class FGController : Mover
     /// </summary>
     [HideInInspector]public float hitstun;
 
+    [Tooltip("How much hitstun you want to give to the enemy when a light attack is performed")]
+    public float lightHitstun;
+
+    [Tooltip("How much hitstun you want to give to the enemy when a medium attack is performed")]
+    public float mediumHitstun;
+
+    [Tooltip("How much hitstun you want to give to the enemy when a heavy attack is performed")]
+    public float heavyHitstun;
+
+    [Tooltip("How much damage you want to deal when a light attack is performed")]
+    public int lightDamage;
+
+    [Tooltip("How much hitstun you want to deal when a medium attack is performed")]
+    public int mediumDamage;
+
+    [Tooltip("How much hitstun you want to deal when a heavy attack is performed")]
+    public int heavyDamage;
+
     /// <summary>
     /// Hit box to hit enemies
     /// </summary>
@@ -138,6 +156,10 @@ public class FGController : Mover
 
     protected override void Update()
     {
+        if(health <= 0)
+        {
+            GameController.singleton.Die();
+        }
         if (hitstun <= 0)
         {
             float h = Input.GetAxisRaw("Horizontal");
@@ -302,8 +324,8 @@ public class FGController : Mover
         }
         else if (collision.CompareTag("EnemyHitbox"))
         {
-            //hitstun = collision.GetComponent<>();
-            //health -= collision.GetComponent<>();
+            hitstun = collision.GetComponent<FightingHitbox>().hitstun;
+            health -= collision.GetComponent<FightingHitbox>().damage;
         }
         else if (collision.CompareTag("Killbox"))
         {
@@ -340,7 +362,8 @@ public class FGController : Mover
                 if (dir == Direction.right)
                 {
                     attacking = true;
-                    Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity);
+                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                    specialMove.tag = "PlayerHitbox";
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
                 }
@@ -348,6 +371,7 @@ public class FGController : Mover
                 {
                     attacking = true;
                     GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                    specialMove.tag = "PlayerHitbox";
                     specialMove.gameObject.GetComponent<SpecialMove>().speed *= -1;
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
@@ -355,20 +379,20 @@ public class FGController : Mover
             }
             else if (Input.GetAxis("Light") > 0)
             {
-                BasicAttack(Attack.light, 1.0f, 0.0f, 0.0f);
+                BasicAttack(Attack.light, 1.0f, 0.0f, 0.0f, lightHitstun, lightDamage);
             }
             else if (Input.GetAxis("Medium") > 0)
             {
-                BasicAttack(Attack.medium, 1.0f, 0.0f, 0.0f);
+                BasicAttack(Attack.medium, 1.0f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
             }
             else if (Input.GetAxis("Heavy") > 0)
             {
-                BasicAttack(Attack.heavy, 1.0f, 0.0f, 0.0f);
+                BasicAttack(Attack.heavy, 1.0f, 0.0f, 0.0f, heavyHitstun, heavyDamage);
             }
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float xVelocity,  float yVelocity)
+    private void BasicAttack(Attack attack, float hitboxTime, float xVelocity,  float yVelocity, float hitstunGiven, int damage)
     {
         attackType = attack;
         hitBoxActivationTime = hitboxTime;
@@ -376,6 +400,8 @@ public class FGController : Mover
         {
             rb.velocity = new Vector2(xVelocity, yVelocity);
         }
+        hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven;
+        hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
     }
 

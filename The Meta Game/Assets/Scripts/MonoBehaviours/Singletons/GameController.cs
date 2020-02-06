@@ -316,6 +316,7 @@ public class GameController : MonoBehaviour
 
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     foreach (EnemyBehaviour behaviour in behaviours)
@@ -399,6 +400,7 @@ public class GameController : MonoBehaviour
 
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     foreach (EnemyBehaviour behaviour in behaviours)
@@ -473,6 +475,7 @@ public class GameController : MonoBehaviour
 
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     foreach (EnemyBehaviour behaviour in behaviours)
@@ -545,6 +548,7 @@ public class GameController : MonoBehaviour
 
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(true);
                     enemy.GetComponent<FGEnemy>().hitstun = 0;
                     Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
                     if(viewPos.x > 0.0f && viewPos.x < 1.0f && viewPos.y > 0.0f && viewPos.y < 1.0f)

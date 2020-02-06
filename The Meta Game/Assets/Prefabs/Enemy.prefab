@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822a56343f87116419e719420cbb7ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 1.5
   maxHP: 30
   damageFadeTime: 0.5
   dir: 0
@@ -258,6 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2172844615423545538}
   - component: {fileID: 6992240254521146180}
+  - component: {fileID: 365245420130831460}
   m_Layer: 0
   m_Name: EnemyHitbox
   m_TagString: EnemyHitbox
@@ -305,6 +306,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
+--- !u!114 &365245420130831460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846122293547929517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94be63ced995af34b810b3f3611ba80b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitstun: 0
+  damage: 0
 --- !u!1 &4720640963120695446
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,9 +7,13 @@ public class SpecialMove : MonoBehaviour
     private float timeInWorld;
     public float maxTimeInWorld;
     public float speed;
+    public float hitstun;
+    public int damage;
 
     private void Start()
     {
+        GetComponent<FightingHitbox>().hitstun = hitstun;
+        GetComponent<FightingHitbox>().damage = damage;
         timeInWorld = 0.0f;
     }
 
@@ -26,11 +30,13 @@ public class SpecialMove : MonoBehaviour
         transform.Translate(Time.deltaTime * speed, 0, 0);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnColliderEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.collider.CompareTag("Enemy"))
         {
+            Debug.Log("Before Destroy");
             Destroy(gameObject);
+            Debug.Log("After Destroy");
         }
     }
 }

@@ -98,6 +98,8 @@ public class FGEnemy : EnemyBehaviour
 
     private bool grounded;
 
+    private bool hitThisFrame;
+
     private bool test = false;
 
     /// <summary>
@@ -128,7 +130,8 @@ public class FGEnemy : EnemyBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         state = EnemyState.neutral;
-        hitbox = transform.Find("hitbox").GetComponent<BoxCollider2D>();
+        hitbox = transform.Find("EnemyHitbox").GetComponent<BoxCollider2D>();
+        hitThisFrame = false;
 
         currHP = maxHP;
 
@@ -137,10 +140,15 @@ public class FGEnemy : EnemyBehaviour
 
     void Update()
     {
+        hitThisFrame = false;
         Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
         if (changedInView == true) {
             fighting = true;
             if (viewPos.y < 0.0f)
+            {
+                Destroy(gameObject);
+            }
+            if(currHP <= 0)
             {
                 Destroy(gameObject);
             }
@@ -149,6 +157,7 @@ public class FGEnemy : EnemyBehaviour
         {
             fighting = false;
         }
+        Debug.Log(changedInView);
         if (fighting == true)
         {
             playerPosX = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.x;
@@ -373,13 +382,14 @@ public class FGEnemy : EnemyBehaviour
                         break;
                 }
             }
+            else
+            {
+                hitbox.gameObject.SetActive(false);
+                attacking = false;
+                hitstun -= Time.deltaTime;
+            }
         }
-        else
-        {
-            hitbox.gameObject.SetActive(false);
-            attacking = false;
-            hitstun -= Time.deltaTime;
-        }
+        //Debug.Log(hitstun);
         GetComponent<PFEnemy>().dir = dir;
     }
 
@@ -407,8 +417,17 @@ public class FGEnemy : EnemyBehaviour
         }
         else if (collision.CompareTag("PlayerHitbox"))
         {
-            //hitstun = collision.GetComponent<>();
-            //health -= collision.GetComponent<>();
+            if (hitThisFrame == false)
+            {
+                hitThisFrame = true;
+                hitstun = collision.GetComponent<FightingHitbox>().hitstun;
+                currHP -= collision.GetComponent<FightingHitbox>().damage;
+                Debug.Log(currHP + " " + hitstun);
+                if (collision.name == "SpecialMove(Clone)")
+                {
+                    Destroy(collision.gameObject);
+                }
+            }
         }
     }
 
