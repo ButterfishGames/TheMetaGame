@@ -314,6 +314,8 @@ public class GameController : MonoBehaviour
                     }
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+
                 foreach (GameObject enemy in enemies)
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
@@ -398,6 +400,8 @@ public class GameController : MonoBehaviour
                     col.gameObject.SetActive(true);
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+
                 foreach (GameObject enemy in enemies)
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
@@ -473,6 +477,8 @@ public class GameController : MonoBehaviour
                     col.gameObject.SetActive(false);
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+
                 foreach (GameObject enemy in enemies)
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
@@ -546,6 +552,8 @@ public class GameController : MonoBehaviour
                     }
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), false);
+
                 foreach (GameObject enemy in enemies)
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(true);
@@ -553,6 +561,8 @@ public class GameController : MonoBehaviour
 
                     Camera cam = FindObjectOfType<Camera>();
                     Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+
+                    
 
                     if (GeometryUtility.TestPlanesAABB(planes, enemy.GetComponent<Collider2D>().bounds))
                     {

@@ -224,11 +224,14 @@ public class FGEnemy : EnemyBehaviour
 
             if (hitstun <= 0)
             {
+
+                //dVecF = Front, dVecB = Back
                 RaycastHit2D hit;
-                Vector2 dVec = new Vector2(dir, -1).normalized;
+                Vector2 dVecF = new Vector2(dir, -1).normalized;
+                Vector2 dVecB = new Vector2(-dir, -1).normalized;
                 LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-                hit = Physics2D.Raycast(transform.position, dVec, 0.4f, mask);
+                hit = Physics2D.Raycast(transform.position, dVecF, 0.4f, mask);
 
                 if (hit.collider == null)
                 {
@@ -244,15 +247,15 @@ public class FGEnemy : EnemyBehaviour
                     {
                         Debug.Log(hit.collider.name);
                     }
-                    dVec = new Vector2(dir, 0);
-                    hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
+                    dVecF = new Vector2(dir, 0);
+                    hit = Physics2D.Raycast(transform.position, dVecF, 0.25f, mask);
                     if (hit.collider != null)
                     {
 
                     }
                     else
                     {
-                        hit = Physics2D.Raycast(transform.position, dVec, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
+                        hit = Physics2D.Raycast(transform.position, dVecF, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
                         if (hit.collider != null && hit.collider.CompareTag("Player"))
                         {
 
@@ -391,6 +394,11 @@ public class FGEnemy : EnemyBehaviour
         }
         //Debug.Log(hitstun);
         GetComponent<PFEnemy>().dir = dir;
+    }
+
+    private void Jump()
+    {
+
     }
 
     private EnemyState ChooseRandomState(EnemyState state1, EnemyState state2)
