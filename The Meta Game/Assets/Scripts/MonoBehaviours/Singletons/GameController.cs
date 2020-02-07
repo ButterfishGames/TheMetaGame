@@ -550,8 +550,11 @@ public class GameController : MonoBehaviour
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(true);
                     enemy.GetComponent<FGEnemy>().hitstun = 0;
-                    Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
-                    if(viewPos.x > 0.0f && viewPos.x < 1.0f && viewPos.y > 0.0f && viewPos.y < 1.0f)
+
+                    Camera cam = FindObjectOfType<Camera>();
+                    Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+
+                    if (GeometryUtility.TestPlanesAABB(planes, enemy.GetComponent<Collider2D>().bounds))
                     {
                         enemy.GetComponent<FGEnemy>().changedInView = true;
                     }
@@ -559,6 +562,7 @@ public class GameController : MonoBehaviour
                     {
                         enemy.GetComponent<FGEnemy>().changedInView = false;
                     }
+
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);

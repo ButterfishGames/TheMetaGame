@@ -157,7 +157,7 @@ public class FGEnemy : EnemyBehaviour
         {
             fighting = false;
         }
-        Debug.Log(changedInView);
+        //Debug.Log(changedInView);
         if (fighting == true)
         {
             playerPosX = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.x;
