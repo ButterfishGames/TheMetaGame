@@ -72,10 +72,10 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// This variable is to determine whether the enemy started within the view when switching to fighting mode
     /// </summary>
-    [HideInInspector]public bool changedInView;
+    [HideInInspector] public bool changedInView;
 
     [Tooltip("How difficult the enemy AI is")]
-    [Range(1,3)]
+    [Range(1, 3)]
     public int difficultyLevel;
 
     /// <summary>
@@ -96,11 +96,20 @@ public class FGEnemy : EnemyBehaviour
     /// </summary>
     private int randomInt;
 
+    /// <summary>
+    /// Is the enmy on the ground
+    /// </summary>
     private bool grounded;
 
+    /// <summary>
+    /// To detect if the enemy has been hit on this frame because it picks up two instances for some reason
+    /// </summary>
     private bool hitThisFrame;
 
     private bool test = false;
+
+    [Tooltip("How much force you want the enemy to have in their jump")]
+    public float jumpForce;
 
     /// <summary>
     /// Different enemy behaviors
@@ -225,10 +234,10 @@ public class FGEnemy : EnemyBehaviour
             if (hitstun <= 0)
             {
 
-                //dVecF = Front, dVecB = Back
+                //dVecF = Front, dVecB = Back, 30 degrees vector instead of 45
                 RaycastHit2D hit;
-                Vector2 dVecF = new Vector2(dir, -1).normalized;
-                Vector2 dVecB = new Vector2(-dir, -1).normalized;
+                Vector2 dVecF = new Vector2((2 * dir) / 3, -1).normalized;
+                Vector2 dVecB = new Vector2((2 * dir) / 3, -1).normalized;
                 LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
                 hit = Physics2D.Raycast(transform.position, dVecF, 0.4f, mask);
@@ -398,7 +407,14 @@ public class FGEnemy : EnemyBehaviour
 
     private void Jump()
     {
+        if (!grounded)
+        {
+            return;
+        }
 
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        grounded = false;
     }
 
     private EnemyState ChooseRandomState(EnemyState state1, EnemyState state2)
