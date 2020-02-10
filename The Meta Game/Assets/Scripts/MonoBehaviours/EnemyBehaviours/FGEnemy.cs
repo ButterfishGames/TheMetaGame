@@ -17,7 +17,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// Players X position so the sprite can face towardsthe player depending on what side they are on.
     /// </summary>
-    private float playerPosX;
+    private GameObject player;
 
     public enum Direction
     {
@@ -132,6 +132,10 @@ public class FGEnemy : EnemyBehaviour
 
     private BoxCollider2D hitbox;
 
+    public float xOffsetForRay;
+
+    private Vector3 v3Offset;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
@@ -141,6 +145,7 @@ public class FGEnemy : EnemyBehaviour
         state = EnemyState.neutral;
         hitbox = transform.Find("EnemyHitbox").GetComponent<BoxCollider2D>();
         hitThisFrame = false;
+        v3Offset = new Vector3(xOffsetForRay,0,0);
 
         currHP = maxHP;
 
@@ -169,8 +174,8 @@ public class FGEnemy : EnemyBehaviour
         //Debug.Log(changedInView);
         if (fighting == true)
         {
-            playerPosX = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position.x;
-            if (transform.position.x > playerPosX)
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (transform.position.x > player.transform.position.x)
             {
                 facingDirection = Direction.left;
             }
@@ -207,9 +212,8 @@ public class FGEnemy : EnemyBehaviour
             {
                 if (hitstun <= 0)
                 {
-                    if (grounded)
-                    {
-                        randomInt = Random.Range(1, 2);
+
+                        randomInt = Random.Range(1, 3);
                         switch (state)
                         {
                             case EnemyState.defense:
@@ -227,22 +231,33 @@ public class FGEnemy : EnemyBehaviour
                         }
                         secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
                         stateSwitchTime = 0;
-                    }
+                    
                 }
             }
+            //Debug.Log(stateSwitchTime);
 
             if (hitstun <= 0)
             {
-
                 //dVecF = Front, dVecB = Back, 30 degrees vector instead of 45
-                RaycastHit2D hit;
-                Vector2 dVecF = new Vector2((2 * dir) / 3, -1).normalized;
-                Vector2 dVecB = new Vector2((2 * dir) / 3, -1).normalized;
+                if (attacking == false)
+                {
+                    hitbox.enabled = false;
+                }
+                else
+                {
+                    hitbox.enabled = true;
+                }
+                RaycastHit2D hitF;
+                RaycastHit2D hitB;
+                Vector2 dVec = new Vector2(0, - 1).normalized;
                 LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-                hit = Physics2D.Raycast(transform.position, dVecF, 0.4f, mask);
-
-                if (hit.collider == null)
+                hitF = Physics2D.Raycast(transform.position + v3Offset, dVec, 0.5f, mask);
+                hitB = Physics2D.Raycast(transform.position - v3Offset, dVec, 0.5f, mask);
+                Debug.DrawRay(transform.position + v3Offset, new Vector2(0, -1).normalized,Color.black);
+                Debug.DrawRay(transform.position - v3Offset, new Vector2(0, -1).normalized, Color.grey);
+                Debug.DrawRay(transform.position, new Vector2(-dir, 0).normalized, Color.magenta);
+                if (hitF.collider == null)
                 {
                     if (test)
                     {
@@ -252,33 +267,48 @@ public class FGEnemy : EnemyBehaviour
                 }
                 else
                 {
-                    if (test)
-                    {
-                        Debug.Log(hit.collider.name);
-                    }
-                    dVecF = new Vector2(dir, 0);
-                    hit = Physics2D.Raycast(transform.position, dVecF, 0.25f, mask);
-                    if (hit.collider != null)
-                    {
+                    //if (test)
+                    //{
+                    //    Debug.Log(hitF.collider.name);
+                    //}
+                    //dVecF = new Vector2(dir, 0);
+                    //hitF = Physics2D.Raycast(transform.position, dVecF, 0.25f, mask);
+                    //if (hitF.collider != null)
+                    //{
 
-                    }
-                    else
-                    {
-                        hit = Physics2D.Raycast(transform.position, dVecF, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
-                        if (hit.collider != null && hit.collider.CompareTag("Player"))
-                        {
+                    //}
+                    //else
+                    //{
+                    //    hitF = Physics2D.Raycast(transform.position, dVecF, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
+                    //    if (hitF.collider != null && hitF.collider.CompareTag("Player"))
+                    //    {
 
-                        }
-                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
-                    }
+                    //    }
+                    //    rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                    //}
                 }
-
+                Debug.Log(state);
+                Debug.Log(grounded);
                 switch (state)
                 {
                     case EnemyState.defense:
                         switch (difficultyLevel)
                         {
                             case 1:
+                                if (transform.position.x - player.transform.position.x >= Mathf.Abs(1))
+                                {
+                                    Debug.Log("close");
+                                    state = EnemyState.offense;
+                                    stateSwitchTime = 0;
+                                }
+                                if (hitB.collider != null)
+                                {
+                                    rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                }
+                                else
+                                {
+                                    //rb.velocity = new Vector2(0, 0);
+                                }
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -317,6 +347,11 @@ public class FGEnemy : EnemyBehaviour
                         switch (difficultyLevel)
                         {
                             case 1:
+                                if (transform.position.x - player.transform.position.x >= Mathf.Abs(2))
+                                {
+                                    state = EnemyState.offense;
+                                    stateSwitchTime = 0;
+                                }
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -355,6 +390,18 @@ public class FGEnemy : EnemyBehaviour
                         switch (difficultyLevel)
                         {
                             case 1:
+                                if (transform.position.x - player.transform.position.x >= Mathf.Abs(4))
+                                {
+                                    Jump();
+                                }
+                                //hit = Physics2D.Raycast(transform.position, dVecF, 2, mask);
+                                if (hitF.collider != null)
+                                {
+                                    rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                }
+                                else {
+                                    Jump();
+                                }
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -413,7 +460,7 @@ public class FGEnemy : EnemyBehaviour
         }
 
         rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2((jumpForce/2) * dir, jumpForce), ForceMode2D.Impulse);
         grounded = false;
     }
 
@@ -446,7 +493,7 @@ public class FGEnemy : EnemyBehaviour
                 hitThisFrame = true;
                 hitstun = collision.GetComponent<FightingHitbox>().hitstun;
                 currHP -= collision.GetComponent<FightingHitbox>().damage;
-                Debug.Log(currHP + " " + hitstun);
+                //Debug.Log(currHP + " " + hitstun);
                 if (collision.name == "SpecialMove(Clone)")
                 {
                     Destroy(collision.gameObject);
