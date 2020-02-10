@@ -82,6 +82,9 @@ public class GameController : MonoBehaviour
 
     public TextMeshProUGUI codeText;
 
+    [Header("Code Highlight Colors")]
+    public Color keyword, type, comment, literal, stringLiteral, other;
+
     /// <summary>
     /// Array of object references to HintDisp objects on in-game hints
     /// </summary>
@@ -257,20 +260,61 @@ public class GameController : MonoBehaviour
             Cursor.visible = true;
         }
 
-        //if (switchMenu.activeInHierarchy)
-        //{
-        //    string selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
-        //    Color keyword = new Color(77.0f / 255.0f, 136.0f / 255.0f, 183.0f / 255.0f);
-        //    Color type = new Color(68.0f / 255.0f, 182.0f / 255.0f, 166.0f / 255.0f);
+        if (switchMenu.activeInHierarchy)
+        {
+            string selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
 
-        //    switch (selected)
-        //    {
-        //        case "Platformer":
-        //            codeText.text = "";
-        //            codeText.text += "public class ".HexEmbed(keyword) + "GameController".HexEmbed(type) + " : ".HexEmbed(Color.white) + "MonoBehaviour".HexEmbed(type);
-        //            break;
-        //    }
-        //}
+            codeText.text = "";
+            codeText.text += "public class ".HexEmbed(keyword) + "GameController".HexEmbed(type) + " : ".HexEmbed(other) + "MonoBehaviour\n".HexEmbed(type);
+            codeText.text += "{\n".HexEmbed(other);
+            codeText.text += "    private void ".HexEmbed(keyword) + "SwitchMode(".HexEmbed(other) + "string ".HexEmbed(keyword) + "newMode)\n".HexEmbed(other);
+            codeText.text += "    {\n".HexEmbed(other);
+            codeText.text += "        equipped = newMode;\n".HexEmbed(other);
+            codeText.text += "        GameObject ".HexEmbed(type) + "player;\n".HexEmbed(other);
+            codeText.text += "        Mover".HexEmbed(type) + "[] movers;\n\n".HexEmbed(other);
+            codeText.text += "        switch ".HexEmbed(type) + "(selected)\n".HexEmbed(other);
+            codeText.text += "        {\n".HexEmbed(other);
+
+            switch (selected)
+            {
+                case "Platformer":
+                    codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".platformer:\n".HexEmbed(other);
+                    codeText.text += "                player = ".HexEmbed(other) + "GameObject".HexEmbed(type) + ".Find(".HexEmbed(other) + "\"Player\"".HexEmbed(stringLiteral) + ");\n".HexEmbed(other);
+                    codeText.text += "                movers = player.GetComponent<".HexEmbed(other) + "Mover".HexEmbed(type) + ">();\n\n".HexEmbed(other);
+                    codeText.text += "                foreach ".HexEmbed(keyword) + "(".HexEmbed(other) + "Mover ".HexEmbed(type) + "mover ".HexEmbed(other) + "in ".HexEmbed(keyword) + "movers)\n".HexEmbed(other);
+                    codeText.text += "                {\n".HexEmbed(other);
+                    codeText.text += "                    if ".HexEmbed(keyword) + "(mover.GetType() == \n".HexEmbed(other);
+                    codeText.text += "                        typeof".HexEmbed(keyword) + "(".HexEmbed(other) + "PFController".HexEmbed(type) + "))\n".HexEmbed(other);
+                    codeText.text += "                    {\n".HexEmbed(other);
+                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "                    } ".HexEmbed(other) + "else ".HexEmbed(keyword) + "{\n".HexEmbed(other);
+                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "                    }\n".HexEmbed(other);
+                    codeText.text += "                }\n".HexEmbed(other);
+                    break;
+
+                case "RPG":
+                    codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".rpg:\n".HexEmbed(other);
+                    codeText.text += "                player = ".HexEmbed(other) + "GameObject".HexEmbed(type) + ".Find(".HexEmbed(other) + "\"Player\"".HexEmbed(stringLiteral) + ");\n".HexEmbed(other);
+                    codeText.text += "                movers = player.GetComponent<".HexEmbed(other) + "Mover".HexEmbed(type) + ">();\n\n".HexEmbed(other);
+                    codeText.text += "                foreach ".HexEmbed(keyword) + "(".HexEmbed(other) + "Mover ".HexEmbed(type) + "mover ".HexEmbed(other) + "in ".HexEmbed(keyword) + "movers)\n".HexEmbed(other);
+                    codeText.text += "                {\n".HexEmbed(other);
+                    codeText.text += "                    if ".HexEmbed(keyword) + "(mover.GetType() == \n".HexEmbed(other);
+                    codeText.text += "                        typeof".HexEmbed(keyword) + "(".HexEmbed(other) + "RPGController".HexEmbed(type) + "))\n".HexEmbed(other);
+                    codeText.text += "                    {\n".HexEmbed(other);
+                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "                    } ".HexEmbed(other) + "else ".HexEmbed(keyword) + "{\n".HexEmbed(other);
+                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "                    }\n".HexEmbed(other);
+                    codeText.text += "                }\n".HexEmbed(other);
+                    break;
+            }
+
+            codeText.text += "                break".HexEmbed(keyword) + ";\n".HexEmbed(other);
+            codeText.text += "        }\n".HexEmbed(other);
+            codeText.text += "    }\n".HexEmbed(other);
+            codeText.text += "}".HexEmbed(other);
+        }
     }
 
     public void SwitchMode(string newMode)
@@ -420,7 +464,7 @@ public class GameController : MonoBehaviour
                     }
 
                     enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 1);
+                    enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 0);
                 }
 
                 player = GameObject.Find("Player");
@@ -443,7 +487,7 @@ public class GameController : MonoBehaviour
                     }
                 }
 
-                player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 1);
+                player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
