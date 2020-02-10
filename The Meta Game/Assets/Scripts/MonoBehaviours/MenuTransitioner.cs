@@ -19,7 +19,7 @@ public class MenuTransitioner : MonoBehaviour
             else
             {
                 collision.enabled = false;
-                GameController.singleton.ignoreHints = false;
+                // GameController.singleton.ignoreHints = false;
                 GameController.singleton.onMenu = false;
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(buildIndex));
             }
