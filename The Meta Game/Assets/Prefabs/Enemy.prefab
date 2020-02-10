@@ -134,7 +134,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: -949153941979863984, guid: 385cbef7b0395534686ae24520620ee8,
+  m_Sprite: {fileID: 3937665781116575559, guid: bbcd46eb5cf6d0f4c937d2a29006ec09,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -163,7 +163,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.50079364, y: 0.5014881}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 0.50079364, y: 0.5014881}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -247,6 +247,7 @@ MonoBehaviour:
   difficultyLevel: 1
   maxSecondsUntilStateSwitch: 0
   minSecondsUntilStateSwitch: 0
+  jumpForce: 0
   hitstun: 0
 --- !u!1 &3846122293547929517
 GameObject:
