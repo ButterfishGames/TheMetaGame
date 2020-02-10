@@ -295,18 +295,17 @@ public class GameController : MonoBehaviour
 
                 case "RPG":
                     codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".rpg:\n".HexEmbed(other);
-                    codeText.text += "                player = ".HexEmbed(other) + "GameObject".HexEmbed(type) + ".Find(".HexEmbed(other) + "\"Player\"".HexEmbed(stringLiteral) + ");\n".HexEmbed(other);
-                    codeText.text += "                movers = player.GetComponent<".HexEmbed(other) + "Mover".HexEmbed(type) + ">();\n\n".HexEmbed(other);
-                    codeText.text += "                foreach ".HexEmbed(keyword) + "(".HexEmbed(other) + "Mover ".HexEmbed(type) + "mover ".HexEmbed(other) + "in ".HexEmbed(keyword) + "movers)\n".HexEmbed(other);
-                    codeText.text += "                {\n".HexEmbed(other);
-                    codeText.text += "                    if ".HexEmbed(keyword) + "(mover.GetType() == \n".HexEmbed(other);
-                    codeText.text += "                        typeof".HexEmbed(keyword) + "(".HexEmbed(other) + "RPGController".HexEmbed(type) + "))\n".HexEmbed(other);
-                    codeText.text += "                    {\n".HexEmbed(other);
-                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
-                    codeText.text += "                    } ".HexEmbed(other) + "else ".HexEmbed(keyword) + "{\n".HexEmbed(other);
-                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
-                    codeText.text += "                    }\n".HexEmbed(other);
-                    codeText.text += "                }\n".HexEmbed(other);
+
+                    codeText.text += "                player.transform.position = \n".HexEmbed(other);
+                    codeText.text += "                    new ".HexEmbed(keyword) + "Vector3".HexEmbed(type) + "(\n".HexEmbed(other);
+                    codeText.text += "                        GridLocker(\n".HexEmbed(other);
+                    codeText.text += "                            player.transform.position.x\n".HexEmbed(other);
+                    codeText.text += "                        ),\n".HexEmbed(other);
+                    codeText.text += "                        GridLocker(\n".HexEmbed(other);
+                    codeText.text += "                            player.transform.position.y\n".HexEmbed(other);
+                    codeText.text += "                        ),\n".HexEmbed(other);
+                    codeText.text += "                        1\n".HexEmbed(other);
+                    codeText.text += "                    );\n".HexEmbed(other);
                     break;
             }
 
@@ -738,12 +737,12 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
 
             switchMenu.SetActive(true);
-            //Transform contentPanel = switchMenu.GetComponentInChildren<GridLayoutGroup>().transform;
+            Transform contentPanel = switchMenu.GetComponentInChildren<GridLayoutGroup>().transform;
             foreach (Mode mode in modes)
             {
                 if (mode.unlocked)
                 {
-                    GameObject button = Instantiate(modeButton, switchMenu.transform);
+                    GameObject button = Instantiate(modeButton, contentPanel);
                     button.GetComponent<Button>().onClick.AddListener(() => SwitchMode(mode.name));
                     button.GetComponentInChildren<Text>().text = mode.name;
                     if (EventSystem.current.currentSelectedGameObject == null)

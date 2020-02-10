@@ -96,10 +96,10 @@ public class PFEnemy : EnemyBehaviour
         }
 
         RaycastHit2D hit;
-        Vector2 dVec = new Vector2(dir, -1).normalized;
+        Vector2 dVec = new Vector2(dir *0.5f, -1).normalized;
         LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-        hit = Physics2D.Raycast(transform.position, dVec, 0.4f, mask);
+        hit = Physics2D.Raycast(transform.position, dVec, 1.5f, mask);
 
         if (hit.collider == null)
         {
