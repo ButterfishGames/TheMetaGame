@@ -122,6 +122,14 @@ public class PFController : Mover
     {
         float moveX = h * moveSpeed * Time.deltaTime;
         float moveY = rb.velocity.y;
+        if (moveX < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        if (moveX > 0)
+        {
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
 
         rb.velocity = new Vector2(moveX, moveY);
     }
