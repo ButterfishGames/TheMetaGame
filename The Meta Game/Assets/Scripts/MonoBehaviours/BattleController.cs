@@ -38,7 +38,7 @@ public class BattleController : MonoBehaviour
 
     private Button[] spellButtons;
 
-    private Troop currTroop;
+    public Troop currTroop;
 
     private GameObject enemy1;
 
@@ -64,9 +64,10 @@ public class BattleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainButtons = FindObjectsOfType<Button>();
-
         currCommand = Command.none;
+
+        mainButtons = FindObjectsOfType<Button>();
+        spellButtons = new Button[] { null };
 
         messagePanel.SetActive(false);
 
@@ -77,15 +78,17 @@ public class BattleController : MonoBehaviour
         currTroop = troops[Random.Range(0, troops.Length)];
         List<Button> buttonList = new List<Button>();
 
-        foreach (Enemy enemy in currTroop.enemies)
+        for(int i = 0; i < currTroop.enemies.Length; i++)
         {
             GameObject img = Instantiate(enemyImgPrefab, enemyCharSpace);
-            img.GetComponent<Image>().sprite = enemy.sprite;
-            enemy.SetImg(img);
+            img.GetComponent<Image>().sprite = currTroop.enemies[i].source.sprite;
+            currTroop.enemies[i].img = img;
 
             GameObject stats = Instantiate(enemyStatPrefab, enemyStatPanel);
-            enemy.SetStats(stats);
-            stats.GetComponent<Button>().onClick.AddListener(() => Target(enemy));
+            currTroop.enemies[i].stats = stats;
+
+            int enemyIndex = i;
+            stats.GetComponent<Button>().onClick.AddListener(() => Target(enemyIndex));
             buttonList.Add(stats.GetComponent<Button>());
 
             if (enemy1 == null)
@@ -99,14 +102,20 @@ public class BattleController : MonoBehaviour
             {
                 if (text.name.Equals("NameText"))
                 {
-                    text.text = enemy.name;
+                    if (currTroop.enemies[i].name.Equals(""))
+                    {
+                        currTroop.enemies[i].name = currTroop.enemies[i].source.name;
+                    }
+                    text.text = currTroop.enemies[i].name;
                 }
                 else if (text.name.Equals("HPText"))
                 {
-                    enemy.SetHP(enemy.maxHP);
-                    text.text = enemy.GetHP() + "/" + enemy.maxHP;
+                    currTroop.enemies[i].currHP = currTroop.enemies[i].source.maxHP;
+                    text.text = currTroop.enemies[i].currHP + "/" + currTroop.enemies[i].source.maxHP;
                 }
             }
+
+            stats.GetComponent<Button>().interactable = false;
         }
         enemyButtons = buttonList.ToArray();
 
@@ -171,14 +180,14 @@ public class BattleController : MonoBehaviour
 
     private IEnumerator EnemyTurn(Enemy enemy)
     {
-        enemy.GetImg().GetComponent<RectTransform>().anchoredPosition += new Vector2(30, 0);
-        Attack attack = enemy.attacks[Random.Range(0, enemy.attacks.Length)];
+        enemy.img.GetComponent<RectTransform>().anchoredPosition += new Vector2(30, 0);
+        Attack attack = enemy.source.attacks[Random.Range(0, enemy.source.attacks.Length)];
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = attack.name;
         yield return new WaitForSeconds(0.75f);
 
-        enemy.UseAttack(attack);
+        enemy.source.UseAttack(attack);
 
         if (GameController.singleton.GetHP() <= 0)
         {
@@ -195,22 +204,22 @@ public class BattleController : MonoBehaviour
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
             yield return new WaitForSeconds(0.75f);
             messagePanel.SetActive(false);
-            enemy.GetImg().GetComponent<RectTransform>().anchoredPosition -= new Vector2(30, 0);
+            enemy.img.GetComponent<RectTransform>().anchoredPosition -= new Vector2(30, 0);
             yield return new WaitForSeconds(0.25f);
             NextTurn();
         }
     }
 
-    public void Target(Enemy enemy)
+    public void Target(int enemyIndex)
     {
         switch (currCommand)
         {
             case Command.attack:
-                StartCoroutine(AttackRtn(enemy));
+                StartCoroutine(AttackRtn(enemyIndex));
                 break;
 
             case Command.magic:
-                StartCoroutine(DmgSpellRtn(currSpell, enemy));
+                StartCoroutine(DmgSpellRtn(currSpell, enemyIndex));
                 break;
 
             default:
@@ -255,7 +264,7 @@ public class BattleController : MonoBehaviour
         onMain = false;
     }
 
-    private IEnumerator AttackRtn(Enemy enemy)
+    private IEnumerator AttackRtn(int enemyIndex)
     {
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Attack!";
@@ -274,28 +283,42 @@ public class BattleController : MonoBehaviour
             crit = true;
         }
 
-        enemy.Damage(dmg);
+        currTroop.enemies[enemyIndex].currHP -= dmg;
 
         if (crit)
         {
             yield return new WaitForSeconds(0.75f);
         }
 
-        if (enemy.GetHP() <= 0)
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
         {
-            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = enemy.name + " was defeated!";
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
             bool replaceE1 = false;
 
-            if (enemy.GetStats() == enemy1)
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
             {
                 replaceE1 = true;
             }
 
             List<Enemy> temp = new List<Enemy>(currTroop.enemies);
-            temp.Remove(enemy);
-            Destroy(enemy.GetStats());
-            Destroy(enemy.GetImg());
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
             currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.stats.GetComponent<Button>());
+            }
+
+            enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
             yield return new WaitForSeconds(0.75f);
 
             if (currTroop.enemies.Length < 1)
@@ -307,17 +330,17 @@ public class BattleController : MonoBehaviour
             }
             else if (replaceE1)
             {
-                enemy1 = currTroop.enemies[0].GetStats();
+                enemy1 = currTroop.enemies[0].stats;
             }
         }
         else
         {
-            TextMeshProUGUI[] texts = enemy.GetStats().GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
                 if (text.name.Equals("HPText"))
                 {
-                    text.text = enemy.GetHP() + "/" + enemy.maxHP;
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
                 }
             }
         }
@@ -351,7 +374,7 @@ public class BattleController : MonoBehaviour
             {
                 count++;
                 GameObject spellButton = Instantiate(spellButtonPrefab, magicScroll.content);
-                spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName;
+                spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName + " [" + spell.spell.manaCost + "]";
                 spellButton.GetComponent<Button>().onClick.AddListener(() => Cast(spell.spell));
                 buttonList.Add(spellButton.GetComponent<Button>());
                 if (spell1 == null)
@@ -384,6 +407,11 @@ public class BattleController : MonoBehaviour
 
     public void Cast(Spell spell)
     {
+        if (spell.manaCost > GameController.singleton.GetMP())
+        {
+            return;
+        }
+
         onMagic = false;
         foreach (Button button in spellButtons)
         {
@@ -432,8 +460,13 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    private IEnumerator DmgSpellRtn(Spell spell, Enemy enemy)
+    private IEnumerator DmgSpellRtn(Spell spell, int enemyIndex)
     {
+        GameController.singleton.Cast(spell.manaCost);
+        playerStats.text = "Player\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
         yield return new WaitForSeconds(0.75f);
@@ -444,23 +477,37 @@ public class BattleController : MonoBehaviour
 
         int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
 
-        enemy.Damage(dmg);
+        currTroop.enemies[enemyIndex].currHP -= dmg;
 
-        if (enemy.GetHP() <= 0)
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
         {
-            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = enemy.name + " was defeated!";
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
             bool replaceE1 = false;
 
-            if (enemy.GetStats() == enemy1)
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
             {
                 replaceE1 = true;
             }
 
             List<Enemy> temp = new List<Enemy>(currTroop.enemies);
-            temp.Remove(enemy);
-            Destroy(enemy.GetStats());
-            Destroy(enemy.GetImg());
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
             currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.stats.GetComponent<Button>());
+            }
+
+            enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
             yield return new WaitForSeconds(0.75f);
 
             if (currTroop.enemies.Length < 1)
@@ -472,17 +519,17 @@ public class BattleController : MonoBehaviour
             }
             else if (replaceE1)
             {
-                enemy1 = currTroop.enemies[0].GetStats();
+                enemy1 = currTroop.enemies[0].stats;
             }
         }
         else
         {
-            TextMeshProUGUI[] texts = enemy.GetStats().GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
                 if (text.name.Equals("HPText"))
                 {
-                    text.text = enemy.GetHP() + "/" + enemy.maxHP;
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
                 }
             }
         }
@@ -505,35 +552,35 @@ public class BattleController : MonoBehaviour
 
         bool replaceE1 = false;
 
-        int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
-
         List<Enemy> dead = new List<Enemy>();
 
-        foreach (Enemy enemy in currTroop.enemies)
+        for (int i = 0; i < currTroop.enemies.Length; i++)
         {
-            enemy.Damage(dmg);
+            int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
 
-            TextMeshProUGUI[] texts = enemy.GetStats().GetComponentsInChildren<TextMeshProUGUI>();
+            currTroop.enemies[i].currHP -= dmg;
+
+            TextMeshProUGUI[] texts = currTroop.enemies[i].stats.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
                 if (text.name.Equals("HPText"))
                 {
-                    text.text = enemy.GetHP() + "/" + enemy.maxHP;
+                    text.text = currTroop.enemies[i].currHP + "/" + currTroop.enemies[i].source.maxHP;
                 }
             }
 
-            if (enemy.GetHP() <= 0)
+            if (currTroop.enemies[i].currHP <= 0)
             {
-                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = enemy.name + " was defeated!";
+                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[i].name + " was defeated!";
 
-                if (enemy.GetStats() == enemy1)
+                if (currTroop.enemies[i].stats == enemy1)
                 {
                     replaceE1 = true;
                 }
 
-                Destroy(enemy.GetStats());
-                Destroy(enemy.GetImg());
-                dead.Add(enemy);
+                Destroy(currTroop.enemies[i].stats);
+                Destroy(currTroop.enemies[i].img);
+                dead.Add(currTroop.enemies[i]);
                 yield return new WaitForSeconds(0.75f);
             }
         }
@@ -552,10 +599,16 @@ public class BattleController : MonoBehaviour
                 temp.Remove(deadEnemy);
             }
             currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.stats.GetComponent<Button>());
+            }
+            enemyButtons = buttonList.ToArray();
 
             if (replaceE1)
             {
-                enemy1 = currTroop.enemies[0].GetStats();
+                enemy1 = currTroop.enemies[0].stats;
             }
 
             messagePanel.SetActive(false);
@@ -575,6 +628,10 @@ public class BattleController : MonoBehaviour
         int amt = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
 
         GameController.singleton.Damage(-amt);
+
+        playerStats.text = "Player\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
 
         messagePanel.SetActive(false);
         ReturnToMain();
@@ -600,9 +657,15 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You failed to escape!";
-            NextTurn();
+            StartCoroutine(FleeFail());   
         }
+    }
+
+    private IEnumerator FleeFail()
+    {
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You failed to escape!";
+        yield return new WaitForSeconds(0.75f);
+        NextTurn();
     }
 
     private void ReturnToMain()
@@ -640,63 +703,13 @@ public struct Troop
 }
 
 [System.Serializable]
-public class Enemy
+public struct Enemy
 {
     public string name;
-    public Sprite sprite;
-    public int maxHP;
-    public Attack[] attacks;
-
-    private int currHP;
-    private GameObject stats;
-    private GameObject img;
-
-    public Enemy()
-    {
-        currHP = maxHP;
-    }
-
-    public void UseAttack(Attack attack)
-    {
-        int damage = attack.baseDmg;
-        damage = Mathf.FloorToInt(damage * Random.Range(1 - attack.var, 1 + attack.var));
-        GameController.singleton.Damage(damage);
-    }
-
-    public int GetHP()
-    {
-        return currHP;
-    }
-
-    public void SetHP(int val)
-    {
-        currHP = val;
-    }
-
-    public void Damage(int amt)
-    {
-        currHP -= amt;
-    }
-
-    public void SetStats(GameObject statObj)
-    {
-        stats = statObj;
-    }
-
-    public GameObject GetStats()
-    {
-        return stats;
-    }
-
-    public void SetImg(GameObject imgObj)
-    {
-        img = imgObj;
-    }
-
-    public GameObject GetImg()
-    {
-        return img;
-    }
+    public RPGEnemy source;
+    public GameObject stats;
+    public GameObject img;
+    public int currHP;
 }
 
 [System.Serializable]

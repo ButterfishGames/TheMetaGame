@@ -43,7 +43,7 @@ public class PFEnemy : EnemyBehaviour
     /// <summary>
     /// Used to determine current direction; 1 is right, -1 is left
     /// </summary>
-    private int dir = 1;
+    [HideInInspector]public int dir = 1;
 
     /// <summary>
     /// Reference to Rigidbody2D component on object
@@ -96,10 +96,10 @@ public class PFEnemy : EnemyBehaviour
         }
 
         RaycastHit2D hit;
-        Vector2 dVec = new Vector2(dir, -1).normalized;
+        Vector2 dVec = new Vector2(dir *0.5f, -1).normalized;
         LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-        hit = Physics2D.Raycast(transform.position, dVec, 0.4f, mask);
+        hit = Physics2D.Raycast(transform.position, dVec, 2, mask);
 
         if (hit.collider == null)
         {
@@ -131,6 +131,21 @@ public class PFEnemy : EnemyBehaviour
                 rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
             }
         }
+        if (rb.velocity.x >= 0)
+        {
+            if (transform.eulerAngles.y == 180) {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+        }
+        else
+        {
+            if (transform.eulerAngles.y == 0)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+        }
+
+        GetComponent<FGEnemy>().dir = dir;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

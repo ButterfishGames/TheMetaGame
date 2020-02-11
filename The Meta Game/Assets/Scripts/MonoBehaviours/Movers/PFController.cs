@@ -28,6 +28,12 @@ public class PFController : Mover
             return;
         }
 
+        if (Input.GetAxisRaw("Vertical") < 0)
+        {
+            StopCoroutine("GoThrough");
+            StartCoroutine("GoThrough");
+        }
+
         if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
         {
             Jump();
@@ -42,12 +48,88 @@ public class PFController : Mover
         }
 
         base.Update();
+
+        bool onGround = false;
+        bool onWall = false;
+        BoxCollider2D groundTrigger = null;
+        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D col in cols)
+        {
+            if (col.name.Equals("GroundTrigger"))
+            {
+                groundTrigger = col;
+            }
+        }
+
+        if (groundTrigger != null)
+        {
+            List<Collider2D> contacts = new List<Collider2D>();
+            groundTrigger.GetContacts(contacts);
+            foreach (Collider2D contact in contacts)
+            {
+                if (contact.CompareTag("Ground"))
+                {
+                    onGround = true;
+                }
+            }
+        }
+
+        if (onGround)
+        {
+            float distX = groundTrigger.bounds.extents.x;
+            Vector3 origin, origin2;
+            origin = origin2 = transform.position;
+            origin.x -= distX;
+            origin2.x += distX;
+            RaycastHit2D hit, hit2;
+
+            hit = Physics2D.Raycast(origin, Vector2.down, 0.2f,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+            hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.2f,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+
+            if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
+            {
+                onGround = false;
+            }
+
+            hit = Physics2D.Raycast(transform.position, Vector2.right, 0.2f,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            {
+                onWall = true;
+            }
+
+            hit = Physics2D.Raycast(transform.position, Vector2.left, 0.2f,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            {
+                onWall = true;
+            }
+        }
+
+        if (onGround)
+        {
+            grounded = true;
+        }
+        else if (!onWall)
+        {
+            grounded = false;
+        }
     }
 
     protected override void Move(float h, float v)
     {
         float moveX = h * moveSpeed * Time.deltaTime;
         float moveY = rb.velocity.y;
+        if (moveX < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        if (moveX > 0)
+        {
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
 
         rb.velocity = new Vector2(moveX, moveY);
     }
@@ -91,14 +173,6 @@ public class PFController : Mover
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (grounded && collision.CompareTag("Ground"))
-        {
-            grounded = false;
-        }
-    }
-
     public IEnumerator Die()
     {
         GameController.singleton.SetPaused(true);
@@ -109,5 +183,12 @@ public class PFController : Mover
         GetComponentInChildren<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(deathWait);
         GameController.singleton.Die();
+    }
+
+    private IEnumerator GoThrough()
+    {
+        gameObject.layer = LayerMask.NameToLayer("ThroughTemp");
+        yield return new WaitForSeconds(0.25f);
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 }

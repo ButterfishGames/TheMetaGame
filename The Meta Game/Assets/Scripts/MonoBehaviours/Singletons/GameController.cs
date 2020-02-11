@@ -76,6 +76,15 @@ public class GameController : MonoBehaviour
     [Tooltip("The amount of time in seconds over which the error text will fade")]
     public float errFadeTime;
 
+    public bool ignoreHints;
+
+    public bool onMenu;
+
+    public TextMeshProUGUI codeText;
+
+    [Header("Code Highlight Colors")]
+    public Color keyword, type, comment, literal, stringLiteral, other;
+
     /// <summary>
     /// Array of object references to HintDisp objects on in-game hints
     /// </summary>
@@ -138,6 +147,8 @@ public class GameController : MonoBehaviour
 
     private int strength, magic;
 
+    private float gScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -180,12 +191,20 @@ public class GameController : MonoBehaviour
             }
         }
 
+        gScale = GameObject.Find("Player").GetComponent<Rigidbody2D>().gravityScale;
+
         errText = GetComponentInChildren<TextMeshProUGUI>();
 
         StartCoroutine(LevelFade(true));
 
-        hints = new HintDisp[] { null };
-        FindHints();
+        if (!ignoreHints)
+        {
+            hints = new HintDisp[] { null };
+            while (hints[0] == null)
+            {
+                StartCoroutine(FindHints());
+            }
+        }
 
         if (resetMode)
         {
@@ -244,6 +263,61 @@ public class GameController : MonoBehaviour
         {
             Cursor.visible = true;
         }
+
+        if (switchMenu.activeInHierarchy)
+        {
+            string selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
+
+            codeText.text = "";
+            codeText.text += "public class ".HexEmbed(keyword) + "GameController".HexEmbed(type) + " : ".HexEmbed(other) + "MonoBehaviour\n".HexEmbed(type);
+            codeText.text += "{\n".HexEmbed(other);
+            codeText.text += "    private void ".HexEmbed(keyword) + "SwitchMode(".HexEmbed(other) + "string ".HexEmbed(keyword) + "newMode)\n".HexEmbed(other);
+            codeText.text += "    {\n".HexEmbed(other);
+            codeText.text += "        equipped = newMode;\n".HexEmbed(other);
+            codeText.text += "        GameObject ".HexEmbed(type) + "player;\n".HexEmbed(other);
+            codeText.text += "        Mover".HexEmbed(type) + "[] movers;\n\n".HexEmbed(other);
+            codeText.text += "        switch ".HexEmbed(type) + "(selected)\n".HexEmbed(other);
+            codeText.text += "        {\n".HexEmbed(other);
+
+            switch (selected)
+            {
+                case "Platformer":
+                    codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".platformer:\n".HexEmbed(other);
+                    codeText.text += "                player = ".HexEmbed(other) + "GameObject".HexEmbed(type) + ".Find(".HexEmbed(other) + "\"Player\"".HexEmbed(stringLiteral) + ");\n".HexEmbed(other);
+                    codeText.text += "                movers = player.GetComponent<".HexEmbed(other) + "Mover".HexEmbed(type) + ">();\n\n".HexEmbed(other);
+                    codeText.text += "                foreach ".HexEmbed(keyword) + "(".HexEmbed(other) + "Mover ".HexEmbed(type) + "mover ".HexEmbed(other) + "in ".HexEmbed(keyword) + "movers)\n".HexEmbed(other);
+                    codeText.text += "                {\n".HexEmbed(other);
+                    codeText.text += "                    if ".HexEmbed(keyword) + "(mover.GetType() == \n".HexEmbed(other);
+                    codeText.text += "                        typeof".HexEmbed(keyword) + "(".HexEmbed(other) + "PFController".HexEmbed(type) + "))\n".HexEmbed(other);
+                    codeText.text += "                    {\n".HexEmbed(other);
+                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "                    } ".HexEmbed(other) + "else ".HexEmbed(keyword) + "{\n".HexEmbed(other);
+                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "                    }\n".HexEmbed(other);
+                    codeText.text += "                }\n".HexEmbed(other);
+                    break;
+
+                case "RPG":
+                    codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".rpg:\n".HexEmbed(other);
+
+                    codeText.text += "                player.transform.position = \n".HexEmbed(other);
+                    codeText.text += "                    new ".HexEmbed(keyword) + "Vector3".HexEmbed(type) + "(\n".HexEmbed(other);
+                    codeText.text += "                        GridLocker(\n".HexEmbed(other);
+                    codeText.text += "                            player.transform.position.x\n".HexEmbed(other);
+                    codeText.text += "                        ),\n".HexEmbed(other);
+                    codeText.text += "                        GridLocker(\n".HexEmbed(other);
+                    codeText.text += "                            player.transform.position.y\n".HexEmbed(other);
+                    codeText.text += "                        ),\n".HexEmbed(other);
+                    codeText.text += "                        1\n".HexEmbed(other);
+                    codeText.text += "                    );\n".HexEmbed(other);
+                    break;
+            }
+
+            codeText.text += "                break".HexEmbed(keyword) + ";\n".HexEmbed(other);
+            codeText.text += "        }\n".HexEmbed(other);
+            codeText.text += "    }\n".HexEmbed(other);
+            codeText.text += "}".HexEmbed(other);
+        }
     }
 
     public void SwitchMode(string newMode)
@@ -287,8 +361,11 @@ public class GameController : MonoBehaviour
                     }
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     foreach (EnemyBehaviour behaviour in behaviours)
@@ -314,13 +391,13 @@ public class GameController : MonoBehaviour
                     rpgCon.mvmtCoroutine = null;
                 }
 
-                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.transform.Find("GroundTrigger").gameObject.SetActive(true);
-
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
                     if (mover.GetType().Equals(typeof(PFController)))
                     {
                         mover.enabled = true;
@@ -334,16 +411,29 @@ public class GameController : MonoBehaviour
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
-                Camera.main.GetComponent<CameraScroll>().enabled = true;
+                if (onMenu)
+                {
+                    Camera.main.GetComponent<CameraScroll>().enabled = false;
+                }
+                else
+                {
+                    Camera.main.GetComponent<CameraScroll>().enabled = true;
+                }
 
-                FindHints();
+                if (!ignoreHints)
+                {
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, true);
-                SetHintDisp(1, true);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, false);
-                SetHintDisp(4, false);
-                SetHintDisp(5, false);
+                    SetHintDisp(0, true);
+                    SetHintDisp(1, true);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, false);
+                    SetHintDisp(4, false);
+                    SetHintDisp(5, false);
+                }
                 break;
 
             case GameMode.rpg:
@@ -357,8 +447,11 @@ public class GameController : MonoBehaviour
                     col.gameObject.SetActive(true);
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     foreach (EnemyBehaviour behaviour in behaviours)
@@ -374,7 +467,7 @@ public class GameController : MonoBehaviour
                     }
 
                     enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 1);
+                    enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 0);
                 }
 
                 player = GameObject.Find("Player");
@@ -385,6 +478,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
@@ -396,21 +490,27 @@ public class GameController : MonoBehaviour
                     }
                 }
 
-                player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 1);
+                player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                FindHints();
+                if (!ignoreHints)
+                {
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, false);
-                SetHintDisp(1, false);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, true);
-                SetHintDisp(4, true);
-                SetHintDisp(5, false);
+                    SetHintDisp(0, false);
+                    SetHintDisp(1, false);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, true);
+                    SetHintDisp(4, true);
+                    SetHintDisp(5, false);
+                }
                 break;
 
             case GameMode.fps:
@@ -424,8 +524,11 @@ public class GameController : MonoBehaviour
                     col.gameObject.SetActive(false);
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+
                 foreach (GameObject enemy in enemies)
                 {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     foreach (EnemyBehaviour behaviour in behaviours)
@@ -443,11 +546,12 @@ public class GameController : MonoBehaviour
 
                 player = GameObject.Find("Player");
 
-                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
 
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.enabled = false;
                 }
@@ -461,14 +565,20 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
 
-                FindHints();
+                if (!ignoreHints)
+                {
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, false);
-                SetHintDisp(1, false);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, false);
-                SetHintDisp(4, false);
-                SetHintDisp(5, true);
+                    SetHintDisp(0, false);
+                    SetHintDisp(1, false);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, false);
+                    SetHintDisp(4, false);
+                    SetHintDisp(5, true);
+                }
                 break;
 
             case GameMode.fighting:
@@ -489,10 +599,19 @@ public class GameController : MonoBehaviour
                     }
                 }
 
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), false);
+
                 foreach (GameObject enemy in enemies)
                 {
-                    Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
-                    if(viewPos.x > 0.0f && viewPos.x < 1.0f && viewPos.y > 0.0f && viewPos.y < 1.0f)
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(true);
+                    enemy.GetComponent<FGEnemy>().hitstun = 0;
+
+                    Camera cam = FindObjectOfType<Camera>();
+                    Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+
+                    
+
+                    if (GeometryUtility.TestPlanesAABB(planes, enemy.GetComponent<Collider2D>().bounds))
                     {
                         enemy.GetComponent<FGEnemy>().changedInView = true;
                     }
@@ -500,6 +619,7 @@ public class GameController : MonoBehaviour
                     {
                         enemy.GetComponent<FGEnemy>().changedInView = false;
                     }
+
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
 
                     enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
@@ -518,10 +638,12 @@ public class GameController : MonoBehaviour
 
                 player = GameObject.Find("Player");
 
-                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    mover.GetComponent<FGController>().hitstun = 0;
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(true);
                     mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     if (mover.GetType().Equals(typeof(FGController)))
@@ -539,14 +661,20 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
-                FindHints();
+                if (!ignoreHints)
+                {
+                    while (hints[0] == null)
+                    {
+                        StartCoroutine(FindHints());
+                    }
 
-                SetHintDisp(0, false);
-                SetHintDisp(1, false);
-                SetHintDisp(2, shouldDisp[2]);
-                SetHintDisp(3, false);
-                SetHintDisp(4, false);
-                SetHintDisp(5, false);
+                    SetHintDisp(0, false);
+                    SetHintDisp(1, false);
+                    SetHintDisp(2, shouldDisp[2]);
+                    SetHintDisp(3, false);
+                    SetHintDisp(4, false);
+                    SetHintDisp(5, false);
+                }
                 break;
 
             default:
@@ -588,6 +716,11 @@ public class GameController : MonoBehaviour
 
     public void ToggleSwitchMenu()
     {
+        if (onMenu)
+        {
+            return;
+        }
+
         if (switchMenu.activeInHierarchy)
         {
             Button[] buttons = switchMenu.GetComponentsInChildren<Button>();
@@ -608,11 +741,12 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
 
             switchMenu.SetActive(true);
+            Transform contentPanel = switchMenu.GetComponentInChildren<GridLayoutGroup>().transform;
             foreach (Mode mode in modes)
             {
                 if (mode.unlocked)
                 {
-                    GameObject button = Instantiate(modeButton, switchMenu.transform);
+                    GameObject button = Instantiate(modeButton, contentPanel);
                     button.GetComponent<Button>().onClick.AddListener(() => SwitchMode(mode.name));
                     button.GetComponentInChildren<Text>().text = mode.name;
                     if (EventSystem.current.currentSelectedGameObject == null)
@@ -625,9 +759,12 @@ public class GameController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = false;
 
-            if (shouldDisp[2])
+            if (!ignoreHints)
             {
-                SetHintDisp(2, false);
+                if (hints[2] != null && shouldDisp[2])
+                {
+                    SetHintDisp(2, false);
+                }
             }
         }
     }
@@ -681,6 +818,7 @@ public class GameController : MonoBehaviour
         paused = true;
         StartCoroutine(ReloadLevel());
         currHP = maxHP;
+        currMP = maxMP;
     }
 
     private IEnumerator ReloadLevel()
@@ -747,6 +885,11 @@ public class GameController : MonoBehaviour
         currHP = Mathf.Clamp(currHP - damage, 0, maxHP);
     }
 
+    public void Cast(int mana)
+    {
+        currMP = Mathf.Clamp(currMP - mana, 0, maxMP);
+    }
+
     private IEnumerator SpriteDamageFlash()
     {
         SpriteRenderer renderer = GameObject.Find("Player").GetComponentInChildren<SpriteRenderer>();
@@ -786,13 +929,16 @@ public class GameController : MonoBehaviour
         hints[hint].SetDisplay(val);
     }
 
-    private void FindHints()
+    private IEnumerator FindHints()
     {
         while (hints[0] == null)
         {
             GameObject hintParent = GameObject.Find("Hints");
-            hints = hintParent.GetComponentsInChildren<HintDisp>(true);
-
+            if (hintParent != null)
+            {
+                hints = hintParent.GetComponentsInChildren<HintDisp>(true);
+            }
+            yield return new WaitForEndOfFrame();
         }
 
         for (int i = 0; i < hints.Length - 1; i++)
@@ -817,6 +963,26 @@ public class GameController : MonoBehaviour
     public int GetMP()
     {
         return currMP;
+    }
+
+    public IEnumerator FadeAndLoad(int buildIndex)
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(buildIndex);
+        yield return new WaitForEndOfFrame();
+        if (!ignoreHints)
+        {
+            hints = new HintDisp[] { null };
+            while (hints[0] == null)
+            {
+                StartCoroutine(FindHints());
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        SwitchMode(GameMode.platformer);
+        StartCoroutine(LevelFade(true));
+        paused = false;
     }
 
     public IEnumerator Battle()

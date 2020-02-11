@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - Reticle
   - Hint
+  - PlayerHitbox
+  - EnemyHitbox
   layers:
   - Default
   - TransparentFX
@@ -26,8 +28,8 @@ TagManager:
   - Enemy
   - Enemy2
   - DamageFloor
-  - 
-  - 
+  - ThroughPlatform
+  - ThroughTemp
   - 
   - 
   - 

@@ -23,6 +23,8 @@ public class Spell : ScriptableObject
     }
     public DamageType damageType;
 
+    public int manaCost;
+
     public int baseAmt;
 
     [Range(0, 1)]
