@@ -83,9 +83,9 @@ public class PFController : Mover
             origin2.x += distX;
             RaycastHit2D hit, hit2;
 
-            hit = Physics2D.Raycast(origin, Vector2.down, 0.2f,
+            hit = Physics2D.Raycast(origin, Vector2.down, transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.2f,
+            hit2 = Physics2D.Raycast(origin2, Vector2.down, transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
 
             if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
@@ -93,14 +93,14 @@ public class PFController : Mover
                 onGround = false;
             }
 
-            hit = Physics2D.Raycast(transform.position, Vector2.right, 0.2f,
+            hit = Physics2D.Raycast(transform.position, Vector2.right, transform.localScale.x,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
             if (hit.collider != null && hit.collider.CompareTag("Ground"))
             {
                 onWall = true;
             }
 
-            hit = Physics2D.Raycast(transform.position, Vector2.left, 0.2f,
+            hit = Physics2D.Raycast(transform.position, Vector2.left, transform.localScale.x,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
             if (hit.collider != null && hit.collider.CompareTag("Ground"))
             {
