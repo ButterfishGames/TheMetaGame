@@ -136,6 +136,16 @@ public class FGEnemy : EnemyBehaviour
 
     private Vector3 v3Offset;
 
+    private bool startRight;
+
+    private bool inNeutral;
+
+    private float secondsInOneDirection;
+
+    private float randomTime;
+
+    private bool choseTime;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
@@ -252,10 +262,10 @@ public class FGEnemy : EnemyBehaviour
                 Vector2 dVec = new Vector2(0, - 1).normalized;
                 LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-                hitF = Physics2D.Raycast(transform.position + v3Offset, dVec, 0.5f, mask);
-                hitB = Physics2D.Raycast(transform.position - v3Offset, dVec, 0.5f, mask);
-                Debug.DrawRay(transform.position + v3Offset, new Vector2(0, -1).normalized,Color.black);
-                Debug.DrawRay(transform.position - v3Offset, new Vector2(0, -1).normalized, Color.grey);
+                hitF = Physics2D.Raycast(transform.position + (v3Offset * dir), dVec, 0.5f, mask);
+                hitB = Physics2D.Raycast(transform.position - (v3Offset * dir), dVec, 0.5f, mask);
+                Debug.DrawRay(transform.position + (v3Offset * dir), new Vector2(0, -1).normalized,Color.black);
+                Debug.DrawRay(transform.position - (v3Offset * dir), new Vector2(0, -1).normalized, Color.grey);
                 Debug.DrawRay(transform.position, new Vector2(-dir, 0).normalized, Color.magenta);
                 if (hitF.collider == null)
                 {
@@ -288,19 +298,16 @@ public class FGEnemy : EnemyBehaviour
                     //}
                 }
                 Debug.Log(state);
-                Debug.Log(grounded);
+                //Debug.Log(choseTime);
                 switch (state)
                 {
                     case EnemyState.defense:
+                        inNeutral = false;
+                        choseTime = false;
                         switch (difficultyLevel)
                         {
                             case 1:
-                                if (transform.position.x - player.transform.position.x >= Mathf.Abs(1))
-                                {
-                                    Debug.Log("close");
-                                    state = EnemyState.offense;
-                                    stateSwitchTime = 0;
-                                }
+                                AutoOffenseSwitch(0.25f);
                                 if (hitB.collider != null)
                                 {
                                     rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
@@ -319,6 +326,7 @@ public class FGEnemy : EnemyBehaviour
                                 }
                                 break;
                             case 2:
+                                AutoOffenseSwitch(0.2f);
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -329,6 +337,7 @@ public class FGEnemy : EnemyBehaviour
                                 }
                                 break;
                             case 3:
+                                AutoOffenseSwitch(0.1f);
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -344,63 +353,110 @@ public class FGEnemy : EnemyBehaviour
                         }
                         break;
                     case EnemyState.neutral:
-                        switch (difficultyLevel)
+                        if(inNeutral == false)
                         {
-                            case 1:
-                                if (transform.position.x - player.transform.position.x >= Mathf.Abs(2))
-                                {
-                                    state = EnemyState.offense;
-                                    stateSwitchTime = 0;
-                                }
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
-                                }
-                                break;
-                            case 2:
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
-                                }
-                                break;
-                            case 3:
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
-                                }
-                                break;
-                            default:
-                                Debug.Log("ERROR: LEVEL DOES NOT EXIST");
-                                break;
+                            randomInt = Random.Range(1, 3);
+                            if (randomInt == 1)
+                            {
+                                startRight = true;
+                            }
+                            else if (randomInt == 2)
+                            {
+                                startRight = false;
+                            }
+                            inNeutral = true;
                         }
+                        
+                        AutoOffenseSwitch(1.0f);
+                        
+                        if(choseTime == false)
+                        {
+                            randomTime = Random.Range(0.5f,2.0f);
+                            choseTime = true;
+                        }
+
+                        if (facingDirection == Direction.right)
+                        {
+                            if (secondsInOneDirection < randomTime)
+                            {
+                                if (startRight == true)
+                                {
+                                    if (hitF.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                    }
+                                }
+                                else
+                                {
+                                    if (hitB.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                    }
+                                }
+                                secondsInOneDirection += Time.deltaTime;
+                            }
+                            else
+                            {
+                                if (startRight)
+                                {
+                                    startRight = false;
+                                }
+                                else
+                                {
+                                    startRight = true;
+                                }
+                                choseTime = false;
+                                secondsInOneDirection = 0;
+                            }
+                        }
+                        else if (facingDirection == Direction.left)
+                        {
+                            if (secondsInOneDirection < randomTime)
+                            {
+                                if (startRight == true)
+                                {
+                                    if (hitB.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                    }
+                                }
+                                else
+                                {
+                                    if (hitF.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                    }
+                                }
+                                secondsInOneDirection += Time.deltaTime;
+                            }
+                            else
+                            {
+                                if (startRight)
+                                {
+                                    startRight = false;
+                                }
+                                else{
+                                    startRight = true;
+                                }
+                                choseTime = false;
+                                secondsInOneDirection = 0;
+                            }
+                        }        
                         break;
                     case EnemyState.offense:
+                        inNeutral = false;
+                        choseTime = false;
                         switch (difficultyLevel)
                         {
                             case 1:
-                                if (transform.position.x - player.transform.position.x >= Mathf.Abs(4))
-                                {
-                                    Jump();
-                                }
+                                JumpCheck(4.0f, 2);
                                 //hit = Physics2D.Raycast(transform.position, dVecF, 2, mask);
                                 if (hitF.collider != null)
                                 {
                                     rb.velocity = new Vector2(dir * speed, rb.velocity.y);
                                 }
                                 else {
-                                    Jump();
+                                    Jump(100);
                                 }
                                 if (facingDirection == Direction.right)
                                 {
@@ -412,6 +468,7 @@ public class FGEnemy : EnemyBehaviour
                                 }
                                 break;
                             case 2:
+                                JumpCheck(4.0f, 5);
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -422,6 +479,7 @@ public class FGEnemy : EnemyBehaviour
                                 }
                                 break;
                             case 3:
+                                JumpCheck(5.0f, 10);
                                 if (facingDirection == Direction.right)
                                 {
 
@@ -452,16 +510,35 @@ public class FGEnemy : EnemyBehaviour
         GetComponent<PFEnemy>().dir = dir;
     }
 
-    private void Jump()
+    private void Jump(int jumpChance)
     {
         if (!grounded)
         {
             return;
         }
+        if (randomInt <= jumpChance) {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(new Vector2((jumpForce / 2) * dir, jumpForce), ForceMode2D.Impulse);
+            grounded = false;
+        }
+    }
 
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(new Vector2((jumpForce/2) * dir, jumpForce), ForceMode2D.Impulse);
-        grounded = false;
+    private void JumpCheck(float distance, int jumpChance)
+    {
+        if (transform.position.x - player.transform.position.x >= Mathf.Abs(distance))
+        {
+            randomInt = Random.Range(1, 101);
+            Jump(jumpChance);
+        }
+    }
+
+    private void AutoOffenseSwitch(float distance)
+    {
+        if (transform.position.x - player.transform.position.x >= Mathf.Abs(distance))
+        {
+            state = EnemyState.offense;
+            stateSwitchTime = 0;
+        }
     }
 
     private EnemyState ChooseRandomState(EnemyState state1, EnemyState state2)

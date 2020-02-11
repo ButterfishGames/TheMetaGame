@@ -195,10 +195,11 @@ MonoBehaviour:
   dir: 0
   changedInView: 0
   difficultyLevel: 1
-  maxSecondsUntilStateSwitch: 0
-  minSecondsUntilStateSwitch: 0
-  jumpForce: 0
+  maxSecondsUntilStateSwitch: 5
+  minSecondsUntilStateSwitch: 3
+  jumpForce: 6
   hitstun: 0
+  xOffsetForRay: 0.5
 --- !u!1 &3553222703423857321
 GameObject:
   m_ObjectHideFlags: 0
