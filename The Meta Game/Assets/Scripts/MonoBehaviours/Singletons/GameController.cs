@@ -147,6 +147,8 @@ public class GameController : MonoBehaviour
 
     private int strength, magic;
 
+    private float gScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -188,6 +190,8 @@ public class GameController : MonoBehaviour
                 levelFade = rect.gameObject;
             }
         }
+
+        gScale = GameObject.Find("Player").GetComponent<Rigidbody2D>().gravityScale;
 
         errText = GetComponentInChildren<TextMeshProUGUI>();
 
@@ -387,7 +391,7 @@ public class GameController : MonoBehaviour
                     rpgCon.mvmtCoroutine = null;
                 }
 
-                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
@@ -542,7 +546,7 @@ public class GameController : MonoBehaviour
 
                 player = GameObject.Find("Player");
 
-                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
 
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
@@ -634,7 +638,7 @@ public class GameController : MonoBehaviour
 
                 player = GameObject.Find("Player");
 
-                player.GetComponent<Rigidbody2D>().gravityScale = 1;
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
