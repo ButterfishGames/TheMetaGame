@@ -241,10 +241,12 @@ public class FGController : Mover
 
             if (h < 0)
             {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
                 dir = Direction.left;
             }
             else if (h > 0)
             {
+                transform.rotation = Quaternion.Euler(Vector3.zero);
                 dir = Direction.right;
             }
         }

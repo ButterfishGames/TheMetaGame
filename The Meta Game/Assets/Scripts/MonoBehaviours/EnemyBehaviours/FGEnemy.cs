@@ -181,11 +181,10 @@ public class FGEnemy : EnemyBehaviour
         {
             fighting = false;
         }
-        //Debug.Log(changedInView);
         if (fighting == true)
         {
             player = GameObject.FindGameObjectWithTag("Player");
-            if (transform.position.x > player.transform.position.x)
+             if (transform.position.x > player.transform.position.x)
             {
                 facingDirection = Direction.left;
             }
@@ -244,11 +243,10 @@ public class FGEnemy : EnemyBehaviour
                     
                 }
             }
-            //Debug.Log(stateSwitchTime);
 
             if (hitstun <= 0)
             {
-                //dVecF = Front, dVecB = Back, 30 degrees vector instead of 45
+                //dVecF = Front, dVecB = Back, offset and facing down
                 if (attacking == false)
                 {
                     hitbox.enabled = false;
@@ -267,38 +265,7 @@ public class FGEnemy : EnemyBehaviour
                 Debug.DrawRay(transform.position + (v3Offset * dir), new Vector2(0, -1).normalized,Color.black);
                 Debug.DrawRay(transform.position - (v3Offset * dir), new Vector2(0, -1).normalized, Color.grey);
                 Debug.DrawRay(transform.position, new Vector2(-dir, 0).normalized, Color.magenta);
-                if (hitF.collider == null)
-                {
-                    if (test)
-                    {
-                        Debug.Log("null");
-                    }
-
-                }
-                else
-                {
-                    //if (test)
-                    //{
-                    //    Debug.Log(hitF.collider.name);
-                    //}
-                    //dVecF = new Vector2(dir, 0);
-                    //hitF = Physics2D.Raycast(transform.position, dVecF, 0.25f, mask);
-                    //if (hitF.collider != null)
-                    //{
-
-                    //}
-                    //else
-                    //{
-                    //    hitF = Physics2D.Raycast(transform.position, dVecF, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Enemy")));
-                    //    if (hitF.collider != null && hitF.collider.CompareTag("Player"))
-                    //    {
-
-                    //    }
-                    //    rb.velocity = new Vector2(dir * speed, rb.velocity.y);
-                    //}
-                }
                 Debug.Log(state);
-                //Debug.Log(choseTime);
                 switch (state)
                 {
                     case EnemyState.defense:
@@ -307,45 +274,34 @@ public class FGEnemy : EnemyBehaviour
                         switch (difficultyLevel)
                         {
                             case 1:
-                                AutoOffenseSwitch(0.25f);
                                 if (hitB.collider != null)
                                 {
-                                    rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x , 2)) <= 3)
+                                    {
+                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                    }
                                 }
-                                else
-                                {
-                                    //rb.velocity = new Vector2(0, 0);
-                                }
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
-                                }
+                                AutoOffenseSwitch(0.25f);
                                 break;
                             case 2:
+                                if (hitB.collider != null)
+                                {
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
+                                    {
+                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                    }
+                                }
                                 AutoOffenseSwitch(0.2f);
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
-                                }
                                 break;
                             case 3:
+                                if (hitB.collider != null)
+                                {
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
+                                    {
+                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                                    }
+                                }
                                 AutoOffenseSwitch(0.1f);
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
-                                }
                                 break;
                             default:
                                 Debug.Log("ERROR: LEVEL DOES NOT EXIST");
@@ -506,7 +462,6 @@ public class FGEnemy : EnemyBehaviour
                 hitstun -= Time.deltaTime;
             }
         }
-        //Debug.Log(hitstun);
         GetComponent<PFEnemy>().dir = dir;
     }
 
@@ -525,7 +480,7 @@ public class FGEnemy : EnemyBehaviour
 
     private void JumpCheck(float distance, int jumpChance)
     {
-        if (transform.position.x - player.transform.position.x >= Mathf.Abs(distance))
+        if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) >= distance)
         {
             randomInt = Random.Range(1, 101);
             Jump(jumpChance);
@@ -534,7 +489,7 @@ public class FGEnemy : EnemyBehaviour
 
     private void AutoOffenseSwitch(float distance)
     {
-        if (transform.position.x - player.transform.position.x >= Mathf.Abs(distance))
+        if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= distance)
         {
             state = EnemyState.offense;
             stateSwitchTime = 0;
@@ -570,7 +525,6 @@ public class FGEnemy : EnemyBehaviour
                 hitThisFrame = true;
                 hitstun = collision.GetComponent<FightingHitbox>().hitstun;
                 currHP -= collision.GetComponent<FightingHitbox>().damage;
-                //Debug.Log(currHP + " " + hitstun);
                 if (collision.name == "SpecialMove(Clone)")
                 {
                     Destroy(collision.gameObject);
