@@ -145,9 +145,10 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
-  moveSpeed: 450
+  moveSpeed: 200
+  maxVelX: 7.5
   jumpForce: 20
-  wallJumpForce: 20
+  wallJumpForce: 6
   deathForce: 5
   deathWait: 10
 --- !u!114 &2826980262528341210
@@ -193,7 +194,7 @@ MonoBehaviour:
   jumpForce: 12
   deathForce: 0
   deathWait: 10
-  maxHealth: 30
+  maxHealth: 0
   maxTimeTillReset: 30
   special: {fileID: 5380071146857707867, guid: a4931da688c59104b824b2cdc57a3c0b, type: 3}
   hitstun: 0
