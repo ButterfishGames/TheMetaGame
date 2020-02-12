@@ -200,6 +200,13 @@ MonoBehaviour:
   jumpForce: 6
   hitstun: 0
   xOffsetForRay: 0.5
+  special: {fileID: 0}
+  lightHitstun: 1
+  mediumHitstun: 2
+  heavyHitstun: 3
+  lightDamage: 1
+  mediumDamage: 2
+  heavyDamage: 3
 --- !u!1 &3553222703423857321
 GameObject:
   m_ObjectHideFlags: 0

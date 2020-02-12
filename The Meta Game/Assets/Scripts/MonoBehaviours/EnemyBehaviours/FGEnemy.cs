@@ -106,8 +106,6 @@ public class FGEnemy : EnemyBehaviour
     /// </summary>
     private bool hitThisFrame;
 
-    private bool test = false;
-
     [Tooltip("How much force you want the enemy to have in their jump")]
     public float jumpForce;
 
@@ -128,23 +126,97 @@ public class FGEnemy : EnemyBehaviour
 
     [HideInInspector]public float hitstun;
 
+    /// <summary>
+    /// bool that checks if enemy is attacking
+    /// </summary>
     private bool attacking;
 
+    /// <summary>
+    /// Enemies hitbox to hit the player with
+    /// </summary>
     private BoxCollider2D hitbox;
 
+    /// <summary>
+    /// float offset for the rays that check if there is a cliff
+    /// </summary>
     public float xOffsetForRay;
 
     private Vector3 v3Offset;
 
+    /// <summary>
+    /// bool to see if the enmy will move right or left
+    /// </summary>
     private bool startRight;
 
+    /// <summary>
+    /// bool to check if the enemy is in the neutral state
+    /// </summary>
     private bool inNeutral;
 
+    /// <summary>
+    /// float to see how long the enemy has been moving in one direction while in neutral
+    /// </summary>
     private float secondsInOneDirection;
 
+    /// <summary>
+    /// float to determine the new max time to move in a direction while in neutral randomly
+    /// </summary>
     private float randomTime;
 
+    /// <summary>
+    /// bool to see if a random time has been chosen
+    /// </summary>
     private bool choseTime;
+
+    /// <summary>
+    /// Different kinds of attacks the enemy can do.
+    /// </summary>
+    private enum Attack
+    {
+        light,
+        medium,
+        heavy,
+        special
+    };
+
+    [Tooltip("Special GameObject to instantiate")]
+    public GameObject special;
+
+    /// <summary>
+    /// float to determine the length at which the hitbox is out.
+    /// </summary>
+    private float hitBoxActivationTime;
+
+    /// <summary>
+    /// float to determine the length of time after the hitbox has dissapeared.
+    /// </summary>
+    private float endLagTime;
+
+    /// <summary>
+    /// Stores current attack
+    /// </summary>
+    private Attack attackType;
+
+    private bool attackCoRoutineRunning;
+
+    [Tooltip("How much hitstun you want to give to the player when a light attack is performed")]
+    public float lightHitstun;
+
+    [Tooltip("How much hitstun you want to give to the player when a medium attack is performed")]
+    public float mediumHitstun;
+
+    [Tooltip("How much hitstun you want to give to the player when a heavy attack is performed")]
+    public float heavyHitstun;
+
+    [Tooltip("How much damage you want to deal when a light attack is performed")]
+    public int lightDamage;
+
+    [Tooltip("How much hitstun you want to deal when a medium attack is performed")]
+    public int mediumDamage;
+
+    [Tooltip("How much hitstun you want to deal when a heavy attack is performed")]
+    public int heavyDamage;
+
 
     void Start()
     {
@@ -156,6 +228,7 @@ public class FGEnemy : EnemyBehaviour
         hitbox = transform.Find("EnemyHitbox").GetComponent<BoxCollider2D>();
         hitThisFrame = false;
         v3Offset = new Vector3(xOffsetForRay,0,0);
+        attackCoRoutineRunning = false;
 
         currHP = maxHP;
 
@@ -323,7 +396,7 @@ public class FGEnemy : EnemyBehaviour
                             inNeutral = true;
                         }
                         
-                        AutoOffenseSwitch(1.0f);
+                        AutoOffenseSwitch(0.75f);
                         
                         if(choseTime == false)
                         {
@@ -405,44 +478,74 @@ public class FGEnemy : EnemyBehaviour
                         switch (difficultyLevel)
                         {
                             case 1:
-                                JumpCheck(4.0f, 2);
-                                //hit = Physics2D.Raycast(transform.position, dVecF, 2, mask);
-                                if (hitF.collider != null)
+                                if (!attacking)
                                 {
-                                    rb.velocity = new Vector2(dir * speed, rb.velocity.y);
-                                }
-                                else {
-                                    Jump(100);
-                                }
-                                if (facingDirection == Direction.right)
-                                {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
+                                    JumpCheck(4.0f, 2);
+                                    //hit = Physics2D.Raycast(transform.position, dVecF, 2, mask);
+                                    if (hitF.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                    }
+                                    else {
+                                        Jump(100);
+                                    }
+                                    if(Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
+                                    {
+                                        Debug.Log("Right bfore basic attack");
+                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                                        if (!attackCoRoutineRunning)
+                                        {
+                                            attackCoRoutineRunning = true;
+                                            StartCoroutine(AttackCoRoutine());
+                                        }
+                                    }
                                 }
                                 break;
                             case 2:
-                                JumpCheck(4.0f, 5);
-                                if (facingDirection == Direction.right)
+                                if (!attacking)
                                 {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
+                                    JumpCheck(4.0f, 5);
+                                    if (hitF.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                    }
+                                    else
+                                    {
+                                        Jump(100);
+                                    }
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
+                                    {
+                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                                        if (!attackCoRoutineRunning)
+                                        {
+                                            Debug.Log("about to start coroutine");
+                                            attackCoRoutineRunning = true;
+                                            StartCoroutine(AttackCoRoutine());
+                                        }
+                                    }
                                 }
                                 break;
                             case 3:
-                                JumpCheck(5.0f, 10);
-                                if (facingDirection == Direction.right)
+                                if (!attacking)
                                 {
-
-                                }
-                                else if (facingDirection == Direction.left)
-                                {
-
+                                    JumpCheck(5.0f, 10);
+                                    if (hitF.collider != null)
+                                    {
+                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                    }
+                                    else
+                                    {
+                                        Jump(100);
+                                    }
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
+                                    {
+                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                                        if (!attackCoRoutineRunning)
+                                        {
+                                            attackCoRoutineRunning = true;
+                                            StartCoroutine(AttackCoRoutine());
+                                        }
+                                    }
                                 }
                                 break;
                             default:
@@ -458,7 +561,12 @@ public class FGEnemy : EnemyBehaviour
             else
             {
                 hitbox.gameObject.SetActive(false);
-                attacking = false;
+                if(attacking == true)
+                {
+                    StopCoroutine(AttackCoRoutine());
+                    attackCoRoutineRunning = false;
+                    attacking = false;
+                }
                 hitstun -= Time.deltaTime;
             }
         }
@@ -512,6 +620,20 @@ public class FGEnemy : EnemyBehaviour
         }
     }
 
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity, float yVelocity, float hitstunGiven, int damage)
+    {
+        attackType = attack;
+        hitBoxActivationTime = hitboxTime;
+        endLagTime = lag;
+        if (grounded)
+        {
+            rb.velocity = new Vector2(xVelocity, yVelocity);
+        }
+        hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven;
+        hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
+        attacking = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
@@ -531,6 +653,50 @@ public class FGEnemy : EnemyBehaviour
                 }
             }
         }
+    }
+
+    private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
+    {
+        //if(dir == Direction.left)
+        //{
+        //    offsetX *= -1;
+        //    offsetY *= -1;
+        //}
+        hitbox.offset = new Vector2(offsetX, offsetY);
+        hitbox.size = new Vector2(sizeX, sizeY);
+    }
+
+    private IEnumerator AttackCoRoutine()
+    {
+        if (grounded)
+        {
+            rb.velocity = new Vector2(0.0f, rb.velocity.y);
+        }
+        switch (attackType)
+        {
+            case Attack.light:
+                HitBoxSizeAndPos(0.6f, 0.0f, 0.5f, 0.5f);
+                break;
+            case Attack.medium:
+                HitBoxSizeAndPos(1.0f, 0.0f, 1.0f, 0.5f);
+                break;
+            case Attack.heavy:
+                HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
+                break;
+            case Attack.special:
+                break;
+            default:
+                Debug.Log("ERROR: INVALID STARTING ATTACK");
+                break;
+        }
+        hitbox.gameObject.SetActive(true);
+        yield return new WaitForSeconds(hitBoxActivationTime);
+        hitbox.gameObject.SetActive(false);
+        yield return new WaitForSeconds(endLagTime);
+        randomInt = Random.Range(1, 3);
+        state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
+        attacking = false;
+        attackCoRoutineRunning = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
