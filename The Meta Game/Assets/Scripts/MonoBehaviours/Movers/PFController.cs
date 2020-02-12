@@ -21,6 +21,23 @@ public class PFController : Mover
     /// </summary>
     private bool grounded;
 
+    private BoxCollider2D groundTrigger;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        groundTrigger = null;
+        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D col in cols)
+        {
+            if (col.name.Equals("GroundTrigger"))
+            {
+                groundTrigger = col;
+            }
+        }
+    }
+
     protected override void Update()
     {
         if (GameController.singleton.GetPaused())
@@ -40,7 +57,7 @@ public class PFController : Mover
         }
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (GameController.singleton.GetPaused())
         {
@@ -51,15 +68,6 @@ public class PFController : Mover
 
         bool onGround = false;
         bool onWall = false;
-        BoxCollider2D groundTrigger = null;
-        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
-        foreach (BoxCollider2D col in cols)
-        {
-            if (col.name.Equals("GroundTrigger"))
-            {
-                groundTrigger = col;
-            }
-        }
 
         if (groundTrigger != null)
         {
@@ -67,6 +75,7 @@ public class PFController : Mover
             groundTrigger.GetContacts(contacts);
             foreach (Collider2D contact in contacts)
             {
+                Debug.Log(contact.tag);
                 if (contact.CompareTag("Ground"))
                 {
                     onGround = true;
@@ -83,9 +92,9 @@ public class PFController : Mover
             origin2.x += distX;
             RaycastHit2D hit, hit2;
 
-            hit = Physics2D.Raycast(origin, Vector2.down, transform.localScale.y,
+            hit = Physics2D.Raycast(origin, Vector2.down, 0.4f * transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            hit2 = Physics2D.Raycast(origin2, Vector2.down, transform.localScale.y,
+            hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.4f * transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
 
             if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
@@ -93,14 +102,14 @@ public class PFController : Mover
                 onGround = false;
             }
 
-            hit = Physics2D.Raycast(transform.position, Vector2.right, transform.localScale.x,
+            hit = Physics2D.Raycast(transform.position, Vector2.right, 0.4f * transform.localScale.x,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
             if (hit.collider != null && hit.collider.CompareTag("Ground"))
             {
                 onWall = true;
             }
 
-            hit = Physics2D.Raycast(transform.position, Vector2.left, transform.localScale.x,
+            hit = Physics2D.Raycast(transform.position, Vector2.left, 0.4f * transform.localScale.x,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
             if (hit.collider != null && hit.collider.CompareTag("Ground"))
             {
@@ -158,7 +167,7 @@ public class PFController : Mover
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    /*private void OnTriggerStay2D(Collider2D collision)
     {
         if (GetComponent<FGController>().enabled == false) {
             if (!grounded && collision.CompareTag("Ground"))
@@ -171,7 +180,7 @@ public class PFController : Mover
                 }
             }
         }
-    }
+    }*/
 
     public IEnumerator Die()
     {
