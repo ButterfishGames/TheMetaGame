@@ -149,6 +149,8 @@ public class GameController : MonoBehaviour
 
     private float gScale;
 
+    private float camSize;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -192,6 +194,7 @@ public class GameController : MonoBehaviour
         }
 
         gScale = GameObject.Find("Player").GetComponent<Rigidbody2D>().gravityScale;
+        camSize = Camera.main.orthographicSize;
 
         errText = GetComponentInChildren<TextMeshProUGUI>();
 
@@ -397,7 +400,7 @@ public class GameController : MonoBehaviour
                 {
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.transform.Find("GroundTrigger").gameObject.SetActive(true);
-                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     if (mover.GetType().Equals(typeof(PFController)))
                     {
                         mover.enabled = true;
@@ -409,7 +412,7 @@ public class GameController : MonoBehaviour
                 }
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 if (onMenu)
                 {
@@ -478,7 +481,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
-                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
@@ -493,7 +496,7 @@ public class GameController : MonoBehaviour
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
@@ -551,7 +554,7 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
-                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.5f);
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.enabled = false;
                 }
@@ -643,7 +646,7 @@ public class GameController : MonoBehaviour
                 foreach (Mover mover in movers)
                 {
                     mover.GetComponent<FGController>().hitstun = 0;
-                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(true);
                     mover.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                     if (mover.GetType().Equals(typeof(FGController)))
@@ -657,7 +660,7 @@ public class GameController : MonoBehaviour
                 }
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Ortho(-5.3f * aspect, 5.3f * aspect, -5.3f, 5.3f, 0.3f, 1000.0f);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
 
