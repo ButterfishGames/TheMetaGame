@@ -28,8 +28,6 @@ public class PFController : Mover
             return;
         }
 
-        Debug.Log(rb.velocity.y);
-
         if (Input.GetAxisRaw("Vertical") < 0)
         {
             StopCoroutine("GoThrough");

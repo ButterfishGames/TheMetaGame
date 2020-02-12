@@ -17,8 +17,10 @@ public class FGController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
-    [Tooltip("Players health")]
-    public int health;
+    [Tooltip("Players max health")]
+    public int maxHealth;
+
+    private int health;
 
     /// <summary>
     /// Tracks whether the player is currently on the ground
@@ -134,9 +136,21 @@ public class FGController : Mover
     /// </summary>
     private float hitBoxActivationTime;
 
+    /// <summary>
+    /// float to determine the length of time after the hitbox has dissapeared.
+    /// </summary>
+    private float endLagTime;
+
+    /// <summary>
+    /// To detect if the enemy has been hit on this frame because it picks up two instances for some reason
+    /// </summary>
+    private bool hitThisFrame;
+
     protected override void Start()
     {
         base.Start();
+
+        health = maxHealth;
 
         inputs = new InputDirection[3];
         inputsHeld = new bool[5];
@@ -150,6 +164,7 @@ public class FGController : Mover
             inputsHeld[i] = false;
         }
         attacking = false;
+        hitThisFrame = false;
 
         hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
     }
@@ -159,7 +174,9 @@ public class FGController : Mover
         if(health <= 0)
         {
             GameController.singleton.Die();
+            health = maxHealth; 
         }
+        hitThisFrame = false;
         if (hitstun <= 0)
         {
             float h = Input.GetAxisRaw("Horizontal");
@@ -233,21 +250,24 @@ public class FGController : Mover
     {
         if (!attacking)
         {
-            float moveX = h * moveSpeed * Time.deltaTime;
-            float moveY = rb.velocity.y;
-
-            rb.velocity = new Vector2(moveX, moveY);
-
-
-            if (h < 0)
+            if (hitstun <= 0)
             {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-                dir = Direction.left;
-            }
-            else if (h > 0)
-            {
-                transform.rotation = Quaternion.Euler(Vector3.zero);
-                dir = Direction.right;
+                float moveX = h * moveSpeed * Time.deltaTime;
+                float moveY = rb.velocity.y;
+
+                rb.velocity = new Vector2(moveX, moveY);
+
+
+                if (h < 0)
+                {
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    dir = Direction.left;
+                }
+                else if (h > 0)
+                {
+                    transform.rotation = Quaternion.Euler(Vector3.zero);
+                    dir = Direction.right;
+                }
             }
         }
 
@@ -326,8 +346,15 @@ public class FGController : Mover
         }
         else if (collision.CompareTag("EnemyHitbox"))
         {
-            hitstun = collision.GetComponent<FightingHitbox>().hitstun;
-            health -= collision.GetComponent<FightingHitbox>().damage;
+            if (hitThisFrame == false) {
+                hitThisFrame = true;
+                hitstun = collision.GetComponent<FightingHitbox>().hitstun;
+                health -= collision.GetComponent<FightingHitbox>().damage;
+                if(collision.name == "SpecialMove(Clone)" && collision.CompareTag("EnemyHitbox"))
+                {
+                    Destroy(collision.gameObject);
+                }
+            }
         }
         else if (collision.CompareTag("Killbox"))
         {
@@ -345,11 +372,11 @@ public class FGController : Mover
 
     private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
-        if(dir == Direction.left)
-        {
-            offsetX *= -1;
-            offsetY *= -1;
-        }
+        //if(dir == Direction.left)
+        //{
+        //    offsetX *= -1;
+        //    offsetY *= -1;
+        //}
         hitbox.offset = new Vector2(offsetX, offsetY);
         hitbox.size = new Vector2(sizeX, sizeY);
     }
@@ -381,23 +408,24 @@ public class FGController : Mover
             }
             else if (Input.GetAxis("Light") > 0)
             {
-                BasicAttack(Attack.light, 1.0f, 0.0f, 0.0f, lightHitstun, lightDamage);
+                BasicAttack(Attack.light, 0.2f, 0.3f, 0.0f, 0.0f, lightHitstun, lightDamage);
             }
             else if (Input.GetAxis("Medium") > 0)
             {
-                BasicAttack(Attack.medium, 1.0f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
             }
             else if (Input.GetAxis("Heavy") > 0)
             {
-                BasicAttack(Attack.heavy, 1.0f, 0.0f, 0.0f, heavyHitstun, heavyDamage);
+                BasicAttack(Attack.heavy, 0.4f, 0.7f, 0.0f, 0.0f, heavyHitstun, heavyDamage);
             }
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float xVelocity,  float yVelocity, float hitstunGiven, int damage)
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage)
     {
         attackType = attack;
         hitBoxActivationTime = hitboxTime;
+        endLagTime = lag;
         if (grounded)
         {
             rb.velocity = new Vector2(xVelocity, yVelocity);
@@ -432,6 +460,8 @@ public class FGController : Mover
         }
         hitbox.gameObject.SetActive(true);
         yield return new WaitForSeconds(hitBoxActivationTime);
+        hitbox.gameObject.SetActive(false);
+        yield return new WaitForSeconds(endLagTime);
         attacking = false;
         attackCoRoutineRunning = false;
     }

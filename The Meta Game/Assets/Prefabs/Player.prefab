@@ -189,11 +189,11 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
-  moveSpeed: 150
-  jumpForce: 6
+  moveSpeed: 300
+  jumpForce: 12
   deathForce: 0
   deathWait: 10
-  health: 30
+  maxHealth: 30
   maxTimeTillReset: 30
   special: {fileID: 5380071146857707867, guid: a4931da688c59104b824b2cdc57a3c0b, type: 3}
   hitstun: 0

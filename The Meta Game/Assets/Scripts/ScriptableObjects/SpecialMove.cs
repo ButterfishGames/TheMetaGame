@@ -29,14 +29,4 @@ public class SpecialMove : MonoBehaviour
         }
         transform.Translate(Time.deltaTime * speed, 0, 0);
     }
-
-    private void OnColliderEnter2D(Collision2D collision)
-    {
-        if(collision.collider.CompareTag("Enemy"))
-        {
-            Debug.Log("Before Destroy");
-            Destroy(gameObject);
-            Debug.Log("After Destroy");
-        }
-    }
 }
