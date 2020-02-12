@@ -146,6 +146,8 @@ public class FGController : Mover
     /// </summary>
     private bool hitThisFrame;
 
+    private bool[] hitConfirm;
+
     protected override void Start()
     {
         base.Start();
@@ -154,6 +156,7 @@ public class FGController : Mover
 
         inputs = new InputDirection[3];
         inputsHeld = new bool[5];
+        hitConfirm = new bool[3];
 
         for (int i = 0; i < inputs.Length - 1; i++)
         {
@@ -162,6 +165,10 @@ public class FGController : Mover
         for (int i = 0; i < inputsHeld.Length - 1; i++)
         {
             inputsHeld[i] = false;
+        }
+        for (int i = 0; i < hitConfirm.Length - 1; i++)
+        {
+            hitConfirm[i] = false;
         }
         attacking = false;
         hitThisFrame = false;
@@ -390,6 +397,15 @@ public class FGController : Mover
             {
                 if (dir == Direction.right)
                 {
+                    //if(hitConfirm[1] == true || hitConfirm[2] == true || hitConfirm[3] == true)
+                    //{
+                    //    for (int i = 0; i < hitConfirm.Length - 1; i++)
+                    //    {
+                    //        hitConfirm[i] = false;
+                    //    }
+                    //    StopCoroutine(AttackCoRoutine());
+                    //    hitbox.gameObject.SetActive(false);
+                    //}
                     attacking = true;
                     GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
                     specialMove.tag = "PlayerHitbox";
@@ -399,9 +415,8 @@ public class FGController : Mover
                 else
                 {
                     attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
                     specialMove.tag = "PlayerHitbox";
-                    specialMove.gameObject.GetComponent<SpecialMove>().speed *= -1;
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
                 }
