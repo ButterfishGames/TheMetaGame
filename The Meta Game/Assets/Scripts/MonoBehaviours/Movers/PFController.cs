@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PFController : Mover
 {
-    [Tooltip("The rate at which the object moves")]
+    [Tooltip("The rate at which the object accelerates")]
     public float moveSpeed;
+
+    [Tooltip("The maximum speed at which the object may move")]
+    public float maxVelX;
 
     [Tooltip("The vertical force applied to the object when it jumps (includes wall jumping)")]
     public float jumpForce;
@@ -113,40 +116,45 @@ public class PFController : Mover
                 onGround = false;
             }
 
-            origin = origin2 = transform.position;
-            origin.y += distY;
-            origin2.y -= distY;
-            RaycastHit2D hit3, hit4;
-            hit = Physics2D.Raycast(origin, Vector2.right, 0.4f * transform.localScale.x,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            hit2 = Physics2D.Raycast(origin2, Vector2.right, 0.4f * transform.localScale.x,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            hit3 = Physics2D.Raycast(origin, Vector2.left, 0.4f * transform.localScale.x,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            hit4 = Physics2D.Raycast(origin2, Vector2.left, 0.4f * transform.localScale.x,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+            if (!onGround)
+            {
+                origin = origin2 = transform.position;
+                origin.y += distY;
+                origin2.y -= distY;
+                RaycastHit2D hit3, hit4;
+                hit = Physics2D.Raycast(origin, Vector2.right, 0.4f * transform.localScale.x,
+                    ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                hit2 = Physics2D.Raycast(origin2, Vector2.right, 0.4f * transform.localScale.x,
+                    ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                hit3 = Physics2D.Raycast(origin, Vector2.left, 0.4f * transform.localScale.x,
+                    ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                hit4 = Physics2D.Raycast(origin2, Vector2.left, 0.4f * transform.localScale.x,
+                    ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
 
-            if ((hit.collider != null && hit.collider.CompareTag("Ground")) || (hit2.collider != null && hit2.collider.CompareTag("Ground")))
-            {
-                onWall = true;
-                wallDir = 1;
-                transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-            }
-            else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
-            {
-                onWall = true;
-                wallDir = -1;
-                transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-            }
-            else
-            {
-                onWall = false;
+                if ((hit.collider != null && hit.collider.CompareTag("Ground")) || (hit2.collider != null && hit2.collider.CompareTag("Ground")))
+                {
+                    onWall = true;
+                    wallDir = 1;
+                    transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
+                }
+                else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
+                {
+                    onWall = true;
+                    wallDir = -1;
+                    transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
+                }
+                else
+                {
+                    onWall = false;
+                }
             }
         }
 
         if (onGround)
         {
+            onWall = false;
             animator.SetBool("grounded", true);
+            animator.SetBool("walled", false);
             animator.SetBool("jumping", false);
             grounded = true;
         }
@@ -181,7 +189,10 @@ public class PFController : Mover
 
     protected override void Move(float h, float v)
     {
-        float moveX = h * moveSpeed * Time.deltaTime;
+        float moveX = Input.GetAxisRaw("Horizontal") == 0 ?
+            (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
+            (grounded ? Mathf.Clamp(rb.velocity.x + (h * moveSpeed * Time.deltaTime), -maxVelX, maxVelX) : 
+            Mathf.Clamp(rb.velocity.x + (h * (moveSpeed/10) * Time.deltaTime), -maxVelX, maxVelX));
         float moveY = rb.velocity.y;
         if (moveX < 0 && !onWall)
         {
@@ -213,7 +224,8 @@ public class PFController : Mover
         Debug.Log(onWall);
         if (onWall)
         {
-            xForce = wallDir * wallJumpForce;
+            xForce = -wallDir * wallJumpForce;
+            Debug.Log(xForce);
         }
 
         rb.AddForce(new Vector2(xForce, jumpForce), ForceMode2D.Impulse);
