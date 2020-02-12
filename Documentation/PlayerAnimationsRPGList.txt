@@ -1,0 +1,26 @@
+TRANSISTION
+1-18 Platformer to RPG
+20-35 RPG to Platformer
+
+MOVEMENT
+37-44 RPG Move Down
+46-48 RPG Down Damage
+50-57 RPG Move Left
+59-61 RPG Left Damage
+63-70 RPG Move Right
+72-74 RPG Right Damage
+76-83 RPG Move Up
+85-87 RPG Up Damage
+
+COMBAT
+89-98 RPG Combat Fire Cast
+100-109 RPG Combat Heal Cast
+111-119 RPG Combat Lightning
+121-126 RPG Combat Ice Cast
+128-137 RPG Combat Sword Attack
+Player Idle is the same as Platformer but it does need to be flipped horizontal
+
+COMBAT DAMAGE/WIN STATE
+139-144 RPG Player Damage
+146-204 RPG Player Death
+205-212 RPG Win
