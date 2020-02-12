@@ -7,8 +7,11 @@ public class PFController : Mover
     [Tooltip("The rate at which the object moves")]
     public float moveSpeed;
 
-    [Tooltip("The force applied to the object when it jumps")]
+    [Tooltip("The vertical force applied to the object when it jumps (includes wall jumping)")]
     public float jumpForce;
+
+    [Tooltip("The horizontal force applied to the object when it wall jumps")]
+    public float wallJumpForce;
 
     [Tooltip("The force applied for death animation")]
     public float deathForce;
@@ -16,10 +19,36 @@ public class PFController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
+    private Animator animator;
+
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
     private bool grounded;
+
+    private bool onWall;
+
+    private int wallDir;
+
+    private BoxCollider2D groundTrigger;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        groundTrigger = null;
+        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D col in cols)
+        {
+            if (col.name.Equals("GroundTrigger"))
+            {
+                groundTrigger = col;
+            }
+        }
+
+        onWall = false;
+        animator = GetComponentInChildren<Animator>();
+    }
 
     protected override void Update()
     {
@@ -40,7 +69,7 @@ public class PFController : Mover
         }
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (GameController.singleton.GetPaused())
         {
@@ -50,16 +79,6 @@ public class PFController : Mover
         base.Update();
 
         bool onGround = false;
-        bool onWall = false;
-        BoxCollider2D groundTrigger = null;
-        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
-        foreach (BoxCollider2D col in cols)
-        {
-            if (col.name.Equals("GroundTrigger"))
-            {
-                groundTrigger = col;
-            }
-        }
 
         if (groundTrigger != null)
         {
@@ -77,15 +96,16 @@ public class PFController : Mover
         if (onGround)
         {
             float distX = groundTrigger.bounds.extents.x;
+            float distY = groundTrigger.bounds.extents.y;
             Vector3 origin, origin2;
             origin = origin2 = transform.position;
             origin.x -= distX;
             origin2.x += distX;
             RaycastHit2D hit, hit2;
 
-            hit = Physics2D.Raycast(origin, Vector2.down, transform.localScale.y,
+            hit = Physics2D.Raycast(origin, Vector2.down, 0.4f * transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            hit2 = Physics2D.Raycast(origin2, Vector2.down, transform.localScale.y,
+            hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.4f * transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
 
             if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
@@ -93,28 +113,69 @@ public class PFController : Mover
                 onGround = false;
             }
 
-            hit = Physics2D.Raycast(transform.position, Vector2.right, transform.localScale.x,
+            origin = origin2 = transform.position;
+            origin.y += distY;
+            origin2.y -= distY;
+            RaycastHit2D hit3, hit4;
+            hit = Physics2D.Raycast(origin, Vector2.right, 0.4f * transform.localScale.x,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            if (hit.collider != null && hit.collider.CompareTag("Ground"))
-            {
-                onWall = true;
-            }
+            hit2 = Physics2D.Raycast(origin2, Vector2.right, 0.4f * transform.localScale.x,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+            hit3 = Physics2D.Raycast(origin, Vector2.left, 0.4f * transform.localScale.x,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+            hit4 = Physics2D.Raycast(origin2, Vector2.left, 0.4f * transform.localScale.x,
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
 
-            hit = Physics2D.Raycast(transform.position, Vector2.left, transform.localScale.x,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
-            if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            if ((hit.collider != null && hit.collider.CompareTag("Ground")) || (hit2.collider != null && hit2.collider.CompareTag("Ground")))
             {
                 onWall = true;
+                wallDir = 1;
+                transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
+            }
+            else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
+            {
+                onWall = true;
+                wallDir = -1;
+                transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
+            }
+            else
+            {
+                onWall = false;
             }
         }
 
         if (onGround)
         {
+            animator.SetBool("grounded", true);
+            animator.SetBool("jumping", false);
             grounded = true;
         }
         else if (!onWall)
         {
+            animator.SetBool("grounded", false);
+            animator.SetBool("walled", false);
             grounded = false;
+        }
+        else
+        {
+            animator.SetBool("jumping", false);
+            if (Input.GetAxisRaw("Horizontal") == wallDir)
+            {
+                animator.SetBool("walled", true);
+            }
+            else
+            {
+                animator.SetBool("walled", false);
+            }
+        }
+
+        if (Mathf.Abs(rb.velocity.x) > 0.1f)
+        {
+            animator.SetBool("moving", true);
+        }
+        else
+        {
+            animator.SetBool("moving", false);
         }
     }
 
@@ -122,13 +183,15 @@ public class PFController : Mover
     {
         float moveX = h * moveSpeed * Time.deltaTime;
         float moveY = rb.velocity.y;
-        if (moveX < 0)
+        if (moveX < 0 && !onWall)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
+            animator.SetBool("moving", true);
         }
-        if (moveX > 0)
+        else if (moveX > 0 && !onWall)
         {
             transform.rotation = Quaternion.Euler(Vector3.zero);
+            animator.SetBool("moving", true);
         }
 
         rb.velocity = new Vector2(moveX, moveY);
@@ -141,8 +204,20 @@ public class PFController : Mover
             return;
         }
 
+        animator.SetBool("grounded", false);
+        animator.SetBool("walled", false);
+        animator.SetBool("jumping", true);
         rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+
+        float xForce = 0;
+        Debug.Log(onWall);
+        if (onWall)
+        {
+            xForce = wallDir * wallJumpForce;
+        }
+
+        rb.AddForce(new Vector2(xForce, jumpForce), ForceMode2D.Impulse);
+        onWall = false;
         grounded = false;
     }
 
@@ -150,6 +225,7 @@ public class PFController : Mover
     {
         if (collision.CompareTag("Ground"))
         {
+            animator.SetBool("jumping", false);
             grounded = true;
         }
         else if (collision.CompareTag("Killbox"))
@@ -158,7 +234,7 @@ public class PFController : Mover
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    /*private void OnTriggerStay2D(Collider2D collision)
     {
         if (GetComponent<FGController>().enabled == false) {
             if (!grounded && collision.CompareTag("Ground"))
@@ -171,7 +247,7 @@ public class PFController : Mover
                 }
             }
         }
-    }
+    }*/
 
     public IEnumerator Die()
     {
