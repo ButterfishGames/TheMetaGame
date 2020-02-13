@@ -55847,6 +55847,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7817119665413950357, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
+        type: 3}
+      propertyPath: maxHealth
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -57781,16 +57786,26 @@ PrefabInstance:
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
       propertyPath: modes.Array.data[2].unlocked
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
-        type: 3}
-      propertyPath: resetUnlocks
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
+      propertyPath: resetUnlocks
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
+        type: 3}
       propertyPath: ignoreHints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
+        type: 3}
+      propertyPath: modes.Array.data[1].unlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
+        type: 3}
+      propertyPath: modes.Array.data[3].unlocked
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612568, guid: 9b40e746262972446a4c231183cf4cdb,
