@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: DeepWater
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 6362216067990907135, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: 441047901724292755, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -3204477150764702503, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: 228550482054294100, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -2665559582077842885, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: 2173083954532429583, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -9155315293679838757, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -5838837872939361907, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -4949234488021548726, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -572646973071943646, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: 7961961898731523050, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -7805934194191210118, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -8198060056294540544, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: 7937806950566177591, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -1523462219012310423, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  - {fileID: -5682104150777662444, guid: 26f18157cebe9ad4d9e08aaa25dc7e5d, type: 3}
+  m_MinSpeed: 1
+  m_MaxSpeed: 1
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 1
