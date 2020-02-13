@@ -221,11 +221,9 @@ public class PFController : Mover
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
         float xForce = 0;
-        Debug.Log(onWall);
         if (onWall)
         {
             xForce = -wallDir * wallJumpForce;
-            Debug.Log(xForce);
         }
 
         rb.AddForce(new Vector2(xForce, jumpForce), ForceMode2D.Impulse);
@@ -263,9 +261,11 @@ public class PFController : Mover
 
     public IEnumerator Die()
     {
+        animator.SetBool("dying", true);
         GameController.singleton.SetPaused(true);
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1);
+        animator.SetBool("dead", true);
         rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
         col.enabled = false;
         GetComponentInChildren<BoxCollider2D>().enabled = false;
