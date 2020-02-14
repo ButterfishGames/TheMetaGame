@@ -1,7 +1,55 @@
 fileFormatVersion: 2
 guid: 49c25d90c65d45b45a9a21b4b2e091e2
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 294076681186154158
+    second: Dancing Flower Blue_0
+  - first:
+      213: -3747434697219850760
+    second: Dancing Flower Blue_1
+  - first:
+      213: -2313873536379473723
+    second: Dancing Flower Blue_2
+  - first:
+      213: 633425320320247710
+    second: Dancing Flower Blue_3
+  - first:
+      213: 6664894514293656564
+    second: Dancing Flower Blue_4
+  - first:
+      213: 5523380948770704114
+    second: Dancing Flower Blue_5
+  - first:
+      213: 7209988367027128985
+    second: Dancing Flower Blue_6
+  - first:
+      213: 54543950882143056
+    second: Dancing Flower Blue_7
+  - first:
+      213: 23952980712793636
+    second: Dancing Flower Blue_8
+  - first:
+      213: 8823688157335567637
+    second: Dancing Flower Blue_9
+  - first:
+      213: -7591596182445524540
+    second: Dancing Flower Blue_10
+  - first:
+      213: 879158105221199385
+    second: Dancing Flower Blue_11
+  - first:
+      213: 2717887602291752811
+    second: Dancing Flower Blue_12
+  - first:
+      213: 6547575527763391119
+    second: Dancing Flower Blue_13
+  - first:
+      213: -8870849340816244516
+    second: Dancing Flower Blue_14
+  - first:
+      213: -1450372277711468915
+    second: Dancing Flower Blue_15
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +88,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -50,7 +98,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -120,8 +168,408 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
-    outline: []
+    sprites:
+    - serializedVersion: 2
+      name: Dancing Flower Blue_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 48
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b4aff8dfb640d84e9687e4abb1f5f3b
+      internalID: 294076681186154158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 48
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b1da6efefd971a47a5a4a42082a23ce
+      internalID: -3747434697219850760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_2
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 48
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26fe4501b4189b44c98801cfd6a98072
+      internalID: -2313873536379473723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_3
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 48
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cffea7742c4970144b7cd00b38c37916
+      internalID: 633425320320247710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_4
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 32
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c92ab247deda2e40a3e166d7d9ce45a
+      internalID: 6664894514293656564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_5
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 32
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e608d0105d1344caec219d469dc54b
+      internalID: 5523380948770704114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_6
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 32
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3afac5d550ef58544ab99db5a4b00f49
+      internalID: 7209988367027128985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_7
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 32
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1173fba5f264c2c4badceafb2baf66fa
+      internalID: 54543950882143056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_8
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 16
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf9c35e12d734114391cd7274b14516b
+      internalID: 23952980712793636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_9
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 16
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e76ce74742cf26a4897ba3efdf8405e0
+      internalID: 8823688157335567637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_10
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 16
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b2812d25dafdb94597ea2a1f93d9f0b
+      internalID: -7591596182445524540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_11
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 16
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eff6b6ecc05593c42b04645f83beac93
+      internalID: 879158105221199385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_12
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 432b352818877fc43af38de3e684647a
+      internalID: 2717887602291752811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_13
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50e8fb7d8c5dd974f8737e16b48a071b
+      internalID: 6547575527763391119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_14
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab40c3cb58c016947b1293e51368b9dd
+      internalID: -8870849340816244516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dancing Flower Blue_15
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f3773b7a8ca0024ca671ad50d8232b3
+      internalID: -1450372277711468915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -29.880394, y: 15.600098}
+      - {x: -29.880394, y: 31.490555}
+      - {x: -18.3189, y: 31.490555}
+      - {x: -18.3189, y: 15.600098}
+    - - {x: -29.933186, y: -0.8182812}
+      - {x: -29.933186, y: 15.177761}
+      - {x: -18.266106, y: 15.177761}
+      - {x: -18.266106, y: -0.8182812}
+    - - {x: -30.091562, y: -16.814323}
+      - {x: -30.091562, y: -1.6629562}
+      - {x: -18.424482, y: -1.6629562}
+      - {x: -18.424482, y: -16.814323}
+    - - {x: -30.091562, y: -31.912897}
+      - {x: -30.091562, y: -17.289452}
+      - {x: -18.424482, y: -17.289452}
+      - {x: -18.424482, y: -31.912897}
+    - - {x: -16.312794, y: -31.912897}
+      - {x: -16.312794, y: -18.18692}
+      - {x: -1.8477268, y: -18.18692}
+      - {x: -1.8477268, y: -31.912897}
+    - - {x: -0.15837479, y: -31.965689}
+      - {x: -0.15837479, y: -18.081337}
+      - {x: 13.831562, y: -18.081337}
+      - {x: 13.831562, y: -31.965689}
+    - - {x: 16.523964, y: -32}
+      - {x: 16.471172, y: -17.342245}
+      - {x: 28.666176, y: -17.342245}
+      - {x: 28.930138, y: -32}
+    - - {x: 18.002148, y: -16.708738}
+      - {x: 18.002148, y: -1.1878262}
+      - {x: 28.138252, y: -1.1878262}
+      - {x: 28.138252, y: -16.708738}
+    - - {x: 18.10773, y: -0.3959427}
+      - {x: 18.10773, y: 13.066074}
+      - {x: 28.03267, y: 13.066074}
+      - {x: 28.03267, y: -0.3959427}
+    - - {x: 19.797085, y: 14.861008}
+      - {x: 19.797085, y: 31.33218}
+      - {x: 27.34637, y: 31.33218}
+      - {x: 27.34637, y: 14.861008}
+    - - {x: 2.7451973, y: 15.600098}
+      - {x: 2.7451973, y: 31.490555}
+      - {x: 13.409225, y: 31.490555}
+      - {x: 13.409225, y: 15.600098}
+    - - {x: 2.0061073, y: -0.7654877}
+      - {x: 2.0061073, y: 13.488411}
+      - {x: 13.092472, y: 13.488411}
+      - {x: 13.092472, y: -0.7654877}
+    - - {x: 1.0030556, y: -17.395037}
+      - {x: 1.0030556, y: -1.451788}
+      - {x: 13.409225, y: -1.451788}
+      - {x: 13.409225, y: -17.395037}
+    - - {x: -13.039677, y: -16.972698}
+      - {x: -13.039677, y: -1.5045795}
+      - {x: -3.6954536, y: -1.5045795}
+      - {x: -3.6954536, y: -16.972698}
+    - - {x: -12.247793, y: -0.44873428}
+      - {x: -12.247793, y: 15.33614}
+      - {x: -4.2233753, y: 15.33614}
+      - {x: -4.2233753, y: -0.44873428}
+    - - {x: -12.142208, y: 15.969643}
+      - {x: -12.142208, y: 31.015427}
+      - {x: -4.645714, y: 31.015427}
+      - {x: -4.645714, y: 15.969643}
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
