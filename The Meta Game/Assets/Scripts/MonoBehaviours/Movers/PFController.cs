@@ -149,6 +149,10 @@ public class PFController : Mover
                 }
             }
         }
+        else
+        {
+            onWall = false;
+        }
 
         if (onGround)
         {
@@ -261,6 +265,8 @@ public class PFController : Mover
 
     public IEnumerator Die()
     {
+        GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().Play();
         animator.SetBool("dying", true);
         GameController.singleton.SetPaused(true);
         rb.gravityScale = 0;
