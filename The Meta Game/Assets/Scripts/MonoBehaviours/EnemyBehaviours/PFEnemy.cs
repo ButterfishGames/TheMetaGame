@@ -60,6 +60,8 @@ public class PFEnemy : EnemyBehaviour
     /// </summary>
     float mult;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +87,8 @@ public class PFEnemy : EnemyBehaviour
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -126,23 +130,30 @@ public class PFEnemy : EnemyBehaviour
                 hit = Physics2D.Raycast(transform.position, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
                 if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
+                    animator.SetBool("charging", true);
                     mult = chargeMult;
                 }
                 rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
             }
         }
-        if (rb.velocity.x >= 0)
+        if (rb.velocity.x > 0)
         {
+            animator.SetBool("moving", true);
             if (transform.eulerAngles.y == 180) {
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
-        else
+        else if (rb.velocity.x < 0)
         {
+            animator.SetBool("moving", true);
             if (transform.eulerAngles.y == 0)
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
+        }
+        else
+        {
+            animator.SetBool("moving", false);
         }
 
         GetComponent<FGEnemy>().dir = dir;
@@ -175,6 +186,7 @@ public class PFEnemy : EnemyBehaviour
 
     private void Turn()
     {
+        animator.SetBool("charging", false);
         dir *= -1;
         mult = 1;
         transform.Rotate(0, 180, 0);

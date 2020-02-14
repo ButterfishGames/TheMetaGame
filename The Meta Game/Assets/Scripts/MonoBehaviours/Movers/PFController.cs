@@ -263,10 +263,12 @@ public class PFController : Mover
     {
         animator.SetBool("dying", true);
         GameController.singleton.SetPaused(true);
+        rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1);
         animator.SetBool("dead", true);
         rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+        rb.gravityScale = GameController.singleton.GetGScale();
         col.enabled = false;
         GetComponentInChildren<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(deathWait);

@@ -1038,4 +1038,9 @@ public class GameController : MonoBehaviour
     {
         return magic;
     }
+
+    public float GetGScale()
+    {
+        return gScale;
+    }
 }
