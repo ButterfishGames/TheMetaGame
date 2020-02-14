@@ -166,7 +166,8 @@ public class PFEnemy : EnemyBehaviour
             if (collision.collider.gameObject.GetComponent<PFController>().enabled) {
                 rb.velocity = Vector2.zero;
                 PFController pfCon = collision.collider.GetComponent<PFController>();
-                pfCon.StartCoroutine(pfCon.Die());
+                GetComponent<AudioSource>().Play();
+                pfCon.StartCoroutine(pfCon.Die(true));
             }
         }
 

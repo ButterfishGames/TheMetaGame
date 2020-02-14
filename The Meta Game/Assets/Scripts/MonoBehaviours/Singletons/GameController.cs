@@ -819,15 +819,33 @@ public class GameController : MonoBehaviour
     public void Die()
     {
         paused = true;
-        StartCoroutine(ReloadLevel());
+        StartCoroutine(ReloadLevel(false));
         currHP = maxHP;
         currMP = maxMP;
     }
 
-    private IEnumerator ReloadLevel()
+    public void Die(bool fall)
     {
+        paused = true;
+        StartCoroutine(ReloadLevel(fall));
+        currHP = maxHP;
+        currMP = maxMP;
+    }
+
+    private IEnumerator ReloadLevel(bool fall)
+    {
+        if (fall)
+        {
+            levelFadeTime = 2;
+        }
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
+
+        /*while (GameObject.Find("Player").GetComponent<AudioSource>().isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }*/
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         yield return new WaitForEndOfFrame();
         SwitchMode(GameMode.platformer);

@@ -244,7 +244,7 @@ public class PFController : Mover
         }
         else if (collision.CompareTag("Killbox"))
         {
-            GameController.singleton.Die();
+            StartCoroutine(Die(false));
         }
     }
 
@@ -263,22 +263,31 @@ public class PFController : Mover
         }
     }*/
 
-    public IEnumerator Die()
+    public IEnumerator Die(bool hit)
     {
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+        
+        if (hit)
+        {
+            animator.SetBool("dying", true);
+            GameController.singleton.SetPaused(true);
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(1);
+            animator.SetBool("dead", true);
+            rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+            rb.gravityScale = GameController.singleton.GetGScale();
+        }
+
+        if (!GetComponent<AudioSource>().isPlaying)
         GetComponent<AudioSource>().Play();
-        animator.SetBool("dying", true);
-        GameController.singleton.SetPaused(true);
-        rb.gravityScale = 0;
-        rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(1);
-        animator.SetBool("dead", true);
-        rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
-        rb.gravityScale = GameController.singleton.GetGScale();
         col.enabled = false;
-        GetComponentInChildren<BoxCollider2D>().enabled = false;
+        /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
+        {
+            childCol.enabled = false;
+        }*/
         yield return new WaitForSeconds(deathWait);
-        GameController.singleton.Die();
+        GameController.singleton.Die(!hit);
     }
 
     private IEnumerator GoThrough()

@@ -344,7 +344,7 @@ public class FGController : Mover
         }
         else if (collision.CompareTag("Killbox"))
         {
-            GameController.singleton.Die();
+            GameController.singleton.Die(true);
         }
     }
 
