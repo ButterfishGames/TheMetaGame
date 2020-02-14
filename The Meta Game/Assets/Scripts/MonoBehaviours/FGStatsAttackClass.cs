@@ -8,16 +8,19 @@ public class FGStatsAttackClass
     [Tooltip("Name of the attack")]
     public string attackName;
 
-    [Tooltip("How much hitstun you want to give to the player when this attack is performed")]
+    [Tooltip("How much hitstun you want to give to the player when this attack is performed in frames")]
     public float hitstun;
 
     [Tooltip("How much damage you want to deal when this attack is performed")]
     public int damage;
 
-    [Tooltip("How long the hitbox is active")]
+    [Tooltip("How long the startup of the move is in frames")]
+    public float startup;
+
+    [Tooltip("How long the hitbox is active in frames")]
     public float hitboxActivationTime;
 
-    [Tooltip("How much lag the move has after the hitbox has ended")]
+    [Tooltip("How much lag the move has after the hitbox has ended in frames")]
     public float moveLag;
 
     [Tooltip("How much x velocity")]

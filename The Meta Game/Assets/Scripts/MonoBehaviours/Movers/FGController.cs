@@ -54,15 +54,17 @@ public class FGController : Mover
     /// </summary>
     private InputDirection[] inputs;
 
-    private InputDirection[] specialRight = { InputDirection.right, InputDirection.rightDown, InputDirection.down };
+    private readonly InputDirection[] specialRight = { InputDirection.right, InputDirection.rightDown, InputDirection.down };
 
-    private InputDirection[] specialLeft = { InputDirection.left, InputDirection.leftDown, InputDirection.down };
+    private readonly InputDirection[] specialLeft = { InputDirection.left, InputDirection.leftDown, InputDirection.down };
 
     /// <summary>
     /// Bool to see if direction is being held so the input doesn't repeat every frame.
     /// Left [0], LeftDown [1], Down [2], RightDown [3], Right [4]
     /// </summary>
     private bool[] inputsHeld;
+
+    private bool[] heldAttackButton;
 
     /// <summary>
     /// Timer to clear the input buffer
@@ -114,6 +116,11 @@ public class FGController : Mover
     private BoxCollider2D hitbox;
 
     /// <summary>
+    /// float to determine the length of time before the hitbox has appeared.
+    /// </summary>
+    private float startupTime;
+
+    /// <summary>
     /// float to determine the length at which the hitbox is out.
     /// </summary>
     private float hitBoxActivationTime;
@@ -128,6 +135,12 @@ public class FGController : Mover
     /// </summary>
     private bool hitThisFrame;
 
+    [Tooltip("how much startup the Hadouken has in frames")]
+    public float hadoStartup;
+
+    [Tooltip("how much endlag the Hadouken has in frames")]
+    public float hadoEndLag;
+
     public FGStatsAttackClass lightAttackStats;
     public FGStatsAttackClass mediumAttackStats;
     public FGStatsAttackClass heavyAttackStats;
@@ -140,6 +153,7 @@ public class FGController : Mover
 
         inputs = new InputDirection[3];
         inputsHeld = new bool[5];
+        heldAttackButton = new bool[3];
 
         for (int i = 0; i < inputs.Length - 1; i++)
         {
@@ -338,6 +352,7 @@ public class FGController : Mover
                 health -= collision.GetComponent<FightingHitbox>().damage;
                 if(collision.name == "SpecialMove(Clone)" && collision.CompareTag("EnemyHitbox"))
                 {
+                    Debug.Log("Hit by hado");
                     Destroy(collision.gameObject);
                 }
             }
@@ -372,7 +387,7 @@ public class FGController : Mover
                 if (dir == Direction.right)
                 {
                     attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 0.5f, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
                     specialMove.tag = "PlayerHitbox";
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
@@ -380,30 +395,46 @@ public class FGController : Mover
                 else
                 {
                     attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 0.5f, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
                     specialMove.tag = "PlayerHitbox";
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
                 }
             }
-            else if (Input.GetAxis("Light") > 0)
+            else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
             {
-                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage);
+                heldAttackButton[0] = true;
+                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup);
             }
-            else if (Input.GetAxis("Medium") > 0)
+            else if (Input.GetAxis("Medium") > 0 && !heldAttackButton[1])
             {
-                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage);
+                heldAttackButton[1] = true;
+                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup);
             }
-            else if (Input.GetAxis("Heavy") > 0)
+            else if (Input.GetAxis("Heavy") > 0 && !heldAttackButton[2])
             {
-                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage);
+                heldAttackButton[2] = true;
+                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup);
             }
+        }
+        if (Input.GetAxis("Light") <= 0)
+        {
+            heldAttackButton[0] = false;
+        }
+        if (Input.GetAxis("Medium") <= 0)
+        {
+            heldAttackButton[1] = false;
+        }
+        if (Input.GetAxis("Heavy") <= 0)
+        {
+            heldAttackButton[2] = false;
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage)
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage, float startup)
     {
         attackType = attack;
+        startupTime = startup;
         hitBoxActivationTime = hitboxTime;
         endLagTime = lag;
         if (grounded)
@@ -433,15 +464,19 @@ public class FGController : Mover
                 HitBoxSizeAndPos(heavyAttackStats.offsetX, heavyAttackStats.offsetY, heavyAttackStats.sizeX, heavyAttackStats.sizeY);
                 break;
             case Attack.special:
+                startupTime = 0;
+                endLagTime = hadoEndLag;
+                hitBoxActivationTime = 0;
                 break;
             default:
                 Debug.Log("ERROR: INVALID STARTING ATTACK");
                 break;
         }
+        yield return new WaitForSeconds(startupTime/60);
         hitbox.gameObject.SetActive(true);
-        yield return new WaitForSeconds(hitBoxActivationTime);
+        yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);
-        yield return new WaitForSeconds(endLagTime);
+        yield return new WaitForSeconds(endLagTime/60);
         attacking = false;
         attackCoRoutineRunning = false;
     }
