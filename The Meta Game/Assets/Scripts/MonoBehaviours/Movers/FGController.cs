@@ -108,24 +108,6 @@ public class FGController : Mover
     /// </summary>
     [HideInInspector]public float hitstun;
 
-    [Tooltip("How much hitstun you want to give to the enemy when a light attack is performed")]
-    public float lightHitstun;
-
-    [Tooltip("How much hitstun you want to give to the enemy when a medium attack is performed")]
-    public float mediumHitstun;
-
-    [Tooltip("How much hitstun you want to give to the enemy when a heavy attack is performed")]
-    public float heavyHitstun;
-
-    [Tooltip("How much damage you want to deal when a light attack is performed")]
-    public int lightDamage;
-
-    [Tooltip("How much hitstun you want to deal when a medium attack is performed")]
-    public int mediumDamage;
-
-    [Tooltip("How much hitstun you want to deal when a heavy attack is performed")]
-    public int heavyDamage;
-
     /// <summary>
     /// Hit box to hit enemies
     /// </summary>
@@ -145,6 +127,10 @@ public class FGController : Mover
     /// To detect if the enemy has been hit on this frame because it picks up two instances for some reason
     /// </summary>
     private bool hitThisFrame;
+
+    public FGStatsAttackClass lightAttackStats;
+    public FGStatsAttackClass mediumAttackStats;
+    public FGStatsAttackClass heavyAttackStats;
 
     protected override void Start()
     {
@@ -372,11 +358,6 @@ public class FGController : Mover
 
     private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
-        //if(dir == Direction.left)
-        //{
-        //    offsetX *= -1;
-        //    offsetY *= -1;
-        //}
         hitbox.offset = new Vector2(offsetX, offsetY);
         hitbox.size = new Vector2(sizeX, sizeY);
     }
@@ -399,24 +380,23 @@ public class FGController : Mover
                 else
                 {
                     attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
                     specialMove.tag = "PlayerHitbox";
-                    specialMove.gameObject.GetComponent<SpecialMove>().speed *= -1;
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
                 }
             }
             else if (Input.GetAxis("Light") > 0)
             {
-                BasicAttack(Attack.light, 0.2f, 0.3f, 0.0f, 0.0f, lightHitstun, lightDamage);
+                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage);
             }
             else if (Input.GetAxis("Medium") > 0)
             {
-                BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage);
             }
             else if (Input.GetAxis("Heavy") > 0)
             {
-                BasicAttack(Attack.heavy, 0.4f, 0.7f, 0.0f, 0.0f, heavyHitstun, heavyDamage);
+                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage);
             }
         }
     }
@@ -444,13 +424,13 @@ public class FGController : Mover
         switch (attackType)
         {
             case Attack.light:
-                HitBoxSizeAndPos(0.65f, 0.0f, 0.5f, 0.5f);
+                HitBoxSizeAndPos(lightAttackStats.offsetX, lightAttackStats.offsetY, lightAttackStats.sizeX, lightAttackStats.sizeY);
                 break;
             case Attack.medium:
-                HitBoxSizeAndPos(1.0f, 0.0f, 1.0f, 0.5f);
+                HitBoxSizeAndPos(mediumAttackStats.offsetX, mediumAttackStats.offsetY, mediumAttackStats.sizeX, mediumAttackStats.sizeY);
                 break;
             case Attack.heavy:
-                HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
+                HitBoxSizeAndPos(heavyAttackStats.offsetX, heavyAttackStats.offsetY, heavyAttackStats.sizeX, heavyAttackStats.sizeY);
                 break;
             case Attack.special:
                 break;

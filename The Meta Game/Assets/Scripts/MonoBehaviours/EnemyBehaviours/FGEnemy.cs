@@ -199,23 +199,9 @@ public class FGEnemy : EnemyBehaviour
 
     private bool attackCoRoutineRunning;
 
-    [Tooltip("How much hitstun you want to give to the player when a light attack is performed")]
-    public float lightHitstun;
-
-    [Tooltip("How much hitstun you want to give to the player when a medium attack is performed")]
-    public float mediumHitstun;
-
-    [Tooltip("How much hitstun you want to give to the player when a heavy attack is performed")]
-    public float heavyHitstun;
-
-    [Tooltip("How much damage you want to deal when a light attack is performed")]
-    public int lightDamage;
-
-    [Tooltip("How much hitstun you want to deal when a medium attack is performed")]
-    public int mediumDamage;
-
-    [Tooltip("How much hitstun you want to deal when a heavy attack is performed")]
-    public int heavyDamage;
+    public FGStatsAttackClass lightAttackStats;
+    public FGStatsAttackClass mediumAttackStats;
+    public FGStatsAttackClass heavyAttackStats;
 
 
     void Start()
@@ -492,7 +478,7 @@ public class FGEnemy : EnemyBehaviour
                                     if(Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
                                     {
                                         Debug.Log("Right bfore basic attack");
-                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                                        BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage);
                                         if (!attackCoRoutineRunning)
                                         {
                                             attackCoRoutineRunning = true;
@@ -515,7 +501,7 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
                                     {
-                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumAttackStats.hitstun, mediumAttackStats.damage);
                                         if (!attackCoRoutineRunning)
                                         {
                                             Debug.Log("about to start coroutine");
@@ -539,7 +525,7 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
                                     {
-                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumAttackStats.hitstun, mediumAttackStats.damage);
                                         if (!attackCoRoutineRunning)
                                         {
                                             attackCoRoutineRunning = true;
