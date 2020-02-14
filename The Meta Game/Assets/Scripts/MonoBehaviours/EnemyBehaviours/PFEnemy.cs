@@ -116,7 +116,7 @@ public class PFEnemy : EnemyBehaviour
                 Debug.Log(hit.collider.name);
             }
             dVec = new Vector2(dir, 0);
-            hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
+            hit = Physics2D.Raycast(transform.position, dVec, 0.5f, mask);
             if (hit.collider != null)
             {
                 Turn();
