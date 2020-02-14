@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTimeInWorld: 3
   speed: 2
-  hitstun: 2
+  hitstun: 0.5
   damage: 2
 --- !u!114 &8319696913176052779
 MonoBehaviour:
@@ -137,5 +137,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
