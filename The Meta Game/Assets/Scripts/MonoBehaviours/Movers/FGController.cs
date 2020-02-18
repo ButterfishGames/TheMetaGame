@@ -167,14 +167,16 @@ public class FGController : Mover
         }
         attacking = false;
         hitThisFrame = false;
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
     }
 
     protected override void Update()
     {
-        if(health <= 0)
+        animator.SetBool("fighter", true);
+        animator.SetBool("platformer", true);
+        if (health <= 0)
         {
             GameController.singleton.Die();
             health = maxHealth; 
@@ -336,6 +338,8 @@ public class FGController : Mover
             return;
         }
 
+        animator.SetBool("jumping", true);
+
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         grounded = false;
@@ -345,6 +349,7 @@ public class FGController : Mover
     {
         if (collision.CompareTag("Ground"))
         {
+            animator.SetBool("jumping", false);
             grounded = true;
         }
         else if (collision.CompareTag("EnemyHitbox"))

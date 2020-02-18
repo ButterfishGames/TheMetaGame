@@ -210,6 +210,8 @@ public class FGEnemy : EnemyBehaviour
 
     private bool[] usedAttack;
 
+    private Animator animator;
+
 
     void Start()
     {
@@ -229,6 +231,7 @@ public class FGEnemy : EnemyBehaviour
         }
 
         currHP = maxHP;
+        animator = GetComponentInChildren<Animator>();
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
     }
