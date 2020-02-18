@@ -33,6 +33,8 @@ public class Cutscene : MonoBehaviour
 
     private IEnumerator RunCutscene()
     {
+        bool lockCam = false;
+
         GameController.singleton.SetPaused(true);
 
         CameraScroll camScroll = Camera.main.GetComponent<CameraScroll>();
@@ -46,7 +48,6 @@ public class Cutscene : MonoBehaviour
             if (transforms[i].TryGetComponent(out temp))
             {
                 temp.velocity = Vector2.zero;
-                temp.simulated = false;
             }
         }
 
@@ -75,21 +76,27 @@ public class Cutscene : MonoBehaviour
                     yield return new WaitForSeconds(steps[i].wait);
                     break;
 
+                case StepType.song:
+                    AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+                    source.clip = steps[i].song;
+                    source.Play();
+                    break;
+
+                case StepType.lockCam:
+                    lockCam = true;
+                    break;
             }
         }
 
         for (int i = 0; i < animatorsSize; i++)
         {
             animators[i].runtimeAnimatorController = gameplayControllers[i];
-
-            Rigidbody2D temp;
-            if (transforms[i].TryGetComponent(out temp))
-            {
-                temp.simulated = true;
-            }
         }
 
-        camScroll.enabled = true;
+        if (!lockCam)
+        {
+            camScroll.enabled = true;
+        }
 
         GameController.singleton.SetPaused(false);
 
@@ -152,6 +159,9 @@ public struct CutsceneStep
 
     // Wait parameters
     public float wait;
+
+    // Song parameters
+    public AudioClip song;
 }
 
 [System.Serializable]
@@ -161,7 +171,9 @@ public enum StepType
     cameraMotion,
     dialogue,
     animation,
-    wait
+    wait,
+    song,
+    lockCam
 }
 
 [CustomEditor(typeof(Cutscene))]
@@ -328,6 +340,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = EditorGUILayout.DelayedFloatField("Move Time", cutscene.steps[i].wait);
+                            cutscene.steps[i].song = null;
                             break;
 
                         case StepType.cameraMotion:
@@ -341,6 +354,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = EditorGUILayout.DelayedFloatField("Move Time", cutscene.steps[i].wait);
+                            cutscene.steps[i].song = null;
                             break;
 
                         case StepType.dialogue:
@@ -382,6 +396,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = 0;
+                            cutscene.steps[i].song = null;
                             break;
 
                         case StepType.animation:
@@ -395,6 +410,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].animInd = EditorGUILayout.DelayedIntField("Animator Index", cutscene.steps[i].animInd);
                             cutscene.steps[i].state = EditorGUILayout.DelayedIntField("Animation State", cutscene.steps[i].state);
                             cutscene.steps[i].wait = 0;
+                            cutscene.steps[i].song = null;
                             break;
 
                         case StepType.wait:
@@ -408,6 +424,21 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = EditorGUILayout.DelayedFloatField("Wait Time", cutscene.steps[i].wait);
+                            cutscene.steps[i].song = null;
+                            break;
+
+                        case StepType.song:
+                            cutscene.steps[i].tranInd = 0;
+                            cutscene.steps[i].mov = Vector3.zero;
+                            cutscene.steps[i].rot = Vector3.zero;
+                            cutscene.steps[i].scl = Vector3.zero;
+                            cutscene.steps[i].lines = new string[0];
+                            cutscene.steps[i].linesSize = 0;
+                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].animInd = 0;
+                            cutscene.steps[i].state = 0;
+                            cutscene.steps[i].wait = 0;
+                            cutscene.steps[i].song = (AudioClip)EditorGUILayout.ObjectField(cutscene.steps[i].song, typeof(AudioClip), false);
                             break;
 
                         default:
@@ -421,6 +452,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = 0;
+                            cutscene.steps[i].song = null;
                             break;
                     }
                     EditorGUI.indentLevel--;
