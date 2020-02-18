@@ -240,6 +240,7 @@ public class GameController : MonoBehaviour
         }
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -737,6 +738,7 @@ public class GameController : MonoBehaviour
 
             switchMenu.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         else
         {
@@ -760,7 +762,6 @@ public class GameController : MonoBehaviour
             }
 
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = false;
 
             if (!ignoreHints)
             {

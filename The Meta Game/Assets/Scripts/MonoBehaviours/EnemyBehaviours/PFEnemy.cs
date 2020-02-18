@@ -60,6 +60,8 @@ public class PFEnemy : EnemyBehaviour
     /// </summary>
     float mult;
 
+    private bool grounded;
+
     private Animator animator;
 
     // Start is called before the first frame update
@@ -95,6 +97,11 @@ public class PFEnemy : EnemyBehaviour
     void Update()
     {
         if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (!grounded)
         {
             return;
         }
@@ -136,6 +143,7 @@ public class PFEnemy : EnemyBehaviour
                 rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
             }
         }
+
         if (rb.velocity.x > 0)
         {
             animator.SetBool("moving", true);
@@ -174,6 +182,27 @@ public class PFEnemy : EnemyBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             Turn();
+        }
+
+        if (collision.collider.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!grounded && collision.collider.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            grounded = false;
         }
     }
 
