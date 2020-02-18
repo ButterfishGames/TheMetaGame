@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: -324677560552814477}
   - component: {fileID: 1499245470291664175}
   - component: {fileID: -242363655407120299}
+  - component: {fileID: 1215093871793128255}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
@@ -206,6 +207,7 @@ MonoBehaviour:
     attackName: Light
     hitstun: 1
     damage: 1
+    startup: 0
     hitboxActivationTime: 0.4
     moveLag: 0.7
     xVelocity: 0
@@ -218,6 +220,7 @@ MonoBehaviour:
     attackName: Medium
     hitstun: 2
     damage: 2
+    startup: 0
     hitboxActivationTime: 0.5
     moveLag: 0.9
     xVelocity: 0
@@ -230,12 +233,15 @@ MonoBehaviour:
     attackName: Heavy
     hitstun: 3
     damage: 3
+    startup: 0
     hitboxActivationTime: 0.6
     moveLag: 1
     xVelocity: 0
     yVelocity: 0
     offsetX: 1
     offsetY: 0
+    sizeX: 0
+    sizeY: 0
 --- !u!82 &-242363655407120299
 AudioSource:
   m_ObjectHideFlags: 0
@@ -332,8 +338,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-    sizeX: 2
-    sizeY: 0.5
+--- !u!95 &1215093871793128255
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498483545563416927}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 831368a8af9b96a4fa7f850c0bc0c7dc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3553222703423857321
 GameObject:
   m_ObjectHideFlags: 0

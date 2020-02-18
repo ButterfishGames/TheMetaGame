@@ -145,6 +145,8 @@ public class FGController : Mover
     public FGStatsAttackClass mediumAttackStats;
     public FGStatsAttackClass heavyAttackStats;
 
+    private Animator animator;
+
     protected override void Start()
     {
         base.Start();
@@ -165,6 +167,7 @@ public class FGController : Mover
         }
         attacking = false;
         hitThisFrame = false;
+        animator = GetComponent<Animator>();
 
         hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
     }
