@@ -54,6 +54,14 @@ public class CameraScroll : MonoBehaviour
                 break;
         }
 
+        float xDiff = posX - transform.position.x;
+
+        Parallax[] pObjs = FindObjectsOfType<Parallax>();
+        foreach (Parallax obj in pObjs)
+        {
+            obj.UpdatePos(xDiff);
+        }
+
         transform.position = new Vector3(Mathf.Clamp(posX, min.x, max.x), Mathf.Clamp(posY, min.y, max.y), transform.position.z);
     }
 }
