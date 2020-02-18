@@ -6,8 +6,8 @@ public class Parallax : MonoBehaviour
 {
     public float moveRateMult;
 
-    public void UpdatePos(float xDiff)
+    public void UpdatePos(float xDiff, float yDiff)
     {
-        transform.position += new Vector3(xDiff * moveRateMult, 0, 0);
+        transform.position += new Vector3(xDiff * moveRateMult, yDiff * moveRateMult, 0);
     }
 }

@@ -134,7 +134,9 @@ public class PFEnemy : EnemyBehaviour
             }
             else
             {
-                hit = Physics2D.Raycast(transform.position, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
+                Vector3 origin = transform.position;
+                origin.y -= 0.3f;
+                hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
                 if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
                     animator.SetBool("charging", true);

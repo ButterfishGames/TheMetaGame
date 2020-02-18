@@ -123,13 +123,17 @@ public class Cutscene : MonoBehaviour
         for (float t = 0; t <= wait; t += Time.deltaTime)
         {
             float xDiff = -Camera.main.transform.position.x;
+            float yDiff = -Camera.main.transform.position.y;
+
             Camera.main.transform.Translate(mov * invTime * Time.deltaTime);
+
             xDiff += Camera.main.transform.position.x;
+            yDiff += Camera.main.transform.position.y;
 
             Parallax[] pObjs = FindObjectsOfType<Parallax>();
             foreach (Parallax obj in pObjs)
             {
-                obj.UpdatePos(xDiff);
+                obj.UpdatePos(xDiff, yDiff);
             }
 
             yield return new WaitForEndOfFrame();
