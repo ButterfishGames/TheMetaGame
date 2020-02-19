@@ -147,6 +147,8 @@ public class FGController : Mover
 
     private Animator animator;
 
+    private string animationAttackBoolString;
+
     protected override void Start()
     {
         base.Start();
@@ -175,11 +177,19 @@ public class FGController : Mover
     protected override void Update()
     {
         animator.SetBool("fighter", true);
-        animator.SetBool("platformer", true);
+        animator.SetBool("platformer", false);
         if (health <= 0)
         {
             GameController.singleton.Die();
             health = maxHealth; 
+        }
+        if (grounded)
+        {
+            animator.SetBool("jumping", false);
+        }
+        else
+        {
+            animator.SetBool("jumping", true);
         }
         hitThisFrame = false;
         if (hitstun <= 0)
@@ -215,12 +225,21 @@ public class FGController : Mover
 
             AttackEnemy();
 
+            if(attacking == true)
+            {
+                animator.SetBool("attacking", true);
+            }
+            else
+            {
+                animator.SetBool("attacking", false);
+            }
+
             if (attacking)
             {
                 if (!attackCoRoutineRunning)
                 {
                     attackCoRoutineRunning = true;
-                    StartCoroutine(AttackCoRoutine());
+                    StartCoroutine(AttackCoRoutine(animationAttackBoolString));
                 }
             }
             else
@@ -232,6 +251,17 @@ public class FGController : Mover
 
                 hitbox.gameObject.SetActive(false);
             }
+
+            if (Mathf.Abs(rb.velocity.x) > 0.1f)
+            {
+                animator.SetBool("moving", true);
+            }
+            else
+            {
+                animator.SetBool("moving", false);
+            }
+
+
         }
         else
         {
@@ -349,7 +379,6 @@ public class FGController : Mover
     {
         if (collision.CompareTag("Ground"))
         {
-            animator.SetBool("jumping", false);
             grounded = true;
         }
         else if (collision.CompareTag("EnemyHitbox"))
@@ -368,6 +397,15 @@ public class FGController : Mover
         else if (collision.CompareTag("Killbox"))
         {
             GameController.singleton.Die(true);
+        }
+    }
+
+    //When switching Gamemodes to fighting for the first time, if you start on the ground you aren't considered grounded
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            grounded = true;
         }
     }
 
@@ -399,6 +437,7 @@ public class FGController : Mover
                     specialMove.tag = "PlayerHitbox";
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
+                    animator.SetBool("specialattack", true);
                 }
                 else
                 {
@@ -407,22 +446,23 @@ public class FGController : Mover
                     specialMove.tag = "PlayerHitbox";
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
+                    animator.SetBool("specialattack", true);
                 }
             }
             else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
             {
                 heldAttackButton[0] = true;
-                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup);
+                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
             }
             else if (Input.GetAxis("Medium") > 0 && !heldAttackButton[1])
             {
                 heldAttackButton[1] = true;
-                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup);
+                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
             }
             else if (Input.GetAxis("Heavy") > 0 && !heldAttackButton[2])
             {
                 heldAttackButton[2] = true;
-                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup);
+                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
             }
         }
         if (Input.GetAxis("Light") <= 0)
@@ -439,7 +479,7 @@ public class FGController : Mover
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage, float startup)
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage, float startup, string animationAttackBool)
     {
         attackType = attack;
         startupTime = startup;
@@ -452,9 +492,10 @@ public class FGController : Mover
         hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven;
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
+        animator.SetBool(animationAttackBool, true);
     }
 
-    private IEnumerator AttackCoRoutine()
+    private IEnumerator AttackCoRoutine(string animationAttackBool)
     {
         if (grounded)
         {

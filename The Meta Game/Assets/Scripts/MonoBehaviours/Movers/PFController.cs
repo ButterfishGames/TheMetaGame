@@ -55,6 +55,8 @@ public class PFController : Mover
 
     protected override void Update()
     {
+        animator.SetBool("fighter", false);
+        animator.SetBool("platformer", true);
         if (GameController.singleton.GetPaused())
         {
             return;
