@@ -180,6 +180,7 @@ public enum StepType
     lockCam
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Cutscene))]
 public class CutsceneEditor : Editor
 {
@@ -466,3 +467,4 @@ public class CutsceneEditor : Editor
         }
     }
 }
+#endif

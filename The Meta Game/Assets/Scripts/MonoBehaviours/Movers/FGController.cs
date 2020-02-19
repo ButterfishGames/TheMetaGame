@@ -438,6 +438,7 @@ public class FGController : Mover
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
                     animator.SetBool("specialattack", true);
+                    animationAttackBoolString = "specialattack";
                 }
                 else
                 {
@@ -447,6 +448,7 @@ public class FGController : Mover
                     inputs[0] = InputDirection.none;
                     attackType = Attack.special;
                     animator.SetBool("specialattack", true);
+                    animationAttackBoolString = "specialattack";
                 }
             }
             else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
@@ -493,6 +495,7 @@ public class FGController : Mover
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
         animator.SetBool(animationAttackBool, true);
+        animationAttackBoolString = animationAttackBool;
     }
 
     private IEnumerator AttackCoRoutine(string animationAttackBool)
@@ -526,6 +529,7 @@ public class FGController : Mover
         yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);
         yield return new WaitForSeconds(endLagTime/60);
+        animator.SetBool(animationAttackBool, false);
         attacking = false;
         attackCoRoutineRunning = false;
     }
