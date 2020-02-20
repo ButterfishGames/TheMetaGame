@@ -63,10 +63,8 @@ public class PFEnemy : EnemyBehaviour
     private bool grounded;
 
     // Start is called before the first frame update
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         switch(startDir)

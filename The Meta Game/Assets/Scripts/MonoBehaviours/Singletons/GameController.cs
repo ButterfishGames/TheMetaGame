@@ -237,7 +237,8 @@ public class GameController : MonoBehaviour
         {
             equipped = GameMode.platformer;
         }
-        SwitchMode(equipped);
+        
+        StartCoroutine(Switch());
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -636,8 +637,8 @@ public class GameController : MonoBehaviour
                         if (behaviour.GetType().Equals(typeof(FGEnemy)))
                         {
                             behaviour.enabled = true;
-                            behaviour.GetAnimator().SetBool("platformer", true);
-                            behaviour.GetAnimator().SetBool("fighter", false);
+                            behaviour.GetAnimator().SetBool("fighter", true);
+                            behaviour.GetAnimator().SetBool("platformer", false);
                         }
                         else
                         {
@@ -1069,5 +1070,23 @@ public class GameController : MonoBehaviour
     public float GetGScale()
     {
         return gScale;
+    }
+
+    private IEnumerator Switch()
+    {
+        bool success = false;
+        while (!success)
+        {
+            try
+            {
+                SwitchMode(equipped);
+                success = true;
+            }
+            catch
+            {
+                success = false;
+            }
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

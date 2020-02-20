@@ -210,11 +210,8 @@ public class FGEnemy : EnemyBehaviour
 
     private bool[] usedAttack;
 
-
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();

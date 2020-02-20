@@ -6,7 +6,7 @@ public class EnemyBehaviour : MonoBehaviour
 {
     protected Animator animator;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     { 
         animator = GetComponentInChildren<Animator>();
     }
