@@ -22,8 +22,6 @@ public class PFController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
-    private Animator animator;
-
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
@@ -50,13 +48,10 @@ public class PFController : Mover
         }
 
         onWall = false;
-        animator = GetComponentInChildren<Animator>();
     }
 
     protected override void Update()
     {
-        animator.SetBool("fighter", false);
-        animator.SetBool("platformer", true);
         if (GameController.singleton.GetPaused())
         {
             return;

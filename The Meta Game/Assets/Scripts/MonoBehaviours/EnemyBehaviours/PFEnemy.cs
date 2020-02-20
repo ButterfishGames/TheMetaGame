@@ -62,11 +62,11 @@ public class PFEnemy : EnemyBehaviour
 
     private bool grounded;
 
-    private Animator animator;
-
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         switch(startDir)
@@ -89,8 +89,6 @@ public class PFEnemy : EnemyBehaviour
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
-
-        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame

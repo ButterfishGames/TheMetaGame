@@ -17,11 +17,14 @@ public abstract class Mover : MonoBehaviour
     /// </summary>
     protected Rigidbody2D rb;
 
+    protected Animator animator;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         col = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -42,4 +45,9 @@ public abstract class Mover : MonoBehaviour
     }
 
     protected abstract void Move(float h, float v);
+
+    public virtual Animator GetAnimator()
+    {
+        return animator;
+    }
 }

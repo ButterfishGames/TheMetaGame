@@ -210,11 +210,11 @@ public class FGEnemy : EnemyBehaviour
 
     private bool[] usedAttack;
 
-    private Animator animator;
 
-
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -231,7 +231,6 @@ public class FGEnemy : EnemyBehaviour
         }
 
         currHP = maxHP;
-        animator = GetComponentInChildren<Animator>();
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
     }

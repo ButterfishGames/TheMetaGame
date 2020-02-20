@@ -145,8 +145,6 @@ public class FGController : Mover
     public FGStatsAttackClass mediumAttackStats;
     public FGStatsAttackClass heavyAttackStats;
 
-    private Animator animator;
-
     private string animationAttackBoolString;
 
     [Tooltip("Distance the special move will spawn from the player")]
@@ -179,8 +177,6 @@ public class FGController : Mover
 
     protected override void Update()
     {
-        animator.SetBool("fighter", true);
-        animator.SetBool("platformer", false);
         if (health <= 0)
         {
             GameController.singleton.Die();

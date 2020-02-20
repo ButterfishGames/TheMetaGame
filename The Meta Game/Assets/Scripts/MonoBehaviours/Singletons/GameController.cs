@@ -209,12 +209,6 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (resetMode)
-        {
-            equipped = GameMode.platformer;
-        }
-        SwitchMode(equipped);
-
         if (resetUnlocks)
         {
             for (int i = 0; i < modes.Length; i++)
@@ -238,6 +232,12 @@ public class GameController : MonoBehaviour
                 numUnlocked++;
             }
         }
+        
+        if (resetMode)
+        {
+            equipped = GameMode.platformer;
+        }
+        SwitchMode(equipped);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -377,6 +377,8 @@ public class GameController : MonoBehaviour
                         if (behaviour.GetType().Equals(typeof(PFEnemy)))
                         {
                             behaviour.enabled = true;
+                            behaviour.GetAnimator().SetBool("platformer", true);
+                            behaviour.GetAnimator().SetBool("fighter", false);
                         }
                         else
                         {
@@ -405,6 +407,8 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(PFController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("platformer", true);
+                        mover.GetAnimator().SetBool("fighter", false);
                     }
                     else
                     {
@@ -632,6 +636,8 @@ public class GameController : MonoBehaviour
                         if (behaviour.GetType().Equals(typeof(FGEnemy)))
                         {
                             behaviour.enabled = true;
+                            behaviour.GetAnimator().SetBool("platformer", true);
+                            behaviour.GetAnimator().SetBool("fighter", false);
                         }
                         else
                         {
@@ -653,6 +659,8 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(FGController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("fighter", true);
+                        mover.GetAnimator().SetBool("platformer", false);
                     }
                     else
                     {

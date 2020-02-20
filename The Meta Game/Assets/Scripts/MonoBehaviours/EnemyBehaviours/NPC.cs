@@ -8,11 +8,6 @@ public class NPC : EnemyBehaviour
     [TextArea(3, 10)]
     public string[] dialogueLines;
 
-    private void Start()
-    {
-        
-    }
-
     public void Interact()
     {
         DialogueManager.singleton.StartDialogue(dialogueLines);
