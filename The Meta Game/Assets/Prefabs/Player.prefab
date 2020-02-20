@@ -189,8 +189,8 @@ MonoBehaviour:
   maxTimeTillReset: 30
   special: {fileID: 5380071146857707867, guid: a4931da688c59104b824b2cdc57a3c0b, type: 3}
   hitstun: 0
-  hadoStartup: 0
-  hadoEndLag: 1
+  hadoStartup: 30
+  hadoEndLag: 20
   lightAttackStats:
     attackName: Light
     hitstun: 50
@@ -230,6 +230,7 @@ MonoBehaviour:
     offsetY: 0
     sizeX: 2
     sizeY: 0.5
+  hadoDistanceFromPlayer: 0.15
 --- !u!82 &8073731519011545422
 AudioSource:
   m_ObjectHideFlags: 0

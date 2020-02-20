@@ -108,7 +108,7 @@ public class FGController : Mover
     /// <summary>
     /// A float to determine how much hitstun the player should have when hit
     /// </summary>
-    [HideInInspector]public float hitstun;
+    [HideInInspector] public float hitstun;
 
     /// <summary>
     /// Hit box to hit enemies
@@ -148,6 +148,9 @@ public class FGController : Mover
     private Animator animator;
 
     private string animationAttackBoolString;
+
+    [Tooltip("Distance the special move will spawn from the player")]
+    public float hadoDistanceFromPlayer;
 
     protected override void Start()
     {
@@ -194,6 +197,7 @@ public class FGController : Mover
         hitThisFrame = false;
         if (hitstun <= 0)
         {
+            animator.SetBool("hit", false);
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
 
@@ -265,6 +269,7 @@ public class FGController : Mover
         }
         else
         {
+            animator.SetBool("hit", true);
             hitbox.gameObject.SetActive(false);
             attacking = false;
             hitstun -= Time.deltaTime;
@@ -430,26 +435,11 @@ public class FGController : Mover
             if ((Input.GetAxis("Light") > 0 || Input.GetAxis("Medium") > 0 || Input.GetAxis("Heavy") > 0) && 
                 (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft)))
             {
-                if (dir == Direction.right)
-                {
-                    attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 0.5f, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
-                    specialMove.tag = "PlayerHitbox";
-                    inputs[0] = InputDirection.none;
-                    attackType = Attack.special;
-                    animator.SetBool("specialattack", true);
-                    animationAttackBoolString = "specialattack";
-                }
-                else
-                {
-                    attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 0.5f, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
-                    specialMove.tag = "PlayerHitbox";
-                    inputs[0] = InputDirection.none;
-                    attackType = Attack.special;
-                    animator.SetBool("specialattack", true);
-                    animationAttackBoolString = "specialattack";
-                }
+                attacking = true;
+                inputs[0] = InputDirection.none;
+                attackType = Attack.special;
+                animator.SetBool("specialattack", true);
+                animationAttackBoolString = "specialattack";
             }
             else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
             {
@@ -516,7 +506,7 @@ public class FGController : Mover
                 HitBoxSizeAndPos(heavyAttackStats.offsetX, heavyAttackStats.offsetY, heavyAttackStats.sizeX, heavyAttackStats.sizeY);
                 break;
             case Attack.special:
-                startupTime = 0;
+                startupTime = hadoStartup;
                 endLagTime = hadoEndLag;
                 hitBoxActivationTime = 0;
                 break;
@@ -525,12 +515,28 @@ public class FGController : Mover
                 break;
         }
         yield return new WaitForSeconds(startupTime/60);
-        hitbox.gameObject.SetActive(true);
+        if (animationAttackBool == "specialattack")
+        {
+            if (dir == Direction.right)
+            {
+                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + hadoDistanceFromPlayer, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                specialMove.tag = "PlayerHitbox";
+            }
+            else
+            {
+                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - hadoDistanceFromPlayer, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                specialMove.tag = "PlayerHitbox";
+            }
+        }
+        else
+        {
+            hitbox.gameObject.SetActive(true);
+        }
         yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);
         yield return new WaitForSeconds(endLagTime/60);
-        animator.SetBool(animationAttackBool, false);
         attacking = false;
         attackCoRoutineRunning = false;
+        animator.SetBool(animationAttackBool, false);
     }
 }
