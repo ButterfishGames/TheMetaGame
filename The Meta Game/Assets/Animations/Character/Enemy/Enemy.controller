@@ -14,6 +14,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: level
     m_EventTreshold: 1
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8803795679935915457}
   m_Solo: 0
@@ -379,6 +382,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: charging
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: platformer
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8479377618716535168}
   m_Solo: 0
@@ -478,7 +484,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6544563505955105730}
   m_Solo: 0
@@ -507,6 +516,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: level
     m_EventTreshold: 2
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2678877945975873040}
   m_Solo: 0
@@ -582,7 +594,7 @@ AnimatorStateMachine:
     m_Position: {x: 260, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7936468539707435876}
-    m_Position: {x: 370, y: 220, z: 0}
+    m_Position: {x: 430, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8479377618716535168}
     m_Position: {x: 490, y: 50, z: 0}
@@ -666,6 +678,18 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: dead
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: platformer
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: fighter
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -873,6 +897,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: attacking
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6565209495087593208}
   m_Solo: 0
@@ -900,6 +927,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: charging
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: platformer
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3880707852550099742}
@@ -1150,6 +1180,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: dead
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 641032115001121739}
   m_Solo: 0
@@ -1174,6 +1207,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: dead
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7281908987908694201}
@@ -1352,6 +1388,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: hit
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: fighter
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9131108104673852014}
