@@ -987,7 +987,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9919733
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 2
   m_OrderedInterruption: 1
@@ -1120,13 +1120,13 @@ AnimatorStateMachine:
     m_Position: {x: 360, y: 790, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7281908987908694201}
-    m_Position: {x: 30, y: 230, z: 0}
+    m_Position: {x: 180, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9131108104673852014}
-    m_Position: {x: -100, y: 410, z: 0}
+    m_Position: {x: -310, y: 380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6544563505955105730}
-    m_Position: {x: -250, y: 610, z: 0}
+    m_Position: {x: -290, y: 660, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2678877945975873040}
     m_Position: {x: 880, y: 500, z: 0}
@@ -1144,13 +1144,13 @@ AnimatorStateMachine:
     m_Position: {x: 640, y: 790, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1481468005986251090}
-    m_Position: {x: 710, y: 710, z: 0}
+    m_Position: {x: 880, y: 700, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2428478610495018591}
-    m_Position: {x: 100, y: 770, z: 0}
+    m_Position: {x: 80, y: 800, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -913237775718128863}
-    m_Position: {x: -80, y: 700, z: 0}
+    m_Position: {x: -200, y: 780, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1175,73 +1175,73 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: fighter
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: moving
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: charging
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: hit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: level
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: dead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attacking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: lightattack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: mediumattack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: heavyattack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: specialattack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
