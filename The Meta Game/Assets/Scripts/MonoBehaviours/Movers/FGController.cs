@@ -150,6 +150,8 @@ public class FGController : Mover
     [Tooltip("Distance the special move will spawn from the player")]
     public float hadoDistanceFromPlayer;
 
+    private bool dead;
+
     protected override void Start()
     {
         base.Start();
@@ -179,8 +181,11 @@ public class FGController : Mover
     {
         if (health <= 0)
         {
-            GameController.singleton.Die();
-            health = maxHealth; 
+            if (!dead)
+            {
+                dead = true;
+                StartCoroutine(Death());
+            }
         }
         if (grounded)
         {
@@ -266,6 +271,7 @@ public class FGController : Mover
         else
         {
             animator.SetBool("hit", true);
+            animator.SetBool("attacking", false);
             hitbox.gameObject.SetActive(false);
             attacking = false;
             hitstun -= Time.deltaTime;
@@ -434,7 +440,7 @@ public class FGController : Mover
                 attacking = true;
                 inputs[0] = InputDirection.none;
                 attackType = Attack.special;
-                animator.SetBool("specialattack", true);
+                animator.SetTrigger("specialattack");
                 animationAttackBoolString = "specialattack";
             }
             else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
@@ -482,6 +488,7 @@ public class FGController : Mover
         attacking = true;
         animator.SetBool(animationAttackBool, true);
         animationAttackBoolString = animationAttackBool;
+        animator.SetTrigger(animationAttackBool);
     }
 
     private IEnumerator AttackCoRoutine(string animationAttackBool)
@@ -533,6 +540,12 @@ public class FGController : Mover
         yield return new WaitForSeconds(endLagTime/60);
         attacking = false;
         attackCoRoutineRunning = false;
-        animator.SetBool(animationAttackBool, false);
+    }
+
+    private IEnumerator Death()
+    {
+        animator.SetBool("dead", true);
+        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
+        GameController.singleton.Die();
     }
 }
