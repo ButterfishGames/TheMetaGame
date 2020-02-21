@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     public static GameController singleton;
 
+    public bool demoBuild;
+
     public enum GameMode
     {
         platformer,
@@ -260,7 +262,17 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                ExitGame();
+                if (demoBuild)
+                {
+                    if (!onMenu)
+                    {
+                        ReturnToMenu();
+                    }
+                }
+                else
+                {
+                    ExitGame();
+                }
             }
         }
 
@@ -422,11 +434,11 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 if (onMenu)
                 {
-                    Camera.main.GetComponent<CameraScroll>().enabled = false;
+                    Camera.main.GetComponent<CameraScroll>().hScroll = false;
                 }
                 else
                 {
-                    Camera.main.GetComponent<CameraScroll>().enabled = true;
+                    Camera.main.GetComponent<CameraScroll>().hScroll = true;
                 }
 
                 if (!ignoreHints)
@@ -1070,6 +1082,11 @@ public class GameController : MonoBehaviour
     public float GetGScale()
     {
         return gScale;
+    }
+
+    public void ReturnToMenu()
+    {
+        StartCoroutine(FadeAndLoad(0));
     }
 
     private IEnumerator Switch()
