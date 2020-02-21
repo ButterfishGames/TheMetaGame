@@ -234,6 +234,7 @@ public class FGEnemy : EnemyBehaviour
 
     void Update()
     {
+        animator.SetInteger("level", difficultyLevel);
         hitThisFrame = false;
         Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
         if (changedInView == true) {
@@ -613,6 +614,10 @@ public class FGEnemy : EnemyBehaviour
                                                     specialMove.tag = "EnemyHitbox";
                                                     attackType = Attack.special;
                                                     Debug.Log("Hado right");
+                                                    for (int i = 0; i < usedAttack.Length - 1; i++)
+                                                    {
+                                                        usedAttack[i] = false;
+                                                    }
                                                 }
                                                 else
                                                 {
@@ -621,6 +626,10 @@ public class FGEnemy : EnemyBehaviour
                                                     specialMove.tag = "EnemyHitbox";
                                                     attackType = Attack.special;
                                                     Debug.Log("Hado left");
+                                                    for (int i = 0; i < usedAttack.Length - 1; i++)
+                                                    {
+                                                        usedAttack[i] = false;
+                                                    }
                                                 }
                                             }
                                         }
