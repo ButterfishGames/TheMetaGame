@@ -98,24 +98,24 @@ public class RPGController : Mover
 
         if (h < 0)
         {
-            h = -0.5f;
+            h = -1;
             v = 0;
             dir = Direction.left;
         }
         else if (h > 0)
         {
-            h = 0.5f;
+            h = 1;
             v = 0;
             dir = Direction.right;
         }
         else if (v < 0)
         {
-            v = -0.5f;
+            v = -1;
             dir = Direction.down;
         }
         else if (v > 0)
         {
-            v = 0.5f;
+            v = 1;
             dir = Direction.up;
         }
         else
@@ -144,7 +144,6 @@ public class RPGController : Mover
     // This method is based heavily on the scripts presented in the Unit Mechanics section of the Unity Learn 2D Roguelike tutorial.
     private IEnumerator SmoothMovement(Vector3 end)
     {
-        end.z = 1;
         float dist = (transform.position - end).sqrMagnitude;
         
         while (dist > 1E-10)
@@ -175,7 +174,7 @@ public class RPGController : Mover
                             if (Input.GetAxisRaw("Horizontal") > 0)
                             {
                                 target = end;
-                                target.x += 0.5f;
+                                target.x += 1;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
@@ -192,7 +191,7 @@ public class RPGController : Mover
                             if (Input.GetAxisRaw("Horizontal") < 0)
                             {
                                 target = end;
-                                target.x -= 0.5f;
+                                target.x -= 1f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
@@ -209,7 +208,7 @@ public class RPGController : Mover
                             if (Input.GetAxisRaw("Vertical") > 0)
                             {
                                 target = end;
-                                target.y += 0.5f;
+                                target.y += 1f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
@@ -226,7 +225,7 @@ public class RPGController : Mover
                             if (Input.GetAxisRaw("Vertical") < 0)
                             {
                                 target = end;
-                                target.y -= 0.5f;
+                                target.y -= 1f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);

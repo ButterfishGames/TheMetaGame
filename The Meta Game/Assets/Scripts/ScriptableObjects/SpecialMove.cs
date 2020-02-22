@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpecialMove : MonoBehaviour
 {
     private float timeInWorld;
+    private Animator animator;
     public float maxTimeInWorld;
     public float speed;
     public float hitstun;
@@ -12,9 +13,18 @@ public class SpecialMove : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         GetComponent<FightingHitbox>().hitstun = hitstun;
         GetComponent<FightingHitbox>().damage = damage;
         timeInWorld = 0.0f;
+
+        if (CompareTag("PlayerHitbox")){
+            animator.SetBool("player", true);
+        }
+        else
+        {
+            animator.SetBool("player", false);
+        }
     }
 
     void Update()

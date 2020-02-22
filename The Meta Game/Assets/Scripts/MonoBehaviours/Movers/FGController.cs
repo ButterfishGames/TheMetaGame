@@ -54,15 +54,17 @@ public class FGController : Mover
     /// </summary>
     private InputDirection[] inputs;
 
-    private InputDirection[] specialRight = { InputDirection.right, InputDirection.rightDown, InputDirection.down };
+    private readonly InputDirection[] specialRight = { InputDirection.right, InputDirection.rightDown, InputDirection.down };
 
-    private InputDirection[] specialLeft = { InputDirection.left, InputDirection.leftDown, InputDirection.down };
+    private readonly InputDirection[] specialLeft = { InputDirection.left, InputDirection.leftDown, InputDirection.down };
 
     /// <summary>
     /// Bool to see if direction is being held so the input doesn't repeat every frame.
     /// Left [0], LeftDown [1], Down [2], RightDown [3], Right [4]
     /// </summary>
     private bool[] inputsHeld;
+
+    private bool[] heldAttackButton;
 
     /// <summary>
     /// Timer to clear the input buffer
@@ -106,30 +108,17 @@ public class FGController : Mover
     /// <summary>
     /// A float to determine how much hitstun the player should have when hit
     /// </summary>
-    [HideInInspector]public float hitstun;
-
-    [Tooltip("How much hitstun you want to give to the enemy when a light attack is performed")]
-    public float lightHitstun;
-
-    [Tooltip("How much hitstun you want to give to the enemy when a medium attack is performed")]
-    public float mediumHitstun;
-
-    [Tooltip("How much hitstun you want to give to the enemy when a heavy attack is performed")]
-    public float heavyHitstun;
-
-    [Tooltip("How much damage you want to deal when a light attack is performed")]
-    public int lightDamage;
-
-    [Tooltip("How much hitstun you want to deal when a medium attack is performed")]
-    public int mediumDamage;
-
-    [Tooltip("How much hitstun you want to deal when a heavy attack is performed")]
-    public int heavyDamage;
+    [HideInInspector] public float hitstun;
 
     /// <summary>
     /// Hit box to hit enemies
     /// </summary>
     private BoxCollider2D hitbox;
+
+    /// <summary>
+    /// float to determine the length of time before the hitbox has appeared.
+    /// </summary>
+    private float startupTime;
 
     /// <summary>
     /// float to determine the length at which the hitbox is out.
@@ -146,6 +135,23 @@ public class FGController : Mover
     /// </summary>
     private bool hitThisFrame;
 
+    [Tooltip("how much startup the Hadouken has in frames")]
+    public float hadoStartup;
+
+    [Tooltip("how much endlag the Hadouken has in frames")]
+    public float hadoEndLag;
+
+    public FGStatsAttackClass lightAttackStats;
+    public FGStatsAttackClass mediumAttackStats;
+    public FGStatsAttackClass heavyAttackStats;
+
+    private string animationAttackBoolString;
+
+    [Tooltip("Distance the special move will spawn from the player")]
+    public float hadoDistanceFromPlayer;
+
+    private bool dead;
+
     protected override void Start()
     {
         base.Start();
@@ -154,6 +160,7 @@ public class FGController : Mover
 
         inputs = new InputDirection[3];
         inputsHeld = new bool[5];
+        heldAttackButton = new bool[3];
 
         for (int i = 0; i < inputs.Length - 1; i++)
         {
@@ -165,20 +172,33 @@ public class FGController : Mover
         }
         attacking = false;
         hitThisFrame = false;
+        animator = GetComponentInChildren<Animator>();
 
         hitbox = transform.Find("Hitbox").GetComponent<BoxCollider2D>();
     }
 
     protected override void Update()
     {
-        if(health <= 0)
+        if (health <= 0)
         {
-            GameController.singleton.Die();
-            health = maxHealth; 
+            if (!dead)
+            {
+                dead = true;
+                StartCoroutine(Death());
+            }
+        }
+        if (grounded)
+        {
+            animator.SetBool("jumping", false);
+        }
+        else
+        {
+            animator.SetBool("jumping", true);
         }
         hitThisFrame = false;
         if (hitstun <= 0)
         {
+            animator.SetBool("hit", false);
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
 
@@ -210,12 +230,21 @@ public class FGController : Mover
 
             AttackEnemy();
 
+            if(attacking == true)
+            {
+                animator.SetBool("attacking", true);
+            }
+            else
+            {
+                animator.SetBool("attacking", false);
+            }
+
             if (attacking)
             {
                 if (!attackCoRoutineRunning)
                 {
                     attackCoRoutineRunning = true;
-                    StartCoroutine(AttackCoRoutine());
+                    StartCoroutine(AttackCoRoutine(animationAttackBoolString));
                 }
             }
             else
@@ -227,9 +256,22 @@ public class FGController : Mover
 
                 hitbox.gameObject.SetActive(false);
             }
+
+            if (Mathf.Abs(rb.velocity.x) > 0.1f)
+            {
+                animator.SetBool("moving", true);
+            }
+            else
+            {
+                animator.SetBool("moving", false);
+            }
+
+
         }
         else
         {
+            animator.SetBool("hit", true);
+            animator.SetBool("attacking", false);
             hitbox.gameObject.SetActive(false);
             attacking = false;
             hitstun -= Time.deltaTime;
@@ -333,6 +375,8 @@ public class FGController : Mover
             return;
         }
 
+        animator.SetBool("jumping", true);
+
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         grounded = false;
@@ -352,13 +396,23 @@ public class FGController : Mover
                 health -= collision.GetComponent<FightingHitbox>().damage;
                 if(collision.name == "SpecialMove(Clone)" && collision.CompareTag("EnemyHitbox"))
                 {
+                    Debug.Log("Hit by hado");
                     Destroy(collision.gameObject);
                 }
             }
         }
         else if (collision.CompareTag("Killbox"))
         {
-            GameController.singleton.Die();
+            GameController.singleton.Die(true);
+        }
+    }
+
+    //When switching Gamemodes to fighting for the first time, if you start on the ground you aren't considered grounded
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            grounded = true;
         }
     }
 
@@ -372,11 +426,6 @@ public class FGController : Mover
 
     private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
-        //if(dir == Direction.left)
-        //{
-        //    offsetX *= -1;
-        //    offsetY *= -1;
-        //}
         hitbox.offset = new Vector2(offsetX, offsetY);
         hitbox.size = new Vector2(sizeX, sizeY);
     }
@@ -388,42 +437,46 @@ public class FGController : Mover
             if ((Input.GetAxis("Light") > 0 || Input.GetAxis("Medium") > 0 || Input.GetAxis("Heavy") > 0) && 
                 (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft)))
             {
-                if (dir == Direction.right)
-                {
-                    attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
-                    specialMove.tag = "PlayerHitbox";
-                    inputs[0] = InputDirection.none;
-                    attackType = Attack.special;
-                }
-                else
-                {
-                    attacking = true;
-                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
-                    specialMove.tag = "PlayerHitbox";
-                    specialMove.gameObject.GetComponent<SpecialMove>().speed *= -1;
-                    inputs[0] = InputDirection.none;
-                    attackType = Attack.special;
-                }
+                attacking = true;
+                inputs[0] = InputDirection.none;
+                attackType = Attack.special;
+                animator.SetTrigger("specialattack");
+                animationAttackBoolString = "specialattack";
             }
-            else if (Input.GetAxis("Light") > 0)
+            else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
             {
-                BasicAttack(Attack.light, 0.2f, 0.3f, 0.0f, 0.0f, lightHitstun, lightDamage);
+                heldAttackButton[0] = true;
+                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
             }
-            else if (Input.GetAxis("Medium") > 0)
+            else if (Input.GetAxis("Medium") > 0 && !heldAttackButton[1])
             {
-                BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
+                heldAttackButton[1] = true;
+                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
             }
-            else if (Input.GetAxis("Heavy") > 0)
+            else if (Input.GetAxis("Heavy") > 0 && !heldAttackButton[2])
             {
-                BasicAttack(Attack.heavy, 0.4f, 0.7f, 0.0f, 0.0f, heavyHitstun, heavyDamage);
+                heldAttackButton[2] = true;
+                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
             }
+        }
+        if (Input.GetAxis("Light") <= 0)
+        {
+            heldAttackButton[0] = false;
+        }
+        if (Input.GetAxis("Medium") <= 0)
+        {
+            heldAttackButton[1] = false;
+        }
+        if (Input.GetAxis("Heavy") <= 0)
+        {
+            heldAttackButton[2] = false;
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage)
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage, float startup, string animationAttackBool)
     {
         attackType = attack;
+        startupTime = startup;
         hitBoxActivationTime = hitboxTime;
         endLagTime = lag;
         if (grounded)
@@ -433,9 +486,12 @@ public class FGController : Mover
         hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven;
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
+        animator.SetBool(animationAttackBool, true);
+        animationAttackBoolString = animationAttackBool;
+        animator.SetTrigger(animationAttackBool);
     }
 
-    private IEnumerator AttackCoRoutine()
+    private IEnumerator AttackCoRoutine(string animationAttackBool)
     {
         if (grounded)
         {
@@ -444,25 +500,52 @@ public class FGController : Mover
         switch (attackType)
         {
             case Attack.light:
-                HitBoxSizeAndPos(0.65f, 0.0f, 0.5f, 0.5f);
+                HitBoxSizeAndPos(lightAttackStats.offsetX, lightAttackStats.offsetY, lightAttackStats.sizeX, lightAttackStats.sizeY);
                 break;
             case Attack.medium:
-                HitBoxSizeAndPos(1.0f, 0.0f, 1.0f, 0.5f);
+                HitBoxSizeAndPos(mediumAttackStats.offsetX, mediumAttackStats.offsetY, mediumAttackStats.sizeX, mediumAttackStats.sizeY);
                 break;
             case Attack.heavy:
-                HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
+                HitBoxSizeAndPos(heavyAttackStats.offsetX, heavyAttackStats.offsetY, heavyAttackStats.sizeX, heavyAttackStats.sizeY);
                 break;
             case Attack.special:
+                startupTime = hadoStartup;
+                endLagTime = hadoEndLag;
+                hitBoxActivationTime = 0;
                 break;
             default:
                 Debug.Log("ERROR: INVALID STARTING ATTACK");
                 break;
         }
-        hitbox.gameObject.SetActive(true);
-        yield return new WaitForSeconds(hitBoxActivationTime);
+        yield return new WaitForSeconds(startupTime/60);
+        if (animationAttackBool == "specialattack")
+        {
+            if (dir == Direction.right)
+            {
+                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + hadoDistanceFromPlayer, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                specialMove.tag = "PlayerHitbox";
+            }
+            else
+            {
+                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - hadoDistanceFromPlayer, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                specialMove.tag = "PlayerHitbox";
+            }
+        }
+        else
+        {
+            hitbox.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);
-        yield return new WaitForSeconds(endLagTime);
+        yield return new WaitForSeconds(endLagTime/60);
         attacking = false;
         attackCoRoutineRunning = false;
+    }
+
+    private IEnumerator Death()
+    {
+        animator.SetBool("dead", true);
+        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
+        GameController.singleton.Die();
     }
 }

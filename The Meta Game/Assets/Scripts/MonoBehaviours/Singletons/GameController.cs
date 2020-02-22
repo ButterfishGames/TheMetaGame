@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     public static GameController singleton;
 
+    public bool demoBuild;
+
     public enum GameMode
     {
         platformer,
@@ -209,12 +211,6 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (resetMode)
-        {
-            equipped = GameMode.platformer;
-        }
-        SwitchMode(equipped);
-
         if (resetUnlocks)
         {
             for (int i = 0; i < modes.Length; i++)
@@ -238,8 +234,16 @@ public class GameController : MonoBehaviour
                 numUnlocked++;
             }
         }
+        
+        if (resetMode)
+        {
+            equipped = GameMode.platformer;
+        }
+        
+        StartCoroutine(Switch());
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -258,7 +262,17 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                ExitGame();
+                if (demoBuild)
+                {
+                    if (!onMenu)
+                    {
+                        ReturnToMenu();
+                    }
+                }
+                else
+                {
+                    ExitGame();
+                }
             }
         }
 
@@ -376,6 +390,8 @@ public class GameController : MonoBehaviour
                         if (behaviour.GetType().Equals(typeof(PFEnemy)))
                         {
                             behaviour.enabled = true;
+                            behaviour.GetAnimator().SetBool("platformer", true);
+                            behaviour.GetAnimator().SetBool("fighter", false);
                         }
                         else
                         {
@@ -404,6 +420,8 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(PFController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("platformer", true);
+                        mover.GetAnimator().SetBool("fighter", false);
                     }
                     else
                     {
@@ -416,11 +434,11 @@ public class GameController : MonoBehaviour
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 if (onMenu)
                 {
-                    Camera.main.GetComponent<CameraScroll>().enabled = false;
+                    Camera.main.GetComponent<CameraScroll>().hScroll = false;
                 }
                 else
                 {
-                    Camera.main.GetComponent<CameraScroll>().enabled = true;
+                    Camera.main.GetComponent<CameraScroll>().hScroll = true;
                 }
 
                 if (!ignoreHints)
@@ -631,6 +649,8 @@ public class GameController : MonoBehaviour
                         if (behaviour.GetType().Equals(typeof(FGEnemy)))
                         {
                             behaviour.enabled = true;
+                            behaviour.GetAnimator().SetBool("fighter", true);
+                            behaviour.GetAnimator().SetBool("platformer", false);
                         }
                         else
                         {
@@ -652,6 +672,8 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(FGController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("fighter", true);
+                        mover.GetAnimator().SetBool("platformer", false);
                     }
                     else
                     {
@@ -737,6 +759,7 @@ public class GameController : MonoBehaviour
 
             switchMenu.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         else
         {
@@ -760,7 +783,6 @@ public class GameController : MonoBehaviour
             }
 
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = false;
 
             if (!ignoreHints)
             {
@@ -819,15 +841,33 @@ public class GameController : MonoBehaviour
     public void Die()
     {
         paused = true;
-        StartCoroutine(ReloadLevel());
+        StartCoroutine(ReloadLevel(false));
         currHP = maxHP;
         currMP = maxMP;
     }
 
-    private IEnumerator ReloadLevel()
+    public void Die(bool fall)
     {
+        paused = true;
+        StartCoroutine(ReloadLevel(fall));
+        currHP = maxHP;
+        currMP = maxMP;
+    }
+
+    private IEnumerator ReloadLevel(bool fall)
+    {
+        if (fall)
+        {
+            levelFadeTime = 2;
+        }
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
+
+        /*while (GameObject.Find("Player").GetComponent<AudioSource>().isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }*/
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         yield return new WaitForEndOfFrame();
         SwitchMode(GameMode.platformer);
@@ -1037,5 +1077,33 @@ public class GameController : MonoBehaviour
     public int GetMagic()
     {
         return magic;
+    }
+
+    public float GetGScale()
+    {
+        return gScale;
+    }
+
+    public void ReturnToMenu()
+    {
+        StartCoroutine(FadeAndLoad(0));
+    }
+
+    private IEnumerator Switch()
+    {
+        bool success = false;
+        while (!success)
+        {
+            try
+            {
+                SwitchMode(equipped);
+                success = true;
+            }
+            catch
+            {
+                success = false;
+            }
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

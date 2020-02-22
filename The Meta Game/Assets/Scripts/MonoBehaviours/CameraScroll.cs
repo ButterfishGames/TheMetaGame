@@ -18,6 +18,8 @@ public class CameraScroll : MonoBehaviour
     /// </summary>
     private Transform player;
 
+    public bool hScroll;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +56,23 @@ public class CameraScroll : MonoBehaviour
                 break;
         }
 
-        transform.position = new Vector3(Mathf.Clamp(posX, min.x, max.x), Mathf.Clamp(posY, min.y, max.y), transform.position.z);
+        if (!hScroll)
+        {
+            posX = transform.position.x;
+        }
+
+        posX = Mathf.Clamp(posX, min.x, max.x);
+        posY = Mathf.Clamp(posY, min.y, max.y);
+
+        float xDiff = posX - transform.position.x;
+        float yDiff = posY - transform.position.y;
+
+        Parallax[] pObjs = FindObjectsOfType<Parallax>();
+        foreach (Parallax obj in pObjs)
+        {
+            obj.UpdatePos(xDiff, yDiff);
+        }
+
+        transform.position = new Vector3(posX, posY, transform.position.z);
     }
 }

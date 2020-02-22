@@ -60,8 +60,10 @@ public class PFEnemy : EnemyBehaviour
     /// </summary>
     float mult;
 
+    private bool grounded;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
@@ -95,6 +97,11 @@ public class PFEnemy : EnemyBehaviour
             return;
         }
 
+        if (!grounded)
+        {
+            return;
+        }
+
         RaycastHit2D hit;
         Vector2 dVec = new Vector2(dir *0.5f, -1).normalized;
         LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
@@ -116,33 +123,43 @@ public class PFEnemy : EnemyBehaviour
                 Debug.Log(hit.collider.name);
             }
             dVec = new Vector2(dir, 0);
-            hit = Physics2D.Raycast(transform.position, dVec, 0.25f, mask);
+            hit = Physics2D.Raycast(transform.position, dVec, 0.5f, mask);
             if (hit.collider != null)
             {
                 Turn();
             }
             else
             {
-                hit = Physics2D.Raycast(transform.position, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
+                Vector3 origin = transform.position;
+                origin.y -= 0.3f;
+                hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
                 if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
+                    animator.SetBool("charging", true);
                     mult = chargeMult;
                 }
                 rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
             }
         }
-        if (rb.velocity.x >= 0)
+
+        if (rb.velocity.x > 0)
         {
+            animator.SetBool("moving", true);
             if (transform.eulerAngles.y == 180) {
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
-        else
+        else if (rb.velocity.x < 0)
         {
+            animator.SetBool("moving", true);
             if (transform.eulerAngles.y == 0)
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
+        }
+        else
+        {
+            animator.SetBool("moving", false);
         }
 
         GetComponent<FGEnemy>().dir = dir;
@@ -155,13 +172,35 @@ public class PFEnemy : EnemyBehaviour
             if (collision.collider.gameObject.GetComponent<PFController>().enabled) {
                 rb.velocity = Vector2.zero;
                 PFController pfCon = collision.collider.GetComponent<PFController>();
-                pfCon.StartCoroutine(pfCon.Die());
+                GetComponent<AudioSource>().Play();
+                pfCon.StartCoroutine(pfCon.Die(true));
             }
         }
 
         if (collision.collider.CompareTag("Enemy"))
         {
             Turn();
+        }
+
+        if (collision.collider.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!grounded && collision.collider.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            grounded = false;
         }
     }
 
@@ -175,6 +214,7 @@ public class PFEnemy : EnemyBehaviour
 
     private void Turn()
     {
+        animator.SetBool("charging", false);
         dir *= -1;
         mult = 1;
         transform.Rotate(0, 180, 0);

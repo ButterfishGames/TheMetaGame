@@ -4,5 +4,15 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    // Used to give all enemy scripts a common type
+    protected Animator animator;
+
+    protected virtual void Awake()
+    { 
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
 }

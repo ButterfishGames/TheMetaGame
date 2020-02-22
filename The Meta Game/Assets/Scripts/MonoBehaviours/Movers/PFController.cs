@@ -22,8 +22,6 @@ public class PFController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
-    private Animator animator;
-
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
@@ -50,7 +48,6 @@ public class PFController : Mover
         }
 
         onWall = false;
-        animator = GetComponentInChildren<Animator>();
     }
 
     protected override void Update()
@@ -149,6 +146,10 @@ public class PFController : Mover
                 }
             }
         }
+        else
+        {
+            onWall = false;
+        }
 
         if (onGround)
         {
@@ -221,11 +222,9 @@ public class PFController : Mover
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
         float xForce = 0;
-        Debug.Log(onWall);
         if (onWall)
         {
             xForce = -wallDir * wallJumpForce;
-            Debug.Log(xForce);
         }
 
         rb.AddForce(new Vector2(xForce, jumpForce), ForceMode2D.Impulse);
@@ -242,7 +241,7 @@ public class PFController : Mover
         }
         else if (collision.CompareTag("Killbox"))
         {
-            GameController.singleton.Die();
+            StartCoroutine(Die(false));
         }
     }
 
@@ -261,16 +260,31 @@ public class PFController : Mover
         }
     }*/
 
-    public IEnumerator Die()
+    public IEnumerator Die(bool hit)
     {
-        GameController.singleton.SetPaused(true);
-        rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(1);
-        rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+        GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+        
+        if (hit)
+        {
+            animator.SetBool("dying", true);
+            GameController.singleton.SetPaused(true);
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(1);
+            animator.SetBool("dead", true);
+            rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+            rb.gravityScale = GameController.singleton.GetGScale();
+        }
+
+        if (!GetComponent<AudioSource>().isPlaying)
+        GetComponent<AudioSource>().Play();
         col.enabled = false;
-        GetComponentInChildren<BoxCollider2D>().enabled = false;
+        /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
+        {
+            childCol.enabled = false;
+        }*/
         yield return new WaitForSeconds(deathWait);
-        GameController.singleton.Die();
+        GameController.singleton.Die(!hit);
     }
 
     private IEnumerator GoThrough()

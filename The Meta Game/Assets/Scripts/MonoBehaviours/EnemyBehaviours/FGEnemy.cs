@@ -185,6 +185,11 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// float to determine the length at which the hitbox is out.
     /// </summary>
+    private float startupTime;
+
+    /// <summary>
+    /// float to determine the length at which the hitbox is out.
+    /// </summary>
     private float hitBoxActivationTime;
 
     /// <summary>
@@ -199,26 +204,13 @@ public class FGEnemy : EnemyBehaviour
 
     private bool attackCoRoutineRunning;
 
-    [Tooltip("How much hitstun you want to give to the player when a light attack is performed")]
-    public float lightHitstun;
+    public FGStatsAttackClass lightAttackStats;
+    public FGStatsAttackClass mediumAttackStats;
+    public FGStatsAttackClass heavyAttackStats;
 
-    [Tooltip("How much hitstun you want to give to the player when a medium attack is performed")]
-    public float mediumHitstun;
+    private bool[] usedAttack;
 
-    [Tooltip("How much hitstun you want to give to the player when a heavy attack is performed")]
-    public float heavyHitstun;
-
-    [Tooltip("How much damage you want to deal when a light attack is performed")]
-    public int lightDamage;
-
-    [Tooltip("How much hitstun you want to deal when a medium attack is performed")]
-    public int mediumDamage;
-
-    [Tooltip("How much hitstun you want to deal when a heavy attack is performed")]
-    public int heavyDamage;
-
-
-    void Start()
+    private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -229,6 +221,11 @@ public class FGEnemy : EnemyBehaviour
         hitThisFrame = false;
         v3Offset = new Vector3(xOffsetForRay,0,0);
         attackCoRoutineRunning = false;
+        usedAttack = new bool[3];
+        for (int i = 0; i < usedAttack.Length - 1; i++)
+        {
+            usedAttack[i] = false;
+        }
 
         currHP = maxHP;
 
@@ -237,6 +234,7 @@ public class FGEnemy : EnemyBehaviour
 
     void Update()
     {
+        animator.SetInteger("level", difficultyLevel);
         hitThisFrame = false;
         Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
         if (changedInView == true) {
@@ -288,7 +286,10 @@ public class FGEnemy : EnemyBehaviour
 
             if (stateSwitchTime < secondsUntilStateSwitch)
             {
-                stateSwitchTime += Time.deltaTime;
+                if (!attacking)
+                {
+                    stateSwitchTime += Time.deltaTime;
+                }
             }
             else
             {
@@ -473,6 +474,7 @@ public class FGEnemy : EnemyBehaviour
                         }        
                         break;
                     case EnemyState.offense:
+                        //Debug.Log(Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)));
                         inNeutral = false;
                         choseTime = false;
                         switch (difficultyLevel)
@@ -491,13 +493,19 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     if(Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
                                     {
-                                        Debug.Log("Right bfore basic attack");
-                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
                                         if (!attackCoRoutineRunning)
                                         {
+                                            BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup);
                                             attackCoRoutineRunning = true;
                                             StartCoroutine(AttackCoRoutine());
                                         }
+                                    }
+                                    else
+                                    {
+                                        hitbox.gameObject.SetActive(false);
+                                        StopCoroutine(AttackCoRoutine());
+                                        attacking = false;
+                                        attackCoRoutineRunning = false;
                                     }
                                 }
                                 break;
@@ -515,13 +523,41 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
                                     {
-                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
-                                        if (!attackCoRoutineRunning)
+                                        if (!attackCoRoutineRunning && !usedAttack[2])
                                         {
-                                            Debug.Log("about to start coroutine");
+                                            BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup);
+                                            usedAttack[2] = true;
                                             attackCoRoutineRunning = true;
                                             StartCoroutine(AttackCoRoutine());
                                         }
+                                        else if (!attackCoRoutineRunning)
+                                        {
+                                            usedAttack[2] = false;
+                                            if (facingDirection == Direction.right)
+                                            {
+                                                attacking = true;
+                                                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                                                specialMove.tag = "EnemyHitbox";
+                                                attackType = Attack.special;
+                                                Debug.Log("Hado right");
+                                            }
+                                            else
+                                            {
+                                                attacking = true;
+                                                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                                                specialMove.tag = "EnemyHitbox";
+                                                attackType = Attack.special;
+                                                Debug.Log("Hado left");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        hitbox.gameObject.SetActive(false);
+                                        StopCoroutine(AttackCoRoutine());
+                                        attacking = false;
+                                        attackCoRoutineRunning = false;
+                                        usedAttack[2] = false;
                                     }
                                 }
                                 break;
@@ -537,13 +573,77 @@ public class FGEnemy : EnemyBehaviour
                                     {
                                         Jump(100);
                                     }
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 2)
                                     {
-                                        BasicAttack(Attack.medium, 0.3f, 0.5f, 0.0f, 0.0f, mediumHitstun, mediumDamage);
                                         if (!attackCoRoutineRunning)
                                         {
-                                            attackCoRoutineRunning = true;
-                                            StartCoroutine(AttackCoRoutine());
+                                            if (!usedAttack[0])
+                                            {
+                                                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup);
+                                                usedAttack[0] = true;
+                                                attackCoRoutineRunning = true;
+                                                StartCoroutine(AttackCoRoutine());
+                                                Debug.Log("L");
+                                            }
+                                            else if (!usedAttack[1])
+                                            {
+                                                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup);
+                                                usedAttack[1] = true;
+                                                attackCoRoutineRunning = true;
+                                                StartCoroutine(AttackCoRoutine());
+                                                Debug.Log("M");
+                                            }
+                                            else if (!usedAttack[2])
+                                            {
+                                                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup);
+                                                usedAttack[2] = true;
+                                                attackCoRoutineRunning = true;
+                                                StartCoroutine(AttackCoRoutine());
+                                                Debug.Log("H");
+                                            }
+                                            else
+                                            {
+                                                for (int i = 0; i < usedAttack.Length - 1; i++)
+                                                {
+                                                    usedAttack[i] = false;
+                                                }
+                                                if (facingDirection == Direction.right)
+                                                {
+                                                    attacking = true;
+                                                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 0.5f, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                                                    specialMove.tag = "EnemyHitbox";
+                                                    attackType = Attack.special;
+                                                    Debug.Log("Hado right");
+                                                    for (int i = 0; i < usedAttack.Length - 1; i++)
+                                                    {
+                                                        usedAttack[i] = false;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    attacking = true;
+                                                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 0.5f, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                                                    specialMove.tag = "EnemyHitbox";
+                                                    attackType = Attack.special;
+                                                    Debug.Log("Hado left");
+                                                    for (int i = 0; i < usedAttack.Length - 1; i++)
+                                                    {
+                                                        usedAttack[i] = false;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        hitbox.gameObject.SetActive(false);
+                                        StopCoroutine(AttackCoRoutine());
+                                        attacking = false;
+
+                                        attackCoRoutineRunning = false;
+                                        for (int i = 0; i < usedAttack.Length - 1; i++)
+                                        {
+                                            usedAttack[i] = false;
                                         }
                                     }
                                 }
@@ -560,6 +660,10 @@ public class FGEnemy : EnemyBehaviour
             }
             else
             {
+                for (int i = 0; i < usedAttack.Length - 1; i++)
+                {
+                    usedAttack[i] = false;
+                }
                 hitbox.gameObject.SetActive(false);
                 if(attacking == true)
                 {
@@ -620,9 +724,10 @@ public class FGEnemy : EnemyBehaviour
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity, float yVelocity, float hitstunGiven, int damage)
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity, float yVelocity, float hitstunGiven, int damage, float startup)
     {
         attackType = attack;
+        startupTime = startup;
         hitBoxActivationTime = hitboxTime;
         endLagTime = lag;
         if (grounded)
@@ -657,11 +762,6 @@ public class FGEnemy : EnemyBehaviour
 
     private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
-        //if(dir == Direction.left)
-        //{
-        //    offsetX *= -1;
-        //    offsetY *= -1;
-        //}
         hitbox.offset = new Vector2(offsetX, offsetY);
         hitbox.size = new Vector2(sizeX, sizeY);
     }
@@ -689,6 +789,7 @@ public class FGEnemy : EnemyBehaviour
                 Debug.Log("ERROR: INVALID STARTING ATTACK");
                 break;
         }
+        yield return new WaitForSeconds(startupTime);
         hitbox.gameObject.SetActive(true);
         yield return new WaitForSeconds(hitBoxActivationTime);
         hitbox.gameObject.SetActive(false);

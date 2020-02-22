@@ -10,18 +10,21 @@ public abstract class Mover : MonoBehaviour
     /// <summary>
     /// The BoxCollider2D component attached to this object
     /// </summary>
-    protected BoxCollider2D col;
+    protected CapsuleCollider2D col;
 
     /// <summary>
     /// The Rigidbody2D component attached to this object
     /// </summary>
     protected Rigidbody2D rb;
 
+    protected Animator animator;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        col = GetComponent<BoxCollider2D>();
+        col = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -42,4 +45,9 @@ public abstract class Mover : MonoBehaviour
     }
 
     protected abstract void Move(float h, float v);
+
+    public virtual Animator GetAnimator()
+    {
+        return animator;
+    }
 }
