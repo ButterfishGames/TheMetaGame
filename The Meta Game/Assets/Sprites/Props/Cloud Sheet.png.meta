@@ -1,7 +1,25 @@
 fileFormatVersion: 2
 guid: 2a79e0f8cd4caf54fada253405ac68a1
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5784174338620399104
+    second: Cloud Sheet_0
+  - first:
+      213: -3230328167109544664
+    second: Cloud Sheet_1
+  - first:
+      213: 8779090938882117282
+    second: Cloud Sheet_2
+  - first:
+      213: 5002036931168140494
+    second: Cloud Sheet_3
+  - first:
+      213: -1482969541317576125
+    second: Cloud Sheet_4
+  - first:
+      213: -6273785460254356427
+    second: Cloud Sheet_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -120,7 +138,133 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Cloud Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 70
+        width: 60
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88c7f8bdb88b4f14bbb6f03a1a8e257a
+      internalID: -5784174338620399104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cloud Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 66
+        width: 59
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa64cd83896f9204aaab55243eb38b93
+      internalID: -3230328167109544664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cloud Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 45
+        width: 60
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9527e07c5e8e58a459256e25f540b748
+      internalID: 8779090938882117282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cloud Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 4
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3ba7a1bdaa1f3479e4ccae7f820841
+      internalID: 5002036931168140494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cloud Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 5
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cb52eca8e1a6a34aa4395e081861bed
+      internalID: -1482969541317576125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cloud Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 8
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5214d6d813cfd9f44affe3a385f80bc0
+      internalID: -6273785460254356427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

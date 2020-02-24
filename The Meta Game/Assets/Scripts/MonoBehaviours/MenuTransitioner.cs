@@ -21,8 +21,19 @@ public class MenuTransitioner : MonoBehaviour
                 collision.enabled = false;
                 // GameController.singleton.ignoreHints = false;
                 GameController.singleton.onMenu = false;
+                StartCoroutine(SongFade());
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(buildIndex));
             }
+        }
+    }
+
+    private IEnumerator SongFade()
+    {
+        AudioSource song = GameObject.Find("Song").GetComponent<AudioSource>();
+        while (song.volume > 0)
+        {
+            song.volume = Mathf.Clamp01(song.volume - (Time.deltaTime * GameController.singleton.levelFadeTime * 0.5f));
+            yield return new WaitForEndOfFrame();
         }
     }
 }

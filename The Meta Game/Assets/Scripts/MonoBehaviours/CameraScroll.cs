@@ -18,6 +18,8 @@ public class CameraScroll : MonoBehaviour
     /// </summary>
     private Transform player;
 
+    public bool hScroll;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,11 @@ public class CameraScroll : MonoBehaviour
                 posX = transform.position.x;
                 posY = transform.position.y;
                 break;
+        }
+
+        if (!hScroll)
+        {
+            posX = transform.position.x;
         }
 
         posX = Mathf.Clamp(posX, min.x, max.x);
