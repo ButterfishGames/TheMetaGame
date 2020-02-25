@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RPGController : Mover
 {
@@ -60,11 +61,28 @@ public class RPGController : Mover
     /// </summary>
     private Direction dir;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
 
+        controls.UI.Submit.performed += InteractHandle;
+
+        controls.UI.Submit.Enable();
+    }
+
+    private void InteractHandle(InputAction.CallbackContext context)
+    {
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        Interact();
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
         inverseMoveTime = 1.0f / moveTime;
         moving = false;
         onDamageFloor = false;
@@ -73,16 +91,6 @@ public class RPGController : Mover
         chance = encRate;
 
         dir = Direction.down;
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (!DialogueManager.singleton.GetDisplaying() && Input.GetButtonUp("Submit"))
-        {
-            Interact();
-        }
     }
 
     protected override void Move(float h, float v)
@@ -94,6 +102,7 @@ public class RPGController : Mover
         else
         {
             moving = true;
+            animator.SetBool("moving", true);
         }
 
         if (h < 0)
@@ -101,22 +110,26 @@ public class RPGController : Mover
             h = -1;
             v = 0;
             dir = Direction.left;
+            animator.SetInteger("dir", 3);
         }
         else if (h > 0)
         {
             h = 1;
             v = 0;
             dir = Direction.right;
+            animator.SetInteger("dir", 2);
         }
         else if (v < 0)
         {
             v = -1;
             dir = Direction.down;
+            animator.SetInteger("dir", 0);
         }
         else if (v > 0)
         {
             v = 1;
             dir = Direction.up;
+            animator.SetInteger("dir", 1);
         }
         else
         {
@@ -171,7 +184,7 @@ public class RPGController : Mover
                     switch (dir)
                     {
                         case Direction.right:
-                            if (Input.GetAxisRaw("Horizontal") > 0)
+                            if (hor > 0)
                             {
                                 target = end;
                                 target.x += 1;
@@ -188,7 +201,7 @@ public class RPGController : Mover
                             break;
 
                         case Direction.left:
-                            if (Input.GetAxisRaw("Horizontal") < 0)
+                            if (hor < 0)
                             {
                                 target = end;
                                 target.x -= 1f;
@@ -205,7 +218,7 @@ public class RPGController : Mover
                             break;
 
                         case Direction.up:
-                            if (Input.GetAxisRaw("Vertical") > 0)
+                            if (ver > 0)
                             {
                                 target = end;
                                 target.y += 1f;
@@ -222,7 +235,7 @@ public class RPGController : Mover
                             break;
 
                         case Direction.down:
-                            if (Input.GetAxisRaw("Vertical") < 0)
+                            if (ver < 0)
                             {
                                 target = end;
                                 target.y -= 1f;
@@ -249,6 +262,7 @@ public class RPGController : Mover
         }
 
         moving = false;
+        animator.SetBool("moving", false);
     }
 
     private void Interact()

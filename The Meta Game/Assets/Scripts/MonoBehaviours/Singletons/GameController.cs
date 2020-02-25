@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class GameController : MonoBehaviour
@@ -153,6 +154,72 @@ public class GameController : MonoBehaviour
 
     private float camSize;
 
+    private Controls controls;
+
+    private void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.Player.Menu.performed += MenuHandle;
+        controls.UI.Cancel.performed += CancelHandle;
+        controls.UI.Escape.performed += EscapeHandle;
+
+        controls.Player.Menu.Enable();
+        controls.UI.Cancel.Enable();
+        controls.UI.Escape.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.Menu.performed -= MenuHandle;
+        controls.UI.Cancel.performed -= CancelHandle;
+        controls.UI.Escape.performed -= EscapeHandle;
+
+        controls.Player.Menu.Disable();
+        controls.UI.Cancel.Disable();
+        controls.UI.Escape.Disable();
+    }
+
+    private void MenuHandle (InputAction.CallbackContext context)
+    {
+        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
+        {
+            return;
+        }
+
+        ToggleSwitchMenu();
+    }
+
+    private void EscapeHandle (InputAction.CallbackContext context)
+    {
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+        else
+        {
+            if (demoBuild)
+            {
+                if (!onMenu)
+                {
+                    ReturnToMenu();
+                }
+            }
+            else
+            {
+                ExitGame();
+            }
+        }
+    }
+
+    private void CancelHandle (InputAction.CallbackContext context)
+    {
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -249,33 +316,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Menu") && numUnlocked > 1 && !paused)
-        {
-            ToggleSwitchMenu();
-        }
-
-        if (Input.GetButtonUp("Cancel"))
-        {
-            if (switchMenu.activeInHierarchy)
-            {
-                ToggleSwitchMenu();
-            }
-            else
-            {
-                if (demoBuild)
-                {
-                    if (!onMenu)
-                    {
-                        ReturnToMenu();
-                    }
-                }
-                else
-                {
-                    ExitGame();
-                }
-            }
-        }
-
         if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             Cursor.visible = true;
@@ -422,6 +462,7 @@ public class GameController : MonoBehaviour
                         mover.enabled = true;
                         mover.GetAnimator().SetBool("platformer", true);
                         mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
                     }
                     else
                     {
@@ -504,6 +545,10 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("rpg", true);
+                        mover.GetAnimator().SetInteger("dir", 0);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("platformer", false);
                     }
                     else
                     {
@@ -582,7 +627,7 @@ public class GameController : MonoBehaviour
                     Mathf.Clamp(player.transform.position.y, Camera.main.GetComponent<CameraScroll>().min.y, Camera.main.GetComponent<CameraScroll>().max.y) + Camera.main.GetComponent<CameraScroll>().yOffset,
                     Camera.main.transform.position.z);
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Perspective(60, aspect, 0.3f, 1000.0f);
+                Camera.main.projectionMatrix = Matrix4x4.Perspective(95.52f, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
 
@@ -674,6 +719,7 @@ public class GameController : MonoBehaviour
                         mover.enabled = true;
                         mover.GetAnimator().SetBool("fighter", true);
                         mover.GetAnimator().SetBool("platformer", false);
+                        mover.GetAnimator().SetBool("rpg", false);
                     }
                     else
                     {
