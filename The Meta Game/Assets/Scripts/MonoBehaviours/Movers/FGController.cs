@@ -638,6 +638,11 @@ public class FGController : Mover
     private IEnumerator Death()
     {
         animator.SetBool("dead", true);
+        GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+        if (!GetComponent<AudioSource>().isPlaying)
+        {
+            GetComponent<AudioSource>().Play();
+        }
         yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
         GameController.singleton.Die();
     }
