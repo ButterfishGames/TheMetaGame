@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class GameController : MonoBehaviour
@@ -153,6 +154,72 @@ public class GameController : MonoBehaviour
 
     private float camSize;
 
+    private Controls controls;
+
+    private void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.Player.Menu.performed += MenuHandle;
+        controls.UI.Cancel.performed += CancelHandle;
+        controls.UI.Escape.performed += EscapeHandle;
+
+        controls.Player.Menu.Enable();
+        controls.UI.Cancel.Enable();
+        controls.UI.Escape.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.Menu.performed -= MenuHandle;
+        controls.UI.Cancel.performed -= CancelHandle;
+        controls.UI.Escape.performed -= EscapeHandle;
+
+        controls.Player.Menu.Disable();
+        controls.UI.Cancel.Disable();
+        controls.UI.Escape.Disable();
+    }
+
+    private void MenuHandle (InputAction.CallbackContext context)
+    {
+        if (numUnlocked < 1 || (paused && !switchMenu.activeInHierarchy))
+        {
+            return;
+        }
+
+        ToggleSwitchMenu();
+    }
+
+    private void EscapeHandle (InputAction.CallbackContext context)
+    {
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+        else
+        {
+            if (demoBuild)
+            {
+                if (!onMenu)
+                {
+                    ReturnToMenu();
+                }
+            }
+            else
+            {
+                ExitGame();
+            }
+        }
+    }
+
+    private void CancelHandle (InputAction.CallbackContext context)
+    {
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -249,33 +316,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Menu") && numUnlocked > 1 && !paused)
-        {
-            ToggleSwitchMenu();
-        }
-
-        if (Input.GetButtonUp("Cancel"))
-        {
-            if (switchMenu.activeInHierarchy)
-            {
-                ToggleSwitchMenu();
-            }
-            else
-            {
-                if (demoBuild)
-                {
-                    if (!onMenu)
-                    {
-                        ReturnToMenu();
-                    }
-                }
-                else
-                {
-                    ExitGame();
-                }
-            }
-        }
-
         if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             Cursor.visible = true;

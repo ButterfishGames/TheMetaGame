@@ -677,6 +677,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "4e613760-6ad8-41d4-b561-12408da899a3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -726,8 +734,8 @@
                 },
                 {
                     "name": "",
-                    "id": "2ceeed45-9774-41b9-935c-a205150f854e",
-                    "path": "<Keyboard>/escape",
+                    "id": "88d03ae5-19b1-4c17-bbac-8390ea32108d",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -737,12 +745,12 @@
                 },
                 {
                     "name": "",
-                    "id": "88d03ae5-19b1-4c17-bbac-8390ea32108d",
-                    "path": "<Keyboard>/x",
+                    "id": "4d4ae784-3720-42b7-9edd-f955ae130afc",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Cancel",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
