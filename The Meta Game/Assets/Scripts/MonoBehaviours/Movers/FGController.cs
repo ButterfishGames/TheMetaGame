@@ -483,7 +483,7 @@ public class FGController : Mover
         {
             rb.velocity = new Vector2(xVelocity, yVelocity);
         }
-        hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven;
+        hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven/60;
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
         animator.SetBool(animationAttackBool, true);
