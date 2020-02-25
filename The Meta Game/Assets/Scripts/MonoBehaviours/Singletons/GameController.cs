@@ -182,7 +182,7 @@ public class GameController : MonoBehaviour
 
     private void MenuHandle (InputAction.CallbackContext context)
     {
-        if (numUnlocked < 1 || (paused && !switchMenu.activeInHierarchy))
+        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
         {
             return;
         }
