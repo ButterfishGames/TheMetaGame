@@ -627,7 +627,7 @@ public class GameController : MonoBehaviour
                     Mathf.Clamp(player.transform.position.y, Camera.main.GetComponent<CameraScroll>().min.y, Camera.main.GetComponent<CameraScroll>().max.y) + Camera.main.GetComponent<CameraScroll>().yOffset,
                     Camera.main.transform.position.z);
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Perspective(60, aspect, 0.3f, 1000.0f);
+                Camera.main.projectionMatrix = Matrix4x4.Perspective(95.52f, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
 

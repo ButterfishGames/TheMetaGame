@@ -59,9 +59,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""LookX"",
                     ""type"": ""Button"",
                     ""id"": ""79f2801e-c3a3-48a7-a5f5-5eea1e4d1dc2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LookY"",
+                    ""type"": ""Button"",
+                    ""id"": ""1143faf7-4cc2-416c-a913-eb08691660e7"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -313,18 +321,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b03c8900-8ff2-40d5-9dd8-01fcd80ccba4"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
+                    ""action"": ""LookX"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -335,18 +332,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0e576f4b-82b0-4cbb-8c63-df8161ce2347"",
-                    ""path"": ""<XInputController>/rightStick/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
+                    ""action"": ""LookX"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -668,6 +654,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""MoveV"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4822b04-6ba1-4b20-9098-505ee51fb15f"",
+                    ""path"": ""<Mouse>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e2243f0-0292-452d-8701-9338ae7e336f"",
+                    ""path"": ""<XInputController>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -779,7 +787,8 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_LookX = m_Player.FindAction("LookX", throwIfNotFound: true);
+        m_Player_LookY = m_Player.FindAction("LookY", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_Light = m_Player.FindAction("Light", throwIfNotFound: true);
         m_Player_Medium = m_Player.FindAction("Medium", throwIfNotFound: true);
@@ -844,7 +853,8 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Menu;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_LookX;
+    private readonly InputAction m_Player_LookY;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_Light;
     private readonly InputAction m_Player_Medium;
@@ -859,7 +869,8 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @LookX => m_Wrapper.m_Player_LookX;
+        public InputAction @LookY => m_Wrapper.m_Player_LookY;
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @Light => m_Wrapper.m_Player_Light;
         public InputAction @Medium => m_Wrapper.m_Player_Medium;
@@ -889,9 +900,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
-                @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                @LookX.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookX;
+                @LookX.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookX;
+                @LookX.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookX;
+                @LookY.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookY;
+                @LookY.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookY;
+                @LookY.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookY;
                 @Zoom.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoom;
@@ -926,9 +940,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
+                @LookX.started += instance.OnLookX;
+                @LookX.performed += instance.OnLookX;
+                @LookX.canceled += instance.OnLookX;
+                @LookY.started += instance.OnLookY;
+                @LookY.performed += instance.OnLookY;
+                @LookY.canceled += instance.OnLookY;
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
@@ -1004,7 +1021,8 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
+        void OnLookX(InputAction.CallbackContext context);
+        void OnLookY(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnLight(InputAction.CallbackContext context);
         void OnMedium(InputAction.CallbackContext context);

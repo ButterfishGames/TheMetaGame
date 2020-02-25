@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FPSController : MonoBehaviour
 {
@@ -39,6 +40,85 @@ public class FPSController : MonoBehaviour
     /// </summary>
     private float aspect;
 
+    private float x, y;
+
+    private Controls controls;
+
+    private void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.Player.LookX.performed += LookXHandle;
+        controls.Player.LookX.canceled += LookXHandle;
+        controls.Player.LookY.performed += LookYHandle;
+        controls.Player.LookY.canceled += LookYHandle;
+        controls.Player.Zoom.started += ZoomPerfHandle;
+        controls.Player.Zoom.canceled += ZoomCancHandle;
+        controls.Player.Fire.started += FireHandle;
+
+        controls.Player.LookX.Enable();
+        controls.Player.LookY.Enable();
+        controls.Player.Zoom.Enable();
+        controls.Player.Fire.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.LookX.performed -= LookXHandle;
+        controls.Player.LookX.canceled -= LookXHandle;
+        controls.Player.LookY.performed -= LookYHandle;
+        controls.Player.LookY.canceled -= LookYHandle;
+        controls.Player.Zoom.started -= ZoomPerfHandle;
+        controls.Player.Zoom.canceled -= ZoomCancHandle;
+        controls.Player.Fire.started -= FireHandle;
+
+        controls.Player.LookX.Disable();
+        controls.Player.LookY.Disable();
+        controls.Player.Zoom.Disable();
+        controls.Player.Fire.Disable();
+    }
+
+    private void LookXHandle (InputAction.CallbackContext context)
+    {
+        x = context.action.ReadValue<float>();
+    }
+
+    private void LookYHandle (InputAction.CallbackContext context)
+    {
+        y = invertY ? context.action.ReadValue<float>() : context.action.ReadValue<float>() * -1;
+    }
+
+    private void ZoomPerfHandle (InputAction.CallbackContext context)
+    {
+        zoomRet.SetActive(true);
+        Camera.main.projectionMatrix = Matrix4x4.Perspective(fovZoomed, aspect, 0.3f, 1000.0f);
+    }
+
+    private void ZoomCancHandle (InputAction.CallbackContext context)
+    {
+        zoomRet.SetActive(false);
+        Camera.main.projectionMatrix = Matrix4x4.Perspective(fovNormal, aspect, 0.3f, 1000.0f);
+    }
+
+    private void FireHandle (InputAction.CallbackContext context)
+    {
+        RaycastHit hit;
+        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, mask);
+
+        if (hit.collider == null)
+        {
+            return;
+        }
+        else if (hit.collider.CompareTag("Player"))
+        {
+            GameController.singleton.Hit(damage);
+        }
+        else
+        {
+            hit.collider.GetComponentInParent<PFEnemy>().Hit(damage);
+        }
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -60,41 +140,7 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        float x = Input.GetAxis("Mouse X");
-        float y = invertY ? Input.GetAxis("Mouse Y") : -1 * Input.GetAxis("Mouse Y");
-
         transform.Rotate(y * sensitivity * Time.deltaTime, x * sensitivity * Time.deltaTime, 0);
         transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 0);
-
-        if (Input.GetButtonDown("Zoom"))
-        {
-            zoomRet.SetActive(true);
-            Camera.main.projectionMatrix = Matrix4x4.Perspective(fovZoomed, aspect, 0.3f, 1000.0f);
-        }
-
-        if (Input.GetButtonUp("Zoom"))
-        {
-            zoomRet.SetActive(false);
-            Camera.main.projectionMatrix = Matrix4x4.Perspective(fovNormal, aspect, 0.3f, 1000.0f);
-        }
-
-        if (Input.GetButtonDown("Fire"))
-        {
-            RaycastHit hit;
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, mask);
-            
-            if (hit.collider == null)
-            {
-                return;
-            }
-            else if (hit.collider.CompareTag("Player"))
-            {
-                GameController.singleton.Hit(damage);
-            }
-            else
-            {
-                hit.collider.GetComponentInParent<PFEnemy>().Hit(damage);
-            }
-        }
     }
 }
