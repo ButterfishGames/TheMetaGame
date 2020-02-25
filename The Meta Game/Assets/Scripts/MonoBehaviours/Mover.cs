@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class Mover : MonoBehaviour
 {
+    public Controls controls;
+
     [Tooltip("The layer on which normal level collision will be checked")]
     public LayerMask blockingLayer;
 
@@ -19,8 +22,34 @@ public abstract class Mover : MonoBehaviour
 
     protected Animator animator;
 
+    protected float hor, ver;
+
+    protected virtual void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.Player.MoveH.performed += MoveHHandle;
+        controls.Player.MoveH.canceled += MoveHHandle;
+        controls.Player.MoveV.performed += MoveVHandle;
+        controls.Player.MoveV.canceled += MoveVHandle;
+
+        controls.Player.MoveH.Enable();
+        controls.Player.MoveV.Enable();
+    }
+
+    protected virtual void OnDisable()
+    {
+        controls.Player.MoveH.performed -= MoveHHandle;
+        controls.Player.MoveH.canceled -= MoveHHandle;
+        controls.Player.MoveV.performed -= MoveVHandle;
+        controls.Player.MoveV.canceled -= MoveVHandle;
+
+        controls.Player.MoveH.Disable();
+        controls.Player.MoveV.Disable();
+    }
+
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         col = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -35,12 +64,9 @@ public abstract class Mover : MonoBehaviour
             return;
         }
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-        if (h != 0 || v != 0)
+        if (hor != 0 || ver != 0)
         {
-            Move(h, v);
+            Move(hor, ver);
         }
     }
 
@@ -49,5 +75,15 @@ public abstract class Mover : MonoBehaviour
     public virtual Animator GetAnimator()
     {
         return animator;
+    }
+
+    private void MoveHHandle(InputAction.CallbackContext context)
+    {
+        hor = context.ReadValue<float>();
+    }
+
+    private void MoveVHandle(InputAction.CallbackContext context)
+    {
+        ver = context.ReadValue<float>();
     }
 }

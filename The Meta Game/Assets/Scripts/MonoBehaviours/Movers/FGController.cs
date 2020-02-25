@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FGController : Mover
 {
@@ -152,10 +153,154 @@ public class FGController : Mover
 
     private bool dead;
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
 
+        controls.Player.Jump.performed += JumpHandle;
+        controls.Player.MoveV.performed += VertHandle;
+        controls.Player.MoveV.canceled += VertHandle;
+        controls.Player.Light.performed += LightPerfHandle;
+        controls.Player.Light.canceled += LightCancHandle;
+        controls.Player.Medium.performed += MedPerfHandle;
+        controls.Player.Medium.canceled += MedCancHandle;
+        controls.Player.Heavy.performed += HeavyPerfHandle;
+        controls.Player.Heavy.canceled += HeavyCancHandle;
+
+        controls.Player.Jump.Enable();
+        controls.Player.MoveV.Enable();
+        controls.Player.Light.Enable();
+        controls.Player.Medium.Enable();
+        controls.Player.Heavy.Enable();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        controls.Player.Jump.performed -= JumpHandle;
+        controls.Player.MoveV.performed -= VertHandle;
+        controls.Player.MoveV.canceled -= VertHandle;
+        controls.Player.Light.performed -= LightPerfHandle;
+        controls.Player.Light.canceled -= LightCancHandle;
+        controls.Player.Medium.performed -= MedPerfHandle;
+        controls.Player.Medium.canceled -= MedCancHandle;
+        controls.Player.Heavy.performed -= HeavyPerfHandle;
+        controls.Player.Heavy.canceled -= HeavyCancHandle;
+
+        controls.Player.Jump.Disable();
+        controls.Player.MoveV.Disable();
+        controls.Player.Light.Disable();
+        controls.Player.Medium.Disable();
+        controls.Player.Heavy.Disable();
+    }
+
+    private void JumpHandle (InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        Jump();
+    }
+
+    private void VertHandle (InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (context.action.ReadValue<float>() > 0)
+        {
+            Jump();
+        }
+    }
+
+    private void LightPerfHandle(InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft))
+        {
+            attacking = true;
+            inputs[0] = InputDirection.none;
+            attackType = Attack.special;
+            animator.SetTrigger("specialattack");
+            animationAttackBoolString = "specialattack";
+        }
+        else
+        {
+            heldAttackButton[0] = true;
+            BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
+        }
+    }
+
+    private void LightCancHandle(InputAction.CallbackContext context)
+    {
+        heldAttackButton[0] = false;
+    }
+
+    private void MedPerfHandle(InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft))
+        {
+            attacking = true;
+            inputs[0] = InputDirection.none;
+            attackType = Attack.special;
+            animator.SetTrigger("specialattack");
+            animationAttackBoolString = "specialattack";
+        }
+        else
+        {
+            heldAttackButton[1] = true;
+            BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
+        }
+    }
+
+    private void MedCancHandle(InputAction.CallbackContext context)
+    {
+        heldAttackButton[1] = false;
+    }
+
+    private void HeavyPerfHandle(InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft))
+        {
+            attacking = true;
+            inputs[0] = InputDirection.none;
+            attackType = Attack.special;
+            animator.SetTrigger("specialattack");
+            animationAttackBoolString = "specialattack";
+        }
+        else
+        {
+            heldAttackButton[2] = true;
+            BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
+        }
+    }
+
+    private void HeavyCancHandle(InputAction.CallbackContext context)
+    {
+        heldAttackButton[2] = false;
+    }
+
+    private void Start()
+    {
         health = maxHealth;
 
         inputs = new InputDirection[3];
@@ -199,10 +344,8 @@ public class FGController : Mover
         if (hitstun <= 0)
         {
             animator.SetBool("hit", false);
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
 
-            Move(h, v);
+            Move(hor, ver);
 
             if (inputResetTimer < maxTimeTillReset / 60)
             {
@@ -228,8 +371,6 @@ public class FGController : Mover
                 return;
             }
 
-            AttackEnemy();
-
             if(attacking == true)
             {
                 animator.SetBool("attacking", true);
@@ -249,11 +390,6 @@ public class FGController : Mover
             }
             else
             {
-                if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
-                {
-                    Jump();
-                }
-
                 hitbox.gameObject.SetActive(false);
             }
 
@@ -428,49 +564,6 @@ public class FGController : Mover
     {
         hitbox.offset = new Vector2(offsetX, offsetY);
         hitbox.size = new Vector2(sizeX, sizeY);
-    }
-
-    private void AttackEnemy()
-    {
-        if (attacking == false)
-        {
-            if ((Input.GetAxis("Light") > 0 || Input.GetAxis("Medium") > 0 || Input.GetAxis("Heavy") > 0) && 
-                (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft)))
-            {
-                attacking = true;
-                inputs[0] = InputDirection.none;
-                attackType = Attack.special;
-                animator.SetTrigger("specialattack");
-                animationAttackBoolString = "specialattack";
-            }
-            else if (Input.GetAxis("Light") > 0 && !heldAttackButton[0])
-            {
-                heldAttackButton[0] = true;
-                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
-            }
-            else if (Input.GetAxis("Medium") > 0 && !heldAttackButton[1])
-            {
-                heldAttackButton[1] = true;
-                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
-            }
-            else if (Input.GetAxis("Heavy") > 0 && !heldAttackButton[2])
-            {
-                heldAttackButton[2] = true;
-                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
-            }
-        }
-        if (Input.GetAxis("Light") <= 0)
-        {
-            heldAttackButton[0] = false;
-        }
-        if (Input.GetAxis("Medium") <= 0)
-        {
-            heldAttackButton[1] = false;
-        }
-        if (Input.GetAxis("Heavy") <= 0)
-        {
-            heldAttackButton[2] = false;
-        }
     }
 
     private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity,  float yVelocity, float hitstunGiven, int damage, float startup, string animationAttackBool)

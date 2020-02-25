@@ -422,6 +422,7 @@ public class GameController : MonoBehaviour
                         mover.enabled = true;
                         mover.GetAnimator().SetBool("platformer", true);
                         mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
                     }
                     else
                     {
@@ -504,6 +505,10 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("rpg", true);
+                        mover.GetAnimator().SetInteger("dir", 0);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("platformer", false);
                     }
                     else
                     {
@@ -674,6 +679,7 @@ public class GameController : MonoBehaviour
                         mover.enabled = true;
                         mover.GetAnimator().SetBool("fighter", true);
                         mover.GetAnimator().SetBool("platformer", false);
+                        mover.GetAnimator().SetBool("rpg", false);
                     }
                     else
                     {
