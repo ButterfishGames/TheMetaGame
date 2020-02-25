@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
     public GameMode equipped;
 
+    private string equippedStr;
+
     [Tooltip("Resets equipped gamemode to platformer at start if enabled.")]
     public bool resetMode;
 
@@ -35,10 +37,13 @@ public class GameController : MonoBehaviour
     {
         public string name;
         public bool unlocked;
+        public Sprite sprite;
     }
 
     [Tooltip("Modes Unlocked. Should default to only platformer.")]
     public Mode[] modes;
+
+    private int modeInt;
 
     [Tooltip("Resets unlocked gamemodes to platformer only at start if enabled")]
     public bool resetUnlocks;
@@ -163,10 +168,12 @@ public class GameController : MonoBehaviour
         controls.Player.Menu.performed += MenuHandle;
         controls.UI.Cancel.performed += CancelHandle;
         controls.UI.Escape.performed += EscapeHandle;
+        controls.Player.SwitchMode.started += SwitchHandle;
 
         controls.Player.Menu.Enable();
         controls.UI.Cancel.Enable();
         controls.UI.Escape.Enable();
+        controls.Player.SwitchMode.Enable();
     }
 
     private void OnDisable()
@@ -174,10 +181,68 @@ public class GameController : MonoBehaviour
         controls.Player.Menu.performed -= MenuHandle;
         controls.UI.Cancel.performed -= CancelHandle;
         controls.UI.Escape.performed -= EscapeHandle;
+        controls.Player.SwitchMode.started -= SwitchHandle;
 
         controls.Player.Menu.Disable();
         controls.UI.Cancel.Disable();
         controls.UI.Escape.Disable();
+        controls.Player.SwitchMode.Disable();
+    }
+
+    private void SwitchHandle (InputAction.CallbackContext context)
+    {
+        if (numUnlocked <= 1)
+        {
+            return;
+        }
+
+        float dir = context.action.ReadValue<float>();
+
+        List<Mode> unlocked = new List<Mode>();
+        int i = 0;
+
+        foreach (Mode mode in modes)
+        {
+            if (mode.unlocked)
+            {
+                unlocked.Add(mode);
+                
+                if (mode.name == equippedStr)
+                {
+                    modeInt = i;
+                }
+
+                i++;
+            }
+        }
+
+        if (dir > 0)
+        {
+            if (modeInt == unlocked.ToArray().Length-1)
+            {
+                modeInt = 0;
+            }
+            else
+            {
+                modeInt++;
+            }
+
+            SwitchMode(unlocked[modeInt].name);
+        }
+
+        if (dir < 0)
+        {
+            if (modeInt == 0)
+            {
+                modeInt = unlocked.ToArray().Length-1;
+            }
+            else
+            {
+                modeInt--;
+            }
+
+            SwitchMode(unlocked[modeInt].name);
+        }
     }
 
     private void MenuHandle (InputAction.CallbackContext context)
@@ -401,6 +466,9 @@ public class GameController : MonoBehaviour
         switch (equipped)
         {
             case GameMode.platformer:
+                modeInt = 0;
+                equippedStr = "Platformer";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -473,6 +541,7 @@ public class GameController : MonoBehaviour
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
                 if (onMenu)
                 {
                     Camera.main.GetComponent<CameraScroll>().hScroll = false;
@@ -499,6 +568,9 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.rpg:
+                modeInt = 1;
+                equippedStr = "RPG";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -580,6 +652,9 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.fps:
+                modeInt = 2;
+                equippedStr = "FPS";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -617,6 +692,12 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    if (!mover.GetAnimator().GetBool("platformer"))
+                    {
+                        mover.GetAnimator().SetBool("platformer", true);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
+                    }
                     mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.enabled = false;
@@ -648,6 +729,9 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.fighting:
+                modeInt = 3;
+                equippedStr = "Fighting";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Untagged";
@@ -753,6 +837,68 @@ public class GameController : MonoBehaviour
                 break;
         }
 
+        Image[] images = GetComponentsInChildren<Image>();
+
+        foreach(Image image in images)
+        {
+            if (image.name.Equals("Main"))
+            {
+                image.sprite = modes[modeInt].sprite;
+            }
+
+            if (image.name.Equals("LB"))
+            {
+                bool found = false;
+
+                if (modeInt > 0)
+                {
+                    for (int i = modeInt - 1; i >= 0 && !found; i--)
+                    {
+                        if (modes[i].unlocked)
+                        {
+                            image.sprite = modes[i].sprite;
+                            found = true;
+                        }
+                    }
+                }
+                
+                for (int i = modes.Length-1; i > modeInt && !found; i--)
+                {
+                    if (modes[i].unlocked)
+                    {
+                        image.sprite = modes[i].sprite;
+                        found = true;
+                    }
+                }
+            }
+
+            if (image.name.Equals("RB"))
+            {
+                bool found = false;
+
+                if (modeInt < modes.Length - 1)
+                {
+                    for (int i = modeInt + 1; i < modes.Length && !found; i++)
+                    {
+                        if (modes[i].unlocked)
+                        {
+                            image.sprite = modes[i].sprite;
+                            found = true;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < modeInt && !found; i++)
+                {
+                    if (modes[i].unlocked)
+                    {
+                        image.sprite = modes[i].sprite;
+                        found = true;
+                    }
+                }
+            }
+        }
+
         if (switchMenu.activeInHierarchy)
         {
             ToggleSwitchMenu();
@@ -821,6 +967,22 @@ public class GameController : MonoBehaviour
                     GameObject button = Instantiate(modeButton, contentPanel);
                     button.GetComponent<Button>().onClick.AddListener(() => SwitchMode(mode.name));
                     button.GetComponentInChildren<Text>().text = mode.name;
+
+                    Image img = null;
+                    Image[] images = button.GetComponentsInChildren<Image>();
+                    foreach (Image image in images)
+                    {
+                        if (image.name.Equals("Icon"))
+                        {
+                            img = image;
+                        }
+                    }
+
+                    if (img != null)
+                    {
+                        img.sprite = mode.sprite;
+                    }
+
                     if (EventSystem.current.currentSelectedGameObject == null)
                     {
                         EventSystem.current.SetSelectedGameObject(button);
@@ -965,7 +1127,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(SpriteDamageFlash());
         if (currHP <= 0)
         {
-            Die();
+            paused = true;
+            PFController con = GameObject.Find("Player").GetComponent<PFController>();
+            con.StartCoroutine(con.Die(true));
         }
     }
 

@@ -80,28 +80,53 @@ public class FPSController : MonoBehaviour
 
     private void LookXHandle (InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            x = 0;
+        }
+
         x = context.action.ReadValue<float>();
     }
 
     private void LookYHandle (InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            y = 0;
+        }
+
         y = invertY ? context.action.ReadValue<float>() : context.action.ReadValue<float>() * -1;
     }
 
     private void ZoomPerfHandle (InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         zoomRet.SetActive(true);
         Camera.main.projectionMatrix = Matrix4x4.Perspective(fovZoomed, aspect, 0.3f, 1000.0f);
     }
 
     private void ZoomCancHandle (InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         zoomRet.SetActive(false);
         Camera.main.projectionMatrix = Matrix4x4.Perspective(fovNormal, aspect, 0.3f, 1000.0f);
     }
 
     private void FireHandle (InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         RaycastHit hit;
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, mask);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -60,6 +61,29 @@ public class BattleController : MonoBehaviour
     private Command currCommand;
 
     private Spell currSpell;
+
+    private Controls controls;
+
+    private void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.UI.Cancel.started += CancelHandle;
+
+        controls.UI.Cancel.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.UI.Cancel.started -= CancelHandle;
+
+        controls.UI.Cancel.Disable();
+    }
+
+    private void CancelHandle(InputAction.CallbackContext context)
+    {
+        ReturnToMain();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -126,11 +150,6 @@ public class BattleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") && !onMain)
-        {
-            ReturnToMain();
-        }
-
         if (onMagic && EventSystem.current.currentSelectedGameObject != null)
         {
             RectTransform selected = EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>();

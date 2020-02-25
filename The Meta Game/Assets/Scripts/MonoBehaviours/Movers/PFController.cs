@@ -258,6 +258,7 @@ public class PFController : Mover
         float xForce = 0;
         if (onWall)
         {
+            Debug.Log("test");
             xForce = -wallDir * wallJumpForce;
         }
 
