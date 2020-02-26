@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PFController : Mover
 {
@@ -33,10 +34,62 @@ public class PFController : Mover
 
     private BoxCollider2D groundTrigger;
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
+        
+        controls.Player.MoveV.performed += VertHandle;
+        controls.Player.MoveV.canceled += VertHandle;
+        controls.Player.Jump.performed += JumpHandle;
+        
+        controls.Player.MoveV.Enable();
+        controls.Player.Jump.Enable();
+    }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        controls.Player.MoveV.performed -= VertHandle;
+        controls.Player.MoveV.canceled -= VertHandle;
+        controls.Player.Jump.performed -= JumpHandle;
+        
+        controls.Player.MoveV.Disable();
+        controls.Player.Jump.Disable();
+    }
+
+    private void VertHandle (InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        float v = context.action.ReadValue<float>();
+
+        if (v > 0)
+        {
+            Jump();
+        }
+        else if (v < 0)
+        {
+            StopCoroutine("GoThrough");
+            StartCoroutine("GoThrough");
+        }
+    }
+
+    private void JumpHandle (InputAction.CallbackContext context)
+    {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        Jump();
+    }
+
+    private void Start()
+    {
         groundTrigger = null;
         BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
         foreach (BoxCollider2D col in cols)
@@ -48,25 +101,6 @@ public class PFController : Mover
         }
 
         onWall = false;
-    }
-
-    protected override void Update()
-    {
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        if (Input.GetAxisRaw("Vertical") < 0)
-        {
-            StopCoroutine("GoThrough");
-            StartCoroutine("GoThrough");
-        }
-
-        if (Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
-        {
-            Jump();
-        }
     }
 
     private void LateUpdate()
@@ -168,7 +202,7 @@ public class PFController : Mover
         else
         {
             animator.SetBool("jumping", false);
-            if (Input.GetAxisRaw("Horizontal") == wallDir)
+            if (hor == wallDir)
             {
                 animator.SetBool("walled", true);
             }
@@ -190,7 +224,7 @@ public class PFController : Mover
 
     protected override void Move(float h, float v)
     {
-        float moveX = Input.GetAxisRaw("Horizontal") == 0 ?
+        float moveX = hor == 0 ?
             (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
             (grounded ? Mathf.Clamp(rb.velocity.x + (h * moveSpeed * Time.deltaTime), -maxVelX, maxVelX) : 
             Mathf.Clamp(rb.velocity.x + (h * (moveSpeed/10) * Time.deltaTime), -maxVelX, maxVelX));
@@ -224,6 +258,7 @@ public class PFController : Mover
         float xForce = 0;
         if (onWall)
         {
+            Debug.Log("test");
             xForce = -wallDir * wallJumpForce;
         }
 

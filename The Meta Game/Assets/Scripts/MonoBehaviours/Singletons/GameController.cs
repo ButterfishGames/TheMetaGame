@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class GameController : MonoBehaviour
@@ -26,6 +27,8 @@ public class GameController : MonoBehaviour
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
     public GameMode equipped;
 
+    private string equippedStr;
+
     [Tooltip("Resets equipped gamemode to platformer at start if enabled.")]
     public bool resetMode;
 
@@ -34,10 +37,13 @@ public class GameController : MonoBehaviour
     {
         public string name;
         public bool unlocked;
+        public Sprite sprite;
     }
 
     [Tooltip("Modes Unlocked. Should default to only platformer.")]
     public Mode[] modes;
+
+    private int modeInt;
 
     [Tooltip("Resets unlocked gamemodes to platformer only at start if enabled")]
     public bool resetUnlocks;
@@ -153,6 +159,132 @@ public class GameController : MonoBehaviour
 
     private float camSize;
 
+    private Controls controls;
+
+    private void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.Player.Menu.performed += MenuHandle;
+        controls.UI.Cancel.performed += CancelHandle;
+        controls.UI.Escape.performed += EscapeHandle;
+        controls.Player.SwitchMode.started += SwitchHandle;
+
+        controls.Player.Menu.Enable();
+        controls.UI.Cancel.Enable();
+        controls.UI.Escape.Enable();
+        controls.Player.SwitchMode.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.Menu.performed -= MenuHandle;
+        controls.UI.Cancel.performed -= CancelHandle;
+        controls.UI.Escape.performed -= EscapeHandle;
+        controls.Player.SwitchMode.started -= SwitchHandle;
+
+        controls.Player.Menu.Disable();
+        controls.UI.Cancel.Disable();
+        controls.UI.Escape.Disable();
+        controls.Player.SwitchMode.Disable();
+    }
+
+    private void SwitchHandle (InputAction.CallbackContext context)
+    {
+        if (numUnlocked <= 1)
+        {
+            return;
+        }
+
+        float dir = context.action.ReadValue<float>();
+
+        List<Mode> unlocked = new List<Mode>();
+        int i = 0;
+
+        foreach (Mode mode in modes)
+        {
+            if (mode.unlocked)
+            {
+                unlocked.Add(mode);
+                
+                if (mode.name == equippedStr)
+                {
+                    modeInt = i;
+                }
+
+                i++;
+            }
+        }
+
+        if (dir > 0)
+        {
+            if (modeInt == unlocked.ToArray().Length-1)
+            {
+                modeInt = 0;
+            }
+            else
+            {
+                modeInt++;
+            }
+
+            SwitchMode(unlocked[modeInt].name);
+        }
+
+        if (dir < 0)
+        {
+            if (modeInt == 0)
+            {
+                modeInt = unlocked.ToArray().Length-1;
+            }
+            else
+            {
+                modeInt--;
+            }
+
+            SwitchMode(unlocked[modeInt].name);
+        }
+    }
+
+    private void MenuHandle (InputAction.CallbackContext context)
+    {
+        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
+        {
+            return;
+        }
+
+        ToggleSwitchMenu();
+    }
+
+    private void EscapeHandle (InputAction.CallbackContext context)
+    {
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+        else
+        {
+            if (demoBuild)
+            {
+                if (!onMenu)
+                {
+                    ReturnToMenu();
+                }
+            }
+            else
+            {
+                ExitGame();
+            }
+        }
+    }
+
+    private void CancelHandle (InputAction.CallbackContext context)
+    {
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -249,33 +381,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Menu") && numUnlocked > 1 && !paused)
-        {
-            ToggleSwitchMenu();
-        }
-
-        if (Input.GetButtonUp("Cancel"))
-        {
-            if (switchMenu.activeInHierarchy)
-            {
-                ToggleSwitchMenu();
-            }
-            else
-            {
-                if (demoBuild)
-                {
-                    if (!onMenu)
-                    {
-                        ReturnToMenu();
-                    }
-                }
-                else
-                {
-                    ExitGame();
-                }
-            }
-        }
-
         if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             Cursor.visible = true;
@@ -361,6 +466,9 @@ public class GameController : MonoBehaviour
         switch (equipped)
         {
             case GameMode.platformer:
+                modeInt = 0;
+                equippedStr = "Platformer";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -422,6 +530,7 @@ public class GameController : MonoBehaviour
                         mover.enabled = true;
                         mover.GetAnimator().SetBool("platformer", true);
                         mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
                     }
                     else
                     {
@@ -432,6 +541,7 @@ public class GameController : MonoBehaviour
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
                 if (onMenu)
                 {
                     Camera.main.GetComponent<CameraScroll>().hScroll = false;
@@ -458,6 +568,9 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.rpg:
+                modeInt = 1;
+                equippedStr = "RPG";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -504,6 +617,10 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("rpg", true);
+                        mover.GetAnimator().SetInteger("dir", 0);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("platformer", false);
                     }
                     else
                     {
@@ -535,6 +652,9 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.fps:
+                modeInt = 2;
+                equippedStr = "FPS";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -572,6 +692,12 @@ public class GameController : MonoBehaviour
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
+                    if (!mover.GetAnimator().GetBool("platformer"))
+                    {
+                        mover.GetAnimator().SetBool("platformer", true);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
+                    }
                     mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.enabled = false;
@@ -582,7 +708,7 @@ public class GameController : MonoBehaviour
                     Mathf.Clamp(player.transform.position.y, Camera.main.GetComponent<CameraScroll>().min.y, Camera.main.GetComponent<CameraScroll>().max.y) + Camera.main.GetComponent<CameraScroll>().yOffset,
                     Camera.main.transform.position.z);
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Perspective(60, aspect, 0.3f, 1000.0f);
+                Camera.main.projectionMatrix = Matrix4x4.Perspective(95.52f, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
 
@@ -603,6 +729,9 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameMode.fighting:
+                modeInt = 3;
+                equippedStr = "Fighting";
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Untagged";
@@ -674,6 +803,7 @@ public class GameController : MonoBehaviour
                         mover.enabled = true;
                         mover.GetAnimator().SetBool("fighter", true);
                         mover.GetAnimator().SetBool("platformer", false);
+                        mover.GetAnimator().SetBool("rpg", false);
                     }
                     else
                     {
@@ -705,6 +835,68 @@ public class GameController : MonoBehaviour
             default:
                 Debug.Log("ERROR: INVALID GAME MODE");
                 break;
+        }
+
+        Image[] images = GetComponentsInChildren<Image>();
+
+        foreach(Image image in images)
+        {
+            if (image.name.Equals("Main"))
+            {
+                image.sprite = modes[modeInt].sprite;
+            }
+
+            if (image.name.Equals("LB"))
+            {
+                bool found = false;
+
+                if (modeInt > 0)
+                {
+                    for (int i = modeInt - 1; i >= 0 && !found; i--)
+                    {
+                        if (modes[i].unlocked)
+                        {
+                            image.sprite = modes[i].sprite;
+                            found = true;
+                        }
+                    }
+                }
+                
+                for (int i = modes.Length-1; i > modeInt && !found; i--)
+                {
+                    if (modes[i].unlocked)
+                    {
+                        image.sprite = modes[i].sprite;
+                        found = true;
+                    }
+                }
+            }
+
+            if (image.name.Equals("RB"))
+            {
+                bool found = false;
+
+                if (modeInt < modes.Length - 1)
+                {
+                    for (int i = modeInt + 1; i < modes.Length && !found; i++)
+                    {
+                        if (modes[i].unlocked)
+                        {
+                            image.sprite = modes[i].sprite;
+                            found = true;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < modeInt && !found; i++)
+                {
+                    if (modes[i].unlocked)
+                    {
+                        image.sprite = modes[i].sprite;
+                        found = true;
+                    }
+                }
+            }
         }
 
         if (switchMenu.activeInHierarchy)
@@ -775,6 +967,22 @@ public class GameController : MonoBehaviour
                     GameObject button = Instantiate(modeButton, contentPanel);
                     button.GetComponent<Button>().onClick.AddListener(() => SwitchMode(mode.name));
                     button.GetComponentInChildren<Text>().text = mode.name;
+
+                    Image img = null;
+                    Image[] images = button.GetComponentsInChildren<Image>();
+                    foreach (Image image in images)
+                    {
+                        if (image.name.Equals("Icon"))
+                        {
+                            img = image;
+                        }
+                    }
+
+                    if (img != null)
+                    {
+                        img.sprite = mode.sprite;
+                    }
+
                     if (EventSystem.current.currentSelectedGameObject == null)
                     {
                         EventSystem.current.SetSelectedGameObject(button);
@@ -919,7 +1127,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(SpriteDamageFlash());
         if (currHP <= 0)
         {
-            Die();
+            paused = true;
+            PFController con = GameObject.Find("Player").GetComponent<PFController>();
+            con.StartCoroutine(con.Die(true));
         }
     }
 

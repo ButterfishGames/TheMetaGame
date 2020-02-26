@@ -210,6 +210,9 @@ public class FGEnemy : EnemyBehaviour
 
     private bool[] usedAttack;
 
+    [Tooltip("Distance the special move will spawn from the enemy")]
+    public float hadoDistanceFromEnemy;
+
     private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
@@ -245,7 +248,10 @@ public class FGEnemy : EnemyBehaviour
             }
             if(currHP <= 0)
             {
-                Destroy(gameObject);
+                if (fighting == true) {
+                    fighting = false;
+                    StartCoroutine(Death());
+                }
             }
         }
         else
@@ -254,8 +260,13 @@ public class FGEnemy : EnemyBehaviour
         }
         if (fighting == true)
         {
+            if (grounded == true)
+            {
+                animator.SetBool("jumping", false);
+            }
+
             player = GameObject.FindGameObjectWithTag("Player");
-             if (transform.position.x > player.transform.position.x)
+            if (transform.position.x > player.transform.position.x)
             {
                 facingDirection = Direction.left;
             }
@@ -320,6 +331,7 @@ public class FGEnemy : EnemyBehaviour
 
             if (hitstun <= 0)
             {
+                animator.SetBool("hit", false);
                 //dVecF = Front, dVecB = Back, offset and facing down
                 if (attacking == false)
                 {
@@ -352,8 +364,17 @@ public class FGEnemy : EnemyBehaviour
                                 {
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x , 2)) <= 3)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
                                     }
+                                    else
+                                    {
+                                        animator.SetBool("moving", false);
+                                    }
+                                }
+                                else
+                                {
+                                    animator.SetBool("moving", false);
                                 }
                                 AutoOffenseSwitch(0.25f);
                                 break;
@@ -362,8 +383,17 @@ public class FGEnemy : EnemyBehaviour
                                 {
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
                                     }
+                                    else
+                                    {
+                                        animator.SetBool("moving", false);
+                                    }
+                                }
+                                else
+                                {
+                                    animator.SetBool("moving", false);
                                 }
                                 AutoOffenseSwitch(0.2f);
                                 break;
@@ -372,8 +402,17 @@ public class FGEnemy : EnemyBehaviour
                                 {
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
                                     }
+                                    else
+                                    {
+                                        animator.SetBool("moving", false);
+                                    }
+                                }
+                                else
+                                {
+                                    animator.SetBool("moving", false);
                                 }
                                 AutoOffenseSwitch(0.1f);
                                 break;
@@ -413,6 +452,7 @@ public class FGEnemy : EnemyBehaviour
                                 {
                                     if (hitF.collider != null)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(dir * speed, rb.velocity.y);
                                     }
                                 }
@@ -420,6 +460,7 @@ public class FGEnemy : EnemyBehaviour
                                 {
                                     if (hitB.collider != null)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
                                     }
                                 }
@@ -486,6 +527,7 @@ public class FGEnemy : EnemyBehaviour
                                     //hit = Physics2D.Raycast(transform.position, dVecF, 2, mask);
                                     if (hitF.collider != null)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(dir * speed, rb.velocity.y);
                                     }
                                     else {
@@ -495,7 +537,7 @@ public class FGEnemy : EnemyBehaviour
                                     {
                                         if (!attackCoRoutineRunning)
                                         {
-                                            BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup);
+                                            BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
                                             attackCoRoutineRunning = true;
                                             StartCoroutine(AttackCoRoutine());
                                         }
@@ -515,17 +557,18 @@ public class FGEnemy : EnemyBehaviour
                                     JumpCheck(4.0f, 5);
                                     if (hitF.collider != null)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(dir * speed, rb.velocity.y);
                                     }
                                     else
                                     {
                                         Jump(100);
                                     }
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 1)
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 5)
                                     {
                                         if (!attackCoRoutineRunning && !usedAttack[2])
                                         {
-                                            BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup);
+                                            BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
                                             usedAttack[2] = true;
                                             attackCoRoutineRunning = true;
                                             StartCoroutine(AttackCoRoutine());
@@ -533,10 +576,11 @@ public class FGEnemy : EnemyBehaviour
                                         else if (!attackCoRoutineRunning)
                                         {
                                             usedAttack[2] = false;
+                                            animator.SetTrigger("specialattack");
                                             if (facingDirection == Direction.right)
                                             {
                                                 attacking = true;
-                                                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 1, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                                                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + hadoDistanceFromEnemy, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
                                                 specialMove.tag = "EnemyHitbox";
                                                 attackType = Attack.special;
                                                 Debug.Log("Hado right");
@@ -544,7 +588,7 @@ public class FGEnemy : EnemyBehaviour
                                             else
                                             {
                                                 attacking = true;
-                                                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 1, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                                                GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - hadoDistanceFromEnemy, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
                                                 specialMove.tag = "EnemyHitbox";
                                                 attackType = Attack.special;
                                                 Debug.Log("Hado left");
@@ -567,19 +611,20 @@ public class FGEnemy : EnemyBehaviour
                                     JumpCheck(5.0f, 10);
                                     if (hitF.collider != null)
                                     {
+                                        animator.SetBool("moving", true);
                                         rb.velocity = new Vector2(dir * speed, rb.velocity.y);
                                     }
                                     else
                                     {
                                         Jump(100);
                                     }
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 2)
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 5)
                                     {
                                         if (!attackCoRoutineRunning)
                                         {
                                             if (!usedAttack[0])
                                             {
-                                                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup);
+                                                BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
                                                 usedAttack[0] = true;
                                                 attackCoRoutineRunning = true;
                                                 StartCoroutine(AttackCoRoutine());
@@ -587,7 +632,7 @@ public class FGEnemy : EnemyBehaviour
                                             }
                                             else if (!usedAttack[1])
                                             {
-                                                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup);
+                                                BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
                                                 usedAttack[1] = true;
                                                 attackCoRoutineRunning = true;
                                                 StartCoroutine(AttackCoRoutine());
@@ -595,7 +640,7 @@ public class FGEnemy : EnemyBehaviour
                                             }
                                             else if (!usedAttack[2])
                                             {
-                                                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup);
+                                                BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
                                                 usedAttack[2] = true;
                                                 attackCoRoutineRunning = true;
                                                 StartCoroutine(AttackCoRoutine());
@@ -607,10 +652,11 @@ public class FGEnemy : EnemyBehaviour
                                                 {
                                                     usedAttack[i] = false;
                                                 }
+                                                animator.SetTrigger("specialattack");
                                                 if (facingDirection == Direction.right)
                                                 {
                                                     attacking = true;
-                                                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + 0.5f, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
+                                                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + hadoDistanceFromEnemy, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
                                                     specialMove.tag = "EnemyHitbox";
                                                     attackType = Attack.special;
                                                     Debug.Log("Hado right");
@@ -622,7 +668,7 @@ public class FGEnemy : EnemyBehaviour
                                                 else
                                                 {
                                                     attacking = true;
-                                                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - 0.5f, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
+                                                    GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - hadoDistanceFromEnemy, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
                                                     specialMove.tag = "EnemyHitbox";
                                                     attackType = Attack.special;
                                                     Debug.Log("Hado left");
@@ -660,6 +706,7 @@ public class FGEnemy : EnemyBehaviour
             }
             else
             {
+                animator.SetBool("hit", true);
                 for (int i = 0; i < usedAttack.Length - 1; i++)
                 {
                     usedAttack[i] = false;
@@ -687,6 +734,7 @@ public class FGEnemy : EnemyBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(new Vector2((jumpForce / 2) * dir, jumpForce), ForceMode2D.Impulse);
             grounded = false;
+            animator.SetBool("jumping", true);
         }
     }
 
@@ -724,7 +772,7 @@ public class FGEnemy : EnemyBehaviour
         }
     }
 
-    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity, float yVelocity, float hitstunGiven, int damage, float startup)
+    private void BasicAttack(Attack attack, float hitboxTime, float lag, float xVelocity, float yVelocity, float hitstunGiven, int damage, float startup, string animationAttackTrigger)
     {
         attackType = attack;
         startupTime = startup;
@@ -734,9 +782,10 @@ public class FGEnemy : EnemyBehaviour
         {
             rb.velocity = new Vector2(xVelocity, yVelocity);
         }
-        hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven;
+        hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven/60;
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
+        animator.SetTrigger(animationAttackTrigger);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -760,6 +809,14 @@ public class FGEnemy : EnemyBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
     private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
         hitbox.offset = new Vector2(offsetX, offsetY);
@@ -768,6 +825,7 @@ public class FGEnemy : EnemyBehaviour
 
     private IEnumerator AttackCoRoutine()
     {
+        animator.SetBool("attacking", true);
         if (grounded)
         {
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
@@ -789,14 +847,15 @@ public class FGEnemy : EnemyBehaviour
                 Debug.Log("ERROR: INVALID STARTING ATTACK");
                 break;
         }
-        yield return new WaitForSeconds(startupTime);
+        yield return new WaitForSeconds(startupTime/60);
         hitbox.gameObject.SetActive(true);
-        yield return new WaitForSeconds(hitBoxActivationTime);
+        yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);
-        yield return new WaitForSeconds(endLagTime);
+        yield return new WaitForSeconds(endLagTime/60);
         randomInt = Random.Range(1, 3);
         state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
         attacking = false;
+        animator.SetBool("attacking", false);
         attackCoRoutineRunning = false;
     }
 
@@ -806,5 +865,14 @@ public class FGEnemy : EnemyBehaviour
         {
             grounded = false;
         }
+    }
+
+    private IEnumerator Death()
+    {
+        animator.SetBool("dead", true);
+        rb.gravityScale = 0.0f;
+        col.enabled = false;
+        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
+        Destroy(gameObject);
     }
 }

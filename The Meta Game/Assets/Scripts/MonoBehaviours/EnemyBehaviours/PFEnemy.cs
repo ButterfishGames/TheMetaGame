@@ -232,7 +232,7 @@ public class PFEnemy : EnemyBehaviour
 
     private IEnumerator DamageFlash()
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
         renderer.color = Color.red;
         Color temp = renderer.color;
         while (renderer.color.g < 1 || renderer.color.b < 1)

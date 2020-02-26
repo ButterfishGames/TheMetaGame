@@ -19,11 +19,7 @@ public class SpecialMove : MonoBehaviour
         timeInWorld = 0.0f;
 
         if (CompareTag("PlayerHitbox")){
-            animator.SetBool("player", true);
-        }
-        else
-        {
-            animator.SetBool("player", false);
+            animator.SetTrigger("player");
         }
     }
 
