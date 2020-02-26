@@ -345,17 +345,7 @@ public class GameController : MonoBehaviour
 
         if (resetUnlocks)
         {
-            for (int i = 0; i < modes.Length; i++)
-            {
-                if (modes[i].name.Equals("Platformer"))
-                {
-                    modes[i].unlocked = true;
-                }
-                else
-                {
-                    modes[i].unlocked = false;
-                }
-            }
+            ResetUnlocks();
         }
 
         numUnlocked = 0;
@@ -534,6 +524,8 @@ public class GameController : MonoBehaviour
                     }
                     else
                     {
+                        mover.hor = 0;
+                        mover.ver = 0;
                         mover.enabled = false;
                     }
                 }
@@ -617,6 +609,7 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(RPGController)))
                     {
                         mover.enabled = true;
+                        mover.GetAnimator().SetBool("moving", false);
                         mover.GetAnimator().SetBool("rpg", true);
                         mover.GetAnimator().SetInteger("dir", 0);
                         mover.GetAnimator().SetBool("fighter", false);
@@ -624,6 +617,8 @@ public class GameController : MonoBehaviour
                     }
                     else
                     {
+                        mover.hor = 0;
+                        mover.ver = 0;
                         mover.enabled = false;
                     }
                 }
@@ -700,6 +695,8 @@ public class GameController : MonoBehaviour
                     }
                     mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
+                    mover.hor = 0;
+                    mover.ver = 0;
                     mover.enabled = false;
                 }
 
@@ -807,6 +804,8 @@ public class GameController : MonoBehaviour
                     }
                     else
                     {
+                        mover.hor = 0;
+                        mover.ver = 0;
                         mover.enabled = false;
                     }
                 }
@@ -837,67 +836,7 @@ public class GameController : MonoBehaviour
                 break;
         }
 
-        Image[] images = GetComponentsInChildren<Image>();
-
-        foreach(Image image in images)
-        {
-            if (image.name.Equals("Main"))
-            {
-                image.sprite = modes[modeInt].sprite;
-            }
-
-            if (image.name.Equals("LB"))
-            {
-                bool found = false;
-
-                if (modeInt > 0)
-                {
-                    for (int i = modeInt - 1; i >= 0 && !found; i--)
-                    {
-                        if (modes[i].unlocked)
-                        {
-                            image.sprite = modes[i].sprite;
-                            found = true;
-                        }
-                    }
-                }
-                
-                for (int i = modes.Length-1; i > modeInt && !found; i--)
-                {
-                    if (modes[i].unlocked)
-                    {
-                        image.sprite = modes[i].sprite;
-                        found = true;
-                    }
-                }
-            }
-
-            if (image.name.Equals("RB"))
-            {
-                bool found = false;
-
-                if (modeInt < modes.Length - 1)
-                {
-                    for (int i = modeInt + 1; i < modes.Length && !found; i++)
-                    {
-                        if (modes[i].unlocked)
-                        {
-                            image.sprite = modes[i].sprite;
-                            found = true;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < modeInt && !found; i++)
-                {
-                    if (modes[i].unlocked)
-                    {
-                        image.sprite = modes[i].sprite;
-                        found = true;
-                    }
-                }
-            }
-        }
+        UpdateSwitchPanel();
 
         if (switchMenu.activeInHierarchy)
         {
@@ -1079,6 +1018,10 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         yield return new WaitForEndOfFrame();
         SwitchMode(GameMode.platformer);
+        if (numUnlocked > 1)
+        {
+            ToggleSwitchPanel(true);
+        }
         StartCoroutine(LevelFade(true));
         paused = false;
     }
@@ -1240,6 +1183,7 @@ public class GameController : MonoBehaviour
 
     public IEnumerator Battle()
     {
+        ToggleSwitchPanel(false);
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
@@ -1263,6 +1207,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForEndOfFrame();
         StartCoroutine(LevelFade(true));
         GameObject.Find("Player").GetComponent<RPGController>().SetEncountering(false);
+        ToggleSwitchPanel(true);
         paused = false;
     }
 
@@ -1297,6 +1242,8 @@ public class GameController : MonoBehaviour
     public void ReturnToMenu()
     {
         StartCoroutine(FadeAndLoad(0));
+        ResetUnlocks();
+        ToggleSwitchPanel(false);
     }
 
     private IEnumerator Switch()
@@ -1314,6 +1261,104 @@ public class GameController : MonoBehaviour
                 success = false;
             }
             yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public void ToggleSwitchPanel (bool value)
+    {
+        Image[] images = GetComponentsInChildren<Image>(true);
+
+        foreach (Image image in images)
+        {
+            if (image.name.Equals("SwitchPanel"))
+            {
+                image.gameObject.SetActive(value);
+            }
+        }
+
+        if (value)
+        {
+            UpdateSwitchPanel();
+        }
+    }
+
+    private void ResetUnlocks()
+    {
+        for (int i = 0; i < modes.Length; i++)
+        {
+            if (modes[i].name.Equals("Platformer"))
+            {
+                modes[i].unlocked = true;
+            }
+            else
+            {
+                modes[i].unlocked = false;
+            }
+        }
+    }
+
+    private void UpdateSwitchPanel()
+    {
+        Image[] images = GetComponentsInChildren<Image>();
+
+        foreach (Image image in images)
+        {
+            if (image.name.Equals("Main"))
+            {
+                image.sprite = modes[modeInt].sprite;
+            }
+
+            if (image.name.Equals("LB"))
+            {
+                bool found = false;
+
+                if (modeInt > 0)
+                {
+                    for (int i = modeInt - 1; i >= 0 && !found; i--)
+                    {
+                        if (modes[i].unlocked)
+                        {
+                            image.sprite = modes[i].sprite;
+                            found = true;
+                        }
+                    }
+                }
+
+                for (int i = modes.Length - 1; i > modeInt && !found; i--)
+                {
+                    if (modes[i].unlocked)
+                    {
+                        image.sprite = modes[i].sprite;
+                        found = true;
+                    }
+                }
+            }
+
+            if (image.name.Equals("RB"))
+            {
+                bool found = false;
+
+                if (modeInt < modes.Length - 1)
+                {
+                    for (int i = modeInt + 1; i < modes.Length && !found; i++)
+                    {
+                        if (modes[i].unlocked)
+                        {
+                            image.sprite = modes[i].sprite;
+                            found = true;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < modeInt && !found; i++)
+                {
+                    if (modes[i].unlocked)
+                    {
+                        image.sprite = modes[i].sprite;
+                        found = true;
+                    }
+                }
+            }
         }
     }
 }

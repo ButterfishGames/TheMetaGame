@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -35,6 +36,42 @@ public class DialogueManager : MonoBehaviour
     /// Bool used to ensure proper execution order when displaying dialogue
     /// </summary>
     private bool primed;
+
+    private Controls controls;
+
+    private void OnEnable()
+    {
+        controls = new Controls();
+
+        controls.UI.Submit.started += SubmitStartHandle;
+        controls.UI.Submit.canceled += SubmitCancHandle;
+
+        controls.UI.Submit.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls = new Controls();
+
+        controls.UI.Submit.started -= SubmitStartHandle;
+        controls.UI.Submit.canceled -= SubmitCancHandle;
+
+        controls.UI.Submit.Disable();
+    }
+
+    private void SubmitStartHandle(InputAction.CallbackContext context)
+    {
+        primed = true;
+    }
+
+    private void SubmitCancHandle(InputAction.CallbackContext context)
+    {
+        if (primed)
+        {
+            DisplayNextLine();
+            primed = false;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

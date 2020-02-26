@@ -50,6 +50,7 @@ public class GameModePickup : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameController.singleton.Unlock(mode);
+            GameController.singleton.ToggleSwitchPanel(true);
             Destroy(gameObject);
         }
     }

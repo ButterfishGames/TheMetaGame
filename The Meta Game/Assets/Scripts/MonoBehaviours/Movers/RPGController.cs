@@ -70,6 +70,15 @@ public class RPGController : Mover
         controls.UI.Submit.Enable();
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        controls.UI.Submit.performed -= InteractHandle;
+
+        controls.UI.Submit.Disable();
+    }
+
     private void InteractHandle(InputAction.CallbackContext context)
     {
         if (DialogueManager.singleton.GetDisplaying())
