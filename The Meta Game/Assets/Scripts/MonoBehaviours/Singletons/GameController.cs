@@ -455,6 +455,7 @@ public class GameController : MonoBehaviour
 
         switch (equipped)
         {
+            #region platformer
             case GameMode.platformer:
                 modeInt = 0;
                 equippedStr = "Platformer";
@@ -558,7 +559,8 @@ public class GameController : MonoBehaviour
                     SetHintDisp(5, false);
                 }
                 break;
-
+            #endregion
+            #region rpg
             case GameMode.rpg:
                 modeInt = 1;
                 equippedStr = "RPG";
@@ -645,7 +647,8 @@ public class GameController : MonoBehaviour
                     SetHintDisp(5, false);
                 }
                 break;
-
+            #endregion
+            #region fps
             case GameMode.fps:
                 modeInt = 2;
                 equippedStr = "FPS";
@@ -724,7 +727,8 @@ public class GameController : MonoBehaviour
                     SetHintDisp(5, true);
                 }
                 break;
-
+            #endregion
+            #region fighting
             case GameMode.fighting:
                 modeInt = 3;
                 equippedStr = "Fighting";
@@ -830,6 +834,7 @@ public class GameController : MonoBehaviour
                     SetHintDisp(5, false);
                 }
                 break;
+            #endregion
 
             default:
                 Debug.Log("ERROR: INVALID GAME MODE");

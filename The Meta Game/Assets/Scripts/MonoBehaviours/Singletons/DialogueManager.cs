@@ -61,7 +61,10 @@ public class DialogueManager : MonoBehaviour
 
     private void SubmitStartHandle(InputAction.CallbackContext context)
     {
-        primed = true;
+        if (displaying)
+        {
+            primed = true;
+        }
     }
 
     private void SubmitCancHandle(InputAction.CallbackContext context)
@@ -101,21 +104,6 @@ public class DialogueManager : MonoBehaviour
         lines = new Queue<string>();
         displaying = false;
         primed = false;
-    }
-
-    // LateUpdate is called once per frame after all Update methods have executed
-    void LateUpdate()
-    {
-        if (displaying && Input.GetButtonDown("Submit"))
-        {
-            primed = true;
-        }
-
-        if (primed && Input.GetButtonUp("Submit"))
-        {
-            DisplayNextLine();
-            primed = false;
-        }
     }
 
     public void StartDialogue(string[] lns)
