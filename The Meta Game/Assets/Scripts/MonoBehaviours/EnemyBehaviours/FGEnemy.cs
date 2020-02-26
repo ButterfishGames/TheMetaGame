@@ -869,6 +869,7 @@ public class FGEnemy : EnemyBehaviour
 
     private IEnumerator Death()
     {
+        rb.velocity = new Vector2(0.0f, 0.0f);
         animator.SetBool("dead", true);
         rb.gravityScale = 0.0f;
         col.enabled = false;
