@@ -355,11 +355,13 @@ public class FGEnemy : EnemyBehaviour
                 switch (state)
                 {
                     case EnemyState.defense:
+                        #region defense
                         inNeutral = false;
                         choseTime = false;
                         switch (difficultyLevel)
                         {
                             case 1:
+                                #region level1def
                                 if (hitB.collider != null)
                                 {
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x , 2)) <= 3)
@@ -377,8 +379,10 @@ public class FGEnemy : EnemyBehaviour
                                     animator.SetBool("moving", false);
                                 }
                                 AutoOffenseSwitch(0.25f);
+                                #endregion
                                 break;
                             case 2:
+                                #region level2def
                                 if (hitB.collider != null)
                                 {
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
@@ -396,8 +400,10 @@ public class FGEnemy : EnemyBehaviour
                                     animator.SetBool("moving", false);
                                 }
                                 AutoOffenseSwitch(0.2f);
+                                #endregion
                                 break;
                             case 3:
+                                #region level3def
                                 if (hitB.collider != null)
                                 {
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
@@ -415,14 +421,17 @@ public class FGEnemy : EnemyBehaviour
                                     animator.SetBool("moving", false);
                                 }
                                 AutoOffenseSwitch(0.1f);
+                                #endregion
                                 break;
                             default:
                                 Debug.Log("ERROR: LEVEL DOES NOT EXIST");
                                 break;
                         }
+                        #endregion
                         break;
                     case EnemyState.neutral:
-                        if(inNeutral == false)
+                        #region neutral
+                        if (inNeutral == false)
                         {
                             randomInt = Random.Range(1, 3);
                             if (randomInt == 1)
@@ -512,15 +521,18 @@ public class FGEnemy : EnemyBehaviour
                                 choseTime = false;
                                 secondsInOneDirection = 0;
                             }
-                        }        
+                        }
+                        #endregion
                         break;
                     case EnemyState.offense:
+                        #region offense
                         //Debug.Log(Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)));
                         inNeutral = false;
                         choseTime = false;
                         switch (difficultyLevel)
                         {
                             case 1:
+                                #region level1off
                                 if (!attacking)
                                 {
                                     JumpCheck(4.0f, 2);
@@ -550,8 +562,10 @@ public class FGEnemy : EnemyBehaviour
                                         attackCoRoutineRunning = false;
                                     }
                                 }
+                                #endregion
                                 break;
                             case 2:
+                                #region level2off
                                 if (!attacking)
                                 {
                                     JumpCheck(4.0f, 5);
@@ -604,8 +618,10 @@ public class FGEnemy : EnemyBehaviour
                                         usedAttack[2] = false;
                                     }
                                 }
+                                #endregion
                                 break;
                             case 3:
+                                #region level3off
                                 if (!attacking)
                                 {
                                     JumpCheck(5.0f, 10);
@@ -693,11 +709,13 @@ public class FGEnemy : EnemyBehaviour
                                         }
                                     }
                                 }
+                                #endregion
                                 break;
                             default:
                                 Debug.Log("ERROR: LEVEL DOES NOT EXIST");
                                 break;
                         }
+                        #endregion
                         break;
                     default:
                         Debug.Log("ERROR: STATE DOES NOT EXIST");
