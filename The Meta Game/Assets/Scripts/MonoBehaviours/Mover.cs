@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public abstract class Mover : MonoBehaviour
 {
+    public static float gravity = 3;
+
     public Controls controls;
 
     [Tooltip("The layer on which normal level collision will be checked")]
@@ -23,6 +25,7 @@ public abstract class Mover : MonoBehaviour
     protected Animator animator;
 
     public float hor, ver;
+    private float hRaw, vRaw;
 
     protected virtual void OnEnable()
     {
@@ -48,6 +51,16 @@ public abstract class Mover : MonoBehaviour
         controls.Player.MoveV.Disable();
     }
 
+    private void MoveHHandle(InputAction.CallbackContext context)
+    {
+        hRaw = context.ReadValue<float>();
+    }
+
+    private void MoveVHandle(InputAction.CallbackContext context)
+    {
+        vRaw = context.ReadValue<float>();
+    }
+
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -64,6 +77,9 @@ public abstract class Mover : MonoBehaviour
             return;
         }
 
+        hor = AxisProc(hor, hRaw);
+        ver = AxisProc(ver, vRaw);
+
         if (hor != 0 || ver != 0)
         {
             Move(hor, ver);
@@ -77,13 +93,30 @@ public abstract class Mover : MonoBehaviour
         return animator;
     }
 
-    private void MoveHHandle(InputAction.CallbackContext context)
+    private float AxisProc(float axis, float rawAxis)
     {
-        hor = context.ReadValue<float>();
-    }
+        float res;
 
-    private void MoveVHandle(InputAction.CallbackContext context)
-    {
-        ver = context.ReadValue<float>();
+        if (rawAxis == 0)
+        {
+            if (axis > 0)
+            {
+                res = Mathf.Clamp01(axis - gravity * Time.deltaTime);
+            }
+            else if (axis < 0)
+            {
+                res = Mathf.Clamp(axis + gravity * Time.deltaTime, -1, 0);
+            }
+            else
+            {
+                res = 0;
+            }
+        }
+        else
+        {
+            res = Mathf.Clamp(axis + rawAxis * gravity * Time.deltaTime, -1, 1);
+        }
+
+        return res;
     }
 }

@@ -258,11 +258,12 @@ public class PFController : Mover
         float xForce = 0;
         if (onWall)
         {
-            Debug.Log("test");
             xForce = -wallDir * wallJumpForce;
+            Debug.Log(xForce);
         }
 
-        rb.AddForce(new Vector2(xForce, jumpForce), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        rb.velocity = new Vector2(xForce, rb.velocity.y);
         onWall = false;
         grounded = false;
     }

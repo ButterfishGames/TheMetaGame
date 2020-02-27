@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PosTest : MonoBehaviour
+public class TEST_pos : MonoBehaviour
 {
     // Update is called once per frame
     void Update()
