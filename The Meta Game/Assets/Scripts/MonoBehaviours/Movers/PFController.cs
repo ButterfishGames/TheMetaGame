@@ -224,7 +224,7 @@ public class PFController : Mover
 
     protected override void Move(float h, float v)
     {
-        float moveX = hor == 0 ?
+        float moveX = hRaw == 0 ?
             (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
             (grounded ? Mathf.Clamp(rb.velocity.x + (h * moveSpeed * Time.deltaTime), -maxVelX, maxVelX) : 
             Mathf.Clamp(rb.velocity.x + (h * (moveSpeed/10) * Time.deltaTime), -maxVelX, maxVelX));

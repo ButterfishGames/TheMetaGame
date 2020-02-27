@@ -25,7 +25,7 @@ public abstract class Mover : MonoBehaviour
     protected Animator animator;
 
     public float hor, ver;
-    private float hRaw, vRaw;
+    protected float hRaw, vRaw;
 
     protected virtual void OnEnable()
     {
