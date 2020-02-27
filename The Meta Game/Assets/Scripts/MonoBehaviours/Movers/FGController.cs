@@ -345,7 +345,7 @@ public class FGController : Mover
         {
             animator.SetBool("hit", false);
 
-            Move(hor, ver);
+            Move(hRaw, vRaw);
 
             if (inputResetTimer < maxTimeTillReset / 60)
             {

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public abstract class Mover : MonoBehaviour
 {
-    public static float gravity = 3;
+    public float gravity = 3;
 
     public Controls controls;
 
@@ -25,7 +25,7 @@ public abstract class Mover : MonoBehaviour
     protected Animator animator;
 
     public float hor, ver;
-    protected float hRaw, vRaw;
+    public float hRaw, vRaw;
 
     protected virtual void OnEnable()
     {

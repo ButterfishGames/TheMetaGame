@@ -527,6 +527,8 @@ public class GameController : MonoBehaviour
                     {
                         mover.hor = 0;
                         mover.ver = 0;
+                        mover.hRaw = 0;
+                        mover.vRaw = 0;
                         mover.enabled = false;
                     }
                 }
@@ -621,6 +623,8 @@ public class GameController : MonoBehaviour
                     {
                         mover.hor = 0;
                         mover.ver = 0;
+                        mover.hRaw = 0;
+                        mover.vRaw = 0;
                         mover.enabled = false;
                     }
                 }
@@ -700,6 +704,8 @@ public class GameController : MonoBehaviour
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
                     mover.hor = 0;
                     mover.ver = 0;
+                    mover.hRaw = 0;
+                    mover.vRaw = 0;
                     mover.enabled = false;
                 }
 
@@ -810,6 +816,8 @@ public class GameController : MonoBehaviour
                     {
                         mover.hor = 0;
                         mover.ver = 0;
+                        mover.hRaw = 0;
+                        mover.vRaw = 0;
                         mover.enabled = false;
                     }
                 }
@@ -851,11 +859,11 @@ public class GameController : MonoBehaviour
 
     private float GridLocker(float pos)
     {
-        pos = Mathf.Floor(pos * 4) / 4;
+        pos = Mathf.Floor(pos * 2) / 2;
 
-        if (pos - Mathf.Floor(pos) == 0 || pos - Mathf.Floor(pos) == 0.5f)
+        if (pos - Mathf.Floor(pos) == 0)
         {
-            pos += 0.25f;
+            pos += 0.5f;
         }
 
         return pos;

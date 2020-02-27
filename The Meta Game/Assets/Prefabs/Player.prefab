@@ -133,11 +133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b24e43073a929843bcf46a01468d598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: 3
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
   hor: 0
   ver: 0
+  hRaw: 0
+  vRaw: 0
   moveSpeed: 200
   maxVelX: 7.5
   jumpForce: 20
@@ -156,18 +159,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e7907da4f4648b4ea008ca932fbbdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: 3
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
   hor: 0
   ver: 0
+  hRaw: 0
+  vRaw: 0
   boundLayer:
     serializedVersion: 2
     m_Bits: 1024
   enemyLayer:
     serializedVersion: 2
     m_Bits: 2048
-  moveTime: 0.1
+  moveTime: 0.15
   encRate: 15
   encGrace: 5
 --- !u!114 &-7817119665413950357
@@ -182,11 +188,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c61c244df27426459ed8a2b2caa1aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: 3
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
   hor: 0
   ver: 0
+  hRaw: 0
+  vRaw: 0
   moveSpeed: 300
   jumpForce: 12
   deathForce: 0

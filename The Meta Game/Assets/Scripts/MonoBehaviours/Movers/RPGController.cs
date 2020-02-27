@@ -45,6 +45,8 @@ public class RPGController : Mover
 
     private bool encountering;
 
+    private bool canEnc;
+
     /// <summary>
     /// Used to store current direction facing
     /// </summary>
@@ -96,6 +98,7 @@ public class RPGController : Mover
         moving = false;
         onDamageFloor = false;
         encountering = false;
+        canEnc = true;
         grace = encGrace;
         chance = encRate;
 
@@ -111,11 +114,12 @@ public class RPGController : Mover
         else
         {
             moving = true;
-            animator.SetBool("moving", true);
         }
 
         if (h < 0)
         {
+            transform.rotation = Quaternion.identity;
+
             h = -1;
             v = 0;
             dir = Direction.left;
@@ -123,6 +127,8 @@ public class RPGController : Mover
         }
         else if (h > 0)
         {
+            transform.rotation = Quaternion.identity;
+
             h = 1;
             v = 0;
             dir = Direction.right;
@@ -154,12 +160,14 @@ public class RPGController : Mover
         if (hit.transform == null)
         {
             mvmtCoroutine = SmoothMovement(end);
-            EncCheck();
             StartCoroutine(mvmtCoroutine);
+            animator.SetBool("moving", true);
+            canEnc = true;
         }
         else
         {
             moving = false;
+            animator.SetBool("moving", false);
         }
     }
 
@@ -175,6 +183,12 @@ public class RPGController : Mover
             rb.MovePosition(newPos);
             if (dist <= 0.1f)
             {
+                if (!encountering && canEnc)
+                {
+                    EncCheck();
+                    canEnc = false;
+                }
+
                 if (damage)
                 {
                     rb.MovePosition(end);
@@ -203,9 +217,9 @@ public class RPGController : Mover
 
                                 if (hit.transform == null)
                                 {
-                                    EncCheck();
                                     end = target;
                                 }
+                                canEnc = true;
                             }
                             break;
 
@@ -220,9 +234,9 @@ public class RPGController : Mover
 
                                 if (hit.transform == null)
                                 {
-                                    EncCheck();
                                     end = target;
                                 }
+                                canEnc = true;
                             }
                             break;
 
@@ -237,9 +251,9 @@ public class RPGController : Mover
 
                                 if (hit.transform == null)
                                 {
-                                    EncCheck();
                                     end = target;
                                 }
+                                canEnc = true;
                             }
                             break;
 
@@ -254,9 +268,9 @@ public class RPGController : Mover
 
                                 if (hit.transform == null)
                                 {
-                                    EncCheck();
                                     end = target;
                                 }
+                                canEnc = true;
                             }
                             break;
 
@@ -312,6 +326,8 @@ public class RPGController : Mover
 
     private void EncCheck()
     {
+        Debug.Log("test");
+
         if (grace > 0)
         {
             grace--;
@@ -321,6 +337,8 @@ public class RPGController : Mover
         int det = Random.Range(0, chance + 1);
         if (det == chance)
         {
+            hRaw = vRaw = hor = ver = 0;
+
             GameController.singleton.SetPaused(true);
             encountering = true;
             grace = encGrace;

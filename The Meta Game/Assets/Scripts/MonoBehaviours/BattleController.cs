@@ -638,6 +638,8 @@ public class BattleController : MonoBehaviour
 
     private IEnumerator HealSpellRtn(Spell spell)
     {
+        GameController.singleton.Cast(spell.manaCost);
+
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
         yield return new WaitForSeconds(0.75f);
