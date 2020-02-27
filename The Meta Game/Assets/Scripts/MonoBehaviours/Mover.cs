@@ -114,7 +114,14 @@ public abstract class Mover : MonoBehaviour
         }
         else
         {
-            res = Mathf.Clamp(axis + rawAxis * gravity * Time.deltaTime, -1, 1);
+            if ((rawAxis > 0 && axis < 0) || (rawAxis < 0 && axis > 0))
+            {
+                res = 0;
+            }
+            else
+            {
+                res = Mathf.Clamp(axis + rawAxis * gravity * Time.deltaTime, -1, 1);
+            }
         }
 
         return res;
