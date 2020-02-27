@@ -455,72 +455,11 @@ public class FGEnemy : EnemyBehaviour
 
                         if (facingDirection == Direction.right)
                         {
-                            if (secondsInOneDirection < randomTime)
-                            {
-                                if (startRight == true)
-                                {
-                                    if (hitF.collider != null)
-                                    {
-                                        animator.SetBool("moving", true);
-                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
-                                    }
-                                }
-                                else
-                                {
-                                    if (hitB.collider != null)
-                                    {
-                                        animator.SetBool("moving", true);
-                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
-                                    }
-                                }
-                                secondsInOneDirection += Time.deltaTime;
-                            }
-                            else
-                            {
-                                if (startRight)
-                                {
-                                    startRight = false;
-                                }
-                                else
-                                {
-                                    startRight = true;
-                                }
-                                choseTime = false;
-                                secondsInOneDirection = 0;
-                            }
+                            neutralDirectionMovement(hitF, hitB, dir);
                         }
                         else if (facingDirection == Direction.left)
                         {
-                            if (secondsInOneDirection < randomTime)
-                            {
-                                if (startRight == true)
-                                {
-                                    if (hitB.collider != null)
-                                    {
-                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
-                                    }
-                                }
-                                else
-                                {
-                                    if (hitF.collider != null)
-                                    {
-                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
-                                    }
-                                }
-                                secondsInOneDirection += Time.deltaTime;
-                            }
-                            else
-                            {
-                                if (startRight)
-                                {
-                                    startRight = false;
-                                }
-                                else{
-                                    startRight = true;
-                                }
-                                choseTime = false;
-                                secondsInOneDirection = 0;
-                            }
+                            neutralDirectionMovement(hitB, hitF, -dir);
                         }
                         #endregion
                         break;
@@ -565,6 +504,7 @@ public class FGEnemy : EnemyBehaviour
                                 #endregion
                                 break;
                             case 2:
+                                //Debug.Log(usedAttack[2]);
                                 #region level2off
                                 if (!attacking)
                                 {
@@ -577,8 +517,9 @@ public class FGEnemy : EnemyBehaviour
                                     else
                                     {
                                         Jump(100);
+                                        animator.SetBool("moving", false);
                                     }
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 5)
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 2)
                                     {
                                         if (!attackCoRoutineRunning && !usedAttack[2])
                                         {
@@ -893,5 +834,50 @@ public class FGEnemy : EnemyBehaviour
         col.enabled = false;
         yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
         Destroy(gameObject);
+    }
+
+    private void neutralDirectionMovement(RaycastHit2D ray1, RaycastHit2D ray2, int directionInt)
+    {
+        if (secondsInOneDirection < randomTime)
+        {
+            if (startRight == true)
+            {
+                if (ray1.collider != null)
+                {
+                    animator.SetBool("moving", true);
+                    rb.velocity = new Vector2(directionInt * speed, rb.velocity.y);
+                }
+                else
+                {
+                    animator.SetBool("moving", false);
+                }
+            }
+            else
+            {
+                if (ray2.collider != null)
+                {
+                    animator.SetBool("moving", true);
+                    rb.velocity = new Vector2(-directionInt * speed, rb.velocity.y);
+                }
+                else
+                {
+                    animator.SetBool("moving", false);
+                }
+            }
+            secondsInOneDirection += Time.deltaTime;
+        }
+        else
+        {
+            if (startRight)
+            {
+                startRight = false;
+            }
+            else
+            {
+                startRight = true;
+            }
+            choseTime = false;
+            secondsInOneDirection = 0;
+        }
     }
 }
