@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FGEnemy : EnemyBehaviour
 {
+    #region variables
     /// <summary>
     /// Sprite renderer to see if the enemy is visible or not so we know whether to include them in the fight.
     /// </summary>
@@ -218,6 +219,7 @@ public class FGEnemy : EnemyBehaviour
 
     [Tooltip("how much endlag the Hadouken has in frames")]
     public float hadoEndLag;
+    #endregion
 
     private void Start()
     {
@@ -461,11 +463,11 @@ public class FGEnemy : EnemyBehaviour
 
                         if (facingDirection == Direction.right)
                         {
-                            neutralDirectionMovement(hitF, hitB, dir);
+                            NeutralDirectionMovement(hitF, hitB, dir);
                         }
                         else if (facingDirection == Direction.left)
                         {
-                            neutralDirectionMovement(hitB, hitF, -dir);
+                            NeutralDirectionMovement(hitB, hitF, -dir);
                         }
                         #endregion
                         break;
@@ -798,13 +800,13 @@ public class FGEnemy : EnemyBehaviour
         switch (attackType)
         {
             case Attack.light:
-                HitBoxSizeAndPos(0.6f, 0.0f, 0.5f, 0.5f);
+                HitBoxSizeAndPos(lightAttackStats.offsetX, lightAttackStats.offsetY, lightAttackStats.sizeX, lightAttackStats.sizeY);
                 break;
             case Attack.medium:
-                HitBoxSizeAndPos(1.0f, 0.0f, 1.0f, 0.5f);
+                HitBoxSizeAndPos(mediumAttackStats.offsetX, mediumAttackStats.offsetY, mediumAttackStats.sizeX, mediumAttackStats.sizeY);
                 break;
             case Attack.heavy:
-                HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
+                HitBoxSizeAndPos(heavyAttackStats.offsetX, heavyAttackStats.offsetY, heavyAttackStats.sizeX, heavyAttackStats.sizeY);
                 break;
             case Attack.special:
                 startupTime = hadoStartup;
@@ -845,7 +847,7 @@ public class FGEnemy : EnemyBehaviour
         Destroy(gameObject);
     }
 
-    private void neutralDirectionMovement(RaycastHit2D ray1, RaycastHit2D ray2, int directionInt)
+    private void NeutralDirectionMovement(RaycastHit2D ray1, RaycastHit2D ray2, int directionInt)
     {
         if (secondsInOneDirection < randomTime)
         {

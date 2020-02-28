@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class FGController : Mover
 {
+    #region variables
     [Tooltip("The rate at which the object moves")]
     public float moveSpeed;
 
@@ -152,6 +153,7 @@ public class FGController : Mover
     public float hadoDistanceFromPlayer;
 
     private bool dead;
+    #endregion
 
     protected override void OnEnable()
     {
@@ -401,8 +403,6 @@ public class FGController : Mover
             {
                 animator.SetBool("moving", false);
             }
-
-
         }
         else
         {
