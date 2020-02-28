@@ -213,6 +213,12 @@ public class FGEnemy : EnemyBehaviour
     [Tooltip("Distance the special move will spawn from the enemy")]
     public float hadoDistanceFromEnemy;
 
+    [Tooltip("how much startup the Hadouken has in frames")]
+    public float hadoStartup;
+
+    [Tooltip("how much endlag the Hadouken has in frames")]
+    public float hadoEndLag;
+
     private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
@@ -801,6 +807,9 @@ public class FGEnemy : EnemyBehaviour
                 HitBoxSizeAndPos(1.0f, 0.0f, 2.0f, 0.5f);
                 break;
             case Attack.special:
+                startupTime = hadoStartup;
+                endLagTime = hadoEndLag;
+                hitBoxActivationTime = 0;
                 break;
             default:
                 Debug.Log("ERROR: INVALID STARTING ATTACK");
