@@ -980,6 +980,10 @@ public class GameController : MonoBehaviour
             {
                 modes[i].unlocked = true;
                 unlockPanel.SetActive(true);
+                if (mode.Equals("Fighting"))
+                {
+                    mode += " Game";
+                }
                 unlockText.text = "You unlocked \n" + mode + " mode!";
                 found = true;
                 StartCoroutine(UnlockFade());

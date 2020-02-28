@@ -158,9 +158,10 @@ public class RPGController : Mover
 
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(h, v);
+        Vector2 lcTarget = start + new Vector2(h * 1.49f, v * 1.49f);
         
         RaycastHit2D hit;
-        hit = Physics2D.Linecast(start, end * 1.49f, blockingLayer + boundLayer + enemyLayer);
+        hit = Physics2D.Linecast(start, lcTarget, blockingLayer + boundLayer + enemyLayer);
 
         if (hit.transform == null)
         {
@@ -171,6 +172,7 @@ public class RPGController : Mover
         }
         else
         {
+            Debug.Log(hit.transform.name);
             moving = false;
             animator.SetBool("moving", false);
         }
