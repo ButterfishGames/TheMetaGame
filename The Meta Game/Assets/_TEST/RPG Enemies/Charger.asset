@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Charger
   m_EditorClassIdentifier: 
   name: Charger
-  sprite: {fileID: 3608220439787051964, guid: 385cbef7b0395534686ae24520620ee8, type: 3}
+  sprite: {fileID: -2713876152424686793, guid: 48eda670634b97c48b916376689c7de5, type: 3}
   maxHP: 30
   attacks:
   - name: Bump
-    baseDmg: 10
+    baseDmg: 5
     var: 0.2
   - name: Charge
-    baseDmg: 20
+    baseDmg: 10
     var: 0.75

@@ -69,6 +69,12 @@ public class GameController : MonoBehaviour
     [Range(0.5f, 3.0f)]
     public float levelFadeTime;
 
+    public float unlockWaitTime;
+
+    public float unlockFadeTime;
+
+    private float inverseUnlockFadeTime;
+
     [Tooltip("The maximum HP for the player (only used in certain gamemodes)")]
     public int maxHP;
 
@@ -89,6 +95,10 @@ public class GameController : MonoBehaviour
     public bool onMenu;
 
     public TextMeshProUGUI codeText;
+
+    public GameObject unlockPanel;
+
+    public TextMeshProUGUI unlockText;
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
@@ -191,6 +201,11 @@ public class GameController : MonoBehaviour
 
     private void SwitchHandle (InputAction.CallbackContext context)
     {
+        if (paused)
+        {
+            return;
+        }
+
         if (numUnlocked <= 1)
         {
             return;
@@ -301,6 +316,8 @@ public class GameController : MonoBehaviour
         inverseDamageFadeTime = 1.0f / damageFadeTime;
 
         inverseLevelFadeTime = 1.0f / levelFadeTime;
+
+        inverseUnlockFadeTime = 1.0f / unlockFadeTime;
 
         currHP = maxHP;
         currMP = maxMP;
@@ -962,7 +979,10 @@ public class GameController : MonoBehaviour
             if (modes[i].name.Equals(mode))
             {
                 modes[i].unlocked = true;
+                unlockPanel.SetActive(true);
+                unlockText.text = "You unlocked \n" + mode + " mode!";
                 found = true;
+                StartCoroutine(UnlockFade());
             }
         }
 
@@ -1037,6 +1057,33 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(LevelFade(true));
         paused = false;
+    }
+
+    private IEnumerator UnlockFade()
+    {
+        Image img = unlockPanel.GetComponent<Image>();
+        Color temp = img.color;
+        Color temp2 = unlockText.color;
+
+        temp.a = temp2.a = 1;
+        img.color = temp;
+        unlockText.color = temp2;
+
+        yield return new WaitForSeconds(unlockWaitTime);
+
+        while (img.color.a > 0)
+        {
+            temp.a -= inverseUnlockFadeTime * Time.deltaTime;
+            temp2.a = temp.a;
+            img.color = temp;
+            unlockText.color = temp2;
+            yield return new WaitForEndOfFrame();
+        }
+
+        unlockPanel.SetActive(false);
+        temp.a = temp2.a = 1;
+        img.color = temp;
+        unlockText.color = temp;
     }
 
     private IEnumerator LevelFade(bool fadeIn)
@@ -1308,6 +1355,8 @@ public class GameController : MonoBehaviour
                 modes[i].unlocked = false;
             }
         }
+
+        numUnlocked = 1;
     }
 
     private void UpdateSwitchPanel()

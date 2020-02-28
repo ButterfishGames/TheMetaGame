@@ -83,6 +83,11 @@ public class RPGController : Mover
 
     private void InteractHandle(InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         if (DialogueManager.singleton.GetDisplaying())
         {
             return;
@@ -155,7 +160,7 @@ public class RPGController : Mover
         Vector2 end = start + new Vector2(h, v);
         
         RaycastHit2D hit;
-        hit = Physics2D.Linecast(start, end, blockingLayer + boundLayer + enemyLayer);
+        hit = Physics2D.Linecast(start, end * 1.49f, blockingLayer + boundLayer + enemyLayer);
 
         if (hit.transform == null)
         {
@@ -202,6 +207,7 @@ public class RPGController : Mover
                 }
 
                 Vector3 target;
+                Vector3 lcTarget;
                 if (!encountering)
                 {
                     switch (dir)
@@ -211,15 +217,16 @@ public class RPGController : Mover
                             {
                                 target = end;
                                 target.x += 1;
+                                lcTarget = target * 1.49f;
 
                                 RaycastHit2D hit;
-                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+                                hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
 
                                 if (hit.transform == null)
                                 {
                                     end = target;
+                                    canEnc = true;
                                 }
-                                canEnc = true;
                             }
                             break;
 
@@ -228,15 +235,16 @@ public class RPGController : Mover
                             {
                                 target = end;
                                 target.x -= 1f;
+                                lcTarget = target * 1.49f;
 
                                 RaycastHit2D hit;
-                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+                                hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
 
                                 if (hit.transform == null)
                                 {
                                     end = target;
+                                    canEnc = true;
                                 }
-                                canEnc = true;
                             }
                             break;
 
@@ -245,15 +253,16 @@ public class RPGController : Mover
                             {
                                 target = end;
                                 target.y += 1f;
+                                lcTarget = target * 1.49f;
 
                                 RaycastHit2D hit;
-                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+                                hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
 
                                 if (hit.transform == null)
                                 {
                                     end = target;
+                                    canEnc = true;
                                 }
-                                canEnc = true;
                             }
                             break;
 
@@ -262,15 +271,16 @@ public class RPGController : Mover
                             {
                                 target = end;
                                 target.y -= 1f;
+                                lcTarget = target * 1.49f;
 
                                 RaycastHit2D hit;
-                                hit = Physics2D.Linecast(transform.position, target, blockingLayer + boundLayer + enemyLayer);
+                                hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
 
                                 if (hit.transform == null)
                                 {
                                     end = target;
+                                    canEnc = true;
                                 }
-                                canEnc = true;
                             }
                             break;
 
