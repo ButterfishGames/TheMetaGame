@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSpell", menuName = "ScriptableObjects/Spell", order = 1)]
+[CreateAssetMenu(fileName = "NewSpell", menuName = "ScriptableObjects/Spell", order = 3)]
 public class Spell : ScriptableObject
 {
     public string spellName;

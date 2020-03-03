@@ -27,6 +27,8 @@ public abstract class Mover : MonoBehaviour
     public float hor, ver;
     public float hRaw, vRaw;
 
+    protected bool stickUp;
+
     protected virtual void OnEnable()
     {
         controls = new Controls();
@@ -35,9 +37,12 @@ public abstract class Mover : MonoBehaviour
         controls.Player.MoveH.canceled += MoveHHandle;
         controls.Player.MoveV.performed += MoveVHandle;
         controls.Player.MoveV.canceled += MoveVHandle;
+        controls.Player.LStick.performed += LStickHandle;
+        controls.Player.LStick.canceled += LStickHandle;
 
         controls.Player.MoveH.Enable();
         controls.Player.MoveV.Enable();
+        controls.Player.LStick.Enable();
     }
 
     protected virtual void OnDisable()
@@ -46,9 +51,12 @@ public abstract class Mover : MonoBehaviour
         controls.Player.MoveH.canceled -= MoveHHandle;
         controls.Player.MoveV.performed -= MoveVHandle;
         controls.Player.MoveV.canceled -= MoveVHandle;
+        controls.Player.LStick.performed -= LStickHandle;
+        controls.Player.LStick.canceled -= LStickHandle;
 
         controls.Player.MoveH.Disable();
         controls.Player.MoveV.Disable();
+        controls.Player.LStick.Disable();
     }
 
     private void MoveHHandle(InputAction.CallbackContext context)
@@ -59,6 +67,42 @@ public abstract class Mover : MonoBehaviour
     private void MoveVHandle(InputAction.CallbackContext context)
     {
         vRaw = context.ReadValue<float>();
+        stickUp = false;
+    }
+
+    private void LStickHandle(InputAction.CallbackContext context)
+    {
+        Vector2 stickRaw = context.ReadValue<Vector2>();
+
+        float threshold = Mathf.Cos(5.0f / 18.0f * Mathf.PI); // 5/18 * pi radians = 50 degrees; cos(50 deg) = sin(40 deg)
+
+        if (stickRaw.x >= threshold)
+        {
+            hRaw = 1;
+        }
+        else if (stickRaw.x <= -threshold)
+        {
+            hRaw = -1;
+        }
+        else
+        {
+            hRaw = 0;
+        }
+
+        if (stickRaw.y >= threshold)
+        {
+            stickUp = true;
+            vRaw = 1;
+        }
+        else if (stickRaw.y <= -threshold)
+        {
+            stickUp = false;
+            vRaw = -1;
+        }
+        else
+        {
+            vRaw = 0;
+        }
     }
 
     // Start is called before the first frame update
@@ -79,6 +123,11 @@ public abstract class Mover : MonoBehaviour
 
         hor = AxisProc(hor, hRaw);
         ver = AxisProc(ver, vRaw);
+        
+        if (ver <= 0 && stickUp)
+        {
+            stickUp = false;
+        }
 
         if (hor != 0 || ver != 0)
         {

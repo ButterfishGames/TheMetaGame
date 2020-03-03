@@ -12,7 +12,7 @@ public class CutsceneTrigger : MonoBehaviour
         if (triggerable && collision.CompareTag("Player"))
         {
             GameController.singleton.SwitchMode("platformer");
-            scene.StartScene();
+            CutsceneManager.singleton.StartScene(scene);
             triggerable = false;
         }
     }

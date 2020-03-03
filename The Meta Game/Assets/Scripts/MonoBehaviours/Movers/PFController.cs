@@ -23,6 +23,9 @@ public class PFController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
+    [Tooltip("Can you jump with up on the stick?")]
+    public bool canStickJump;
+
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
@@ -37,9 +40,7 @@ public class PFController : Mover
     protected override void OnEnable()
     {
         base.OnEnable();
-        
-        controls.Player.MoveV.performed += VertHandle;
-        controls.Player.MoveV.canceled += VertHandle;
+
         controls.Player.Jump.performed += JumpHandle;
         
         controls.Player.MoveV.Enable();
@@ -50,32 +51,10 @@ public class PFController : Mover
     {
         base.OnDisable();
         
-        controls.Player.MoveV.performed -= VertHandle;
-        controls.Player.MoveV.canceled -= VertHandle;
         controls.Player.Jump.performed -= JumpHandle;
         
         controls.Player.MoveV.Disable();
         controls.Player.Jump.Disable();
-    }
-
-    private void VertHandle (InputAction.CallbackContext context)
-    {
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        float v = context.action.ReadValue<float>();
-
-        if (v > 0)
-        {
-            Jump();
-        }
-        else if (v < 0)
-        {
-            StopCoroutine("GoThrough");
-            StartCoroutine("GoThrough");
-        }
     }
 
     private void JumpHandle (InputAction.CallbackContext context)
@@ -224,6 +203,21 @@ public class PFController : Mover
 
     protected override void Move(float h, float v)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (v > 0 && (canStickJump || !stickUp))
+        {
+            Jump();
+        }
+        else if (v < 0)
+        {
+            StopCoroutine("GoThrough");
+            StartCoroutine("GoThrough");
+        }
+
         float moveX = hRaw == 0 ?
             (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
             (grounded ? Mathf.Clamp(rb.velocity.x + (h * moveSpeed * Time.deltaTime), -maxVelX, maxVelX) : 
@@ -259,7 +253,6 @@ public class PFController : Mover
         if (onWall)
         {
             xForce = -wallDir * wallJumpForce;
-            Debug.Log(xForce);
         }
 
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);

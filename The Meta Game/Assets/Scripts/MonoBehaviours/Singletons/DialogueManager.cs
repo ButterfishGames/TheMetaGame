@@ -1,43 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    /// <summary>
-    /// A static variable storing a reference to the DialogueManager singleton
-    /// </summary>
     public static DialogueManager singleton;
 
-    /// <summary>
-    /// Object reference to the dialogue box game object
-    /// </summary>
-    private GameObject dialogueBox;
+    private GameObject rpgDialogueBox;
+    private GameObject datingDialogueBox;
 
-    /// <summary>
-    /// Object reference to the text component which will contain dialogue
-    /// </summary>
+    public GameObject branchButtonPrefab;
+
+    private Image charImg;
     private TextMeshProUGUI dialogueText;
+    private TextMeshProUGUI nameText;
 
-    /// <summary>
-    /// Queue storing the lines of the currently active dialogue
-    /// </summary>
-    private Queue<string> lines;
+    private Queue<string> sentences;
+    private Queue<string> names;
+    private Queue<int> sprites;
 
-    /// <summary>
-    /// Bool representing whether a dialogue is currently being displayed or not
-    /// </summary>
     private bool displaying;
+    private Dialogue currentDialogue;
 
-    /// <summary>
-    /// Bool used to ensure proper execution order when displaying dialogue
-    /// </summary>
     private bool primed;
+    private bool isBranched;
 
     private Controls controls;
+
+    private int relationship;
 
     private void OnEnable()
     {
@@ -51,8 +45,6 @@ public class DialogueManager : MonoBehaviour
 
     private void OnDisable()
     {
-        controls = new Controls();
-
         controls.UI.Submit.started -= SubmitStartHandle;
         controls.UI.Submit.canceled -= SubmitCancHandle;
 
@@ -77,8 +69,10 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        relationship = 0;
+
         if (singleton == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -89,59 +83,165 @@ public class DialogueManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
+        sentences = new Queue<string>();
+        names = new Queue<string>();
+        sprites = new Queue<int>();
 
+        RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
         foreach (RectTransform rect in rects)
         {
-            if (rect.name.Equals("DialogueBox"))
+            if (rect.name.Equals("RPG DBox"))
             {
-                dialogueBox = rect.gameObject;
+                rpgDialogueBox = rect.gameObject;
+            }
+            else if (rect.name.Equals("Dating DBox"))
+            {
+                datingDialogueBox = rect.gameObject;
+            }
+        }
+        
+        currentDialogue = null;
+    }
+
+    public void StartDialogue(Dialogue dialogue)
+    {
+        StartDialogue(dialogue, false);
+    }
+
+    public void StartDialogue(Dialogue dialogue, int relationshipChange)
+    {
+        relationship += relationshipChange;
+
+        StartDialogue(dialogue, true);
+    }
+
+    public void StartDialogue(Dialogue dialogue, bool datingSim)
+    {
+        isBranched = false;
+        sentences.Clear();
+        names.Clear();
+        sprites.Clear();
+
+        GameObject branchPanel = GameObject.Find("BranchPanel");
+        Button[] buttons = branchPanel.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            Destroy(button.gameObject);
+        }
+
+        foreach (DialogueLine line in dialogue.lines)
+        {
+            names.Enqueue(line.name);
+            sentences.Enqueue(line.line);
+            sprites.Enqueue(line.sprite);
+        }
+
+        currentDialogue = dialogue;
+
+        TextMeshProUGUI[] texts;
+        Image[] imgs;
+
+        if (datingSim)
+        {
+            datingDialogueBox.SetActive(true);
+            texts = datingDialogueBox.GetComponentsInChildren<TextMeshProUGUI>();
+            imgs = datingDialogueBox.GetComponentsInChildren<Image>();
+        }
+        else
+        {
+            rpgDialogueBox.SetActive(true);
+            texts = rpgDialogueBox.GetComponentsInChildren<TextMeshProUGUI>();
+            imgs = rpgDialogueBox.GetComponentsInChildren<Image>();
+        }
+
+        foreach(TextMeshProUGUI text in texts)
+        {
+            if (text.gameObject.name.Equals("DialogueText"))
+            {
+                dialogueText = text;
+            }
+            else if (text.gameObject.name.Equals("NameText"))
+            {
+                nameText = text;
             }
         }
 
-        dialogueText = dialogueBox.GetComponentInChildren<TextMeshProUGUI>(true);
-
-        lines = new Queue<string>();
-        displaying = false;
-        primed = false;
-    }
-
-    public void StartDialogue(string[] lns)
-    {
-        lines.Clear();
-
-        foreach(string line in lns)
+        foreach(Image img in imgs)
         {
-            lines.Enqueue(line);
+            if (img.gameObject.name.Equals("CharImg"))
+            {
+                charImg = img;
+            }
         }
-
-        dialogueBox.SetActive(true);
 
         displaying = true;
         DisplayNextLine();
     }
 
-    private void DisplayNextLine()
+    public void DisplayNextLine()
     {
-        if (!displaying)
+        if (currentDialogue == null)
         {
             return;
         }
-        else if (lines.Count == 0)
+
+        else if (sentences.Count == 0)
         {
             EndDialogue();
             return;
         }
 
-        string line = lines.Dequeue();
+        string name = names.Dequeue();
+        string line = sentences.Dequeue();
 
+        nameText.text = name;
         dialogueText.text = line;
+
+        if (currentDialogue.type == DialogueType.branch && sentences.Count == 0)
+        {
+            EndDialogue();
+        }
     }
 
     private void EndDialogue()
     {
-        dialogueBox.SetActive(false);
-        displaying = false;
+        switch (currentDialogue.type)
+        {
+            case DialogueType.end:
+                if (relationship >= 100)
+                {
+                    // TODO: Initiate fast travel
+                    return;
+                }
+                else
+                {
+                    currentDialogue = null;
+                    rpgDialogueBox.SetActive(false);
+                    datingDialogueBox.SetActive(false);
+                }
+                break;
+
+            case DialogueType.branch:
+                isBranched = true;
+                GameObject branchPanel = GameObject.Find("BranchPanel");
+                for (int i = 0; i < currentDialogue.branches.Length; i++)
+                {
+                    GameObject branchButton = Instantiate(branchButtonPrefab, branchPanel.transform);
+                    branchButton.GetComponentInChildren<Text>().text = currentDialogue.branches[i];
+                    Dialogue nextDialogue = currentDialogue.branchDialogues[i];
+                    int relChange = currentDialogue.relationshipChanges[i];
+                    branchButton.GetComponentInChildren<Button>().onClick.AddListener(() => StartDialogue(nextDialogue, relChange));
+                    if (i == 0)
+                    {
+                        EventSystem.current.SetSelectedGameObject(branchButton);
+                    }
+                }
+                break;
+
+            default:
+                Debug.Log("ERROR: How did you break an enum?");
+                break;
+        }
     }
 
     public bool GetDisplaying()

@@ -22,6 +22,9 @@ public class FGController : Mover
     [Tooltip("Players max health")]
     public int maxHealth;
 
+    [Tooltip("Can you jump with up on the stick?")]
+    public bool canStickJump;
+
     private int health;
 
     /// <summary>
@@ -160,8 +163,6 @@ public class FGController : Mover
         base.OnEnable();
 
         controls.Player.Jump.performed += JumpHandle;
-        controls.Player.MoveV.performed += VertHandle;
-        controls.Player.MoveV.canceled += VertHandle;
         controls.Player.Light.performed += LightPerfHandle;
         controls.Player.Light.canceled += LightCancHandle;
         controls.Player.Medium.performed += MedPerfHandle;
@@ -170,7 +171,6 @@ public class FGController : Mover
         controls.Player.Heavy.canceled += HeavyCancHandle;
 
         controls.Player.Jump.Enable();
-        controls.Player.MoveV.Enable();
         controls.Player.Light.Enable();
         controls.Player.Medium.Enable();
         controls.Player.Heavy.Enable();
@@ -181,8 +181,6 @@ public class FGController : Mover
         base.OnDisable();
 
         controls.Player.Jump.performed -= JumpHandle;
-        controls.Player.MoveV.performed -= VertHandle;
-        controls.Player.MoveV.canceled -= VertHandle;
         controls.Player.Light.performed -= LightPerfHandle;
         controls.Player.Light.canceled -= LightCancHandle;
         controls.Player.Medium.performed -= MedPerfHandle;
@@ -191,7 +189,6 @@ public class FGController : Mover
         controls.Player.Heavy.canceled -= HeavyCancHandle;
 
         controls.Player.Jump.Disable();
-        controls.Player.MoveV.Disable();
         controls.Player.Light.Disable();
         controls.Player.Medium.Disable();
         controls.Player.Heavy.Disable();
@@ -205,19 +202,6 @@ public class FGController : Mover
         }
 
         Jump();
-    }
-
-    private void VertHandle (InputAction.CallbackContext context)
-    {
-        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
-        {
-            return;
-        }
-
-        if (context.action.ReadValue<float>() > 0)
-        {
-            Jump();
-        }
     }
 
     private void LightPerfHandle(InputAction.CallbackContext context)
@@ -445,6 +429,11 @@ public class FGController : Mover
                 {
                     transform.rotation = Quaternion.Euler(Vector3.zero);
                     dir = Direction.right;
+                }
+                
+                if (v > 0 && (canStickJump || !stickUp))
+                {
+                    Jump();
                 }
             }
         }

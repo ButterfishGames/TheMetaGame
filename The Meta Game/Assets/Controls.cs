@@ -113,6 +113,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""5bef8b01-794b-4dc2-ab38-72d4b793dca3"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -175,39 +183,6 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""positive"",
                     ""id"": ""d6ec2bdb-a6cf-47fb-9453-ca64342d12ec"",
                     ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveH"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Horizontal_Joy"",
-                    ""id"": ""59e9e709-2239-40f9-9743-47cb5da5928e"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveH"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""c040046d-72b7-40a6-adc7-6de5643a5a9d"",
-                    ""path"": ""<XInputController>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveH"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""4f16989e-fb9e-456d-967d-3434fbd91545"",
-                    ""path"": ""<XInputController>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -590,39 +565,6 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Vertical_Joy"",
-                    ""id"": ""13cbb7d3-8270-45b9-bd75-b0974edd4638"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveV"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""63a9058b-23ea-48e0-9757-c5ca6ecd9135"",
-                    ""path"": ""<XInputController>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveV"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""ecdac362-9438-4793-831a-54660035a7e3"",
-                    ""path"": ""<XInputController>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveV"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""Vertical_DPad"",
                     ""id"": ""3d1b5001-d12b-49db-a103-1f1e2dfb1b86"",
                     ""path"": ""1DAxis"",
@@ -674,6 +616,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LookY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a4b188b-06c5-4634-8824-154fb6715cc7"",
+                    ""path"": ""<XInputController>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -794,6 +747,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Medium = m_Player.FindAction("Medium", throwIfNotFound: true);
         m_Player_Heavy = m_Player.FindAction("Heavy", throwIfNotFound: true);
         m_Player_SwitchMode = m_Player.FindAction("SwitchMode", throwIfNotFound: true);
+        m_Player_LStick = m_Player.FindAction("LStick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -860,6 +814,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Medium;
     private readonly InputAction m_Player_Heavy;
     private readonly InputAction m_Player_SwitchMode;
+    private readonly InputAction m_Player_LStick;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -876,6 +831,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Medium => m_Wrapper.m_Player_Medium;
         public InputAction @Heavy => m_Wrapper.m_Player_Heavy;
         public InputAction @SwitchMode => m_Wrapper.m_Player_SwitchMode;
+        public InputAction @LStick => m_Wrapper.m_Player_LStick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -921,6 +877,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @SwitchMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchMode;
                 @SwitchMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchMode;
                 @SwitchMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchMode;
+                @LStick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLStick;
+                @LStick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLStick;
+                @LStick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLStick;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -961,6 +920,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @SwitchMode.started += instance.OnSwitchMode;
                 @SwitchMode.performed += instance.OnSwitchMode;
                 @SwitchMode.canceled += instance.OnSwitchMode;
+                @LStick.started += instance.OnLStick;
+                @LStick.performed += instance.OnLStick;
+                @LStick.canceled += instance.OnLStick;
             }
         }
     }
@@ -1028,6 +990,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMedium(InputAction.CallbackContext context);
         void OnHeavy(InputAction.CallbackContext context);
         void OnSwitchMode(InputAction.CallbackContext context);
+        void OnLStick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
