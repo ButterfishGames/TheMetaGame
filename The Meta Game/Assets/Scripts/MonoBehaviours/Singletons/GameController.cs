@@ -514,6 +514,8 @@ public class GameController : MonoBehaviour
                             behaviour.enabled = false;
                         }
                     }
+                    
+                    enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
                 }
 
                 player = GameObject.Find("Player");
@@ -595,6 +597,7 @@ public class GameController : MonoBehaviour
                 }
 
                 Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), true);
+                RaycastHit2D hit;
 
                 foreach (GameObject enemy in enemies)
                 {
@@ -614,7 +617,16 @@ public class GameController : MonoBehaviour
                     }
 
                     enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    enemy.GetComponent<Rigidbody2D>().gravityScale = 0;
+
                     enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 0);
+                    
+                    hit = Physics2D.BoxCast(enemy.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                    if (hit.collider != null)
+                    {
+                        enemy.transform.position += Vector3.up;
+                        enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 0);
+                    }
                 }
 
                 player = GameObject.Find("Player");
@@ -647,6 +659,13 @@ public class GameController : MonoBehaviour
                 }
 
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
+                
+                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                if (hit.collider != null)
+                {
+                    player.transform.position += Vector3.up;
+                    player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
+                }
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
@@ -702,6 +721,8 @@ public class GameController : MonoBehaviour
                             behaviour.enabled = false;
                         }
                     }
+                    
+                    enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
                 }
 
                 player = GameObject.Find("Player");
@@ -810,6 +831,8 @@ public class GameController : MonoBehaviour
                             behaviour.enabled = false;
                         }
                     }
+
+                    enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
                 }
 
                 player = GameObject.Find("Player");

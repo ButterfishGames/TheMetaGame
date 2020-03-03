@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Cutscene : MonoBehaviour
+[CreateAssetMenu(fileName = "NewCutscene", menuName = "ScriptableObjects/Cutscene", order = 1)]
+public class Cutscene : ScriptableObject
 {
     public Transform[] transforms = new Transform[0];
         public int transformsSize = 0;
@@ -25,131 +26,6 @@ public class Cutscene : MonoBehaviour
         public int stepsSize = 0;
         public bool stepsExpanded = false;
         public bool[] stepExpanded = new bool[0];
-
-    public void StartScene()
-    {
-        StartCoroutine(RunCutscene());
-    }
-
-    private IEnumerator RunCutscene()
-    {
-        bool lockCam = false;
-
-        GameController.singleton.SetPaused(true);
-
-        CameraScroll camScroll = Camera.main.GetComponent<CameraScroll>();
-        camScroll.enabled = false;
-
-        for (int i = 0; i < animatorsSize; i++)
-        {
-            animators[i].runtimeAnimatorController = cutsceneControllers[i];
-
-            Rigidbody2D temp;
-            if (transforms[i].TryGetComponent(out temp))
-            {
-                temp.velocity = Vector2.zero;
-            }
-        }
-
-        for (int i = 0; i < stepsSize; i++)
-        {
-            switch (steps[i].stepType)
-            {
-                case StepType.motion:
-                    StartCoroutine(TransformMove(transforms[steps[i].tranInd], steps[i].mov, steps[i].rot, steps[i].scl, steps[i].wait));
-                    break;
-
-                case StepType.cameraMotion:
-                    StartCoroutine(CameraMove(steps[i].mov, steps[i].wait));
-                    break;
-
-                case StepType.dialogue:
-                    DialogueManager.singleton.StartDialogue(steps[i].lines);
-                    yield return new WaitUntil(() => !DialogueManager.singleton.GetDisplaying());
-                    break;
-
-                case StepType.animation:
-                    animators[steps[i].animInd].SetInteger("state", steps[i].state);
-                    break;
-
-                case StepType.wait:
-                    yield return new WaitForSeconds(steps[i].wait);
-                    break;
-
-                case StepType.song:
-                    AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-                    source.clip = steps[i].song;
-                    source.Play();
-                    break;
-
-                case StepType.lockCam:
-                    lockCam = true;
-                    break;
-
-                case StepType.loadScene:
-                    if (steps[i].scene == 0)
-                    {
-                        GameController.singleton.ReturnToMenu();
-                    }
-                    else
-                    {
-                        GameController.singleton.FadeAndLoad(steps[i].scene);
-                    }
-                    break;
-            }
-        }
-
-        for (int i = 0; i < animatorsSize; i++)
-        {
-            animators[i].runtimeAnimatorController = gameplayControllers[i];
-        }
-
-        if (!lockCam)
-        {
-            camScroll.enabled = true;
-        }
-
-        GameController.singleton.SetPaused(false);
-
-        yield return null;
-    }
-
-    private IEnumerator TransformMove(Transform trans, Vector3 mov, Vector3 rot, Vector3 scl, float wait)
-    {
-        float invTime = 1.0f / wait;
-
-        for (float t = 0; t <= wait; t += Time.deltaTime)
-        {
-            trans.Translate(mov * invTime * Time.deltaTime);
-            trans.Rotate(rot * invTime * Time.deltaTime);
-            trans.localScale += scl * invTime * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-    private IEnumerator CameraMove(Vector3 mov, float wait)
-    {
-        float invTime = 1.0f / wait;
-
-        for (float t = 0; t <= wait; t += Time.deltaTime)
-        {
-            float xDiff = -Camera.main.transform.position.x;
-            float yDiff = -Camera.main.transform.position.y;
-
-            Camera.main.transform.Translate(mov * invTime * Time.deltaTime);
-
-            xDiff += Camera.main.transform.position.x;
-            yDiff += Camera.main.transform.position.y;
-
-            Parallax[] pObjs = FindObjectsOfType<Parallax>();
-            foreach (Parallax obj in pObjs)
-            {
-                obj.UpdatePos(xDiff, yDiff);
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
-    }
 }
 
 [System.Serializable]
@@ -164,9 +40,7 @@ public struct CutsceneStep
     public Vector3 scl;
 
     // Dialogue parameters
-    public string[] lines;
-        public int linesSize;
-        public bool linesExpanded;
+    public Dialogue dialogue;
 
     // Animation parameters
     public int animInd;
@@ -354,9 +228,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = EditorGUILayout.Vector3Field("Movement", cutscene.steps[i].mov);
                             cutscene.steps[i].rot = EditorGUILayout.Vector3Field("Rotation", cutscene.steps[i].rot);
                             cutscene.steps[i].scl = EditorGUILayout.Vector3Field("Scale", cutscene.steps[i].scl);
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = EditorGUILayout.DelayedFloatField("Move Time", cutscene.steps[i].wait);
@@ -369,9 +241,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = EditorGUILayout.Vector3Field("Movement", cutscene.steps[i].mov);
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = EditorGUILayout.DelayedFloatField("Move Time", cutscene.steps[i].wait);
@@ -384,37 +254,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = Vector3.zero;
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].linesExpanded = EditorGUILayout.Foldout(cutscene.steps[i].linesExpanded, "Lines");
-                            if (cutscene.steps[i].linesExpanded)
-                            {
-                                EditorGUI.indentLevel++;
-                                cutscene.steps[i].linesSize = EditorGUILayout.DelayedIntField("Size", cutscene.steps[i].linesSize);
-                                if (cutscene.steps[i].lines == null)
-                                {
-                                    cutscene.steps[i].lines = new string[0];
-                                }
-
-                                if (cutscene.steps[i].lines.Length != cutscene.steps[i].linesSize)
-                                {
-                                    string[] newArray = new string[cutscene.steps[i].linesSize];
-                                    for (int j = 0; j < cutscene.steps[i].linesSize; j++)
-                                    {
-                                        if (cutscene.steps[i].lines.Length > j)
-                                        {
-                                            newArray[j] = cutscene.steps[i].lines[j];
-                                        }
-                                    }
-                                    cutscene.steps[i].lines = newArray;
-                                }
-
-                                for (int j = 0; j < cutscene.steps[i].linesSize; j++)
-                                {
-                                    EditorGUILayout.LabelField("Line " + j);
-                                    cutscene.steps[i].lines[j] = EditorGUILayout.TextArea(cutscene.steps[i].lines[j]);
-                                }
-
-                                EditorGUI.indentLevel--;
-                            }
+                            cutscene.steps[i].dialogue = (Dialogue)EditorGUILayout.ObjectField("Dialogue", cutscene.steps[i].dialogue, typeof(Dialogue), true);
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = 0;
@@ -427,9 +267,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = Vector3.zero;
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = EditorGUILayout.DelayedIntField("Animator Index", cutscene.steps[i].animInd);
                             cutscene.steps[i].state = EditorGUILayout.DelayedIntField("Animation State", cutscene.steps[i].state);
                             cutscene.steps[i].wait = 0;
@@ -442,9 +280,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = Vector3.zero;
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = EditorGUILayout.DelayedFloatField("Wait Time", cutscene.steps[i].wait);
@@ -457,9 +293,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = Vector3.zero;
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = 0;
@@ -472,9 +306,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = Vector3.zero;
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = 0;
@@ -487,9 +319,7 @@ public class CutsceneEditor : Editor
                             cutscene.steps[i].mov = Vector3.zero;
                             cutscene.steps[i].rot = Vector3.zero;
                             cutscene.steps[i].scl = Vector3.zero;
-                            cutscene.steps[i].lines = new string[0];
-                            cutscene.steps[i].linesSize = 0;
-                            cutscene.steps[i].linesExpanded = false;
+                            cutscene.steps[i].dialogue = null;
                             cutscene.steps[i].animInd = 0;
                             cutscene.steps[i].state = 0;
                             cutscene.steps[i].wait = 0;

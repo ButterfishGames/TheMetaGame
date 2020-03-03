@@ -147,6 +147,7 @@ MonoBehaviour:
   wallJumpForce: 6
   deathForce: 12
   deathWait: 10
+  canStickJump: 1
 --- !u!114 &2826980262528341210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +202,7 @@ MonoBehaviour:
   deathForce: 0
   deathWait: 10
   maxHealth: 30
+  canStickJump: 1
   maxTimeTillReset: 30
   special: {fileID: 5380071146857707867, guid: a4931da688c59104b824b2cdc57a3c0b, type: 3}
   hitstun: 0

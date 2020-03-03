@@ -5,11 +5,10 @@ using UnityEngine;
 public class NPC : EnemyBehaviour
 {
     [Tooltip("Array of dialogue lines to display when interacted with")]
-    [TextArea(3, 10)]
-    public string[] dialogueLines;
+    public Dialogue dialogue;
 
     public void Interact()
     {
-        DialogueManager.singleton.StartDialogue(dialogueLines);
+        DialogueManager.singleton.StartDialogue(dialogue);
     }
 }
