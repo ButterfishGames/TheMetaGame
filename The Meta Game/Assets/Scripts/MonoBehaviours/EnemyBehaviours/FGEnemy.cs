@@ -514,6 +514,7 @@ public class FGEnemy : EnemyBehaviour
                             case 2:
                                 //Debug.Log(usedAttack[2]);
                                 #region level2off
+                                Debug.Log(attacking);
                                 if (!attacking)
                                 {
                                     JumpCheck(4.0f, 5);
@@ -547,6 +548,7 @@ public class FGEnemy : EnemyBehaviour
                                                 specialMove.tag = "EnemyHitbox";
                                                 attackType = Attack.special;
                                                 Debug.Log("Hado right");
+                                                StartCoroutine(AttackCoRoutine());
                                             }
                                             else
                                             {
@@ -555,6 +557,7 @@ public class FGEnemy : EnemyBehaviour
                                                 specialMove.tag = "EnemyHitbox";
                                                 attackType = Attack.special;
                                                 Debug.Log("Hado left");
+                                                StartCoroutine(AttackCoRoutine());
                                             }
                                         }
                                     }
@@ -582,6 +585,7 @@ public class FGEnemy : EnemyBehaviour
                                     else
                                     {
                                         Jump(100);
+                                        animator.SetBool("moving", false);
                                     }
                                     if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 5)
                                     {
@@ -629,6 +633,7 @@ public class FGEnemy : EnemyBehaviour
                                                     {
                                                         usedAttack[i] = false;
                                                     }
+                                                    StartCoroutine(AttackCoRoutine());
                                                 }
                                                 else
                                                 {
@@ -641,6 +646,7 @@ public class FGEnemy : EnemyBehaviour
                                                     {
                                                         usedAttack[i] = false;
                                                     }
+                                                    StartCoroutine(AttackCoRoutine());
                                                 }
                                             }
                                         }
@@ -650,7 +656,6 @@ public class FGEnemy : EnemyBehaviour
                                         hitbox.gameObject.SetActive(false);
                                         StopCoroutine(AttackCoRoutine());
                                         attacking = false;
-
                                         attackCoRoutineRunning = false;
                                         for (int i = 0; i < usedAttack.Length - 1; i++)
                                         {
@@ -792,6 +797,7 @@ public class FGEnemy : EnemyBehaviour
 
     private IEnumerator AttackCoRoutine()
     {
+        animator.SetBool("moving", false);
         animator.SetBool("attacking", true);
         if (grounded)
         {
