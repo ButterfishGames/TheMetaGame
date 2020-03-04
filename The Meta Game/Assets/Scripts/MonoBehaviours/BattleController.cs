@@ -483,8 +483,8 @@ public class BattleController : MonoBehaviour
     {
         GameController.singleton.Cast(spell.manaCost);
         playerStats.text = "Player\n"
-            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
-            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "HP \n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + "MP";
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
