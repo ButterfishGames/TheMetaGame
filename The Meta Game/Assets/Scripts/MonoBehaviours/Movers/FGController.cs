@@ -318,83 +318,86 @@ public class FGController : Mover
                 StartCoroutine(Death());
             }
         }
-        if (grounded)
+        if (!dead)
         {
-            animator.SetBool("jumping", false);
-        }
-        else
-        {
-            animator.SetBool("jumping", true);
-        }
-        hitThisFrame = false;
-        if (hitstun <= 0)
-        {
-            animator.SetBool("hit", false);
-
-            Move(hRaw, vRaw);
-
-            if (inputResetTimer < maxTimeTillReset / 60)
+            if (grounded)
             {
-                inputResetTimer += Time.deltaTime;
+                animator.SetBool("jumping", false);
             }
             else
             {
-                inputs[0] = InputDirection.none;
-                inputResetTimer = 0;
+                animator.SetBool("jumping", true);
             }
-
-            Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
-            if (GameController.singleton.GetPaused() == false)
+            hitThisFrame = false;
+            if (hitstun <= 0)
             {
-                if (viewPos.y < 0.0f)
+                animator.SetBool("hit", false);
+
+                Move(hRaw, vRaw);
+
+                if (inputResetTimer < maxTimeTillReset / 60)
                 {
-                    GameController.singleton.Die();
+                    inputResetTimer += Time.deltaTime;
+                }
+                else
+                {
+                    inputs[0] = InputDirection.none;
+                    inputResetTimer = 0;
+                }
+
+                Vector3 viewPos = FindObjectOfType<Camera>().WorldToViewportPoint(transform.position);
+                if (GameController.singleton.GetPaused() == false)
+                {
+                    if (viewPos.y < 0.0f)
+                    {
+                        GameController.singleton.Die();
+                    }
+                }
+
+                if (GameController.singleton.GetPaused())
+                {
+                    return;
+                }
+
+                if (attacking == true)
+                {
+                    animator.SetBool("attacking", true);
+                }
+                else
+                {
+                    animator.SetBool("attacking", false);
+                }
+
+                if (attacking)
+                {
+                    if (!attackCoRoutineRunning)
+                    {
+                        attackCoRoutineRunning = true;
+                        StartCoroutine(AttackCoRoutine(animationAttackBoolString));
+                    }
+                }
+                else
+                {
+                    hitbox.gameObject.SetActive(false);
+                }
+
+                if (Mathf.Abs(rb.velocity.x) > 0.1f)
+                {
+                    animator.SetBool("moving", true);
+                }
+                else
+                {
+                    animator.SetBool("moving", false);
                 }
             }
-
-            if (GameController.singleton.GetPaused())
-            {
-                return;
-            }
-
-            if(attacking == true)
-            {
-                animator.SetBool("attacking", true);
-            }
             else
             {
+                animator.SetBool("hit", true);
                 animator.SetBool("attacking", false);
-            }
-
-            if (attacking)
-            {
-                if (!attackCoRoutineRunning)
-                {
-                    attackCoRoutineRunning = true;
-                    StartCoroutine(AttackCoRoutine(animationAttackBoolString));
-                }
-            }
-            else
-            {
                 hitbox.gameObject.SetActive(false);
+                attacking = false;
+                hitstun -= Time.deltaTime;
             }
-
-            if (Mathf.Abs(rb.velocity.x) > 0.1f)
-            {
-                animator.SetBool("moving", true);
-            }
-            else
-            {
-                animator.SetBool("moving", false);
-            }
-        }
-        else
-        {
-            animator.SetBool("hit", true);
-            animator.SetBool("attacking", false);
-            hitbox.gameObject.SetActive(false);
-            attacking = false;
-            hitstun -= Time.deltaTime;
         }
     }
 
@@ -627,6 +630,7 @@ public class FGController : Mover
     private IEnumerator Death()
     {
         animator.SetBool("dead", true);
+        GameController.singleton.SetPaused(true);
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
         if (!GetComponent<AudioSource>().isPlaying)
         {

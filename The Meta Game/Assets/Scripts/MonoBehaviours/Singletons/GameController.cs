@@ -713,6 +713,8 @@ public class GameController : MonoBehaviour
 
                     foreach (EnemyBehaviour behaviour in behaviours)
                     {
+                        behaviour.GetAnimator().SetBool("platformer", true);
+                        behaviour.GetAnimator().SetBool("fighter", false);
                         if (behaviour.GetType().Equals(typeof(PFEnemy)))
                         {
                             behaviour.enabled = true;
