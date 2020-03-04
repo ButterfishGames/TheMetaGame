@@ -34130,12 +34130,12 @@ PrefabInstance:
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 286.7
+      value: 278.66
       objectReference: {fileID: 0}
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.4
+      value: 13.01
       objectReference: {fileID: 0}
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
@@ -39411,6 +39411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ede9af3f7fbcfc4a881b3572713a475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  branchButtonPrefab: {fileID: 0}
 --- !u!4 &1791267261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
