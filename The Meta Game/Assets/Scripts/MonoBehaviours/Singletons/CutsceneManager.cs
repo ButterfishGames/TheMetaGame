@@ -34,6 +34,22 @@ public class CutsceneManager : MonoBehaviour
 
         CameraScroll camScroll = Camera.main.GetComponent<CameraScroll>();
         camScroll.enabled = false;
+        
+        GameObject gTemp;
+        Animator aTemp;
+
+        for (int i = 0; i < currentScene.animatorsSize; i++)
+        {
+            gTemp = GameObject.Find(currentScene.animNames[i]);
+            if (gTemp != null)
+            {
+                aTemp = gTemp.GetComponentInChildren<Animator>();
+                if (aTemp != null)
+                {
+                    currentScene.animators[i] = aTemp;
+                }
+            }
+        }
 
         for (int i = 0; i < currentScene.animatorsSize; i++)
         {
@@ -48,9 +64,19 @@ public class CutsceneManager : MonoBehaviour
 
         for (int i = 0; i < currentScene.stepsSize; i++)
         {
+            Debug.Log(i + "/" + currentScene.stepsSize);
             switch (currentScene.steps[i].stepType)
             {
                 case StepType.motion:
+                    for (int j = 0; j < currentScene.transformsSize; j++)
+                    {
+                        gTemp = GameObject.Find(currentScene.transNames[j]);
+                        if (gTemp != null)
+                        {
+                            currentScene.transforms[j] = gTemp.GetComponent<Transform>();
+                        }
+                    }
+
                     StartCoroutine(TransformMove(currentScene.transforms[currentScene.steps[i].tranInd], 
                         currentScene.steps[i].mov, 
                         currentScene.steps[i].rot, 
@@ -69,6 +95,19 @@ public class CutsceneManager : MonoBehaviour
                     break;
 
                 case StepType.animation:
+                    for (int j = 0; j < currentScene.animatorsSize; j++)
+                    {
+                        gTemp = GameObject.Find(currentScene.animNames[j]);
+                        if (gTemp != null)
+                        {
+                            aTemp = gTemp.GetComponentInChildren<Animator>();
+                            if (aTemp != null)
+                            {
+                                currentScene.animators[j] = aTemp;
+                            }
+                        }
+                    }
+
                     currentScene.animators[currentScene.steps[i].animInd].SetInteger("state", currentScene.steps[i].state);
                     break;
 
@@ -99,9 +138,16 @@ public class CutsceneManager : MonoBehaviour
             }
         }
 
+        Debug.Log("test");
+
         for (int i = 0; i < currentScene.animatorsSize; i++)
         {
             currentScene.animators[i].runtimeAnimatorController = currentScene.gameplayControllers[i];
+            if (currentScene.animNames[i].Equals("Player"))
+            {
+                currentScene.animators[i].SetBool("platformer", true);
+                currentScene.animators[i].SetBool("moving", false);
+            }
         }
 
         if (!lockCam)
@@ -109,6 +155,7 @@ public class CutsceneManager : MonoBehaviour
             camScroll.enabled = true;
         }
 
+        Debug.Log("Gets here?");
         GameController.singleton.SetPaused(false);
 
         currentScene = null;

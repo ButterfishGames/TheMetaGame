@@ -15,16 +15,19 @@ MonoBehaviour:
   lines:
   - name: Guy
     line: Hi, I'm Guy!
-    sprite: 0
+    sprite: {fileID: 4865077164665957340, guid: 48eda670634b97c48b916376689c7de5,
+      type: 3}
   - name: Dextra
     line: Hi Guy! I'm gonna kill you
-    sprite: 0
+    sprite: {fileID: 1453023118580339789, guid: fbab9053c2d04d6408684b3a0cf55e2d,
+      type: 3}
   - name: Guy
     line: Oh. Really?
-    sprite: 0
+    sprite: {fileID: -2266453515868001820, guid: bbcd46eb5cf6d0f4c937d2a29006ec09,
+      type: 3}
   - name: Dextra
     line: Most likely.
-    sprite: 0
+    sprite: {fileID: -8141641546963983, guid: fbab9053c2d04d6408684b3a0cf55e2d, type: 3}
   type: 1
   branches: []
   branchDialogues: []

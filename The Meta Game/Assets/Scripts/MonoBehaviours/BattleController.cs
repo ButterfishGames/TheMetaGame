@@ -684,6 +684,17 @@ public class BattleController : MonoBehaviour
 
     private IEnumerator FleeFail()
     {
+        currCommand = Command.none;
+
+        spellButtons = new Button[] { null };
+
+        Button[] buttons = FindObjectsOfType<Button>();
+
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
+
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You failed to escape!";
         yield return new WaitForSeconds(0.75f);
         NextTurn();

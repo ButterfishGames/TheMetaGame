@@ -469,6 +469,7 @@ public class GameController : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         float aspect = (float)Screen.width / (float)Screen.height;
+        RPGController rpgCon;
 
         switch (equipped)
         {
@@ -520,7 +521,7 @@ public class GameController : MonoBehaviour
 
                 player = GameObject.Find("Player");
 
-                RPGController rpgCon = player.GetComponent<RPGController>();
+                rpgCon = player.GetComponent<RPGController>();
                 if (rpgCon.mvmtCoroutine != null)
                 {
                     rpgCon.StopCoroutine(rpgCon.mvmtCoroutine);
@@ -836,6 +837,14 @@ public class GameController : MonoBehaviour
                 }
 
                 player = GameObject.Find("Player");
+                
+                rpgCon = player.GetComponent<RPGController>();
+                if (rpgCon.mvmtCoroutine != null)
+                {
+                    rpgCon.StopCoroutine(rpgCon.mvmtCoroutine);
+                    rpgCon.SetMoving(false);
+                    rpgCon.mvmtCoroutine = null;
+                }
 
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 movers = player.GetComponents<Mover>();
@@ -1149,6 +1158,7 @@ public class GameController : MonoBehaviour
     public void SetPaused(bool val)
     {
         paused = val;
+        Debug.Log(val + ", " + paused);
     }
 
     public void Hit(int damage)

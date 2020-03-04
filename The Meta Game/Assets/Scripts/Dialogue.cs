@@ -42,8 +42,8 @@ public struct DialogueLine
     [TextArea(3, 10)]
     public string line;
 
-    [Tooltip("The index of the sprite associated with this line")]
-    public int sprite;
+    [Tooltip("The character sprite associated with this line")]
+    public Sprite sprite;
 }
 
 public enum DialogueType

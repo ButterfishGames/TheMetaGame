@@ -7,10 +7,12 @@ using UnityEditor;
 public class Cutscene : ScriptableObject
 {
     public Transform[] transforms = new Transform[0];
+        public string[] transNames = new string[0];
         public int transformsSize = 0;
         public bool transformsExpanded = false;
 
     public Animator[] animators = new Animator[0];
+        public string[] animNames = new string[0];
         public int animatorsSize = 0;
         public bool animatorsExpanded = false;
 
@@ -85,19 +87,27 @@ public class CutsceneEditor : Editor
             if (cutscene.transforms.Length != cutscene.transformsSize)
             {
                 Transform[] newArray = new Transform[cutscene.transformsSize];
+                string[] nameArray = new string[cutscene.transformsSize];
                 for (int i = 0; i < cutscene.transformsSize; i++)
                 {
                     if (cutscene.transforms.Length > i)
                     {
                         newArray[i] = cutscene.transforms[i];
+                        nameArray[i] = cutscene.transNames[i];
                     }
                 }
                 cutscene.transforms = newArray;
+                cutscene.transNames = nameArray;
             }
 
             for (int i = 0; i < cutscene.transformsSize; i++)
             {
-                cutscene.transforms[i] = (Transform)EditorGUILayout.ObjectField(cutscene.transforms[i], typeof(Transform), true);
+                cutscene.transNames[i] = EditorGUILayout.DelayedTextField("Object Name", cutscene.transNames[i]);
+                GameObject temp = GameObject.Find(cutscene.transNames[i]);
+                if (temp != null)
+                {
+                    cutscene.transforms[i] = temp.GetComponent<Transform>();
+                }
             }
 
             EditorGUI.indentLevel--;
@@ -111,19 +121,31 @@ public class CutsceneEditor : Editor
             if (cutscene.animators.Length != cutscene.animatorsSize)
             {
                 Animator[] newArray = new Animator[cutscene.animatorsSize];
+                string[] nameArray = new string[cutscene.animatorsSize];
                 for (int i = 0; i < cutscene.animatorsSize; i++)
                 {
                     if (cutscene.animators.Length > i)
                     {
                         newArray[i] = cutscene.animators[i];
+                        nameArray[i] = cutscene.animNames[i];
                     }
                 }
                 cutscene.animators = newArray;
+                cutscene.animNames = nameArray;
             }
 
             for (int i = 0; i < cutscene.animatorsSize; i++)
             {
-                cutscene.animators[i] = (Animator)EditorGUILayout.ObjectField(cutscene.animators[i], typeof(Animator), true);
+                cutscene.animNames[i] = EditorGUILayout.DelayedTextField("Object Name", cutscene.animNames[i]);
+                GameObject temp = GameObject.Find(cutscene.animNames[i]);
+                if (temp != null)
+                {
+                    Animator aTemp = temp.GetComponentInChildren<Animator>();
+                    if (aTemp != null)
+                    {
+                        cutscene.animators[i] = aTemp;
+                    }
+                }
             }
 
             EditorGUI.indentLevel--;

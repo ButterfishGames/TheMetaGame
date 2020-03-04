@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
     private Queue<string> names;
-    private Queue<int> sprites;
+    private Queue<Sprite> sprites;
 
     private bool displaying;
     private Dialogue currentDialogue;
@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
 
         sentences = new Queue<string>();
         names = new Queue<string>();
-        sprites = new Queue<int>();
+        sprites = new Queue<Sprite>();
 
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
         foreach (RectTransform rect in rects)
@@ -193,9 +193,11 @@ public class DialogueManager : MonoBehaviour
 
         string name = names.Dequeue();
         string line = sentences.Dequeue();
+        Sprite spr = sprites.Dequeue();
 
         nameText.text = name;
         dialogueText.text = line;
+        charImg.sprite = spr;
 
         if (currentDialogue.type == DialogueType.branch && sentences.Count == 0)
         {
@@ -242,6 +244,8 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("ERROR: How did you break an enum?");
                 break;
         }
+
+        displaying = false;
     }
 
     public bool GetDisplaying()

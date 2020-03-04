@@ -42,7 +42,7 @@ public class PFController : Mover
         base.OnEnable();
 
         controls.Player.Jump.performed += JumpHandle;
-        
+
         controls.Player.MoveV.Enable();
         controls.Player.Jump.Enable();
     }
@@ -50,14 +50,14 @@ public class PFController : Mover
     protected override void OnDisable()
     {
         base.OnDisable();
-        
+
         controls.Player.Jump.performed -= JumpHandle;
-        
+
         controls.Player.MoveV.Disable();
         controls.Player.Jump.Disable();
     }
 
-    private void JumpHandle (InputAction.CallbackContext context)
+    private void JumpHandle(InputAction.CallbackContext context)
     {
         if (GameController.singleton.GetPaused())
         {
@@ -91,6 +91,143 @@ public class PFController : Mover
 
         base.Update();
 
+        GroundWallCheck();
+
+        if (Mathf.Abs(rb.velocity.x) > 0.1f)
+        {
+            animator.SetBool("moving", true);
+        }
+        else
+        {
+            animator.SetBool("moving", false);
+        }
+    }
+
+    protected override void Move(float h, float v)
+    {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (v > 0 && (canStickJump || !stickUp))
+        {
+            Jump();
+        }
+        else if (v < 0)
+        {
+            StopCoroutine("GoThrough");
+            StartCoroutine("GoThrough");
+        }
+
+        float moveX = hRaw == 0 ?
+            (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
+            (grounded ? Mathf.Clamp(rb.velocity.x + (h * moveSpeed * Time.deltaTime), -maxVelX, maxVelX) :
+            Mathf.Clamp(rb.velocity.x + (h * (moveSpeed / 10) * Time.deltaTime), -maxVelX, maxVelX));
+        float moveY = rb.velocity.y;
+        if (moveX < 0 && !onWall)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            animator.SetBool("moving", true);
+        }
+        else if (moveX > 0 && !onWall)
+        {
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+            animator.SetBool("moving", true);
+        }
+
+        rb.velocity = new Vector2(moveX, moveY);
+    }
+
+    private void Jump()
+    {
+        if (!grounded)
+        {
+            return;
+        }
+
+        animator.SetBool("grounded", false);
+        animator.SetBool("walled", false);
+        animator.SetBool("jumping", true);
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+
+        float xForce = 0;
+        if (onWall)
+        {
+            xForce = -wallDir * wallJumpForce;
+        }
+
+        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        rb.velocity = new Vector2(xForce, rb.velocity.y);
+        onWall = false;
+        grounded = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            animator.SetBool("jumping", false);
+            grounded = true;
+            GroundWallCheck();
+        }
+        else if (collision.CompareTag("Killbox"))
+        {
+            StartCoroutine(Die(false));
+        }
+    }
+
+    /*private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (GetComponent<FGController>().enabled == false) {
+            if (!grounded && collision.CompareTag("Ground"))
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);
+
+                if (hit.collider != null && hit.collider.CompareTag("Ground"))
+                {
+                    grounded = true;
+                }
+            }
+        }
+    }*/
+
+    public IEnumerator Die(bool hit)
+    {
+        GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+
+        if (hit)
+        {
+            animator.SetBool("dying", true);
+            GameController.singleton.SetPaused(true);
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(1);
+            animator.SetBool("dead", true);
+            rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+            rb.gravityScale = GameController.singleton.GetGScale();
+        }
+
+        if (!GetComponent<AudioSource>().isPlaying)
+            GetComponent<AudioSource>().Play();
+        col.enabled = false;
+        /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
+        {
+            childCol.enabled = false;
+        }*/
+        yield return new WaitForSeconds(deathWait);
+        GameController.singleton.Die(!hit);
+    }
+
+    private IEnumerator GoThrough()
+    {
+        gameObject.layer = LayerMask.NameToLayer("ThroughTemp");
+        yield return new WaitForSeconds(0.25f);
+        gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
+    private void GroundWallCheck()
+    {
         bool onGround = false;
 
         if (groundTrigger != null)
@@ -110,6 +247,7 @@ public class PFController : Mover
         {
             float distX = groundTrigger.bounds.extents.x;
             float distY = groundTrigger.bounds.extents.y;
+            distX -= 0.015f;
             Vector3 origin, origin2;
             origin = origin2 = transform.position;
             origin.x -= distX;
@@ -190,136 +328,5 @@ public class PFController : Mover
                 animator.SetBool("walled", false);
             }
         }
-
-        if (Mathf.Abs(rb.velocity.x) > 0.1f)
-        {
-            animator.SetBool("moving", true);
-        }
-        else
-        {
-            animator.SetBool("moving", false);
-        }
-    }
-
-    protected override void Move(float h, float v)
-    {
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        if (v > 0 && (canStickJump || !stickUp))
-        {
-            Jump();
-        }
-        else if (v < 0)
-        {
-            StopCoroutine("GoThrough");
-            StartCoroutine("GoThrough");
-        }
-
-        float moveX = hRaw == 0 ?
-            (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
-            (grounded ? Mathf.Clamp(rb.velocity.x + (h * moveSpeed * Time.deltaTime), -maxVelX, maxVelX) : 
-            Mathf.Clamp(rb.velocity.x + (h * (moveSpeed/10) * Time.deltaTime), -maxVelX, maxVelX));
-        float moveY = rb.velocity.y;
-        if (moveX < 0 && !onWall)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-            animator.SetBool("moving", true);
-        }
-        else if (moveX > 0 && !onWall)
-        {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
-            animator.SetBool("moving", true);
-        }
-
-        rb.velocity = new Vector2(moveX, moveY);
-    }
-
-    private void Jump()
-    {
-        if (!grounded)
-        {
-            return;
-        }
-
-        animator.SetBool("grounded", false);
-        animator.SetBool("walled", false);
-        animator.SetBool("jumping", true);
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-
-        float xForce = 0;
-        if (onWall)
-        {
-            xForce = -wallDir * wallJumpForce;
-        }
-
-        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        rb.velocity = new Vector2(xForce, rb.velocity.y);
-        onWall = false;
-        grounded = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Ground"))
-        {
-            animator.SetBool("jumping", false);
-            grounded = true;
-        }
-        else if (collision.CompareTag("Killbox"))
-        {
-            StartCoroutine(Die(false));
-        }
-    }
-
-    /*private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (GetComponent<FGController>().enabled == false) {
-            if (!grounded && collision.CompareTag("Ground"))
-            {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);
-
-                if (hit.collider != null && hit.collider.CompareTag("Ground"))
-                {
-                    grounded = true;
-                }
-            }
-        }
-    }*/
-
-    public IEnumerator Die(bool hit)
-    {
-        GameObject.Find("Song").GetComponent<AudioSource>().Stop();
-        
-        if (hit)
-        {
-            animator.SetBool("dying", true);
-            GameController.singleton.SetPaused(true);
-            rb.gravityScale = 0;
-            rb.velocity = Vector2.zero;
-            yield return new WaitForSeconds(1);
-            animator.SetBool("dead", true);
-            rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
-            rb.gravityScale = GameController.singleton.GetGScale();
-        }
-
-        if (!GetComponent<AudioSource>().isPlaying)
-        GetComponent<AudioSource>().Play();
-        col.enabled = false;
-        /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
-        {
-            childCol.enabled = false;
-        }*/
-        yield return new WaitForSeconds(deathWait);
-        GameController.singleton.Die(!hit);
-    }
-
-    private IEnumerator GoThrough()
-    {
-        gameObject.layer = LayerMask.NameToLayer("ThroughTemp");
-        yield return new WaitForSeconds(0.25f);
-        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 }
