@@ -849,7 +849,7 @@ public class FGEnemy : EnemyBehaviour
         animator.SetBool("dead", true);
         Destroy(rb);
         col.enabled = false;
-        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 50);
+        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
         Destroy(gameObject);
     }
 
