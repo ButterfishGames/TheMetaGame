@@ -515,8 +515,10 @@ public class GameController : MonoBehaviour
                             behaviour.enabled = false;
                         }
                     }
-                    
-                    enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    }
                 }
 
                 player = GameObject.Find("Player");
@@ -617,8 +619,11 @@ public class GameController : MonoBehaviour
                         }
                     }
 
-                    enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    enemy.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                        enemy.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    }
 
                     enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 0);
                     
@@ -724,8 +729,10 @@ public class GameController : MonoBehaviour
                             behaviour.enabled = false;
                         }
                     }
-                    
-                    enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    }
                 }
 
                 player = GameObject.Find("Player");
@@ -819,8 +826,10 @@ public class GameController : MonoBehaviour
                     }
 
                     EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
-
-                    enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                    }
                     foreach (EnemyBehaviour behaviour in behaviours)
                     {
                         if (behaviour.GetType().Equals(typeof(FGEnemy)))
@@ -834,8 +843,10 @@ public class GameController : MonoBehaviour
                             behaviour.enabled = false;
                         }
                     }
-
-                    enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    }
                 }
 
                 player = GameObject.Find("Player");

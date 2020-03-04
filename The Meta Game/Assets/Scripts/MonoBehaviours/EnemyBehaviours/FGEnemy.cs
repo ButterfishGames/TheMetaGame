@@ -847,9 +847,9 @@ public class FGEnemy : EnemyBehaviour
     {
         rb.velocity = new Vector2(0.0f, 0.0f);
         animator.SetBool("dead", true);
-        rb.gravityScale = 0.0f;
+        Destroy(rb);
         col.enabled = false;
-        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
+        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 50);
         Destroy(gameObject);
     }
 
