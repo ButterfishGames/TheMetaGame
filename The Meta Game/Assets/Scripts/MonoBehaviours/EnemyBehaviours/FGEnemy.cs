@@ -221,6 +221,10 @@ public class FGEnemy : EnemyBehaviour
     public float hadoEndLag;
 
     private string animationAttackBoolString;
+
+    private bool comboed;
+
+    private bool justComboed;
     #endregion
 
     private void Start()
@@ -235,7 +239,7 @@ public class FGEnemy : EnemyBehaviour
         v3Offset = new Vector3(xOffsetForRay,0,0);
         attackCoRoutineRunning = false;
         usedAttack = new bool[3];
-        for (int i = 0; i < usedAttack.Length - 1; i++)
+        for (int i = 0; i < usedAttack.Length; i++)
         {
             usedAttack[i] = false;
         }
@@ -360,7 +364,6 @@ public class FGEnemy : EnemyBehaviour
                 hitB = Physics2D.Raycast(transform.position - (v3Offset * dir), dVec, 0.5f, mask);
                 Debug.DrawRay(transform.position + (v3Offset * dir), new Vector2(0, -1).normalized,Color.black);
                 Debug.DrawRay(transform.position - (v3Offset * dir), new Vector2(0, -1).normalized, Color.grey);
-                Debug.DrawRay(transform.position, new Vector2(-dir, 0).normalized, Color.magenta);
                 Debug.Log(state);
                 switch (state)
                 {
@@ -371,67 +374,13 @@ public class FGEnemy : EnemyBehaviour
                         switch (difficultyLevel)
                         {
                             case 1:
-                                #region level1def
-                                if (hitB.collider != null)
-                                {
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x , 2)) <= 3)
-                                    {
-                                        animator.SetBool("moving", true);
-                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
-                                    }
-                                    else
-                                    {
-                                        animator.SetBool("moving", false);
-                                    }
-                                }
-                                else
-                                {
-                                    animator.SetBool("moving", false);
-                                }
-                                AutoOffenseSwitch(0.25f);
-                                #endregion
+                                DefenseMode(hitB, 3, 0.25f);
                                 break;
                             case 2:
-                                #region level2def
-                                if (hitB.collider != null)
-                                {
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
-                                    {
-                                        animator.SetBool("moving", true);
-                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
-                                    }
-                                    else
-                                    {
-                                        animator.SetBool("moving", false);
-                                    }
-                                }
-                                else
-                                {
-                                    animator.SetBool("moving", false);
-                                }
-                                AutoOffenseSwitch(0.2f);
-                                #endregion
+                                DefenseMode(hitB, 3, 0.2f);
                                 break;
                             case 3:
-                                #region level3def
-                                if (hitB.collider != null)
-                                {
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 3)
-                                    {
-                                        animator.SetBool("moving", true);
-                                        rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
-                                    }
-                                    else
-                                    {
-                                        animator.SetBool("moving", false);
-                                    }
-                                }
-                                else
-                                {
-                                    animator.SetBool("moving", false);
-                                }
-                                AutoOffenseSwitch(0.1f);
-                                #endregion
+                                DefenseMode(hitB, 3, 0.1f);
                                 break;
                             default:
                                 Debug.Log("ERROR: LEVEL DOES NOT EXIST");
@@ -454,8 +403,11 @@ public class FGEnemy : EnemyBehaviour
                             }
                             inNeutral = true;
                         }
-                        
-                        AutoOffenseSwitch(0.75f);
+
+                        if (justComboed == false)
+                        {
+                            AutoOffenseSwitch(0.75f);
+                        }
                         
                         if(choseTime == false)
                         {
@@ -475,7 +427,6 @@ public class FGEnemy : EnemyBehaviour
                         break;
                     case EnemyState.offense:
                         #region offense
-                        //Debug.Log(Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)));
                         inNeutral = false;
                         choseTime = false;
                         switch (difficultyLevel)
@@ -485,7 +436,6 @@ public class FGEnemy : EnemyBehaviour
                                 if (!attacking)
                                 {
                                     JumpCheck(4.0f, 2);
-                                    //hit = Physics2D.Raycast(transform.position, dVecF, 2, mask);
                                     if (hitF.collider != null)
                                     {
                                         animator.SetBool("moving", true);
@@ -498,6 +448,8 @@ public class FGEnemy : EnemyBehaviour
                                     {
                                         if (!attackCoRoutineRunning)
                                         {
+                                            comboed = true;
+                                            animator.SetBool("comboed", true);
                                             BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
                                             attackCoRoutineRunning = true;
                                             StartCoroutine(AttackCoRoutine());
@@ -505,6 +457,8 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     else
                                     {
+                                        comboed = false;
+                                        animator.SetBool("comboed", false);
                                         hitbox.gameObject.SetActive(false);
                                         StopCoroutine(AttackCoRoutine());
                                         attacking = false;
@@ -514,7 +468,6 @@ public class FGEnemy : EnemyBehaviour
                                 #endregion
                                 break;
                             case 2:
-                                //Debug.Log(usedAttack[2]);
                                 #region level2off
                                 if (!attacking)
                                 {
@@ -541,6 +494,8 @@ public class FGEnemy : EnemyBehaviour
                                         }
                                         else if (!attackCoRoutineRunning)
                                         {
+                                            comboed = true;
+                                            animator.SetBool("comboed", true);
                                             usedAttack[2] = false;
                                             animator.SetTrigger("specialattack");
                                             attacking = true;
@@ -551,6 +506,8 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     else
                                     {
+                                        comboed = false;
+                                        animator.SetBool("comboed", false);
                                         animator.SetBool("close", false);
                                         hitbox.gameObject.SetActive(false);
                                         StopCoroutine(AttackCoRoutine());
@@ -576,7 +533,7 @@ public class FGEnemy : EnemyBehaviour
                                         Jump(100);
                                         animator.SetBool("moving", false);
                                     }
-                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 5)
+                                    if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= 2)
                                     {
                                         animator.SetBool("close", true);
                                         if (!attackCoRoutineRunning)
@@ -587,7 +544,6 @@ public class FGEnemy : EnemyBehaviour
                                                 usedAttack[0] = true;
                                                 attackCoRoutineRunning = true;
                                                 StartCoroutine(AttackCoRoutine());
-                                                Debug.Log("L");
                                             }
                                             else if (!usedAttack[1])
                                             {
@@ -595,7 +551,6 @@ public class FGEnemy : EnemyBehaviour
                                                 usedAttack[1] = true;
                                                 attackCoRoutineRunning = true;
                                                 StartCoroutine(AttackCoRoutine());
-                                                Debug.Log("M");
                                             }
                                             else if (!usedAttack[2])
                                             {
@@ -603,11 +558,12 @@ public class FGEnemy : EnemyBehaviour
                                                 usedAttack[2] = true;
                                                 attackCoRoutineRunning = true;
                                                 StartCoroutine(AttackCoRoutine());
-                                                Debug.Log("H");
                                             }
                                             else
                                             {
-                                                for (int i = 0; i < usedAttack.Length - 1; i++)
+                                                comboed = true;
+                                                animator.SetBool("comboed", true);
+                                                for (int i = 0; i < usedAttack.Length; i++)
                                                 {
                                                     usedAttack[i] = false;
                                                 }
@@ -621,18 +577,18 @@ public class FGEnemy : EnemyBehaviour
                                     }
                                     else
                                     {
+                                        comboed = false;
                                         animator.SetBool("close", false);
                                         hitbox.gameObject.SetActive(false);
                                         StopCoroutine(AttackCoRoutine());
                                         attacking = false;
                                         attackCoRoutineRunning = false;
-                                        for (int i = 0; i < usedAttack.Length - 1; i++)
+                                        for (int i = 0; i < usedAttack.Length; i++)
                                         {
                                             usedAttack[i] = false;
                                         }
                                     }
                                 }
-                                Debug.Log("Light used: " + usedAttack[0] + ", medium used: " + usedAttack[1] + ", heavy used: " + usedAttack[2]);
                                 #endregion
                                 break;
                             default:
@@ -648,8 +604,11 @@ public class FGEnemy : EnemyBehaviour
             }
             else
             {
+                comboed = false;
+                justComboed = false;
+                animator.SetBool("comboed", false);
                 animator.SetBool("hit", true);
-                for (int i = 0; i < usedAttack.Length - 1; i++)
+                for (int i = 0; i < usedAttack.Length; i++)
                 {
                     usedAttack[i] = false;
                 }
@@ -805,13 +764,11 @@ public class FGEnemy : EnemyBehaviour
             {
                 GameObject specialMove = Instantiate(special, new Vector3(transform.position.x + hadoDistanceFromEnemy, transform.position.y, -2.0f), Quaternion.identity) as GameObject;
                 specialMove.tag = "EnemyHitbox";
-                Debug.Log("Hado right");
             }
             else
             {
                 GameObject specialMove = Instantiate(special, new Vector3(transform.position.x - hadoDistanceFromEnemy, transform.position.y, -2.0f), Quaternion.Euler(0, 180, 0)) as GameObject;
                 specialMove.tag = "EnemyHitbox";
-                Debug.Log("Hado left");
             }
         }
         else
@@ -822,7 +779,13 @@ public class FGEnemy : EnemyBehaviour
         hitbox.gameObject.SetActive(false);
         yield return new WaitForSeconds(endLagTime/60);
         randomInt = Random.Range(1, 3);
-        state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
+        if (comboed == true)
+        {
+            comboed = false;
+            animator.SetBool("comboed", false);
+            justComboed = true;
+            state = ChooseRandomState(EnemyState.defense, EnemyState.neutral);
+        }
         attacking = false;
         animator.SetBool("attacking", false);
         attackCoRoutineRunning = false;
@@ -887,6 +850,29 @@ public class FGEnemy : EnemyBehaviour
             }
             choseTime = false;
             secondsInOneDirection = 0;
+        }
+    }
+
+    private void DefenseMode(RaycastHit2D hit, float distanceFromPlayer, float distanceSwitch)
+    {
+        if (hit.collider != null)
+        {
+            if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= distanceFromPlayer)
+            {
+                animator.SetBool("moving", true);
+                rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+            }
+            else
+            {
+                animator.SetBool("moving", false);
+            }
+        }
+        else
+        {
+            animator.SetBool("moving", false);
+        }
+        if (justComboed == false) {
+            AutoOffenseSwitch(distanceSwitch);
         }
     }
 }
