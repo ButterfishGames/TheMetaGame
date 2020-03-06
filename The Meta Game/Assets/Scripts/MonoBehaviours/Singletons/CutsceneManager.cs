@@ -72,7 +72,6 @@ public class CutsceneManager : MonoBehaviour
 
         for (int i = 0; i < currentScene.stepsSize; i++)
         {
-            Debug.Log(i + "/" + currentScene.stepsSize);
             switch (currentScene.steps[i].stepType)
             {
                 case StepType.motion:
@@ -140,7 +139,7 @@ public class CutsceneManager : MonoBehaviour
                     }
                     else
                     {
-                        GameController.singleton.FadeAndLoad(currentScene.steps[i].scene);
+                        GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(currentScene.steps[i].scene));
                     }
                     break;
 
@@ -148,6 +147,12 @@ public class CutsceneManager : MonoBehaviour
                     GameController.singleton.SwitchMode(currentScene.steps[i].mode);
                     GameController.singleton.SetPaused(true);
                     Camera.main.GetComponent<CameraScroll>().enabled = false;
+                    break;
+
+                case StepType.unlockMode:
+                    GameController.singleton.Unlock(currentScene.steps[i].mode);
+                    GameController.singleton.ToggleSwitchPanel(true);
+                    yield return new WaitForSeconds(GameController.singleton.unlockWaitTime + GameController.singleton.unlockFadeTime);
                     break;
             }
         }

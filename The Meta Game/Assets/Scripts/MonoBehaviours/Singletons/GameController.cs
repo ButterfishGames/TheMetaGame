@@ -1016,6 +1016,31 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void Unlock(GameMode mode)
+    {
+        string modeStr = "";
+        switch (mode)
+        {
+            case GameMode.platformer:
+                modeStr = "Platformer";
+                break;
+
+            case GameMode.fighting:
+                modeStr = "Fighting";
+                break;
+
+            case GameMode.rpg:
+                modeStr = "RPG";
+                break;
+
+            case GameMode.fps:
+                modeStr = "FPS";
+                break;
+        }
+
+        Unlock(modeStr);
+    }
+
     public void Unlock(string mode)
     {
         bool found = false;
