@@ -32,11 +32,19 @@ public class CutsceneManager : MonoBehaviour
 
         GameController.singleton.SetPaused(true);
 
-        CameraScroll camScroll = Camera.main.GetComponent<CameraScroll>();
-        camScroll.enabled = false;
+        Camera.main.GetComponent<CameraScroll>().enabled = false;
         
         GameObject gTemp;
         Animator aTemp;
+
+        for (int i = 0; i < currentScene.transformsSize; i++)
+        {
+            gTemp = GameObject.Find(currentScene.transNames[i]);
+            if (gTemp != null)
+            {
+                currentScene.transforms[i] = gTemp.GetComponent<Transform>();
+            }
+        }
 
         for (int i = 0; i < currentScene.animatorsSize; i++)
         {
@@ -135,10 +143,14 @@ public class CutsceneManager : MonoBehaviour
                         GameController.singleton.FadeAndLoad(currentScene.steps[i].scene);
                     }
                     break;
+
+                case StepType.switchMode:
+                    GameController.singleton.SwitchMode(currentScene.steps[i].mode);
+                    GameController.singleton.SetPaused(true);
+                    Camera.main.GetComponent<CameraScroll>().enabled = false;
+                    break;
             }
         }
-
-        Debug.Log("test");
 
         for (int i = 0; i < currentScene.animatorsSize; i++)
         {
@@ -149,13 +161,9 @@ public class CutsceneManager : MonoBehaviour
                 currentScene.animators[i].SetBool("moving", false);
             }
         }
+        
+        Camera.main.GetComponent<CameraScroll>().enabled = !lockCam;
 
-        if (!lockCam)
-        {
-            camScroll.enabled = true;
-        }
-
-        Debug.Log("Gets here?");
         GameController.singleton.SetPaused(false);
 
         currentScene = null;
@@ -165,12 +173,19 @@ public class CutsceneManager : MonoBehaviour
     private IEnumerator TransformMove(Transform trans, Vector3 mov, Vector3 rot, Vector3 scl, float wait)
     {
         float invTime = 1.0f / wait;
+        float maxDistMov = Vector3.Distance(trans.position, mov) * invTime;
+        float maxDistRot = Vector3.Distance(trans.rotation.eulerAngles, rot) * invTime;
+        float maxDistScl = Vector3.Distance(trans.localScale, scl) * invTime;
 
         for (float t = 0; t <= wait; t += Time.deltaTime)
         {
-            trans.Translate(mov * invTime * Time.deltaTime);
-            trans.Rotate(rot * invTime * Time.deltaTime);
-            trans.localScale += scl * invTime * Time.deltaTime;
+            trans.position = Vector3.MoveTowards(trans.position, mov, maxDistMov * Time.deltaTime);
+            trans.rotation = Quaternion.Euler(Vector3.MoveTowards(trans.rotation.eulerAngles, rot, maxDistRot * Time.deltaTime));
+            trans.localScale = Vector3.MoveTowards(trans.localScale, scl, maxDistScl);
+
+            // trans.Translate(mov * invTime * Time.deltaTime);
+            // trans.Rotate(rot * invTime * Time.deltaTime);
+            // trans.localScale += scl * invTime * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -178,13 +193,14 @@ public class CutsceneManager : MonoBehaviour
     private IEnumerator CameraMove(Vector3 mov, float wait)
     {
         float invTime = 1.0f / wait;
+        float maxDist = Vector3.Distance(Camera.main.transform.position, mov) * invTime;
 
         for (float t = 0; t <= wait; t += Time.deltaTime)
         {
             float xDiff = -Camera.main.transform.position.x;
             float yDiff = -Camera.main.transform.position.y;
 
-            Camera.main.transform.Translate(mov * invTime * Time.deltaTime);
+            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, mov, maxDist * Time.deltaTime);
 
             xDiff += Camera.main.transform.position.x;
             yDiff += Camera.main.transform.position.y;
