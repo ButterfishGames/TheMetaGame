@@ -202,15 +202,22 @@ public class PFController : Mover
             GameController.singleton.SetPaused(true);
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
+            GameObject lavamap = GameObject.Find("Lavamap");
+            if (lavamap != null)
+            {
+                lavamap.GetComponent<Renderer>().sortingOrder = 0;
+            }
             yield return new WaitForSeconds(1);
             animator.SetBool("dead", true);
             rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
             rb.gravityScale = GameController.singleton.GetGScale();
+            col.enabled = false;
         }
 
         if (!GetComponent<AudioSource>().isPlaying)
+        {
             GetComponent<AudioSource>().Play();
-        col.enabled = false;
+        }
         /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
         {
             childCol.enabled = false;
