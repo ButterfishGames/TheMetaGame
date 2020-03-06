@@ -458,7 +458,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void SwitchMode(GameMode newMode)
+    public void SwitchMode(GameMode newMode)
     {
         equipped = newMode;
 
@@ -1171,7 +1171,6 @@ public class GameController : MonoBehaviour
     public void SetPaused(bool val)
     {
         paused = val;
-        Debug.Log(val + ", " + paused);
     }
 
     public void Hit(int damage)
