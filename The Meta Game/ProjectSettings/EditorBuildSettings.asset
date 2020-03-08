@@ -5,22 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/_TEST/Scenes/Demo Menu.unity
-    guid: 59b5269d4bc5c9d45a44268954f1f83f
-  - enabled: 0
-    path: Assets/_TEST/Scenes/DemoLevel.unity
-    guid: 562d62727e6edd44a91eaa19e07f7d6b
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: c9b2aef2be682144fb5cdd31fe04d83d
   - enabled: 1
+    path: Assets/_TEST/Scenes/DemoLevel.unity
+    guid: 562d62727e6edd44a91eaa19e07f7d6b
+  - enabled: 0
     path: Assets/Scenes/CastleApproach.unity
     guid: 575babc2149bb8c4ba1d5cb03c02bab5
   - enabled: 1
     path: Assets/Scenes/RPGCombat.unity
     guid: 5ad215fe0889c9a4fb0ffcbb52880636
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CastleInterior.unity
     guid: 1e1b7f1e36ca38a478a63a1a800cb34b
   m_configObjects:
