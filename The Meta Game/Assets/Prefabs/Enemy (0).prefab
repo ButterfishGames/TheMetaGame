@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 1499245470291664175}
   - component: {fileID: -242363655407120299}
   m_Layer: 11
-  m_Name: Enemy
+  m_Name: Enemy (0)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,8 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce6aee6eb339bf42b9e42aee4c519ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - This is test dialogue
+  dialogue: {fileID: 0}
 --- !u!114 &1499245470291664175
 MonoBehaviour:
   m_ObjectHideFlags: 0
