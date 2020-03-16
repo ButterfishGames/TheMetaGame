@@ -5,6 +5,7 @@ using UnityEngine;
 public class CutsceneTrigger : MonoBehaviour
 {
     public Cutscene scene;
+    public bool oneTime;
     public bool triggerable;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -12,7 +13,11 @@ public class CutsceneTrigger : MonoBehaviour
         if (triggerable && collision.CompareTag("Player"))
         {
             CutsceneManager.singleton.StartScene(scene);
-            triggerable = false;
+            if (oneTime)
+            {
+                triggerable = false;
+                SaveManager.singleton.UpdateSceneData();
+            }
         }
     }
 }

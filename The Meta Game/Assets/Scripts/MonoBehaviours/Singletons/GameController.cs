@@ -313,6 +313,8 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        SaveManager.singleton.Init();
+
         inverseDamageFadeTime = 1.0f / damageFadeTime;
 
         inverseLevelFadeTime = 1.0f / levelFadeTime;
@@ -1129,6 +1131,10 @@ public class GameController : MonoBehaviour
         {
             ToggleSwitchPanel(true);
         }
+        if (!onMenu)
+        {
+            SaveManager.singleton.InitScene();
+        }
         StartCoroutine(LevelFade(true));
         paused = false;
     }
@@ -1311,6 +1317,12 @@ public class GameController : MonoBehaviour
             }
         }
         SwitchMode(GameMode.platformer);
+        
+        if (numUnlocked > 1)
+        {
+            ToggleSwitchPanel(true);
+        }
+
         StartCoroutine(LevelFade(true));
         paused = false;
     }
@@ -1363,9 +1375,29 @@ public class GameController : MonoBehaviour
         return strength;
     }
 
+    public void SetStrength(int str)
+    {
+        strength = str;
+    }
+
     public int GetMagic()
     {
         return magic;
+    }
+    
+    public void SetMagic(int mag)
+    {
+        magic = mag;
+    }
+
+    public int GetNumUnlocked()
+    {
+        return numUnlocked;
+    }
+
+    public void SetNumUnlocked(int num)
+    {
+        numUnlocked = num;
     }
 
     public float GetGScale()

@@ -5,24 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class MenuTransitioner : MonoBehaviour
 {
-    [Tooltip("-1 is used to quit the game")]
-    public int buildIndex;
+    [Tooltip("-1 is used to quit the game, 0 is used to go to credits, 1 is used to play")]
+    public int function;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if (buildIndex == -1)
+            if (function == -1)
             {
                 Application.Quit();
             }
-            else
+            else if (function == 1)
             {
+                SaveManager.singleton.LoadGame();
+                int sceneInd = SaveManager.singleton.GetCurrentScene();
                 collision.enabled = false;
                 // GameController.singleton.ignoreHints = false;
                 GameController.singleton.onMenu = false;
                 StartCoroutine(SongFade());
-                GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(buildIndex));
+                GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(sceneInd));
             }
         }
     }

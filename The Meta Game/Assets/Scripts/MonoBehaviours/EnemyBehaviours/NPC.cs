@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class NPC : EnemyBehaviour
 {
-    [Tooltip("Array of dialogue lines to display when interacted with")]
-    public Dialogue dialogue;
+    public Dialogue firstDialogue, otherDialogue;
+    public bool interacted;
+
+    public void Start()
+    {
+        interacted = false;
+    }
 
     public void Interact()
     {
-        DialogueManager.singleton.StartDialogue(dialogue);
+        if (interacted)
+        {
+            DialogueManager.singleton.StartDialogue(otherDialogue);
+        }
+        else
+        {
+            DialogueManager.singleton.StartDialogue(firstDialogue);
+            interacted = true;
+            SaveManager.singleton.UpdateSceneData();
+        }
     }
 }
