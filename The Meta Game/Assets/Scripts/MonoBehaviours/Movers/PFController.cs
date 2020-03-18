@@ -69,6 +69,11 @@ public class PFController : Mover
 
     private void Start()
     {
+        if (GameController.singleton != null && !GameController.singleton.onMenu)
+        {
+            SaveManager.singleton.InitScene();
+        }
+
         groundTrigger = null;
         BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
         foreach (BoxCollider2D col in cols)

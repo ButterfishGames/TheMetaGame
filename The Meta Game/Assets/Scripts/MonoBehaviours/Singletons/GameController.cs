@@ -313,8 +313,6 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        SaveManager.singleton.Init();
-
         inverseDamageFadeTime = 1.0f / damageFadeTime;
 
         inverseLevelFadeTime = 1.0f / levelFadeTime;
@@ -350,6 +348,8 @@ public class GameController : MonoBehaviour
         camSize = Camera.main.orthographicSize;
 
         errText = GetComponentInChildren<TextMeshProUGUI>();
+        
+        SaveManager.singleton.Init();
 
         StartCoroutine(LevelFade(true));
 
@@ -1119,11 +1119,6 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
 
-        /*while (GameObject.Find("Player").GetComponent<AudioSource>().isPlaying)
-        {
-            yield return new WaitForEndOfFrame();
-        }*/
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         yield return new WaitForEndOfFrame();
         SwitchMode(GameMode.platformer);
@@ -1131,10 +1126,7 @@ public class GameController : MonoBehaviour
         {
             ToggleSwitchPanel(true);
         }
-        if (!onMenu)
-        {
-            SaveManager.singleton.InitScene();
-        }
+
         StartCoroutine(LevelFade(true));
         paused = false;
     }

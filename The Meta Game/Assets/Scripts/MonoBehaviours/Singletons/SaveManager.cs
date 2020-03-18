@@ -15,7 +15,7 @@ public class SaveManager : MonoBehaviour
 
     private SaveData saveData;
 
-    private void Start()
+    private void Awake()
     {
         if (singleton == null)
         {
@@ -50,10 +50,15 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            saveData = new SaveData();
-            saveData.SetCheckpointPos(initPos);
-            SaveGame(false);
+            CreateSave();
         }
+    }
+
+    public void CreateSave()
+    {
+        saveData = new SaveData();
+        saveData.SetCheckpointPos(initPos);
+        SaveGame(false);
     }
 
     public void SaveGame(bool update)
@@ -72,6 +77,11 @@ public class SaveManager : MonoBehaviour
 
     public void UpdateSceneData()
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneData temp;
 
@@ -104,11 +114,21 @@ public class SaveManager : MonoBehaviour
 
     public void UpdateCheckpointPos(Vector3 pos)
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         saveData.SetCheckpointPos(pos);
     }
 
     public void UpdatePlayerData()
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         saveData.maxHP = GameController.singleton.maxHP;
         saveData.maxMP = GameController.singleton.maxMP;
         saveData.strength = GameController.singleton.GetStrength();
@@ -131,6 +151,11 @@ public class SaveManager : MonoBehaviour
 
     public void InitScene()
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneData temp;
 
@@ -159,10 +184,28 @@ public class SaveManager : MonoBehaviour
         }
 
         GameObject.Find("Player").transform.position = saveData.GetCheckpointPos();
+
+        Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
+        foreach(Checkpoint checkpoint in checkpoints)
+        {
+            if (checkpoint.transform.position == saveData.GetCheckpointPos())
+            {
+                if (Checkpoint.active != null)
+                {
+                    Checkpoint.active.Deactivate();
+                }
+                checkpoint.Activate();
+            }
+        }
     }
 
     public void InitGameController()
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         GameController.singleton.maxHP = saveData.maxHP;
         GameController.singleton.maxMP = saveData.maxMP;
         GameController.singleton.SetStrength(saveData.strength);
@@ -183,11 +226,21 @@ public class SaveManager : MonoBehaviour
 
     public int GetCurrentScene()
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         return saveData.GetCurrentScene();
     }
 
     public void SetCurrentScene(int currentSceneIndex)
     {
+        if (saveData == null)
+        {
+            CreateSave();
+        }
+
         saveData.SetCurrentScene(currentSceneIndex);
     }
 }
