@@ -114255,7 +114255,7 @@ GameObject:
   - component: {fileID: 1513736382}
   - component: {fileID: 1513736381}
   m_Layer: 0
-  m_Name: Cutscene 1 trigger
+  m_Name: Scene (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114274,6 +114274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: {fileID: 11400000, guid: d227c45b51d19d8429eec85f75329241, type: 2}
+  oneTime: 0
   triggerable: 1
 --- !u!61 &1513736382
 BoxCollider2D:
@@ -116090,6 +116091,85 @@ Transform:
   m_Father: {fileID: 1150235864}
   m_RootOrder: 63
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 179.99998}
+--- !u!1001 &1928388938
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755185, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: initPos.x
+      value: -155.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755185, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: initPos.y
+      value: 5.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886264583296755190, guid: 17cbca61a89f49c428c3fc51536a7376,
+        type: 3}
+      propertyPath: m_Name
+      value: SaveManager (script)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17cbca61a89f49c428c3fc51536a7376, type: 3}
 --- !u!1 &1948566433
 GameObject:
   m_ObjectHideFlags: 0
@@ -116582,6 +116662,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 81660603, guid: 9b40e746262972446a4c231183cf4cdb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1814747856, guid: 9b40e746262972446a4c231183cf4cdb, type: 3}
       propertyPath: m_textInfo.characterCount
       value: 0
