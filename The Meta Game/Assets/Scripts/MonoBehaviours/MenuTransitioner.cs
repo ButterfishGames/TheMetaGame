@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuTransitioner : MonoBehaviour
 {
-    [Tooltip("-1 is used to quit the game, 0 is used to go to credits, 1 is used to play")]
+    [Tooltip("-1 is used to quit the game, 0 is used to go to credits, 1 is used to play, 2 is used to delete save data")]
     public int function;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,6 +25,10 @@ public class MenuTransitioner : MonoBehaviour
                 GameController.singleton.onMenu = false;
                 StartCoroutine(SongFade());
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(sceneInd));
+            }
+            else if (function == 2)
+            {
+                SaveManager.singleton.DeleteSave();
             }
         }
     }

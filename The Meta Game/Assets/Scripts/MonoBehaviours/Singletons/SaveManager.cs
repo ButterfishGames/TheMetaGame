@@ -75,6 +75,14 @@ public class SaveManager : MonoBehaviour
         file.Close();
     }
 
+    public void DeleteSave()
+    {
+        if (File.Exists(dataPath))
+        {
+            File.Delete(dataPath);
+        }
+    }
+
     public void UpdateSceneData()
     {
         if (saveData == null)
