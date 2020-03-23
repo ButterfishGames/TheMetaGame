@@ -52,7 +52,6 @@ public class GameModePickup : MonoBehaviour
             GameController.singleton.Unlock(mode);
             GameController.singleton.ToggleSwitchPanel(true);
             SaveManager.singleton.UpdatePlayerData();
-            SaveManager.singleton.SaveGame(true); // REMOVE THIS WHEN CHECKPOINTS ARE IMPLEMENTED
             Destroy(gameObject);
         }
     }
