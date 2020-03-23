@@ -37,12 +37,15 @@ public abstract class Mover : MonoBehaviour
         controls.Player.MoveH.canceled += MoveHHandle;
         controls.Player.MoveV.performed += MoveVHandle;
         controls.Player.MoveV.canceled += MoveVHandle;
-        controls.Player.LStick.performed += LStickHandle;
-        controls.Player.LStick.canceled += LStickHandle;
+        controls.Player.LStick.performed += JoyMoveHandle;
+        controls.Player.LStick.canceled += JoyMoveHandle;
+        controls.Player.DPad.performed += JoyMoveHandle;
+        controls.Player.DPad.canceled += JoyMoveHandle;
 
         controls.Player.MoveH.Enable();
         controls.Player.MoveV.Enable();
         controls.Player.LStick.Enable();
+        controls.Player.DPad.Enable();
     }
 
     protected virtual void OnDisable()
@@ -51,12 +54,15 @@ public abstract class Mover : MonoBehaviour
         controls.Player.MoveH.canceled -= MoveHHandle;
         controls.Player.MoveV.performed -= MoveVHandle;
         controls.Player.MoveV.canceled -= MoveVHandle;
-        controls.Player.LStick.performed -= LStickHandle;
-        controls.Player.LStick.canceled -= LStickHandle;
+        controls.Player.LStick.performed -= JoyMoveHandle;
+        controls.Player.LStick.canceled -= JoyMoveHandle;
+        controls.Player.DPad.performed -= JoyMoveHandle;
+        controls.Player.DPad.canceled -= JoyMoveHandle;
 
         controls.Player.MoveH.Disable();
         controls.Player.MoveV.Disable();
         controls.Player.LStick.Disable();
+        controls.Player.DPad.Disable();
     }
 
     private void MoveHHandle(InputAction.CallbackContext context)
@@ -70,7 +76,7 @@ public abstract class Mover : MonoBehaviour
         stickUp = false;
     }
 
-    private void LStickHandle(InputAction.CallbackContext context)
+    private void JoyMoveHandle(InputAction.CallbackContext context)
     {
         Vector2 stickRaw = context.ReadValue<Vector2>();
 

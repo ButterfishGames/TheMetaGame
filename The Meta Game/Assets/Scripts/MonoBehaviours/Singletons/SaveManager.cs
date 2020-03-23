@@ -118,6 +118,7 @@ public class SaveManager : MonoBehaviour
         }
 
         saveData.SetSceneData(buildIndex, temp);
+        saveData.SetCurrentScene(buildIndex);
     }
 
     public void UpdateCheckpointPos(Vector3 pos)
