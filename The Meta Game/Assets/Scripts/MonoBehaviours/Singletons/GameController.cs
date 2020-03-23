@@ -90,8 +90,6 @@ public class GameController : MonoBehaviour
     [Tooltip("The amount of time in seconds over which the error text will fade")]
     public float errFadeTime;
 
-    public bool ignoreHints;
-
     public bool onMenu;
 
     public TextMeshProUGUI codeText;
@@ -102,16 +100,6 @@ public class GameController : MonoBehaviour
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
-
-    /// <summary>
-    /// Array of object references to HintDisp objects on in-game hints
-    /// </summary>
-    private HintDisp[] hints;
-
-    /// <summary>
-    /// Used to store between scenes whether the hints should be displayed
-    /// </summary>
-    private bool[] shouldDisp = { true, true, true, false, false, false };
 
     /// <summary>
     /// Determines whether the game is paused or not
@@ -353,15 +341,6 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(LevelFade(true));
 
-        if (!ignoreHints)
-        {
-            hints = new HintDisp[] { null };
-            while (hints[0] == null)
-            {
-                StartCoroutine(FindHints());
-            }
-        }
-
         if (resetUnlocks)
         {
             ResetUnlocks();
@@ -569,21 +548,6 @@ public class GameController : MonoBehaviour
                 {
                     Camera.main.GetComponent<CameraScroll>().hScroll = true;
                 }
-
-                if (!ignoreHints)
-                {
-                    while (hints[0] == null)
-                    {
-                        StartCoroutine(FindHints());
-                    }
-
-                    SetHintDisp(0, true);
-                    SetHintDisp(1, true);
-                    SetHintDisp(2, shouldDisp[2]);
-                    SetHintDisp(3, false);
-                    SetHintDisp(4, false);
-                    SetHintDisp(5, false);
-                }
                 break;
             #endregion
             #region rpg
@@ -679,21 +643,7 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
-
-                if (!ignoreHints)
-                {
-                    while (hints[0] == null)
-                    {
-                        StartCoroutine(FindHints());
-                    }
-
-                    SetHintDisp(0, false);
-                    SetHintDisp(1, false);
-                    SetHintDisp(2, shouldDisp[2]);
-                    SetHintDisp(3, true);
-                    SetHintDisp(4, true);
-                    SetHintDisp(5, false);
-                }
+                
                 break;
             #endregion
             #region fps
@@ -767,21 +717,7 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Perspective(95.52f, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
-
-                if (!ignoreHints)
-                {
-                    while (hints[0] == null)
-                    {
-                        StartCoroutine(FindHints());
-                    }
-
-                    SetHintDisp(0, false);
-                    SetHintDisp(1, false);
-                    SetHintDisp(2, shouldDisp[2]);
-                    SetHintDisp(3, false);
-                    SetHintDisp(4, false);
-                    SetHintDisp(5, true);
-                }
+                
                 break;
             #endregion
             #region fighting
@@ -890,21 +826,7 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
-
-                if (!ignoreHints)
-                {
-                    while (hints[0] == null)
-                    {
-                        StartCoroutine(FindHints());
-                    }
-
-                    SetHintDisp(0, false);
-                    SetHintDisp(1, false);
-                    SetHintDisp(2, shouldDisp[2]);
-                    SetHintDisp(3, false);
-                    SetHintDisp(4, false);
-                    SetHintDisp(5, false);
-                }
+                
                 break;
             #endregion
 
@@ -1007,14 +929,6 @@ public class GameController : MonoBehaviour
             }
 
             Cursor.lockState = CursorLockMode.None;
-
-            if (!ignoreHints)
-            {
-                if (hints[2] != null && shouldDisp[2])
-                {
-                    SetHintDisp(2, false);
-                }
-            }
         }
     }
 
@@ -1251,38 +1165,6 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    public void SetHintDisp(int hint, bool val)
-    {
-        shouldDisp[hint] = val;
-        hints[hint].SetDisplay(val);
-    }
-
-    private IEnumerator FindHints()
-    {
-        while (hints[0] == null)
-        {
-            GameObject hintParent = GameObject.Find("Hints");
-            if (hintParent != null)
-            {
-                hints = hintParent.GetComponentsInChildren<HintDisp>(true);
-            }
-            yield return new WaitForEndOfFrame();
-        }
-
-        for (int i = 0; i < hints.Length - 1; i++)
-        {
-            for (int j = i + 1; j < hints.Length; j++)
-            {
-                if (int.Parse(hints[i].gameObject.name.Substring(5)) > int.Parse(hints[j].gameObject.name.Substring(5)))
-                {
-                    HintDisp temp = hints[i];
-                    hints[i] = hints[j];
-                    hints[j] = temp;
-                }
-            }
-        }
-    }
-
     public int GetHP()
     {
         return currHP;
@@ -1299,15 +1181,6 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(buildIndex);
         yield return new WaitForEndOfFrame();
-        if (!ignoreHints)
-        {
-            hints = new HintDisp[] { null };
-            while (hints[0] == null)
-            {
-                StartCoroutine(FindHints());
-                yield return new WaitForEndOfFrame();
-            }
-        }
         SwitchMode(GameMode.platformer);
         
         if (numUnlocked > 1)

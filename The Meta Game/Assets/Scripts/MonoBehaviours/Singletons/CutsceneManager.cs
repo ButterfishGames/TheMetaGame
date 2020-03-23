@@ -141,6 +141,7 @@ public class CutsceneManager : MonoBehaviour
                     {
                         GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(currentScene.steps[i].scene));
                     }
+                    StopAllCoroutines();
                     break;
 
                 case StepType.switchMode:
