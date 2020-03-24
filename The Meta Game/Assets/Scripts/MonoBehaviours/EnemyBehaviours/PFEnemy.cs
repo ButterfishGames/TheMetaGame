@@ -22,6 +22,15 @@ public class PFEnemy : EnemyBehaviour
     [Tooltip("The direction the enemy starts facing")]
     public Direction startDir;
 
+    public enum EnemyType
+    {
+        moving,
+        fullStill,
+        stillAndCharge
+    };
+
+    public EnemyType enemyType;
+
     [Tooltip("The max HP enemies have in gamemodes where they can take damage")]
     public int maxHP;
 
@@ -62,6 +71,8 @@ public class PFEnemy : EnemyBehaviour
 
     private bool grounded;
 
+    private bool turning;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -82,7 +93,7 @@ public class PFEnemy : EnemyBehaviour
                 break;
         }
 
-        mult = 1;
+        mult = enemyType == EnemyType.stillAndCharge ? 0 : 1;
 
         currHP = maxHP;
 
@@ -93,6 +104,11 @@ public class PFEnemy : EnemyBehaviour
     void Update()
     {
         if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (enemyType == EnemyType.fullStill)
         {
             return;
         }
@@ -142,27 +158,36 @@ public class PFEnemy : EnemyBehaviour
             }
         }
 
-        if (rb.velocity.x > 0)
+        if (!turning)
         {
-            animator.SetBool("moving", true);
-            if (transform.eulerAngles.y == 180) {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-            }
-        }
-        else if (rb.velocity.x < 0)
-        {
-            animator.SetBool("moving", true);
-            if (transform.eulerAngles.y == 0)
+            if (rb.velocity.x > 0)
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                animator.SetBool("moving", true);
+                if (transform.eulerAngles.y == 180)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                }
             }
-        }
-        else
-        {
-            animator.SetBool("moving", false);
+            else if (rb.velocity.x < 0)
+            {
+                animator.SetBool("moving", true);
+                if (transform.eulerAngles.y == 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                }
+            }
+            else
+            {
+                animator.SetBool("moving", false);
+            }
         }
 
         GetComponent<FGEnemy>().dir = dir;
+
+        if (turning)
+        {
+            turning = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -214,9 +239,11 @@ public class PFEnemy : EnemyBehaviour
 
     private void Turn()
     {
+        turning = true;
+        
         animator.SetBool("charging", false);
         dir *= -1;
-        mult = 1;
+        mult = enemyType == EnemyType.stillAndCharge ? 0 : 1;
         transform.Rotate(0, 180, 0);
     }
 
