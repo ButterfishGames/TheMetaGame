@@ -843,7 +843,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private float GridLocker(float pos)
+    public static float GridLocker(float pos)
     {
         pos = Mathf.Floor(pos * 2) / 2;
 
