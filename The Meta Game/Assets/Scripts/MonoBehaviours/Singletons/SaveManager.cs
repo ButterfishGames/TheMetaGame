@@ -107,8 +107,11 @@ public class SaveManager : MonoBehaviour
 
         foreach (NPC npc in npcs)
         {
-            int ind = int.Parse(npc.gameObject.name.Substring(7, 1));
-            temp.npcInteracted[ind] = npc.interacted;
+            int ind;
+            if (int.TryParse(npc.gameObject.name.Substring(7, 1), out ind))
+            {
+                temp.npcInteracted[ind] = npc.interacted;
+            }
         }
 
         foreach (CutsceneTrigger trigger in triggers)
@@ -182,8 +185,11 @@ public class SaveManager : MonoBehaviour
 
         for (int i = 0; i < npcs.Length; i++)
         {
-            int ind = int.Parse(npcs[i].gameObject.name.Substring(7, 1));
-            npcs[i].interacted = temp.npcInteracted[ind];
+            int ind;
+            if (int.TryParse(npcs[i].gameObject.name.Substring(7, 1), out ind))
+            {
+                npcs[i].interacted = temp.npcInteracted[ind];
+            }
         }
 
         for (int i = 0; i < triggers.Length; i++)
