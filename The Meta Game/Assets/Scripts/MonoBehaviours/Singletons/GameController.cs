@@ -21,7 +21,8 @@ public class GameController : MonoBehaviour
         platformer,
         rpg,
         fps,
-        fighting
+        fighting,
+        rhythm
     };
 
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
@@ -97,6 +98,8 @@ public class GameController : MonoBehaviour
     public GameObject unlockPanel;
 
     public TextMeshProUGUI unlockText;
+
+    public GameObject staffPrefab;
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
@@ -451,6 +454,7 @@ public class GameController : MonoBehaviour
 
         float aspect = (float)Screen.width / (float)Screen.height;
         RPGController rpgCon;
+        GameObject staff;
 
         switch (equipped)
         {
@@ -525,6 +529,7 @@ public class GameController : MonoBehaviour
                         mover.GetAnimator().SetBool("platformer", true);
                         mover.GetAnimator().SetBool("fighter", false);
                         mover.GetAnimator().SetBool("rpg", false);
+                        mover.GetAnimator().SetBool("rhythm", false);
                     }
                     else
                     {
@@ -535,6 +540,8 @@ public class GameController : MonoBehaviour
                         mover.enabled = false;
                     }
                 }
+
+                player.GetComponent<CapsuleCollider2D>().enabled = true;
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
@@ -548,6 +555,14 @@ public class GameController : MonoBehaviour
                 {
                     Camera.main.GetComponent<CameraScroll>().hScroll = true;
                 }
+
+                staff = GameObject.Find("MusicalStaff(Clone)");
+                if (staff != null)
+                {
+                    Destroy(staff);
+                }
+
+                GameObject.Find("Song").GetComponent<AudioSource>().Play();
                 break;
             #endregion
             #region rpg
@@ -605,6 +620,8 @@ public class GameController : MonoBehaviour
 
                 player.GetComponent<Rigidbody2D>().gravityScale = 0;
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                
+                player.GetComponent<CapsuleCollider2D>().enabled = true;
 
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
@@ -619,6 +636,7 @@ public class GameController : MonoBehaviour
                         mover.GetAnimator().SetInteger("dir", 0);
                         mover.GetAnimator().SetBool("fighter", false);
                         mover.GetAnimator().SetBool("platformer", false);
+                        mover.GetAnimator().SetBool("rhythm", false);
                     }
                     else
                     {
@@ -643,7 +661,14 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
-                
+
+                staff = GameObject.Find("MusicalStaff(Clone)");
+                if (staff != null)
+                {
+                    Destroy(staff);
+                }
+
+                GameObject.Find("Song").GetComponent<AudioSource>().Play();
                 break;
             #endregion
             #region fps
@@ -690,6 +715,8 @@ public class GameController : MonoBehaviour
                 player = GameObject.Find("Player");
 
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
+                
+                player.GetComponent<CapsuleCollider2D>().enabled = true;
 
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
@@ -699,6 +726,7 @@ public class GameController : MonoBehaviour
                         mover.GetAnimator().SetBool("platformer", true);
                         mover.GetAnimator().SetBool("fighter", false);
                         mover.GetAnimator().SetBool("rpg", false);
+                        mover.GetAnimator().SetBool("rhythm", false);
                     }
                     mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
                     mover.transform.Find("Hitbox").gameObject.SetActive(false);
@@ -717,7 +745,14 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Perspective(95.52f, aspect, 0.3f, 1000.0f);
                 Camera.main.GetComponent<CameraScroll>().enabled = false;
                 Camera.main.GetComponent<FPSController>().enabled = true;
-                
+                staff = GameObject.Find("MusicalStaff(Clone)");
+
+                if (staff != null)
+                {
+                    Destroy(staff);
+                }
+
+                GameObject.Find("Song").GetComponent<AudioSource>().Play();
                 break;
             #endregion
             #region fighting
@@ -798,6 +833,9 @@ public class GameController : MonoBehaviour
                 }
 
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
+
+                player.GetComponent<CapsuleCollider2D>().enabled = true;
+
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
@@ -811,6 +849,7 @@ public class GameController : MonoBehaviour
                         mover.GetAnimator().SetBool("fighter", true);
                         mover.GetAnimator().SetBool("platformer", false);
                         mover.GetAnimator().SetBool("rpg", false);
+                        mover.GetAnimator().SetBool("rhythm", false);
                     }
                     else
                     {
@@ -826,7 +865,98 @@ public class GameController : MonoBehaviour
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
+
+                staff = GameObject.Find("MusicalStaff(Clone)");
+                if (staff != null)
+                {
+                    Destroy(staff);
+                }
+
+                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                break;
+            #endregion
+            #region rhythm
+            case GameMode.rhythm:
+                modeInt = 4;
+                equippedStr = "Rhythm";
+
+                foreach (GameObject enemy in enemies)
+                {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(NPC)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                        enemy.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    }
+                }
+
+                player = GameObject.Find("Player");
+
+                rpgCon = player.GetComponent<RPGController>();
+                if (rpgCon.mvmtCoroutine != null)
+                {
+                    rpgCon.StopCoroutine(rpgCon.mvmtCoroutine);
+                    rpgCon.SetMoving(false);
+                    rpgCon.mvmtCoroutine = null;
+                }
+
+                player.GetComponent<Rigidbody2D>().gravityScale = 0;
+                movers = player.GetComponents<Mover>();
+                foreach (Mover mover in movers)
+                {
+                    if (mover.GetType().Equals(typeof(RhythmController)))
+                    {
+                        mover.enabled = true;
+                        mover.GetAnimator().SetBool("rhythm", true);
+                        mover.GetAnimator().SetBool("platformer", false);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
+                    }
+                    else
+                    {
+                        mover.hor = 0;
+                        mover.ver = 0;
+                        mover.hRaw = 0;
+                        mover.vRaw = 0;
+                        mover.enabled = false;
+                    }
+                }
+
+                player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                player.GetComponent<CapsuleCollider2D>().enabled = false;
+
+                Vector3 staffSpawn = player.transform.position;
+                staffSpawn += new Vector3(0.7f, -0.05f, 0);
+                Instantiate(staffPrefab, staffSpawn, Quaternion.identity);
                 
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
+                Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
+                if (onMenu)
+                {
+                    Camera.main.GetComponent<CameraScroll>().hScroll = false;
+                }
+                else
+                {
+                    Camera.main.GetComponent<CameraScroll>().hScroll = true;
+                }
+
+                GameObject.Find("Song").GetComponent<AudioSource>().Stop();
                 break;
             #endregion
 

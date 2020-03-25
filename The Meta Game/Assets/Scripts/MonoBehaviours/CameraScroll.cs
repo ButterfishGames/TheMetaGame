@@ -45,6 +45,7 @@ public class CameraScroll : MonoBehaviour
                 posY = player.position.y + yOffset;
                 break;
 
+            case GameController.GameMode.rhythm:
             case GameController.GameMode.rpg:
                 posX = player.position.x;
                 posY = player.position.y + yOffset;

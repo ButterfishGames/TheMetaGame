@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 2826980262528341209}
   - component: {fileID: 2826980262528341210}
   - component: {fileID: -7817119665413950357}
+  - component: {fileID: 1857426907251737140}
   - component: {fileID: 8073731519011545422}
   m_Layer: 9
   m_Name: Player
@@ -184,7 +185,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2826980262528341213}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c61c244df27426459ed8a2b2caa1aad, type: 3}
   m_Name: 
@@ -248,6 +249,28 @@ MonoBehaviour:
     sizeX: 2
     sizeY: 0.5
   hadoDistanceFromPlayer: 0.15
+--- !u!114 &1857426907251737140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2826980262528341213}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f155c87c8998d41ba5cae0fed1d35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 3
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  hor: 0
+  ver: 0
+  hRaw: 0
+  vRaw: 0
+  speed: 1
+  startWait: 5
 --- !u!82 &8073731519011545422
 AudioSource:
   m_ObjectHideFlags: 0

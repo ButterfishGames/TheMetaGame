@@ -11,6 +11,8 @@ public class SaveManager : MonoBehaviour
 
     public Vector3 initPos;
 
+    public bool active = true;
+
     private string dataPath;
 
     private SaveData saveData;
@@ -40,6 +42,11 @@ public class SaveManager : MonoBehaviour
 
     public void LoadGame()
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (File.Exists(dataPath))
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -56,6 +63,11 @@ public class SaveManager : MonoBehaviour
 
     public void CreateSave()
     {
+        if (!active)
+        {
+            return;
+        }
+
         saveData = new SaveData();
         saveData.SetCheckpointPos(initPos);
         SaveGame(false);
@@ -63,6 +75,11 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGame(bool update)
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (update)
         {
             UpdateSceneData();
@@ -77,6 +94,11 @@ public class SaveManager : MonoBehaviour
 
     public void DeleteSave()
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (File.Exists(dataPath))
         {
             File.Delete(dataPath);
@@ -85,6 +107,11 @@ public class SaveManager : MonoBehaviour
 
     public void UpdateSceneData()
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (saveData == null)
         {
             CreateSave();
@@ -126,6 +153,11 @@ public class SaveManager : MonoBehaviour
 
     public void UpdateCheckpointPos(Vector3 pos)
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (saveData == null)
         {
             CreateSave();
@@ -136,6 +168,11 @@ public class SaveManager : MonoBehaviour
 
     public void UpdatePlayerData()
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (saveData == null)
         {
             CreateSave();
@@ -163,6 +200,11 @@ public class SaveManager : MonoBehaviour
 
     public void InitScene()
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (saveData == null)
         {
             CreateSave();
@@ -219,6 +261,11 @@ public class SaveManager : MonoBehaviour
 
     public void InitGameController()
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (saveData == null)
         {
             CreateSave();
@@ -244,6 +291,11 @@ public class SaveManager : MonoBehaviour
 
     public int GetCurrentScene()
     {
+        if (!active)
+        {
+            return -1;
+        }
+
         if (saveData == null)
         {
             CreateSave();
@@ -254,6 +306,11 @@ public class SaveManager : MonoBehaviour
 
     public void SetCurrentScene(int currentSceneIndex)
     {
+        if (!active)
+        {
+            return;
+        }
+
         if (saveData == null)
         {
             CreateSave();

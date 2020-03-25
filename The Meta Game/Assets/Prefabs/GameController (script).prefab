@@ -1553,18 +1553,22 @@ MonoBehaviour:
     sprite: {fileID: 3414657202290878509, guid: c77fe7d12667a804db79230e4d806ebc,
       type: 3}
   - name: RPG
-    unlocked: 1
+    unlocked: 0
     sprite: {fileID: 5223461305758084474, guid: c77fe7d12667a804db79230e4d806ebc,
       type: 3}
   - name: FPS
-    unlocked: 1
+    unlocked: 0
     sprite: {fileID: -5109177819046786902, guid: c77fe7d12667a804db79230e4d806ebc,
       type: 3}
   - name: Fighting
-    unlocked: 1
+    unlocked: 0
     sprite: {fileID: 2122501309460574069, guid: c77fe7d12667a804db79230e4d806ebc,
       type: 3}
-  resetUnlocks: 0
+  - name: Rhythm
+    unlocked: 0
+    sprite: {fileID: 1563787634760702847, guid: c77fe7d12667a804db79230e4d806ebc,
+      type: 3}
+  resetUnlocks: 1
   spellList:
   - spell: {fileID: 11400000, guid: bc21eb39d6540614f827ae91e7ddd107, type: 2}
     unlocked: 1
@@ -1587,11 +1591,12 @@ MonoBehaviour:
   floorDamage: 8
   errDispTime: 2
   errFadeTime: 2
-  ignoreHints: 1
   onMenu: 0
   codeText: {fileID: 1814747856}
   unlockPanel: {fileID: 4306903383836815127}
   unlockText: {fileID: 6044181046465288886}
+  staffPrefab: {fileID: 8817258574654481329, guid: a66b1856d5fc5d747bbe32ae23459e42,
+    type: 3}
   keyword: {r: 0.26666668, g: 0.6117647, b: 0.8392157, a: 1}
   type: {r: 0.30588236, g: 0.7882353, b: 0.6901961, a: 1}
   comment: {r: 0.34117648, g: 0.6509804, b: 0.2901961, a: 1}

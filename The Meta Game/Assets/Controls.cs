@@ -129,6 +129,46 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""UpNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e49e0c6-5dae-4fb9-bd65-d71bb0f42558"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""93961454-9f62-41ec-955a-c47b7da60333"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RightNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d5cc52a-2b83-4f92-baed-164af98e1978"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DownNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""55fd097c-3089-4d6f-82f6-c618324de557"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""StartRhythm"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd9d2a97-2bb2-4a0d-87ac-af9c9dbdd89c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -736,6 +776,215 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""DPad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4635758-d6b7-4714-b91b-8627fe2632f9"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2de89ea-fc14-423f-9143-5b4bd9ecdbbf"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9c3a2c1-1308-431b-837a-9741eb03a9c8"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c631f8a1-d89a-4146-859f-f7b3ce102970"",
+                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42117292-697e-41eb-871e-faba5743f499"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b40fc76e-5eba-485e-9ae9-0d6c7db33dd1"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e4a3c2c-3d82-4df9-8477-526287fa69dd"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c788efc-dc23-4d8c-971d-9762a79b672b"",
+                    ""path"": ""<DualShockGamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cced21f8-50a5-407d-9444-82818ddb622c"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""785a7be8-b9b6-4105-8eb1-e40a99289f20"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f524e256-74b8-4357-976f-e49debdb6d05"",
+                    ""path"": ""<XInputController>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ca18a7b-a775-4ec0-b9da-ee811f7fe16c"",
+                    ""path"": ""<DualShockGamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea0dc155-dccd-4d6c-8626-645c9cd225fa"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""837e1f29-f104-4137-ae2f-4be2c6680e20"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""799717f7-7f4a-4589-b10b-70a8c8643a8e"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2dfa5d7-d7db-4d50-af57-bd3052488888"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa529ca9-6feb-42a7-b259-ff8881b45805"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartRhythm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b2363fa-8ac6-420d-b1ae-a4e1a003ecfd"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartRhythm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ea97884-e72a-4fe3-bf97-7a9e8cefad4a"",
+                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartRhythm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -878,6 +1127,11 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_SwitchMode = m_Player.FindAction("SwitchMode", throwIfNotFound: true);
         m_Player_LStick = m_Player.FindAction("LStick", throwIfNotFound: true);
         m_Player_DPad = m_Player.FindAction("DPad", throwIfNotFound: true);
+        m_Player_UpNote = m_Player.FindAction("UpNote", throwIfNotFound: true);
+        m_Player_LeftNote = m_Player.FindAction("LeftNote", throwIfNotFound: true);
+        m_Player_RightNote = m_Player.FindAction("RightNote", throwIfNotFound: true);
+        m_Player_DownNote = m_Player.FindAction("DownNote", throwIfNotFound: true);
+        m_Player_StartRhythm = m_Player.FindAction("StartRhythm", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -946,6 +1200,11 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_SwitchMode;
     private readonly InputAction m_Player_LStick;
     private readonly InputAction m_Player_DPad;
+    private readonly InputAction m_Player_UpNote;
+    private readonly InputAction m_Player_LeftNote;
+    private readonly InputAction m_Player_RightNote;
+    private readonly InputAction m_Player_DownNote;
+    private readonly InputAction m_Player_StartRhythm;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -964,6 +1223,11 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @SwitchMode => m_Wrapper.m_Player_SwitchMode;
         public InputAction @LStick => m_Wrapper.m_Player_LStick;
         public InputAction @DPad => m_Wrapper.m_Player_DPad;
+        public InputAction @UpNote => m_Wrapper.m_Player_UpNote;
+        public InputAction @LeftNote => m_Wrapper.m_Player_LeftNote;
+        public InputAction @RightNote => m_Wrapper.m_Player_RightNote;
+        public InputAction @DownNote => m_Wrapper.m_Player_DownNote;
+        public InputAction @StartRhythm => m_Wrapper.m_Player_StartRhythm;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1015,6 +1279,21 @@ public class @Controls : IInputActionCollection, IDisposable
                 @DPad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPad;
                 @DPad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPad;
                 @DPad.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPad;
+                @UpNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpNote;
+                @UpNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpNote;
+                @UpNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpNote;
+                @LeftNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftNote;
+                @LeftNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftNote;
+                @LeftNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftNote;
+                @RightNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightNote;
+                @RightNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightNote;
+                @RightNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightNote;
+                @DownNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDownNote;
+                @DownNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDownNote;
+                @DownNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDownNote;
+                @StartRhythm.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartRhythm;
+                @StartRhythm.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartRhythm;
+                @StartRhythm.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartRhythm;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1061,6 +1340,21 @@ public class @Controls : IInputActionCollection, IDisposable
                 @DPad.started += instance.OnDPad;
                 @DPad.performed += instance.OnDPad;
                 @DPad.canceled += instance.OnDPad;
+                @UpNote.started += instance.OnUpNote;
+                @UpNote.performed += instance.OnUpNote;
+                @UpNote.canceled += instance.OnUpNote;
+                @LeftNote.started += instance.OnLeftNote;
+                @LeftNote.performed += instance.OnLeftNote;
+                @LeftNote.canceled += instance.OnLeftNote;
+                @RightNote.started += instance.OnRightNote;
+                @RightNote.performed += instance.OnRightNote;
+                @RightNote.canceled += instance.OnRightNote;
+                @DownNote.started += instance.OnDownNote;
+                @DownNote.performed += instance.OnDownNote;
+                @DownNote.canceled += instance.OnDownNote;
+                @StartRhythm.started += instance.OnStartRhythm;
+                @StartRhythm.performed += instance.OnStartRhythm;
+                @StartRhythm.canceled += instance.OnStartRhythm;
             }
         }
     }
@@ -1130,6 +1424,11 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnSwitchMode(InputAction.CallbackContext context);
         void OnLStick(InputAction.CallbackContext context);
         void OnDPad(InputAction.CallbackContext context);
+        void OnUpNote(InputAction.CallbackContext context);
+        void OnLeftNote(InputAction.CallbackContext context);
+        void OnRightNote(InputAction.CallbackContext context);
+        void OnDownNote(InputAction.CallbackContext context);
+        void OnStartRhythm(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
