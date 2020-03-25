@@ -1,7 +1,46 @@
 fileFormatVersion: 2
 guid: 85cdbf577af56854a9d9a15d298e2dd4
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -6810060001049576930
+    second: StaffGlow_0
+  - first:
+      213: -7883629466285386153
+    second: StaffGlow_1
+  - first:
+      213: -4667735818273392844
+    second: StaffGlow_2
+  - first:
+      213: 7228097285782852040
+    second: StaffGlow_3
+  - first:
+      213: 5418953433609251051
+    second: StaffGlow_4
+  - first:
+      213: 7520597574056418865
+    second: StaffGlow_5
+  - first:
+      213: -4574252872985109045
+    second: StaffGlow_6
+  - first:
+      213: -990492532982019765
+    second: StaffGlow_7
+  - first:
+      213: -168965875937928482
+    second: StaffGlow_8
+  - first:
+      213: 4439165833303198836
+    second: StaffGlow_9
+  - first:
+      213: 4204840574013165200
+    second: StaffGlow_10
+  - first:
+      213: -2640808766722222006
+    second: StaffGlow_11
+  - first:
+      213: -3409892451741976802
+    second: StaffGlow_12
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +70,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +79,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,9 +109,294 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: StaffGlow_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1152
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c76eb8c8f1e91a04d9b9ec1b7ee7cb67
+      internalID: -6810060001049576930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_1
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 1152
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54f4aa1e76ef24d4da04a74e67375aa3
+      internalID: -7883629466285386153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 001d9d9230034784b8e7c5a654b3b05d
+      internalID: -4667735818273392844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_3
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 960
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3cc0cc788bf8e44a854ee2c69e0f09c
+      internalID: 7228097285782852040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7e7cd3ba4c37b446a3ae5b458d8db79
+      internalID: 5418953433609251051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_5
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 768
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cd293d158d2e4844bfd0c8b3da6b55b
+      internalID: 7520597574056418865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 033a3ecb1ebcfba4baf88ac6379f76db
+      internalID: -4574252872985109045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_7
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 576
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcd824640669ae643bcab5d319a2dba8
+      internalID: -990492532982019765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36063ef57976c8c4b98a220fb601fb89
+      internalID: -168965875937928482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_9
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 384
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41eaf4e4a5c6f3a45a87246a0808f542
+      internalID: 4439165833303198836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec7678b79a60d0843b7e464f1b3523fb
+      internalID: 4204840574013165200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_11
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 192
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d99f5b501bd9fbf4aa4efbf1f1c837bd
+      internalID: -2640808766722222006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StaffGlow_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 681
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5526a6324516b34aaee201eeff98fa3
+      internalID: -3409892451741976802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
