@@ -5,7 +5,7 @@ using UnityEngine;
 public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager singleton;
-    private Cutscene currentScene;
+    public Cutscene currentScene;
 
     private void Start()
     {
@@ -22,7 +22,7 @@ public class CutsceneManager : MonoBehaviour
 
     public void StartScene(Cutscene cutscene)
     {
-        currentScene = cutscene;
+        currentScene = Instantiate(cutscene);
         StartCoroutine(RunCutscene());
     }
 
@@ -172,6 +172,7 @@ public class CutsceneManager : MonoBehaviour
 
         GameController.singleton.SetPaused(false);
 
+        yield return new WaitForEndOfFrame();
         currentScene = null;
         yield return null;
     }
