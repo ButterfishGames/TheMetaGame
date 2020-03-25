@@ -107,17 +107,33 @@ public class PFDreadKnight : EnemyBehaviour
             return;
         }
 
+        if (!Camera.main.GetComponent<CameraScroll>().enabled)
+        {
+            if (currHP > 0)
+            {
+                inCutscene = false;
+            }
+            else
+            {
+                inCutscene = true;
+            }
+        }
+
         if (inCutscene)
         {
-
+            animator.SetBool("cutscene", true);
         }
         if (!inCutscene)
         {
+            animator.SetBool("cutscene", false);
             RaycastHit2D hit;
+            RaycastHit2D hitWall;
             Vector2 dVec = new Vector2(dir * 0.5f, -1).normalized;
             LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
             hit = Physics2D.Raycast(transform.position, dVec, 2, mask);
+            hitWall = Physics2D.Raycast(transform.position, -Vector3.right, 0.5f, 1 << LayerMask.NameToLayer("Ground"));
+            Debug.DrawRay(gameObject.transform.position, -Vector3.right, Color.green);
 
             if (hit.collider == null)
             {
@@ -146,10 +162,13 @@ public class PFDreadKnight : EnemyBehaviour
                     hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
                     if (hit.collider != null && hit.collider.CompareTag("Player"))
                     {
-                        animator.SetBool("charging", true);
+                        animator.SetBool("chargePrep", true);
                         mult = chargeMult;
                     }
-                    rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
+                    if (!animator.GetBool("chargePrep"))
+                    {
+                        rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
+                    }
                 }
             }
 
@@ -173,8 +192,6 @@ public class PFDreadKnight : EnemyBehaviour
             {
                 animator.SetBool("moving", false);
             }
-
-            GetComponent<FGEnemy>().dir = dir;
         }
     }
 
@@ -240,7 +257,7 @@ public class PFDreadKnight : EnemyBehaviour
         StartCoroutine(DamageFlash());
         if (currHP <= 0)
         {
-            Destroy(gameObject);
+            Debug.Log("Defeated Dread Knight");
         }
     }
 
