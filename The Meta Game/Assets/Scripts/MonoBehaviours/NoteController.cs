@@ -8,6 +8,21 @@ public class NoteController : MonoBehaviour
 
     private int dir;
 
+    private RhythmController rCon;
+
+    private void Start()
+    {
+        rCon = FindObjectOfType<RhythmController>();
+    }
+
+    private void LateUpdate()
+    {
+        if (rCon.transform.position.x > transform.position.x + 1)
+        {
+            rCon.StartCoroutine(rCon.Fail());
+        }
+    }
+
     public void SetDir(int d)
     {
         if (d < 0 || d > 3)

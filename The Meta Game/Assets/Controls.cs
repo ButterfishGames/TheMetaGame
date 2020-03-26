@@ -169,6 +169,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""078bd4f6-322b-4e99-8e39-47657f3fd971"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -985,6 +993,39 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""StartRhythm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25be4c1d-ec5d-4a04-b3ea-b70d67d58262"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5952475e-3d96-4047-a8ae-66685322cf3f"",
+                    ""path"": ""<XInputController>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0da8a48c-7277-4dd3-b9b5-59c788738850"",
+                    ""path"": ""<DualShockGamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1132,6 +1173,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_RightNote = m_Player.FindAction("RightNote", throwIfNotFound: true);
         m_Player_DownNote = m_Player.FindAction("DownNote", throwIfNotFound: true);
         m_Player_StartRhythm = m_Player.FindAction("StartRhythm", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -1205,6 +1247,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RightNote;
     private readonly InputAction m_Player_DownNote;
     private readonly InputAction m_Player_StartRhythm;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -1228,6 +1271,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @RightNote => m_Wrapper.m_Player_RightNote;
         public InputAction @DownNote => m_Wrapper.m_Player_DownNote;
         public InputAction @StartRhythm => m_Wrapper.m_Player_StartRhythm;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1294,6 +1338,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @StartRhythm.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartRhythm;
                 @StartRhythm.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartRhythm;
                 @StartRhythm.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartRhythm;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1355,6 +1402,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @StartRhythm.started += instance.OnStartRhythm;
                 @StartRhythm.performed += instance.OnStartRhythm;
                 @StartRhythm.canceled += instance.OnStartRhythm;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -1429,6 +1479,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnRightNote(InputAction.CallbackContext context);
         void OnDownNote(InputAction.CallbackContext context);
         void OnStartRhythm(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

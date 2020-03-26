@@ -31,7 +31,7 @@ public class StaffController : MonoBehaviour
 
     public GameObject notePrefab;
 
-    private AudioSource source;
+    public AudioSource source;
 
     private float yScaleFactor;
 
@@ -78,21 +78,20 @@ public class StaffController : MonoBehaviour
     public bool ProcInput(int d, int note)
     {
         currentPlay.Add(d);
+        RhythmController temp = FindObjectOfType<RhythmController>();
 
         int ind = currentPlay.ToArray().Length - 1;
         if (songs[0].notes.Length > ind)
         {
             if (currentPlay[ind] != songs[0].notes[ind].note || ind != note)
             {
-                // FAIL
+                temp.StartCoroutine(temp.Fail());
                 return false;
             }
             else
             {
-                Debug.Log("right: " + d);
                 if (currentPlay.ToArray().Length == songs[0].notes.Length)
                 {
-                    RhythmController temp = FindObjectOfType<RhythmController>();
                     temp.StartCoroutine(temp.Win());
                 }
                 return true;
@@ -100,7 +99,7 @@ public class StaffController : MonoBehaviour
         }
         else
         {
-            // FAIL
+            temp.StartCoroutine(temp.Fail());
             return false;
         }
     }

@@ -120,7 +120,7 @@ public class PFEnemy : EnemyBehaviour
 
         RaycastHit2D hit;
         Vector2 dVec = new Vector2(dir *0.5f, -1).normalized;
-        LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
+        LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("Checkpoint")));
 
         hit = Physics2D.Raycast(transform.position, dVec, 2, mask);
 
@@ -148,7 +148,7 @@ public class PFEnemy : EnemyBehaviour
             {
                 Vector3 origin = transform.position;
                 origin.y -= 0.3f;
-                hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
+                hit = Physics2D.Raycast(origin, dVec, viewDist, ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Checkpoint"))));
                 if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
                     animator.SetBool("charging", true);

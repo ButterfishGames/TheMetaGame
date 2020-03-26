@@ -13,9 +13,13 @@ public class RhythmController : Mover
 
     private float baseY;
 
-    private Vector3 startPos;
+    public Vector3 startPos;
 
     private float xDiff = 20;
+
+    private bool dying = false;
+
+    public bool inGround = false;
 
     protected override void OnEnable()
     {
@@ -23,15 +27,17 @@ public class RhythmController : Mover
         baseY = transform.position.y - 0.05f;
         startPos = transform.position;
 
+        inGround = false;
+
         controls = new Controls();
 
-        controls.Player.StartRhythm.performed += StartRhythmHandle;
+        //controls.Player.StartRhythm.performed += StartRhythmHandle;
         controls.Player.UpNote.performed += UpNoteHandle;
         controls.Player.LeftNote.performed += LeftNoteHandle;
         controls.Player.RightNote.performed += RightNoteHandle;
         controls.Player.DownNote.performed += DownNoteHandle;
 
-        controls.Player.StartRhythm.Enable();
+        //controls.Player.StartRhythm.Enable();
         controls.Player.UpNote.Enable();
         controls.Player.LeftNote.Enable();
         controls.Player.RightNote.Enable();
@@ -40,27 +46,27 @@ public class RhythmController : Mover
 
     protected override void OnDisable()
     {
-        controls.Player.StartRhythm.performed -= StartRhythmHandle;
+        //controls.Player.StartRhythm.performed -= StartRhythmHandle;
         controls.Player.UpNote.performed -= UpNoteHandle;
         controls.Player.LeftNote.performed -= LeftNoteHandle;
         controls.Player.RightNote.performed -= RightNoteHandle;
         controls.Player.DownNote.performed -= DownNoteHandle;
 
-        controls.Player.StartRhythm.Disable();
+        //controls.Player.StartRhythm.Disable();
         controls.Player.UpNote.Disable();
         controls.Player.LeftNote.Disable();
         controls.Player.RightNote.Disable();
         controls.Player.DownNote.Disable();
     }
 
-    private void StartRhythmHandle(InputAction.CallbackContext context)
+    /*private void StartRhythmHandle(InputAction.CallbackContext context)
     {
         StartCoroutine(StartRhythm());
-    }
+    }*/
 
     private void UpNoteHandle(InputAction.CallbackContext context)
     {
-        if (!started)
+        if (!started || dying || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -70,7 +76,7 @@ public class RhythmController : Mover
 
     private void LeftNoteHandle(InputAction.CallbackContext context)
     {
-        if (!started)
+        if (!started || dying || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -80,7 +86,7 @@ public class RhythmController : Mover
 
     private void RightNoteHandle(InputAction.CallbackContext context)
     {
-        if (!started)
+        if (!started || dying || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -90,7 +96,7 @@ public class RhythmController : Mover
 
     private void DownNoteHandle(InputAction.CallbackContext context)
     {
-        if (!started)
+        if (!started || dying || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -100,11 +106,12 @@ public class RhythmController : Mover
 
     protected override void Move(float h, float v)
     {
-        // Nothing to see here
+        throw new System.NotImplementedException();
     }
 
-    private IEnumerator StartRhythm()
+    public IEnumerator StartRhythm()
     {
+        yield return new WaitUntil(() => FindObjectOfType<StaffController>() != null);
         FindObjectOfType<StaffController>().StartSong();
         yield return new WaitForSeconds(startWait);
         rb.velocity = new Vector2(speed, 0);
@@ -140,14 +147,14 @@ public class RhythmController : Mover
                 }
                 else
                 {
-                    Debug.Log("wrong: " + nTemp.GetDir());
+                    StartCoroutine(Fail());
                 }
             }
         }
 
         if (!hit)
         {
-            Debug.Log("wrong");
+            StartCoroutine(Fail());
         }
     }
 
@@ -180,14 +187,14 @@ public class RhythmController : Mover
                 }
                 else
                 {
-                    Debug.Log("wrong: " + nTemp.GetDir());
+                    StartCoroutine(Fail());
                 }
             }
         }
 
         if (!hit)
         {
-            Debug.Log("wrong");
+            StartCoroutine(Fail());
         }
     }
 
@@ -220,14 +227,14 @@ public class RhythmController : Mover
                 }
                 else
                 {
-                    Debug.Log("wrong: " + nTemp.GetDir());
+                    StartCoroutine(Fail());
                 }
             }
         }
 
         if (!hit)
         {
-            Debug.Log("wrong");
+            StartCoroutine(Fail());
         }
     }
 
@@ -260,14 +267,14 @@ public class RhythmController : Mover
                 }
                 else
                 {
-                    Debug.Log("wrong: " + nTemp.GetDir());
+                    StartCoroutine(Fail());
                 }
             }
         }
 
         if (!hit)
         {
-            Debug.Log("wrong");
+            StartCoroutine(Fail());
         }
     }
 
@@ -276,5 +283,44 @@ public class RhythmController : Mover
         yield return new WaitUntil(() => transform.position.x >= startPos.x + xDiff);
         transform.position = startPos + new Vector3(xDiff, 0, 0);
         rb.velocity = Vector2.zero;
+    }
+
+    public IEnumerator Fail()
+    {
+        if (!dying)
+        {
+            dying = true;
+            rb.velocity = Vector2.zero;
+            FindObjectOfType<StaffController>().source.Stop();
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(1);
+            GameController.singleton.Die();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!enabled)
+        {
+            return;
+        }
+
+        if (collision.CompareTag("Ground"))
+        {
+            inGround = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!enabled)
+        {
+            return;
+        }
+
+        if (collision.CompareTag("Ground"))
+        {
+            inGround = false;
+        }
     }
 }
