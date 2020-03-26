@@ -455,6 +455,7 @@ public class GameController : MonoBehaviour
         float aspect = (float)Screen.width / (float)Screen.height;
         RPGController rpgCon;
         GameObject staff;
+        AudioSource source;
 
         switch (equipped)
         {
@@ -562,7 +563,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region rpg
@@ -668,7 +673,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region fps
@@ -752,7 +761,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region fighting
@@ -872,7 +885,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region rhythm
