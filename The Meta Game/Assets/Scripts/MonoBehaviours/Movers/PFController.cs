@@ -170,6 +170,11 @@ public class PFController : Mover
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         if (collision.CompareTag("Ground"))
         {
             animator.SetBool("jumping", false);
@@ -181,21 +186,6 @@ public class PFController : Mover
             StartCoroutine(Die(false));
         }
     }
-
-    /*private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (GetComponent<FGController>().enabled == false) {
-            if (!grounded && collision.CompareTag("Ground"))
-            {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.3f, blockingLayer);
-
-                if (hit.collider != null && hit.collider.CompareTag("Ground"))
-                {
-                    grounded = true;
-                }
-            }
-        }
-    }*/
 
     public IEnumerator Die(bool hit)
     {
