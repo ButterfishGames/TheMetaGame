@@ -121,6 +121,8 @@ public class RhythmController : Mover
     private IEnumerator UpNote()
     {
         transform.position = new Vector3(transform.position.x, baseY + StaffController.NOTE_HEIGHTS[0] * 0.25f);
+        animator.SetInteger("dance", 0);
+        animator.SetBool("dancing", true);
 
         yield return new WaitForSeconds(0.033333f);
 
@@ -161,6 +163,8 @@ public class RhythmController : Mover
     private IEnumerator LeftNote()
     {
         transform.position = new Vector3(transform.position.x, baseY + StaffController.NOTE_HEIGHTS[1] * 0.25f);
+        animator.SetInteger("dance", 1);
+        animator.SetBool("dancing", true);
 
         yield return new WaitForSeconds(0.033333f);
 
@@ -201,6 +205,8 @@ public class RhythmController : Mover
     private IEnumerator RightNote()
     {
         transform.position = new Vector3(transform.position.x, baseY + StaffController.NOTE_HEIGHTS[2] * 0.25f);
+        animator.SetInteger("dance", 2);
+        animator.SetBool("dancing", true);
 
         yield return new WaitForSeconds(0.033333f);
 
@@ -241,6 +247,8 @@ public class RhythmController : Mover
     private IEnumerator DownNote()
     {
         transform.position = new Vector3(transform.position.x, baseY + StaffController.NOTE_HEIGHTS[3] * 0.25f);
+        animator.SetInteger("dance", 3);
+        animator.SetBool("dancing", true);
 
         yield return new WaitForSeconds(0.033333f);
 
@@ -280,7 +288,9 @@ public class RhythmController : Mover
 
     public IEnumerator Win()
     {
+        started = false;
         yield return new WaitUntil(() => transform.position.x >= startPos.x + xDiff);
+        animator.SetBool("dancing", false);
         transform.position = startPos + new Vector3(xDiff, 0, 0);
         rb.velocity = Vector2.zero;
     }
