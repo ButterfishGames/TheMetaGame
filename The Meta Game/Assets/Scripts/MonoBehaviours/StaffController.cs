@@ -31,20 +31,25 @@ public class StaffController : MonoBehaviour
 
     public GameObject notePrefab;
 
-    private AudioSource source;
+    public AudioSource source;
 
     private float yScaleFactor;
 
     private float xScaleFactor;
 
+    private List<int> currentPlay;
+
     // Start is called before the first frame update
     void Start()
     {
+        currentPlay = new List<int>();
+
         source = GetComponent<AudioSource>();
         yScaleFactor = 1.0f / transform.localScale.y;
         xScaleFactor = 1.0f / transform.localScale.x;
 
         Vector3 spawnPos = new Vector3(startX, 0, 0);
+        int i = 0;
         foreach (Note note in songs[0].notes)
         {
             spawnPos.y = NOTE_HEIGHTS[note.note];
@@ -56,8 +61,10 @@ public class StaffController : MonoBehaviour
             scale.y *= yScaleFactor;
             temp.transform.localScale = scale;
             temp.GetComponent<NoteController>().SetDir(note.note);
+            temp.name += " " + i;
 
             spawnPos.x += note.xDiff;
+            i++;
         }
 
         source.clip = songs[0].song;
@@ -66,5 +73,34 @@ public class StaffController : MonoBehaviour
     public void StartSong()
     {
         source.Play();
+    }
+
+    public bool ProcInput(int d, int note)
+    {
+        currentPlay.Add(d);
+        RhythmController temp = FindObjectOfType<RhythmController>();
+
+        int ind = currentPlay.ToArray().Length - 1;
+        if (songs[0].notes.Length > ind)
+        {
+            if (currentPlay[ind] != songs[0].notes[ind].note || ind != note)
+            {
+                temp.StartCoroutine(temp.Fail());
+                return false;
+            }
+            else
+            {
+                if (currentPlay.ToArray().Length == songs[0].notes.Length)
+                {
+                    temp.StartCoroutine(temp.Win());
+                }
+                return true;
+            }
+        }
+        else
+        {
+            temp.StartCoroutine(temp.Fail());
+            return false;
+        }
     }
 }

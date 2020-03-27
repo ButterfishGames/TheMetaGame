@@ -217,9 +217,9 @@ public class RPGController : Mover
                         case Direction.right:
                             if (hor > 0)
                             {
-                                target = end;
+                                target = lcTarget = end;
                                 target.x += 1;
-                                lcTarget = target * 1.49f;
+                                lcTarget.x += 1.49f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
@@ -235,9 +235,9 @@ public class RPGController : Mover
                         case Direction.left:
                             if (hor < 0)
                             {
-                                target = end;
+                                target = lcTarget = end;
                                 target.x -= 1f;
-                                lcTarget = target * 1.49f;
+                                lcTarget.x -= 1.49f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
@@ -253,9 +253,9 @@ public class RPGController : Mover
                         case Direction.up:
                             if (ver > 0)
                             {
-                                target = end;
+                                target = lcTarget = end;
                                 target.y += 1f;
-                                lcTarget = target * 1.49f;
+                                lcTarget.y += 1.49f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);
@@ -271,9 +271,9 @@ public class RPGController : Mover
                         case Direction.down:
                             if (ver < 0)
                             {
-                                target = end;
+                                target = lcTarget = end;
                                 target.y -= 1f;
-                                lcTarget = target * 1.49f;
+                                lcTarget.y -= 1.49f;
 
                                 RaycastHit2D hit;
                                 hit = Physics2D.Linecast(transform.position, lcTarget, blockingLayer + boundLayer + enemyLayer);

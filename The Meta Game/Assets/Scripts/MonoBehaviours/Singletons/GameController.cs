@@ -97,6 +97,8 @@ public class GameController : MonoBehaviour
 
     public GameObject unlockPanel;
 
+    public GameObject pauseMenu;
+
     public TextMeshProUGUI unlockText;
 
     public GameObject staffPrefab;
@@ -160,6 +162,8 @@ public class GameController : MonoBehaviour
 
     private float camSize;
 
+    private bool unpausing;
+
     private Controls controls;
 
     private void OnEnable()
@@ -170,11 +174,13 @@ public class GameController : MonoBehaviour
         controls.UI.Cancel.performed += CancelHandle;
         controls.UI.Escape.performed += EscapeHandle;
         controls.Player.SwitchMode.started += SwitchHandle;
+        controls.Player.Pause.started += PauseHandle;
 
         controls.Player.Menu.Enable();
         controls.UI.Cancel.Enable();
         controls.UI.Escape.Enable();
         controls.Player.SwitchMode.Enable();
+        controls.Player.Pause.Enable();
     }
 
     private void OnDisable()
@@ -183,11 +189,13 @@ public class GameController : MonoBehaviour
         controls.UI.Cancel.performed -= CancelHandle;
         controls.UI.Escape.performed -= EscapeHandle;
         controls.Player.SwitchMode.started -= SwitchHandle;
+        controls.Player.Pause.started -= PauseHandle;
 
         controls.Player.Menu.Disable();
         controls.UI.Cancel.Disable();
         controls.UI.Escape.Disable();
         controls.Player.SwitchMode.Disable();
+        controls.Player.Pause.Disable();
     }
 
     private void SwitchHandle (InputAction.CallbackContext context)
@@ -251,6 +259,18 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void PauseHandle (InputAction.CallbackContext context)
+    {
+        if (pauseMenu.activeInHierarchy)
+        {
+            Unpause();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
     private void MenuHandle (InputAction.CallbackContext context)
     {
         if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
@@ -275,10 +295,6 @@ public class GameController : MonoBehaviour
                 {
                     ReturnToMenu();
                 }
-            }
-            else
-            {
-                ExitGame();
             }
         }
     }
@@ -454,7 +470,9 @@ public class GameController : MonoBehaviour
 
         float aspect = (float)Screen.width / (float)Screen.height;
         RPGController rpgCon;
+        RhythmController rCon;
         GameObject staff;
+        AudioSource source;
 
         switch (equipped)
         {
@@ -516,6 +534,17 @@ public class GameController : MonoBehaviour
                     rpgCon.mvmtCoroutine = null;
                 }
 
+                rCon = player.GetComponent<RhythmController>();
+                if (rCon.enabled)
+                {
+                    player.transform.position = rCon.inGround ? rCon.startPos : player.transform.position;
+                    Camera.main.transform.position = new Vector3(
+                        player.transform.position.x,
+                        Camera.main.transform.position.y,
+                        Camera.main.transform.position.z
+                        );
+                }
+
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
@@ -562,7 +591,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region rpg
@@ -623,6 +656,17 @@ public class GameController : MonoBehaviour
                 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
 
+                rCon = player.GetComponent<RhythmController>();
+                if (rCon.enabled)
+                {
+                    player.transform.position = rCon.inGround ? rCon.startPos : player.transform.position;
+                    Camera.main.transform.position = new Vector3(
+                        player.transform.position.x,
+                        Camera.main.transform.position.y,
+                        Camera.main.transform.position.z
+                        );
+                }
+
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
@@ -668,7 +712,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region fps
@@ -718,6 +766,25 @@ public class GameController : MonoBehaviour
                 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
 
+                rpgCon = player.GetComponent<RPGController>();
+                if (rpgCon.mvmtCoroutine != null)
+                {
+                    rpgCon.StopCoroutine(rpgCon.mvmtCoroutine);
+                    rpgCon.SetMoving(false);
+                    rpgCon.mvmtCoroutine = null;
+                }
+
+                rCon = player.GetComponent<RhythmController>();
+                if (rCon.enabled)
+                {
+                    player.transform.position = rCon.inGround ? rCon.startPos : player.transform.position;
+                    Camera.main.transform.position = new Vector3(
+                        player.transform.position.x,
+                        Camera.main.transform.position.y,
+                        Camera.main.transform.position.z
+                        );
+                }
+
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
                 {
@@ -752,7 +819,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region fighting
@@ -832,6 +903,17 @@ public class GameController : MonoBehaviour
                     rpgCon.mvmtCoroutine = null;
                 }
 
+                rCon = player.GetComponent<RhythmController>();
+                if (rCon.enabled)
+                {
+                    player.transform.position = rCon.inGround ? rCon.startPos : player.transform.position;
+                    Camera.main.transform.position = new Vector3(
+                        player.transform.position.x,
+                        Camera.main.transform.position.y,
+                        Camera.main.transform.position.z
+                        );
+                }
+
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
@@ -872,7 +954,11 @@ public class GameController : MonoBehaviour
                     Destroy(staff);
                 }
 
-                GameObject.Find("Song").GetComponent<AudioSource>().Play();
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
             #region rhythm
@@ -957,6 +1043,9 @@ public class GameController : MonoBehaviour
                 }
 
                 GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+
+                rCon = player.GetComponent<RhythmController>();
+                rCon.StartCoroutine(rCon.StartRhythm());
                 break;
             #endregion
 
@@ -1458,6 +1547,60 @@ public class GameController : MonoBehaviour
         }
 
         numUnlocked = 1;
+    }
+
+    private void Pause()
+    {
+        if (equipped == GameMode.rhythm)
+        {
+            FindObjectOfType<StaffController>().source.Pause();
+        }
+        paused = true;
+        Time.timeScale = 0;
+        pauseMenu.GetComponentInChildren<TextMeshProUGUI>().text = "Coming Soon:\nPause Menu\n\nPress pause to resume";
+        pauseMenu.SetActive(true);
+    }
+
+    private void Unpause()
+    {
+        if (unpausing)
+        {
+            return;
+        }
+
+        if (equipped == GameMode.rhythm)
+        {
+            StartCoroutine(RhythmUnpause());
+        }
+        else
+        {
+            paused = false;
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+        }
+    }
+
+    private IEnumerator RhythmUnpause()
+    {
+        unpausing = true;
+        Color temp = pauseMenu.GetComponent<Image>().color;
+        temp.a = 0.5f;
+        pauseMenu.GetComponent<Image>().color = temp;
+        TextMeshProUGUI text = pauseMenu.GetComponentInChildren<TextMeshProUGUI>();
+        text.text = "3";
+        yield return new WaitForSecondsRealtime(1);
+        text.text = "2";
+        yield return new WaitForSecondsRealtime(1);
+        text.text = "1";
+        yield return new WaitForSecondsRealtime(1);
+
+        FindObjectOfType<StaffController>().source.UnPause();
+        Time.timeScale = 1;
+        paused = false;
+        pauseMenu.SetActive(false);
+        temp.a = 1;
+        pauseMenu.GetComponent<Image>().color = temp;
+        unpausing = false;
     }
 
     private void UpdateSwitchPanel()

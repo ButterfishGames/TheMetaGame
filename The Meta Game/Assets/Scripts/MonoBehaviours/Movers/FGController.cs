@@ -19,13 +19,8 @@ public class FGController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
-    [Tooltip("Players max health")]
-    public int maxHealth;
-
     [Tooltip("Can you jump with up on the stick?")]
     public bool canStickJump;
-
-    private int health;
 
     /// <summary>
     /// Tracks whether the player is currently on the ground
@@ -287,8 +282,6 @@ public class FGController : Mover
 
     private void Start()
     {
-        health = maxHealth;
-
         inputs = new InputDirection[3];
         inputsHeld = new bool[5];
         heldAttackButton = new bool[3];
@@ -310,7 +303,7 @@ public class FGController : Mover
 
     protected override void Update()
     {
-        if (health <= 0)
+        if (GameController.singleton.GetHP() <= 0)
         {
             if (!dead)
             {
@@ -521,7 +514,7 @@ public class FGController : Mover
             if (hitThisFrame == false) {
                 hitThisFrame = true;
                 hitstun = collision.GetComponent<FightingHitbox>().hitstun;
-                health -= collision.GetComponent<FightingHitbox>().damage;
+                GameController.singleton.Damage(collision.GetComponent<FightingHitbox>().damage);
                 if(collision.name == "SpecialMove(Clone)" && collision.CompareTag("EnemyHitbox"))
                 {
                     Debug.Log("Hit by hado");
