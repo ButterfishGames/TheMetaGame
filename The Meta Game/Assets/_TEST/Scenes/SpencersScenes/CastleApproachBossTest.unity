@@ -130,7 +130,7 @@ PrefabInstance:
     - target: {fileID: 3443210852198275158, guid: c829c17c640c7f442a476ec14045865c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 199.46
+      value: 222.23
       objectReference: {fileID: 0}
     - target: {fileID: 3443210852198275158, guid: c829c17c640c7f442a476ec14045865c,
         type: 3}
@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 58355937}
   - component: {fileID: 58355939}
   - component: {fileID: 58355938}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: EnemyHitbox
   m_TagString: EnemyHitbox
   m_Icon: {fileID: 0}
@@ -756,7 +756,7 @@ PrefabInstance:
     - target: {fileID: 3548829814031940256, guid: 4e4411ca4356a5a4fb00693bbb1d6e97,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3548829814031940256, guid: 4e4411ca4356a5a4fb00693bbb1d6e97,
         type: 3}
@@ -1830,7 +1830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 302165970}
   - component: {fileID: 302165971}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: ShotCol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1863,7 +1863,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.96829224, y: 1.5639708, z: 0.01}
-  m_Center: {x: 0.055221558, y: 0.31473625, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &338184799
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,7 +2849,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.46, y: 0.31690913}
+  m_Offset: {x: -0.46, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3319,7 +3319,7 @@ PrefabInstance:
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 189.36
+      value: 212.12999
       objectReference: {fileID: 0}
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
@@ -3413,7 +3413,6 @@ Transform:
   - {fileID: 1275260140}
   - {fileID: 1812669032}
   - {fileID: 830782384}
-  - {fileID: 1562560103}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -110653,7 +110652,7 @@ GameObject:
   - component: {fileID: 739194975}
   - component: {fileID: 739194974}
   - component: {fileID: 739194973}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Dread Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110737,7 +110736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739194972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.06840515, y: 0.47628784, z: 58.370728}
+  m_LocalPosition: {x: 0, y: 0.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1023505469}
@@ -112329,7 +112328,7 @@ GameObject:
   - component: {fileID: 1023505467}
   - component: {fileID: 1023505466}
   - component: {fileID: 1023505465}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DreadKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112445,13 +112444,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
-  chargeMult: 6
+  chargeMult: 0
   viewDist: 6
   startDir: 1
   maxHP: 3
   damageFadeTime: 0.5
   test: 0
   dir: 1
+  chargePrepTime: 0
 --- !u!50 &1023505467
 Rigidbody2D:
   serializedVersion: 4
@@ -112472,7 +112472,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1023505468
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -112486,7 +112486,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04321289, y: 0.30789948}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -112507,7 +112507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023505464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 240.3784, y: 44.503, z: -58.370728}
+  m_LocalPosition: {x: 240.3784, y: 44.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 739194975}
@@ -112515,7 +112515,7 @@ Transform:
   - {fileID: 302165970}
   - {fileID: 58355937}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1077292722
 GameObject:
@@ -114926,7 +114926,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 591798092}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1498483545563416922, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
@@ -114946,7 +114946,7 @@ PrefabInstance:
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41.74
+      value: 41.54
       objectReference: {fileID: 0}
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
@@ -114976,7 +114976,7 @@ PrefabInstance:
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
@@ -115000,12 +115000,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e950a9e4287fbe640af89e07c7b94e2c, type: 3}
---- !u!4 &1562560103 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1562560102}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1610066974
 GameObject:
   m_ObjectHideFlags: 0
@@ -116510,7 +116504,7 @@ PrefabInstance:
     - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
         type: 3}
@@ -116530,7 +116524,7 @@ PrefabInstance:
     - target: {fileID: 4886264583296755185, guid: 17cbca61a89f49c428c3fc51536a7376,
         type: 3}
       propertyPath: initPos.x
-      value: 189.36
+      value: 212.13
       objectReference: {fileID: 0}
     - target: {fileID: 4886264583296755185, guid: 17cbca61a89f49c428c3fc51536a7376,
         type: 3}

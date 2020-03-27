@@ -63,7 +63,23 @@ public class PFDreadKnight : EnemyBehaviour
 
     private bool grounded;
 
+    private bool turning;
+
     private bool inCutscene;
+
+    /// <summary>
+    /// How much time until Dread Knight charges
+    /// </summary>
+    private float chargePrepTime;
+
+    /// <summary>
+    /// The Dread Knights charge prep animation
+    /// </summary>
+    private Animation chargePrepAnimaton;
+
+    private float currentChargeTime;
+
+    public GameObject cutscene;
     #endregion
 
     // Start is called before the first frame update
@@ -72,6 +88,8 @@ public class PFDreadKnight : EnemyBehaviour
         inCutscene = true;
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+        chargePrepAnimaton = GetComponent<Animation>();
+        chargePrepTime = chargePrepAnimaton.clip.length;
         switch (startDir)
         {
             case Direction.right:
@@ -131,8 +149,10 @@ public class PFDreadKnight : EnemyBehaviour
             Vector2 dVec = new Vector2(dir * 0.5f, -1).normalized;
             LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-            hit = Physics2D.Raycast(transform.position, dVec, 2, mask);
-            hitWall = Physics2D.Raycast(transform.position, -Vector3.right, 0.5f, 1 << LayerMask.NameToLayer("Ground"));
+            hit = Physics2D.Raycast(transform.position, dVec, 20, mask);
+
+            Debug.DrawRay(transform.position, dVec, Color.red);
+            hitWall = Physics2D.Raycast(transform.position, -Vector3.right, 0.5f, 1 << LayerMask.NameToLayer("Blocking") + 1 << LayerMask.NameToLayer("Bounds"));
             Debug.DrawRay(gameObject.transform.position, -Vector3.right, Color.green);
 
             if (hit.collider == null)
@@ -141,6 +161,7 @@ public class PFDreadKnight : EnemyBehaviour
                 {
                     Debug.Log("null");
                 }
+                Debug.Log("Turning 1");
                 Turn();
             }
             else
@@ -149,67 +170,103 @@ public class PFDreadKnight : EnemyBehaviour
                 {
                     Debug.Log(hit.collider.name);
                 }
+                if (!animator.GetBool("chargePrep") && !animator.GetBool("charging"))
+                {
+                    currentChargeTime = chargePrepAnimaton.clip.length;
+                }
                 dVec = new Vector2(dir, 0);
                 hit = Physics2D.Raycast(transform.position, dVec, 0.5f, mask);
+                Debug.DrawRay(transform.position, dVec, Color.white);
                 if (hit.collider != null)
                 {
+                    Debug.Log("Turning 2");
                     Turn();
                 }
                 else
                 {
                     Vector3 origin = transform.position;
                     origin.y -= 0.3f;
-                    hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy")));
-                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy2")));
+                    if (hit.collider != null && hit.collider.CompareTag("Player")  && !animator.GetBool("charging"))
                     {
                         animator.SetBool("chargePrep", true);
+                        currentChargeTime -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        animator.SetBool("chargePrep", false);
+                    }
+                    if (currentChargeTime <= 0)
+                    {
+                        animator.SetBool("chargePrep", false);
+                        animator.SetBool("charging", true);
                         mult = chargeMult;
+                    }
+                    if(animator.GetBool("charging") &&  hit.collider.IsTouchingLayers(1 << LayerMask.NameToLayer("Bounds")))
+                    {
+                        animator.SetBool("charging", false);
+                        animator.SetBool("hitWall", true);
+                        Hit(1);
                     }
                     if (!animator.GetBool("chargePrep"))
                     {
+                        Debug.Log("dir: " + dir);
+                        Debug.Log("moveSpeed: " + moveSpeed);
+                        Debug.Log("mult: " + mult);
                         rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
                     }
                 }
             }
+            if (!turning)
+            {
+                if (rb.velocity.x > 0)
+                {
+                    animator.SetBool("moving", true);
+                    if (transform.eulerAngles.y == 180)
+                    {
+                        transform.eulerAngles = new Vector3(0, 180, 0);
+                    }
+                }
+                else if (rb.velocity.x < 0)
+                {
+                    animator.SetBool("moving", true);
+                    if (transform.eulerAngles.y == 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                }
+                else
+                {
+                    animator.SetBool("moving", false);
+                }
+            }
 
-            if (rb.velocity.x > 0)
+            if (turning)
             {
-                animator.SetBool("moving", true);
-                if (transform.eulerAngles.y == 180)
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                }
-            }
-            else if (rb.velocity.x < 0)
-            {
-                animator.SetBool("moving", true);
-                if (transform.eulerAngles.y == 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 180, 0);
-                }
-            }
-            else
-            {
-                animator.SetBool("moving", false);
+                turning = false;
             }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (currHP > 0)
         {
-            if (collision.collider.gameObject.GetComponent<PFController>().enabled)
+            if (collision.collider.CompareTag("Player"))
             {
-                rb.velocity = Vector2.zero;
-                PFController pfCon = collision.collider.GetComponent<PFController>();
-                GetComponent<AudioSource>().Play();
-                pfCon.StartCoroutine(pfCon.Die(true));
+                if (collision.collider.gameObject.GetComponent<PFController>().enabled)
+                {
+                    rb.velocity = Vector2.zero;
+                    PFController pfCon = collision.collider.GetComponent<PFController>();
+                    GetComponent<AudioSource>().Play();
+                    pfCon.StartCoroutine(pfCon.Die(true));
+                }
             }
         }
 
         if (collision.collider.CompareTag("Enemy"))
         {
+            Debug.Log("Turning 3");
             Turn();
         }
 
@@ -245,6 +302,8 @@ public class PFDreadKnight : EnemyBehaviour
 
     private void Turn()
     {
+        turning = true;
+
         animator.SetBool("charging", false);
         dir *= -1;
         mult = 1;
