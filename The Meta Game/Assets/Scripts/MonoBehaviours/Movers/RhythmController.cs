@@ -30,14 +30,12 @@ public class RhythmController : Mover
         inGround = false;
 
         controls = new Controls();
-
-        //controls.Player.StartRhythm.performed += StartRhythmHandle;
+        
         controls.Player.UpNote.performed += UpNoteHandle;
         controls.Player.LeftNote.performed += LeftNoteHandle;
         controls.Player.RightNote.performed += RightNoteHandle;
         controls.Player.DownNote.performed += DownNoteHandle;
-
-        //controls.Player.StartRhythm.Enable();
+        
         controls.Player.UpNote.Enable();
         controls.Player.LeftNote.Enable();
         controls.Player.RightNote.Enable();
@@ -46,23 +44,16 @@ public class RhythmController : Mover
 
     protected override void OnDisable()
     {
-        //controls.Player.StartRhythm.performed -= StartRhythmHandle;
         controls.Player.UpNote.performed -= UpNoteHandle;
         controls.Player.LeftNote.performed -= LeftNoteHandle;
         controls.Player.RightNote.performed -= RightNoteHandle;
         controls.Player.DownNote.performed -= DownNoteHandle;
-
-        //controls.Player.StartRhythm.Disable();
+        
         controls.Player.UpNote.Disable();
         controls.Player.LeftNote.Disable();
         controls.Player.RightNote.Disable();
         controls.Player.DownNote.Disable();
     }
-
-    /*private void StartRhythmHandle(InputAction.CallbackContext context)
-    {
-        StartCoroutine(StartRhythm());
-    }*/
 
     private void UpNoteHandle(InputAction.CallbackContext context)
     {

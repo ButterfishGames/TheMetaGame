@@ -95,9 +95,10 @@ public class BattleController : MonoBehaviour
 
         messagePanel.SetActive(false);
 
-        playerStats.text = "Player\n"
-            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
-            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
 
         currTroop = troops[Random.Range(0, troops.Length)];
         List<Button> buttonList = new List<Button>();
@@ -210,17 +211,20 @@ public class BattleController : MonoBehaviour
 
         if (GameController.singleton.GetHP() <= 0)
         {
-            playerStats.text = "Player\n0/" + GameController.singleton.maxHP + "\n"
-                + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+            playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
             messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You lose...";
             yield return new WaitForSeconds(1);
             GameController.singleton.Die();
         }
         else
         {
-            playerStats.text = "Player\n"
-            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
-            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+            playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
             yield return new WaitForSeconds(0.75f);
             messagePanel.SetActive(false);
             enemy.img.GetComponent<RectTransform>().anchoredPosition -= new Vector2(30, 0);
@@ -482,9 +486,10 @@ public class BattleController : MonoBehaviour
     private IEnumerator DmgSpellRtn(Spell spell, int enemyIndex)
     {
         GameController.singleton.Cast(spell.manaCost);
-        playerStats.text = "Player\n"
-            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "HP \n"
-            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + "MP";
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
@@ -650,9 +655,10 @@ public class BattleController : MonoBehaviour
 
         GameController.singleton.Damage(-amt);
 
-        playerStats.text = "Player\n"
-            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + "\n"
-            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP;
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
 
         messagePanel.SetActive(false);
         ReturnToMain();

@@ -82,6 +82,8 @@ public class GameController : MonoBehaviour
     [Tooltip("The maximum MP for the player (only used in certain gamemodes)")]
     public int maxMP;
 
+    public int maxSP;
+
     [Tooltip("The amount of damage the player takes each step on a damage floor while in RPG mode")]
     public int floorDamage;
 
@@ -120,6 +122,8 @@ public class GameController : MonoBehaviour
     /// Stores the player's current MP
     /// </summary>
     private int currMP;
+
+    private int currSP;
 
     /// <summary>
     /// Used to make flash fade time calculation more efficient
@@ -328,6 +332,7 @@ public class GameController : MonoBehaviour
 
         currHP = maxHP;
         currMP = maxMP;
+        currSP = maxSP;
         strength = 10;
         magic = 10;
 
@@ -641,7 +646,7 @@ public class GameController : MonoBehaviour
 
                     enemy.transform.position = new Vector3(GridLocker(enemy.transform.position.x), GridLocker(enemy.transform.position.y), 0);
                     
-                    hit = Physics2D.BoxCast(enemy.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                    hit = Physics2D.BoxCast(enemy.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Floor"))));
                     if (hit.collider != null)
                     {
                         enemy.transform.position += Vector3.up;
@@ -1025,6 +1030,8 @@ public class GameController : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 player.GetComponent<CapsuleCollider2D>().enabled = false;
 
+                player.transform.rotation = Quaternion.identity;
+
                 Vector3 staffSpawn = player.transform.position;
                 staffSpawn += new Vector3(0.7f, -0.05f, 0);
                 Instantiate(staffPrefab, staffSpawn, Quaternion.identity);
@@ -1185,7 +1192,7 @@ public class GameController : MonoBehaviour
             {
                 modes[i].unlocked = true;
                 unlockPanel.SetActive(true);
-                if (mode.Equals("Fighting"))
+                if (mode.Equals("Fighting") || mode.Equals("Rhythm"))
                 {
                     mode += " Game";
                 }
@@ -1241,6 +1248,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(ReloadLevel(fall));
         currHP = maxHP;
         currMP = maxMP;
+        currSP = maxSP;
     }
 
     private IEnumerator ReloadLevel(bool fall)
@@ -1351,6 +1359,11 @@ public class GameController : MonoBehaviour
         currMP = Mathf.Clamp(currMP - mana, 0, maxMP);
     }
 
+    public void UseSkill(int cost)
+    {
+        currSP = Mathf.Clamp(currSP - cost, 0, maxSP);
+    }
+
     private IEnumerator SpriteDamageFlash()
     {
         SpriteRenderer renderer = GameObject.Find("Player").GetComponentInChildren<SpriteRenderer>();
@@ -1392,6 +1405,11 @@ public class GameController : MonoBehaviour
     public int GetMP()
     {
         return currMP;
+    }
+
+    public int GetSP()
+    {
+        return currSP;
     }
 
     public IEnumerator FadeAndLoad(int buildIndex)
