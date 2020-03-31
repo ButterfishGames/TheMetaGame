@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 987fb30f9faef2348b6630ee6428ea29
+guid: 1694d8746dc6e514fb6684f0748395df
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5684622053680141831
-    second: Portraits Done_ (1)_0
+      213: 6603269443398373562
+    second: Rhythm Damage_0
   - first:
-      213: -7076742389337625004
-    second: Portraits Done_ (1)_1
+      213: -939486440971885298
+    second: Rhythm Damage_1
   - first:
-      213: 3723367367073977862
-    second: Portraits Done_ (1)_2
+      213: 776071452400124679
+    second: Rhythm Damage_2
   - first:
-      213: 8763386319506457825
-    second: Portraits Done_ (1)_3
+      213: -7565599631303992520
+    second: Rhythm Damage_3
+  - first:
+      213: -6889325454964188764
+    second: Rhythm Damage_4
+  - first:
+      213: -8910576021616430835
+    second: Rhythm Damage_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -57,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -98,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Portraits Done_ (1)_0
+      name: Rhythm Damage_0
       rect:
         serializedVersion: 2
         x: 0
         y: 64
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4d5206117fe72d42897607eb0a91ca4
-      internalID: -5684622053680141831
+      spriteID: 6e3a30b56fe21b74f9d93c4390f36998
+      internalID: 6603269443398373562
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Portraits Done_ (1)_1
+      name: Rhythm Damage_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 64
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,20 +139,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bfd67c8d4fdde54e9b4c93c37352a65
-      internalID: -7076742389337625004
+      spriteID: 2b85800eb73ccb1498e3e0b12706e02f
+      internalID: -939486440971885298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Portraits Done_ (1)_2
+      name: Rhythm Damage_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d46e487ded8cb4459214a83a484a170
+      internalID: 776071452400124679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rhythm Damage_3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6a00994a2c6887438b81c5dc9ffbbac
+      internalID: -7565599631303992520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rhythm Damage_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,20 +202,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34fcf0ddcedad8e469434e0d68c73cf2
-      internalID: 3723367367073977862
+      spriteID: caf01e9b41b41e34cb195872c0e55989
+      internalID: -6889325454964188764
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Portraits Done_ (1)_3
+      name: Rhythm Damage_5
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,8 +223,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6caf98ebbfc21a84bad6cc5c8427e223
-      internalID: 8763386319506457825
+      spriteID: 2eec3cf58e86c3745af27c794805af31
+      internalID: -8910576021616430835
       vertices: []
       indices: 
       edges: []
