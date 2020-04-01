@@ -99,7 +99,7 @@ public class StaffController : MonoBehaviour
         }
         else
         {
-            temp.Miss();
+            temp.StartCoroutine(temp.Miss());
             return false;
         }
     }
