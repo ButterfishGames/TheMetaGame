@@ -21,11 +21,17 @@ public class RhythmController : Mover
 
     public bool inGround = false;
 
+    private int misses;
+
+    private StaffController sCon;
+
     protected override void OnEnable()
     {
         started = false;
+        misses = 0;
         baseY = transform.position.y - 0.05f;
         startPos = transform.position;
+        sCon = FindObjectOfType<StaffController>();
 
         inGround = false;
 
@@ -132,22 +138,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if(FindObjectOfType<StaffController>().ProcInput(0, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(0, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    Miss();
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            Miss();
         }
     }
 
@@ -174,22 +178,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if (FindObjectOfType<StaffController>().ProcInput(1, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(1, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    Miss();
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            Miss();
         }
     }
 
@@ -216,22 +218,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if (FindObjectOfType<StaffController>().ProcInput(2, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(2, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    Miss();
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            Miss();
         }
     }
 
@@ -258,22 +258,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if (FindObjectOfType<StaffController>().ProcInput(3, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(3, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    Miss(nTemp);
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            Miss();
         }
     }
 
@@ -284,6 +282,21 @@ public class RhythmController : Mover
         animator.SetBool("dancing", false);
         transform.position = startPos + new Vector3(xDiff, 0, 0);
         rb.velocity = Vector2.zero;
+    }
+
+    public void Miss(NoteController note)
+    {
+        sCon.FixPlay(int.Parse(note.gameObject.name.Substring(12)));
+        Miss();
+    }
+
+    public void Miss()
+    {
+        misses++;
+        if (misses >= 3)
+        {
+            StartCoroutine(Fail());
+        }
     }
 
     public IEnumerator Fail()

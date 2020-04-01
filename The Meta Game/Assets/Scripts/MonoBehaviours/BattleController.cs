@@ -21,7 +21,7 @@ public class BattleController : MonoBehaviour
 
     public GameObject messagePanel;
 
-    public GameObject magicPanel;
+    public GameObject optionPanel;
 
     public GameObject attackButton;
 
@@ -29,7 +29,7 @@ public class BattleController : MonoBehaviour
 
     public Transform enemyStatPanel;
 
-    public ScrollRect magicScroll;
+    public ScrollRect optionScroll;
 
     public Troop[] troops;
 
@@ -55,12 +55,15 @@ public class BattleController : MonoBehaviour
     {
         attack,
         magic,
+        skill,
         none
     };
 
     private Command currCommand;
 
     private Spell currSpell;
+
+    private Skill currSkill;
 
     private Controls controls;
 
@@ -157,14 +160,14 @@ public class BattleController : MonoBehaviour
             int posOffset = scrollOffset * 90;
             if (selected.localPosition.y > (-45 - posOffset))
             {
-                magicScroll.content.localPosition = new Vector3(magicScroll.content.localPosition.x,
-                    magicScroll.content.localPosition.y - (selected.localPosition.y + 45 + posOffset), 0);
+                optionScroll.content.localPosition = new Vector3(optionScroll.content.localPosition.x,
+                    optionScroll.content.localPosition.y - (selected.localPosition.y + 45 + posOffset), 0);
                 scrollOffset--;
             }
             else if (selected.localPosition.y < (-315 - posOffset))
             {
-                magicScroll.content.localPosition = new Vector3(magicScroll.content.localPosition.x,
-                    magicScroll.content.localPosition.y - (selected.localPosition.y + 315 + posOffset), 0);
+                optionScroll.content.localPosition = new Vector3(optionScroll.content.localPosition.x,
+                    optionScroll.content.localPosition.y - (selected.localPosition.y + 315 + posOffset), 0);
                 scrollOffset++;
             }
         }
@@ -385,8 +388,8 @@ public class BattleController : MonoBehaviour
         }
 
         scrollOffset = 0;
-        magicPanel.SetActive(true);
-        magicScroll.content.anchoredPosition = Vector2.zero;
+        optionPanel.SetActive(true);
+        optionScroll.content.anchoredPosition = Vector2.zero;
         GameObject spell1 = null;
         int count = 0;
 
@@ -396,7 +399,7 @@ public class BattleController : MonoBehaviour
             if (spell.unlocked)
             {
                 count++;
-                GameObject spellButton = Instantiate(spellButtonPrefab, magicScroll.content);
+                GameObject spellButton = Instantiate(spellButtonPrefab, optionScroll.content);
                 spellButton.GetComponentInChildren<TextMeshProUGUI>().text = spell.spell.spellName + " [" + spell.spell.manaCost + "]";
                 spellButton.GetComponent<Button>().onClick.AddListener(() => Cast(spell.spell));
                 buttonList.Add(spellButton.GetComponent<Button>());
@@ -432,6 +435,7 @@ public class BattleController : MonoBehaviour
     {
         if (spell.manaCost > GameController.singleton.GetMP())
         {
+            StartCoroutine(OutOfMana());
             return;
         }
 
@@ -493,7 +497,23 @@ public class BattleController : MonoBehaviour
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
-        yield return new WaitForSeconds(0.75f);
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[enemyIndex].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[enemyIndex].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(spell.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(spell.effect));
+        yield return new WaitForSeconds(0.1f);
 
         int mag = GameController.singleton.GetMagic();
 
@@ -582,6 +602,23 @@ public class BattleController : MonoBehaviour
         {
             int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
 
+            Animator effectAnim = null;
+            Animator[] animators = currTroop.enemies[i].img.GetComponentsInChildren<Animator>();
+            foreach (Animator animator in animators)
+            {
+                if (animator.gameObject == currTroop.enemies[i].img)
+                {
+                    // TODO: trigger damage animation
+                }
+                else
+                {
+                    effectAnim = animator;
+                    animator.SetBool(spell.effect, true);
+                }
+            }
+            
+            yield return new WaitUntil(() => !effectAnim.GetBool(spell.effect));
+
             currTroop.enemies[i].currHP -= dmg;
 
             TextMeshProUGUI[] texts = currTroop.enemies[i].stats.GetComponentsInChildren<TextMeshProUGUI>();
@@ -605,8 +642,9 @@ public class BattleController : MonoBehaviour
                 Destroy(currTroop.enemies[i].stats);
                 Destroy(currTroop.enemies[i].img);
                 dead.Add(currTroop.enemies[i]);
-                yield return new WaitForSeconds(0.75f);
             }
+
+            yield return new WaitForSeconds(0.1f);
         }
 
         if (dead.ToArray().Length == currTroop.enemies.Length)
@@ -647,7 +685,20 @@ public class BattleController : MonoBehaviour
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
-        yield return new WaitForSeconds(0.75f);
+
+        GameObject playerImg = GameObject.Find("PlayerImage");
+        Animator effectAnim = null;
+        Animator[] animators = playerImg.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject.name.Equals("Effects"))
+            {
+                effectAnim = animator;
+                animator.SetBool(spell.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(spell.effect));
+        yield return new WaitForSeconds(0.1f);
 
         int mag = GameController.singleton.GetMagic();
 
@@ -665,10 +716,17 @@ public class BattleController : MonoBehaviour
         NextTurn();
     }
 
-    public void ItemCmd()
+    private IEnumerator OutOfMana()
     {
-        GameController.singleton.ErrDisp("Error: BattleController.cs does not contain a definition for 'ItemCmd'");
-        NextTurn();
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Not enough MP!";
+        yield return new WaitForSeconds(0.75f);
+        messagePanel.SetActive(false);
+    }
+
+    public void SkillCmd()
+    {
+        // TODO: Implement Skill command (should be pretty similar to magic command)
     }
 
     public void FleeCmd()
@@ -716,7 +774,7 @@ public class BattleController : MonoBehaviour
             {
                 Destroy(button.gameObject);
             }
-            magicPanel.SetActive(false);
+            optionPanel.SetActive(false);
         }
 
         foreach (Button button in enemyButtons)
@@ -731,6 +789,12 @@ public class BattleController : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(attackButton);
         onMain = true;
+
+        GameController.singleton.UseSkill(-1);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
     }
 }
 
@@ -758,4 +822,16 @@ public struct Attack
 
     [Range(0, 1)]
     public float var;
+    public string anim;
+    public string effect;
+
+    public enum Target
+    {
+        player,
+        self,
+        ally,
+        ownParty
+    }
+
+    public Target target;
 }

@@ -196,6 +196,12 @@ public class SaveManager : MonoBehaviour
         {
             saveData.spellsUnlocked[i] = GameController.singleton.spellList[i].unlocked;
         }
+
+        saveData.skillsUnlocked = new bool[GameController.singleton.skillList.Length];
+        for (int i = 0; i < saveData.skillsUnlocked.Length; i++)
+        {
+            saveData.skillsUnlocked[i] = GameController.singleton.skillList[i].unlocked;
+        }
     }
 
     public void InitScene()
@@ -287,6 +293,11 @@ public class SaveManager : MonoBehaviour
         {
             GameController.singleton.spellList[i].unlocked = saveData.spellsUnlocked[i];
         }
+
+        for (int i = 0; i < GameController.singleton.skillList.Length; i++)
+        {
+            GameController.singleton.skillList[i].unlocked = saveData.spellsUnlocked[i];
+        }
     }
 
     public int GetCurrentScene()
@@ -339,6 +350,7 @@ public class SaveData
     public MiniMode[] modes;
 
     public bool[] spellsUnlocked;
+    public bool[] skillsUnlocked;
 
     int currentScene;
     float checkpointX, checkpointY, checkpointZ;
@@ -368,6 +380,12 @@ public class SaveData
             for (int i = 0; i < spellsUnlocked.Length; i++)
             {
                 spellsUnlocked[i] = GameController.singleton.spellList[i].unlocked;
+            }
+
+            skillsUnlocked = new bool[GameController.singleton.skillList.Length];
+            for (int i = 0; i < skillsUnlocked.Length; i++)
+            {
+                skillsUnlocked[i] = GameController.singleton.skillList[i].unlocked;
             }
         }
     }

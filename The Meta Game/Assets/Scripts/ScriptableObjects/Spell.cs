@@ -29,4 +29,7 @@ public class Spell : ScriptableObject
 
     [Range(0, 1)]
     public float var;
+    
+    public string anim;
+    public string effect;
 }

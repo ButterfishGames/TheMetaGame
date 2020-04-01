@@ -59,6 +59,15 @@ public class GameController : MonoBehaviour
     [Tooltip("Spells unlocked. DO NOT DEFAULT TO ANY HEALING SPELLS")]
     public SpellStr[] spellList;
 
+    [System.Serializable]
+    public struct SkillStr
+    {
+        public Skill skill;
+        public bool unlocked;
+    }
+
+    public SkillStr[] skillList;
+
     [Tooltip("Reference to prefab for game mode buttons in switch menu")]
     public GameObject modeButton;
 
