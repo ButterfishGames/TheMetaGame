@@ -15,6 +15,9 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject branchButtonPrefab;
 
+    public Dialogue[] failDialogues;
+
+    private Image stillImg;
     private Image charImg;
     private TextMeshProUGUI dialogueText;
     private TextMeshProUGUI nameText;
@@ -32,6 +35,10 @@ public class DialogueManager : MonoBehaviour
     private Controls controls;
 
     private int relationship;
+
+    private bool dating;
+
+    private int pInd;
 
     private void OnEnable()
     {
@@ -53,6 +60,11 @@ public class DialogueManager : MonoBehaviour
 
     private void SubmitStartHandle(InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         if (displaying)
         {
             primed = true;
@@ -61,6 +73,11 @@ public class DialogueManager : MonoBehaviour
 
     private void SubmitCancHandle(InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            primed = false;
+        }
+
         if (primed)
         {
             DisplayNextLine();
@@ -105,22 +122,25 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        StartDialogue(dialogue, false);
+        StartDialogue(dialogue, false, -1);
     }
 
-    public void StartDialogue(Dialogue dialogue, int relationshipChange)
+    public void StartDialogue(Dialogue dialogue, int relationshipChange, int partnerInd)
     {
         relationship += relationshipChange;
 
-        StartDialogue(dialogue, true);
+        StartDialogue(dialogue, true, partnerInd);
     }
 
-    public void StartDialogue(Dialogue dialogue, bool datingSim)
+    public void StartDialogue(Dialogue dialogue, bool datingSim, int partnerInd)
     {
         isBranched = false;
+        dating = datingSim;
         sentences.Clear();
         names.Clear();
         sprites.Clear();
+
+        pInd = partnerInd;
 
         GameObject branchPanel = GameObject.Find("BranchPanel");
         Button[] buttons = branchPanel.GetComponentsInChildren<Button>();
@@ -184,10 +204,9 @@ public class DialogueManager : MonoBehaviour
         {
             return;
         }
-
         else if (sentences.Count == 0)
         {
-            EndDialogue();
+            EndDialogue(true);
             return;
         }
 
@@ -201,51 +220,84 @@ public class DialogueManager : MonoBehaviour
 
         if (currentDialogue.type == DialogueType.branch && sentences.Count == 0)
         {
-            EndDialogue();
+            EndDialogue(true);
         }
     }
 
-    private void EndDialogue()
+    public void EndDialogue(bool normal)
     {
-        switch (currentDialogue.type)
+        if (normal)
         {
-            case DialogueType.end:
-                if (relationship >= 100)
-                {
-                    // TODO: Initiate fast travel
-                    return;
-                }
-                else
-                {
-                    currentDialogue = null;
-                    rpgDialogueBox.SetActive(false);
-                    datingDialogueBox.SetActive(false);
-                }
-                break;
-
-            case DialogueType.branch:
-                isBranched = true;
-                GameObject branchPanel = GameObject.Find("BranchPanel");
-                for (int i = 0; i < currentDialogue.branches.Length; i++)
-                {
-                    GameObject branchButton = Instantiate(branchButtonPrefab, branchPanel.transform);
-                    branchButton.GetComponentInChildren<Text>().text = currentDialogue.branches[i];
-                    Dialogue nextDialogue = currentDialogue.branchDialogues[i];
-                    int relChange = currentDialogue.relationshipChanges[i];
-                    branchButton.GetComponentInChildren<Button>().onClick.AddListener(() => StartDialogue(nextDialogue, relChange));
-                    if (i == 0)
+            switch (currentDialogue.type)
+            {
+                case DialogueType.end:
+                    if (dating)
                     {
-                        EventSystem.current.SetSelectedGameObject(branchButton);
+                        if (relationship >= 100)
+                        {
+                            // TODO: Initiate fast travel
+
+                            displaying = false;
+                            return;
+                        }
+                        else
+                        {
+                            StartDialogue(failDialogues[pInd], true, pInd);
+                        }
                     }
-                }
-                break;
+                    else
+                    {
+                        currentDialogue = null;
+                        rpgDialogueBox.SetActive(false);
+                        datingDialogueBox.SetActive(false);
 
-            default:
-                Debug.Log("ERROR: How did you break an enum?");
-                break;
+                        displaying = false;
+                    }
+                    break;
+
+                case DialogueType.branch:
+                    isBranched = true;
+                    GameObject branchPanel = GameObject.Find("BranchPanel");
+                    for (int i = 0; i < currentDialogue.branches.Length; i++)
+                    {
+                        GameObject branchButton = Instantiate(branchButtonPrefab, branchPanel.transform);
+                        branchButton.GetComponentInChildren<TextMeshProUGUI>().text = currentDialogue.branches[i];
+                        Dialogue nextDialogue = currentDialogue.branchDialogues[i];
+                        int relChange = currentDialogue.relationshipChanges[i];
+                        branchButton.GetComponentInChildren<Button>().onClick.AddListener(() => StartDialogue(nextDialogue, relChange, pInd));
+                        if (i == 0)
+                        {
+                            EventSystem.current.SetSelectedGameObject(branchButton);
+                        }
+                    }
+
+                    displaying = false;
+                    break;
+
+                default:
+                    Debug.Log("ERROR: How did you break an enum?");
+                    break;
+            }
         }
+        else
+        {
+            sentences = new Queue<string>();
+            names = new Queue<string>();
+            sprites = new Queue<Sprite>();
 
-        displaying = false;
+            GameObject branchPanel = GameObject.Find("BranchPanel");
+            Button[] branchButtons = branchPanel.GetComponentsInChildren<Button>();
+            foreach (Button button in branchButtons)
+            {
+                Destroy(button.gameObject);
+            }
+
+            currentDialogue = null;
+            rpgDialogueBox.SetActive(false);
+            datingDialogueBox.SetActive(false);
+            
+            displaying = false;
+        }
     }
 
     public bool GetDisplaying()

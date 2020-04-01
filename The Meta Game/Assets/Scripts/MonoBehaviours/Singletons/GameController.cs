@@ -22,7 +22,8 @@ public class GameController : MonoBehaviour
         rpg,
         fps,
         fighting,
-        rhythm
+        rhythm,
+        dating
     };
 
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
@@ -110,9 +111,21 @@ public class GameController : MonoBehaviour
 
     public GameObject pauseMenu;
 
+    public GameObject settingsPanel;
+
+    public GameObject quitPanel;
+
+    public GameObject rhythmUnpausePanel;
+
     public TextMeshProUGUI unlockText;
 
     public GameObject staffPrefab;
+
+    public Dialogue[] datingDialogues;
+
+    public bool dating;
+
+    private bool battling;
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
@@ -177,6 +190,8 @@ public class GameController : MonoBehaviour
 
     private bool unpausing;
 
+    private GameMode prev;
+
     private Controls controls;
 
     private void OnEnable()
@@ -213,7 +228,7 @@ public class GameController : MonoBehaviour
 
     private void SwitchHandle (InputAction.CallbackContext context)
     {
-        if (paused)
+        if (paused || battling)
         {
             return;
         }
@@ -274,9 +289,21 @@ public class GameController : MonoBehaviour
 
     private void PauseHandle (InputAction.CallbackContext context)
     {
+        if (unpausing)
+        {
+            return;
+        }
+
         if (pauseMenu.activeInHierarchy)
         {
-            Unpause();
+            if (quitPanel.activeInHierarchy)
+            {
+                CloseQuitMenu();
+            }
+            else
+            {
+                Unpause();
+            }
         }
         else
         {
@@ -474,7 +501,18 @@ public class GameController : MonoBehaviour
 
     public void SwitchMode(GameMode newMode)
     {
+        SwitchMode(newMode, false);
+    }
+
+    public void SwitchMode(GameMode newMode, bool transitioned)
+    {
+        prev = equipped;
         equipped = newMode;
+
+        if (prev == GameMode.dating && !transitioned)
+        {
+            StartCoroutine(DatingUntransitionLite());
+        }
 
         BoxCollider2D[] cameraWalls;
         GameObject player;
@@ -494,6 +532,11 @@ public class GameController : MonoBehaviour
             case GameMode.platformer:
                 modeInt = 0;
                 equippedStr = "Platformer";
+
+                if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
+                {
+                    DialogueManager.singleton.EndDialogue(false);
+                }
 
                 if (GameObject.Find("Killbox") != null)
                 {
@@ -617,6 +660,11 @@ public class GameController : MonoBehaviour
                 modeInt = 1;
                 equippedStr = "RPG";
 
+                if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
+                {
+                    DialogueManager.singleton.EndDialogue(false);
+                }
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -738,6 +786,11 @@ public class GameController : MonoBehaviour
                 modeInt = 2;
                 equippedStr = "FPS";
 
+                if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
+                {
+                    DialogueManager.singleton.EndDialogue(false);
+                }
+
                 if (GameObject.Find("Killbox") != null)
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
@@ -844,6 +897,11 @@ public class GameController : MonoBehaviour
             case GameMode.fighting:
                 modeInt = 3;
                 equippedStr = "Fighting";
+
+                if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
+                {
+                    DialogueManager.singleton.EndDialogue(false);
+                }
 
                 if (GameObject.Find("Killbox") != null)
                 {
@@ -980,6 +1038,11 @@ public class GameController : MonoBehaviour
                 modeInt = 4;
                 equippedStr = "Rhythm";
 
+                if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
+                {
+                    DialogueManager.singleton.EndDialogue(false);
+                }
+
                 foreach (GameObject enemy in enemies)
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
@@ -1064,6 +1127,14 @@ public class GameController : MonoBehaviour
                 rCon.StartCoroutine(rCon.StartRhythm());
                 break;
             #endregion
+            #region dating
+            case GameMode.dating:
+                modeInt = 5;
+                equippedStr = "Dating";
+
+                StartCoroutine(DatingTransition());
+                break;
+            #endregion
 
             default:
                 Debug.Log("ERROR: INVALID GAME MODE");
@@ -1076,6 +1147,43 @@ public class GameController : MonoBehaviour
         {
             ToggleSwitchMenu();
         }
+    }
+
+    private IEnumerator DatingTransition()
+    {
+        dating = true;
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        ToggleSwitchPanel(false);
+        DialogueManager.singleton.StartDialogue(datingDialogues[0], true, 0);
+        StartCoroutine(LevelFade(true));
+    }
+    
+    private IEnumerator DatingUntransitionLite()
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            DialogueManager.singleton.EndDialogue(false);
+        }
+        ToggleSwitchPanel(true);
+        StartCoroutine(LevelFade(true));
+        dating = false;
+    }
+
+    public IEnumerator DatingUntransition()
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            DialogueManager.singleton.EndDialogue(false);
+        }
+        StartCoroutine(LevelFade(true));
+        ToggleSwitchPanel(true);
+        dating = false;
+        SwitchMode(prev, true);
     }
 
     public static float GridLocker(float pos)
@@ -1187,6 +1295,14 @@ public class GameController : MonoBehaviour
             case GameMode.fps:
                 modeStr = "FPS";
                 break;
+
+            case GameMode.rhythm:
+                modeStr = "Rhythm";
+                break;
+
+            case GameMode.dating:
+                modeStr = "Dating";
+                break;
         }
 
         Unlock(modeStr);
@@ -1204,6 +1320,10 @@ public class GameController : MonoBehaviour
                 if (mode.Equals("Fighting") || mode.Equals("Rhythm"))
                 {
                     mode += " Game";
+                }
+                else if (mode.Equals("Dating"))
+                {
+                    mode += " Sim";
                 }
                 unlockText.text = "You unlocked \n" + mode + " mode!";
                 found = true;
@@ -1440,6 +1560,7 @@ public class GameController : MonoBehaviour
 
     public IEnumerator Battle()
     {
+        battling = true;
         ToggleSwitchPanel(false);
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
@@ -1466,6 +1587,7 @@ public class GameController : MonoBehaviour
         GameObject.Find("Player").GetComponent<RPGController>().SetEncountering(false);
         ToggleSwitchPanel(true);
         paused = false;
+        battling = false;
     }
 
     public void ErrDisp(string err)
@@ -1584,11 +1706,23 @@ public class GameController : MonoBehaviour
         }
         paused = true;
         Time.timeScale = 0;
-        pauseMenu.GetComponentInChildren<TextMeshProUGUI>().text = "Coming Soon:\nPause Menu\n\nPress pause to resume";
         pauseMenu.SetActive(true);
+
+        Button[] buttons = pauseMenu.GetComponentsInChildren<Button>();
+        bool found = false;
+        for (int i = 0; i < buttons.Length && !found; i++)
+        {
+            if (buttons[i].name.Equals("ResumeButton"))
+            {
+                EventSystem.current.SetSelectedGameObject(buttons[i].gameObject);
+                found = true;
+            }
+        }
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
-    private void Unpause()
+    public void Unpause()
     {
         if (unpausing)
         {
@@ -1605,15 +1739,59 @@ public class GameController : MonoBehaviour
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void OpenQuitMenu()
+    {
+        quitPanel.SetActive(true);
+
+        Button[] buttons = pauseMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
+
+        buttons = quitPanel.GetComponentsInChildren<Button>();
+        bool found = false;
+        for (int i = 0; i < buttons.Length && !found; i++)
+        {
+            if (buttons[i].name.Equals("MenuButton"))
+            {
+                EventSystem.current.SetSelectedGameObject(buttons[i].gameObject);
+                found = true;
+            }
+        }
+    }
+
+    public void CloseQuitMenu()
+    {
+        quitPanel.SetActive(false);
+
+        Button[] buttons = pauseMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+            if (button.name.Equals("ResumeButton"))
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+            }
+        }
+    }
+
+    public void QuitToDesktop()
+    {
+        Application.Quit();
     }
 
     private IEnumerator RhythmUnpause()
     {
         unpausing = true;
-        Color temp = pauseMenu.GetComponent<Image>().color;
-        temp.a = 0.5f;
-        pauseMenu.GetComponent<Image>().color = temp;
-        TextMeshProUGUI text = pauseMenu.GetComponentInChildren<TextMeshProUGUI>();
+        pauseMenu.SetActive(false);
+        rhythmUnpausePanel.SetActive(true);
+        TextMeshProUGUI text = rhythmUnpausePanel.GetComponentInChildren<TextMeshProUGUI>();
         text.text = "3";
         yield return new WaitForSecondsRealtime(1);
         text.text = "2";
@@ -1624,9 +1802,7 @@ public class GameController : MonoBehaviour
         FindObjectOfType<StaffController>().source.UnPause();
         Time.timeScale = 1;
         paused = false;
-        pauseMenu.SetActive(false);
-        temp.a = 1;
-        pauseMenu.GetComponent<Image>().color = temp;
+        rhythmUnpausePanel.SetActive(false);
         unpausing = false;
     }
 

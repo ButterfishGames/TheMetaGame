@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
+  m_Name: DatingTest0
+  m_EditorClassIdentifier: 
+  lines:
+  - name: Sebastian
+    line: Hey Kiira?
+    sprite: {fileID: -3353662780002245855, guid: abd38a4b64d097943a6d4b049ff1af67,
+      type: 3}
+  - name: Sebastian
+    line: Do you like me?
+    sprite: {fileID: -3353662780002245855, guid: abd38a4b64d097943a6d4b049ff1af67,
+      type: 3}
+  type: 0
+  branches:
+  - Yes
+  - No
+  branchDialogues:
+  - {fileID: 11400000, guid: 65c3bbd5572ac344e9e0aedf51f5b7ec, type: 2}
+  - {fileID: 11400000, guid: c8eee91b87026c14dbfaf0810b1feb2f, type: 2}
+  relationshipChanges: 32000000ceffffff
