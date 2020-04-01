@@ -202,7 +202,6 @@ MonoBehaviour:
   jumpForce: 12
   deathForce: 0
   deathWait: 10
-  maxHealth: 30
   canStickJump: 1
   maxTimeTillReset: 30
   special: {fileID: 5380071146857707867, guid: a4931da688c59104b824b2cdc57a3c0b, type: 3}
@@ -271,6 +270,10 @@ MonoBehaviour:
   vRaw: 0
   speed: 1
   startWait: 5
+  startPos: {x: 0, y: 0, z: 0}
+  hitClip: {fileID: 8300000, guid: dfccf734445885d47bd6eba50b53afd1, type: 3}
+  deathClip: {fileID: 8300000, guid: 789036896d9c4464c87cf1535e8097f3, type: 3}
+  inGround: 0
 --- !u!82 &8073731519011545422
 AudioSource:
   m_ObjectHideFlags: 0

@@ -85,7 +85,7 @@ public class StaffController : MonoBehaviour
         {
             if (currentPlay[ind] != songs[0].notes[ind].note || ind != note)
             {
-                temp.StartCoroutine(temp.Fail());
+                temp.Miss();
                 return false;
             }
             else
@@ -99,8 +99,17 @@ public class StaffController : MonoBehaviour
         }
         else
         {
-            temp.StartCoroutine(temp.Fail());
+            temp.StartCoroutine(temp.Miss());
             return false;
+        }
+    }
+
+    public void FixPlay(int ind)
+    {
+        currentPlay = new List<int>();
+        for (int i = 0; i <= ind; i++)
+        {
+            currentPlay.Add(songs[0].notes[i].note);
         }
     }
 }
