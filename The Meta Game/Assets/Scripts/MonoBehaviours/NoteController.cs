@@ -9,17 +9,20 @@ public class NoteController : MonoBehaviour
     private int dir;
 
     private RhythmController rCon;
+    private StaffController sCon;
 
     private void Start()
     {
         rCon = FindObjectOfType<RhythmController>();
+        sCon = GetComponentInParent<StaffController>();
     }
 
     private void LateUpdate()
     {
         if (rCon.transform.position.x > transform.position.x + 1)
         {
-            rCon.StartCoroutine(rCon.Fail());
+            rCon.Miss(this);
+            Destroy(gameObject);
         }
     }
 

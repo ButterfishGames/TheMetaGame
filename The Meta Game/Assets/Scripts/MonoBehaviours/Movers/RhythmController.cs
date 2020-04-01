@@ -15,29 +15,37 @@ public class RhythmController : Mover
 
     public Vector3 startPos;
 
+    public AudioClip hitClip, deathClip;
+
     private float xDiff = 20;
 
     private bool dying = false;
 
     public bool inGround = false;
 
+    private int misses;
+
+    private StaffController sCon;
+
+    private AudioSource source;
+
     protected override void OnEnable()
     {
         started = false;
+        source = GetComponent<AudioSource>();
+        misses = 0;
         baseY = transform.position.y - 0.05f;
         startPos = transform.position;
 
         inGround = false;
 
         controls = new Controls();
-
-        //controls.Player.StartRhythm.performed += StartRhythmHandle;
+        
         controls.Player.UpNote.performed += UpNoteHandle;
         controls.Player.LeftNote.performed += LeftNoteHandle;
         controls.Player.RightNote.performed += RightNoteHandle;
         controls.Player.DownNote.performed += DownNoteHandle;
-
-        //controls.Player.StartRhythm.Enable();
+        
         controls.Player.UpNote.Enable();
         controls.Player.LeftNote.Enable();
         controls.Player.RightNote.Enable();
@@ -46,23 +54,16 @@ public class RhythmController : Mover
 
     protected override void OnDisable()
     {
-        //controls.Player.StartRhythm.performed -= StartRhythmHandle;
         controls.Player.UpNote.performed -= UpNoteHandle;
         controls.Player.LeftNote.performed -= LeftNoteHandle;
         controls.Player.RightNote.performed -= RightNoteHandle;
         controls.Player.DownNote.performed -= DownNoteHandle;
-
-        //controls.Player.StartRhythm.Disable();
+        
         controls.Player.UpNote.Disable();
         controls.Player.LeftNote.Disable();
         controls.Player.RightNote.Disable();
         controls.Player.DownNote.Disable();
     }
-
-    /*private void StartRhythmHandle(InputAction.CallbackContext context)
-    {
-        StartCoroutine(StartRhythm());
-    }*/
 
     private void UpNoteHandle(InputAction.CallbackContext context)
     {
@@ -112,7 +113,8 @@ public class RhythmController : Mover
     public IEnumerator StartRhythm()
     {
         yield return new WaitUntil(() => FindObjectOfType<StaffController>() != null);
-        FindObjectOfType<StaffController>().StartSong();
+        sCon = FindObjectOfType<StaffController>();
+        sCon.StartSong();
         yield return new WaitForSeconds(startWait);
         rb.velocity = new Vector2(speed, 0);
         started = true;
@@ -141,22 +143,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if(FindObjectOfType<StaffController>().ProcInput(0, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(0, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    StartCoroutine(Miss());
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            StartCoroutine(Miss());
         }
     }
 
@@ -183,22 +183,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if (FindObjectOfType<StaffController>().ProcInput(1, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(1, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    StartCoroutine(Miss());
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            StartCoroutine(Miss());
         }
     }
 
@@ -225,22 +223,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if (FindObjectOfType<StaffController>().ProcInput(2, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(2, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    StartCoroutine(Miss());
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            StartCoroutine(Miss());
         }
     }
 
@@ -267,22 +263,20 @@ public class RhythmController : Mover
                     int noteNum;
                     if (int.TryParse(nTemp.gameObject.name.Substring(12), out noteNum))
                     {
-                        if (FindObjectOfType<StaffController>().ProcInput(3, noteNum))
-                        {
-                            Destroy(nTemp.gameObject);
-                        }
+                        sCon.ProcInput(3, noteNum);
+                        Destroy(nTemp.gameObject);
                     }
                 }
                 else
                 {
-                    StartCoroutine(Fail());
+                    Miss(nTemp);
                 }
             }
         }
 
         if (!hit)
         {
-            StartCoroutine(Fail());
+            StartCoroutine(Miss());
         }
     }
 
@@ -295,17 +289,49 @@ public class RhythmController : Mover
         rb.velocity = Vector2.zero;
     }
 
-    public IEnumerator Fail()
+    public void Miss(NoteController note)
+    {
+        sCon.FixPlay(int.Parse(note.gameObject.name.Substring(12)));
+        StartCoroutine(Miss());
+    }
+
+    public IEnumerator Miss()
     {
         if (!dying)
         {
-            dying = true;
-            rb.velocity = Vector2.zero;
-            FindObjectOfType<StaffController>().source.Stop();
-            GetComponent<AudioSource>().Play();
-            yield return new WaitForSeconds(1);
-            GameController.singleton.Die();
+            misses++;
+            if (misses >= 3)
+            {
+                dying = true;
+                animator.SetBool("dying", true);
+            }
+            animator.SetTrigger("miss");
+            if (!dying)
+            {
+                source.clip = hitClip;
+                source.Play();
+                yield return new WaitUntil(() => !source.isPlaying);
+            }
+            source.clip = deathClip;
+            if (dying)
+            {
+                StartCoroutine(Fail());
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.45f);
+                animator.ResetTrigger("miss");
+            }
         }
+    }
+
+    public IEnumerator Fail()
+    {
+        rb.velocity = Vector2.zero;
+        sCon.source.Stop();
+        source.Play();
+        yield return new WaitForSeconds(1);
+        GameController.singleton.Die();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
