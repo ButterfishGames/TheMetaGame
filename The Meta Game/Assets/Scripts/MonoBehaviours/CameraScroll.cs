@@ -61,17 +61,28 @@ public class CameraScroll : MonoBehaviour
         {
             posX = transform.position.x;
         }
-
+        
         posX = Mathf.Clamp(posX, min.x, max.x);
         posY = Mathf.Clamp(posY, min.y, max.y);
 
-        float xDiff = posX - transform.position.x;
-        float yDiff = posY - transform.position.y;
-
-        Parallax[] pObjs = FindObjectsOfType<Parallax>();
-        foreach (Parallax obj in pObjs)
+        if (CompareTag("MainCamera"))
         {
-            obj.UpdatePos(xDiff, yDiff);
+            float xDiff = posX - transform.position.x;
+            float yDiff = posY - transform.position.y;
+
+            Parallax[] pObjs = FindObjectsOfType<Parallax>();
+            foreach (Parallax obj in pObjs)
+            {
+                obj.UpdatePos(xDiff, yDiff);
+            }
+        }
+        else
+        {
+            if (GameController.singleton.glitching)
+            {
+                posX += Random.Range(-1.0f, 1.0f) * Time.timeScale;
+                posY += Random.Range(-1.0f, 1.0f) * Time.timeScale;
+            }
         }
 
         transform.position = new Vector3(posX, posY, transform.position.z);

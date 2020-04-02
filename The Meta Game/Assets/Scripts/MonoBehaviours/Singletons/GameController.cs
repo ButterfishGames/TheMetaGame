@@ -14,6 +14,14 @@ public class GameController : MonoBehaviour
     /// </summary>
     public static GameController singleton;
 
+    public RenderTexture rTex;
+
+    public GameObject gCanv;
+
+    public RawImage rTarg;
+
+    public bool glitching = false;
+
     public bool demoBuild;
 
     public enum GameMode
@@ -432,6 +440,24 @@ public class GameController : MonoBehaviour
         if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             Cursor.visible = true;
+        }
+
+        if (glitching)
+        {
+            gCanv.SetActive(true);
+
+            Camera.main.GetComponent<Camera>().targetTexture = rTex;
+            rTarg.texture = rTex;
+            Resources.UnloadUnusedAssets();
+        }
+        else
+        {
+            GameObject gCam = GameObject.Find("GCam");
+            if (gCam != null)
+            {
+                gCam.SetActive(false);
+            }
+            gCanv.SetActive(false);
         }
 
         if (switchMenu.activeInHierarchy)
@@ -1565,6 +1591,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        DialogueManager.singleton.EndDialogue(false);
         yield return new WaitForEndOfFrame();
         GameObject attackBtn = null;
         while (attackBtn == null)
@@ -1573,6 +1600,23 @@ public class GameController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         EventSystem.current.SetSelectedGameObject(attackBtn);
+        StartCoroutine(LevelFade(true));
+    }
+
+    public IEnumerator DateMap()
+    {
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        DialogueManager.singleton.EndDialogue(false);
+        SceneManager.LoadScene(12, LoadSceneMode.Additive);
+        yield return new WaitForEndOfFrame();
+        GameObject caButton = null;
+        while (caButton == null)
+        {
+            caButton = GameObject.Find("CA Button");
+            yield return new WaitForEndOfFrame();
+        }
+        EventSystem.current.SetSelectedGameObject(caButton);
         StartCoroutine(LevelFade(true));
     }
 

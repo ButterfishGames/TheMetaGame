@@ -246,9 +246,13 @@ public class SaveManager : MonoBehaviour
             triggers[i].triggerable = temp.cutsceneTriggerable[ind];
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == saveData.GetCurrentScene())
+        if (buildIndex == saveData.GetCurrentScene())
         {
             GameObject.Find("Player").transform.position = saveData.GetCheckpointPos();
+        }
+        else
+        {
+            GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint (0)").transform.position;
         }
 
         Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();

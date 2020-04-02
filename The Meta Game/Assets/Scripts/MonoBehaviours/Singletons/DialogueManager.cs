@@ -233,9 +233,10 @@ public class DialogueManager : MonoBehaviour
                 case DialogueType.end:
                     if (dating)
                     {
+                        Debug.Log(relationship);
                         if (relationship >= 100)
                         {
-                            // TODO: Initiate fast travel
+                            GameController.singleton.StartCoroutine(GameController.singleton.DateMap());
 
                             displaying = false;
                             return;
