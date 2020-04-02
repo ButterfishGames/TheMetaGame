@@ -77,9 +77,14 @@ public class PFDreadKnight : EnemyBehaviour
     /// </summary>
     private Animation chargePrepAnimaton;
 
+    private float timeToGetUp = 2.08f;
+    private float timeGettingUp;
+
     private float currentChargeTime;
 
     public GameObject cutscene;
+
+    public GameObject barriers;
     #endregion
 
     // Start is called before the first frame update
@@ -127,12 +132,18 @@ public class PFDreadKnight : EnemyBehaviour
 
         if (!Camera.main.GetComponent<CameraScroll>().enabled)
         {
+            if(cutscene != null)
+            {
+                Destroy(cutscene.gameObject);
+            }
             if (currHP > 0)
             {
+                barriers.SetActive(true);
                 inCutscene = false;
             }
             else
             {
+                barriers.SetActive(false);
                 inCutscene = true;
             }
         }
@@ -144,106 +155,96 @@ public class PFDreadKnight : EnemyBehaviour
         if (!inCutscene)
         {
             animator.SetBool("cutscene", false);
-            RaycastHit2D hit;
-            RaycastHit2D hitWall;
-            Vector2 dVec = new Vector2(dir * 0.5f, -1).normalized;
-            LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
-
-            hit = Physics2D.Raycast(transform.position, dVec, 20, mask);
-
-            Debug.DrawRay(transform.position, dVec, Color.red);
-            hitWall = Physics2D.Raycast(transform.position, -Vector3.right, 0.5f, 1 << LayerMask.NameToLayer("Blocking") + 1 << LayerMask.NameToLayer("Bounds"));
-            Debug.DrawRay(gameObject.transform.position, -Vector3.right, Color.green);
-
-            if (hit.collider == null)
+            if (timeGettingUp <= 0)
             {
-                if (test)
+                animator.SetBool("hitWall", false);
+                RaycastHit2D hit;
+                Vector2 dVec = new Vector2(dir * 0.5f, -1).normalized;
+                LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
+
+                hit = Physics2D.Raycast(transform.position, dVec, 20, mask);
+
+                Debug.DrawRay(transform.position, dVec, Color.red);
+                Debug.DrawRay(gameObject.transform.position, -Vector3.right, Color.green);
+
+                if (hit.collider == null)
                 {
-                    Debug.Log("null");
-                }
-                Debug.Log("Turning 1");
-                Turn();
-            }
-            else
-            {
-                if (test)
-                {
-                    Debug.Log(hit.collider.name);
-                }
-                if (!animator.GetBool("chargePrep") && !animator.GetBool("charging"))
-                {
-                    currentChargeTime = chargePrepAnimaton.clip.length;
-                }
-                dVec = new Vector2(dir, 0);
-                hit = Physics2D.Raycast(transform.position, dVec, 0.5f, mask);
-                Debug.DrawRay(transform.position, dVec, Color.white);
-                if (hit.collider != null)
-                {
-                    Debug.Log("Turning 2");
+                    if (test)
+                    {
+                        Debug.Log("null");
+                    }
+                    Debug.Log("Turning 1");
                     Turn();
                 }
                 else
                 {
-                    Vector3 origin = transform.position;
-                    origin.y -= 0.3f;
-                    hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy2")));
-                    if (hit.collider != null && hit.collider.CompareTag("Player")  && !animator.GetBool("charging"))
+                    if (test)
                     {
-                        animator.SetBool("chargePrep", true);
-                        currentChargeTime -= Time.deltaTime;
+                        Debug.Log(hit.collider.name);
+                    }
+                    if (!animator.GetBool("chargePrep") && !animator.GetBool("charging"))
+                    {
+                        currentChargeTime = chargePrepAnimaton.clip.length;
+                    }
+
+                        Vector3 origin = transform.position;
+                        dVec = new Vector2(dir, 0);
+                        origin.y -= 0.3f;
+                        hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy2")));
+                        if (hit.collider != null && hit.collider.CompareTag("Player") && !animator.GetBool("charging"))
+                        {
+                            animator.SetBool("chargePrep", true);
+                            currentChargeTime -= Time.deltaTime;
+                        }
+                        else
+                        {
+                            animator.SetBool("chargePrep", false);
+                        }
+                        if (currentChargeTime <= 0)
+                        {
+                            animator.SetBool("moving", false);
+                            animator.SetBool("charging", true);
+                            animator.SetBool("chargePrep", false);
+                            mult = chargeMult;
+                        }
+                        if (!animator.GetBool("chargePrep"))
+                        {
+                            rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
+                        }
+                    
+                }
+                if (!turning)
+                {
+                    if (rb.velocity.x > 0 && !animator.GetBool("charging"))
+                    {
+                        animator.SetBool("moving", true);
+                        if (transform.eulerAngles.y == 180)
+                        {
+                            transform.eulerAngles = new Vector3(0, 180, 0);
+                        }
+                    }
+                    else if (rb.velocity.x < 0 && !animator.GetBool("charging"))
+                    {
+                        animator.SetBool("moving", true);
+                        if (transform.eulerAngles.y == 0)
+                        {
+                            transform.eulerAngles = new Vector3(0, 0, 0);
+                        }
                     }
                     else
                     {
-                        animator.SetBool("chargePrep", false);
-                    }
-                    if (currentChargeTime <= 0)
-                    {
-                        animator.SetBool("chargePrep", false);
-                        animator.SetBool("charging", true);
-                        mult = chargeMult;
-                    }
-                    if(animator.GetBool("charging") &&  hit.collider.IsTouchingLayers(1 << LayerMask.NameToLayer("Bounds")))
-                    {
-                        animator.SetBool("charging", false);
-                        animator.SetBool("hitWall", true);
-                        Hit(1);
-                    }
-                    if (!animator.GetBool("chargePrep"))
-                    {
-                        Debug.Log("dir: " + dir);
-                        Debug.Log("moveSpeed: " + moveSpeed);
-                        Debug.Log("mult: " + mult);
-                        rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
+                        animator.SetBool("moving", false);
                     }
                 }
-            }
-            if (!turning)
-            {
-                if (rb.velocity.x > 0)
-                {
-                    animator.SetBool("moving", true);
-                    if (transform.eulerAngles.y == 180)
-                    {
-                        transform.eulerAngles = new Vector3(0, 180, 0);
-                    }
-                }
-                else if (rb.velocity.x < 0)
-                {
-                    animator.SetBool("moving", true);
-                    if (transform.eulerAngles.y == 0)
-                    {
-                        transform.eulerAngles = new Vector3(0, 0, 0);
-                    }
-                }
-                else
-                {
-                    animator.SetBool("moving", false);
-                }
-            }
 
-            if (turning)
+                if (turning)
+                {
+                    turning = false;
+                }
+            }
+            else
             {
-                turning = false;
+                timeGettingUp -= Time.deltaTime;
             }
         }
     }
@@ -273,6 +274,22 @@ public class PFDreadKnight : EnemyBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             grounded = true;
+        }
+
+        if (collision.collider.CompareTag("Bound"))
+        {
+            if (animator.GetBool("charging"))
+            {
+                animator.SetBool("charging", false);
+                animator.SetBool("hitWall", true);
+                Hit(1);
+                timeGettingUp = timeToGetUp;
+                rb.velocity = new Vector2(-dir, 0.5f);
+            }
+            else
+            {
+                Turn();
+            }
         }
     }
 
