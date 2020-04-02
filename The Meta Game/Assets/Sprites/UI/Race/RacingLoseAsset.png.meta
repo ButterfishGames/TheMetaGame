@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 52428521860f73949b10883b2e6e6575
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -4276175050392089124
+    second: RacingLoseAsset_0
+  - first:
+      213: 3792351426628912909
+    second: RacingLoseAsset_1
+  - first:
+      213: -7347258468706880293
+    second: RacingLoseAsset_2
+  - first:
+      213: 2344745434238572315
+    second: RacingLoseAsset_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -84,7 +96,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: RacingLoseAsset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 864
+        width: 516
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfd2284b85751b646aa70a303920b401
+      internalID: -4276175050392089124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RacingLoseAsset_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 516
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138d9156f0d2fce4c8d08d0712bcac16
+      internalID: 3792351426628912909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RacingLoseAsset_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 516
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17e444a3a3ced4c4dba70a8b509bb4b1
+      internalID: -7347258468706880293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RacingLoseAsset_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 516
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd73086d41697944480267455939b2ba
+      internalID: 2344745434238572315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 4984d60b32059b74e965ae5c2ff2b7a6
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2823006711898482267
+    second: RacingWinAsset 1_0
+  - first:
+      213: -8743741159747853778
+    second: RacingWinAsset 1_1
+  - first:
+      213: -420162003406268207
+    second: RacingWinAsset 1_2
+  - first:
+      213: -5575941180555962974
+    second: RacingWinAsset 1_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -84,7 +96,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: RacingWinAsset 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 864
+        width: 612
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d5a4dfc8b583b42b1aa256df2e85f9
+      internalID: -2823006711898482267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RacingWinAsset 1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 612
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c73a3d8c16b67e541abfd0d43cfd805a
+      internalID: -8743741159747853778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RacingWinAsset 1_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 612
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2481808579c5cda4e83e3dfd1dae09f4
+      internalID: -420162003406268207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RacingWinAsset 1_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 612
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7305d94093cae02439fc9a1a988e7003
+      internalID: -5575941180555962974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
