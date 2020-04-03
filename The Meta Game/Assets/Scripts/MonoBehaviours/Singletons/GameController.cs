@@ -1527,7 +1527,6 @@ public class GameController : MonoBehaviour
 
     public void SetPaused(bool val)
     {
-        Debug.Log("this happens");
         paused = val;
     }
 
