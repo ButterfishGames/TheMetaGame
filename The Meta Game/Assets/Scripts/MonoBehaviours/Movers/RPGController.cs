@@ -93,6 +93,11 @@ public class RPGController : Mover
             return;
         }
 
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         Interact();
     }
 

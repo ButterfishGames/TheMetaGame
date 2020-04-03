@@ -14,6 +14,10 @@ public class GameController : MonoBehaviour
     /// </summary>
     public static GameController singleton;
 
+    public AudioClip rpgCombatBGM, datingSimBGM;
+
+    private AudioClip currentBGM;
+
     public RenderTexture rTex;
 
     public GameObject gCanv;
@@ -241,6 +245,16 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         if (numUnlocked <= 1)
         {
             return;
@@ -427,7 +441,9 @@ public class GameController : MonoBehaviour
         {
             equipped = GameMode.platformer;
         }
-        
+
+        currentBGM = GameObject.Find("Song").GetComponent<AudioSource>().clip;
+
         StartCoroutine(Switch());
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -442,8 +458,14 @@ public class GameController : MonoBehaviour
             Cursor.visible = true;
         }
 
+        /*
         if (glitching)
         {
+            GameObject gCam = GameObject.Find("GCam");
+            if (gCam != null)
+            {
+                gCam.SetActive(true);
+            }
             gCanv.SetActive(true);
 
             Camera.main.GetComponent<Camera>().targetTexture = rTex;
@@ -459,6 +481,7 @@ public class GameController : MonoBehaviour
             }
             gCanv.SetActive(false);
         }
+        */
 
         if (switchMenu.activeInHierarchy)
         {
@@ -1180,6 +1203,11 @@ public class GameController : MonoBehaviour
         dating = true;
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
+
+        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+        source.clip = datingSimBGM;
+        source.Play();
+
         ToggleSwitchPanel(false);
         DialogueManager.singleton.StartDialogue(datingDialogues[0], true, 0);
         StartCoroutine(LevelFade(true));
@@ -1193,6 +1221,11 @@ public class GameController : MonoBehaviour
         {
             DialogueManager.singleton.EndDialogue(false);
         }
+
+        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+        source.clip = currentBGM;
+        source.Play();
+
         ToggleSwitchPanel(true);
         StartCoroutine(LevelFade(true));
         dating = false;
@@ -1206,6 +1239,11 @@ public class GameController : MonoBehaviour
         {
             DialogueManager.singleton.EndDialogue(false);
         }
+
+        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+        source.clip = currentBGM;
+        source.Play();
+
         StartCoroutine(LevelFade(true));
         ToggleSwitchPanel(true);
         dating = false;
@@ -1489,6 +1527,7 @@ public class GameController : MonoBehaviour
 
     public void SetPaused(bool val)
     {
+        Debug.Log("this happens");
         paused = val;
     }
 
@@ -1573,6 +1612,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(buildIndex);
         yield return new WaitForEndOfFrame();
+        currentBGM = GameObject.Find("Song").GetComponent<AudioSource>().clip;
         SwitchMode(GameMode.platformer);
         
         if (numUnlocked > 1)
@@ -1593,6 +1633,11 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
         DialogueManager.singleton.EndDialogue(false);
         yield return new WaitForEndOfFrame();
+
+        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+        source.clip = rpgCombatBGM;
+        source.Play();
+
         GameObject attackBtn = null;
         while (attackBtn == null)
         {
@@ -1626,6 +1671,11 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.UnloadSceneAsync(2);
+
+        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+        source.clip = currentBGM;
+        source.Play();
+
         yield return new WaitForEndOfFrame();
         StartCoroutine(LevelFade(true));
         GameObject.Find("Player").GetComponent<RPGController>().SetEncountering(false);

@@ -127,6 +127,16 @@ public abstract class Mover : MonoBehaviour
             return;
         }
 
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         hor = AxisProc(hor, hRaw);
         ver = AxisProc(ver, vRaw);
         

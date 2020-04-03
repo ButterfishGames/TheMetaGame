@@ -6,6 +6,7 @@ public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager singleton;
     public Cutscene currentScene;
+    public bool scening;
 
     private void Start()
     {
@@ -18,6 +19,8 @@ public class CutsceneManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        scening = false;
     }
 
     public void StartScene(Cutscene cutscene)
@@ -30,7 +33,7 @@ public class CutsceneManager : MonoBehaviour
     {
         bool lockCam = false;
 
-        GameController.singleton.SetPaused(true);
+        scening = true;
 
         Camera.main.GetComponent<CameraScroll>().enabled = false;
         
@@ -97,6 +100,7 @@ public class CutsceneManager : MonoBehaviour
                     break;
 
                 case StepType.dialogue:
+                    GameController.singleton.SetPaused(false);
                     DialogueManager.singleton.StartDialogue(currentScene.steps[i].dialogue);
                     yield return new WaitUntil(() => !DialogueManager.singleton.GetDisplaying());
                     break;
@@ -170,10 +174,9 @@ public class CutsceneManager : MonoBehaviour
         
         Camera.main.GetComponent<CameraScroll>().enabled = !lockCam;
 
-        GameController.singleton.SetPaused(false);
-
         yield return new WaitForEndOfFrame();
         currentScene = null;
+        scening = false;
         yield return null;
     }
 

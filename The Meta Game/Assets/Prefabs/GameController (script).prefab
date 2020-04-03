@@ -3410,6 +3410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315bf6a0b140cf04bb9665de29bc1b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rpgCombatBGM: {fileID: 8300000, guid: f3697f039363c6f4fbe55a2e2a080779, type: 3}
+  datingSimBGM: {fileID: 8300000, guid: 70a14f4df18f8f44fabee9c5e7f9ef29, type: 3}
   rTex: {fileID: 8400000, guid: 5063f1624fd79fc4cb0de70c1443742c, type: 2}
   gCanv: {fileID: 8246059260980274710}
   rTarg: {fileID: 647865818163936502}
@@ -3462,7 +3464,7 @@ MonoBehaviour:
   unlockFadeTime: 1
   maxHP: 100
   maxMP: 10
-  maxSP: 0
+  maxSP: 10
   floorDamage: 8
   errDispTime: 2
   errFadeTime: 2
@@ -4068,7 +4070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4474975401112553929
 RectTransform:
   m_ObjectHideFlags: 0

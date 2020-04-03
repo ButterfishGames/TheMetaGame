@@ -64,6 +64,16 @@ public class PFController : Mover
             return;
         }
 
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         Jump();
     }
 
@@ -94,6 +104,16 @@ public class PFController : Mover
             return;
         }
 
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         base.Update();
 
         GroundWallCheck();
@@ -111,6 +131,16 @@ public class PFController : Mover
     protected override void Move(float h, float v)
     {
         if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
         {
             return;
         }

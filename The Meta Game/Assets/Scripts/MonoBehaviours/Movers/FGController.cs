@@ -196,12 +196,32 @@ public class FGController : Mover
             return;
         }
 
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         Jump();
     }
 
     private void LightPerfHandle(InputAction.CallbackContext context)
     {
         if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
         {
             return;
         }
@@ -233,6 +253,16 @@ public class FGController : Mover
             return;
         }
 
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         if (inputs.SequenceEqual(specialRight) || inputs.SequenceEqual(specialLeft))
         {
             attacking = true;
@@ -256,6 +286,16 @@ public class FGController : Mover
     private void HeavyPerfHandle(InputAction.CallbackContext context)
     {
         if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
         {
             return;
         }
@@ -397,6 +437,16 @@ public class FGController : Mover
     private void FixedUpdate()
     {
         if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
         {
             return;
         }
