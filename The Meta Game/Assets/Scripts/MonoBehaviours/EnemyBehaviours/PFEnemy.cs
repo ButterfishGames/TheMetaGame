@@ -123,7 +123,7 @@ public class PFEnemy : EnemyBehaviour
         LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("Checkpoint")));
 
         hit = Physics2D.Raycast(transform.position, dVec, 2, mask);
-
+        Debug.DrawRay(transform.position, dVec, Color.red);
         if (hit.collider == null)
         {
             if (test)
@@ -140,6 +140,7 @@ public class PFEnemy : EnemyBehaviour
             }
             dVec = new Vector2(dir, 0);
             hit = Physics2D.Raycast(transform.position, dVec, 0.5f, mask);
+            Debug.DrawRay(transform.position, dVec, Color.white);
             if (hit.collider != null)
             {
                 Turn();
@@ -182,7 +183,10 @@ public class PFEnemy : EnemyBehaviour
             }
         }
 
-        GetComponent<FGEnemy>().dir = dir;
+        if (GetComponent<FGEnemy>() != null)
+        {
+            GetComponent<FGEnemy>().dir = dir;
+        }
 
         if (turning)
         {
