@@ -82,8 +82,13 @@ public class PFDreadKnight : EnemyBehaviour
 
     private float currentChargeTime;
 
+    [Tooltip("Cutscene before fight.")]
     public GameObject cutscene;
 
+    [Tooltip("Cutscene after fight. MAKE SURE IT IS INACTIVE IN THE SCENE.")]
+    public GameObject endCutscene;
+
+    [Tooltip("Boss fight room barriers.")]
     public GameObject barriers;
     #endregion
 
@@ -143,8 +148,14 @@ public class PFDreadKnight : EnemyBehaviour
             }
             else
             {
-                barriers.SetActive(false);
-                inCutscene = true;
+                if (!animator.GetBool("hitWall"))
+                {
+                    barriers.SetActive(false);
+                    endCutscene.SetActive(true);
+                    rb.gravityScale = 0.0f;
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    inCutscene = true;
+                }
             }
         }
 

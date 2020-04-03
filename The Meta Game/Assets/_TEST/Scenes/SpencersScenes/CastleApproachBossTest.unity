@@ -756,7 +756,7 @@ PrefabInstance:
     - target: {fileID: 3548829814031940256, guid: 4e4411ca4356a5a4fb00693bbb1d6e97,
         type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3548829814031940256, guid: 4e4411ca4356a5a4fb00693bbb1d6e97,
         type: 3}
@@ -2736,6 +2736,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &425224627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425224630}
+  - component: {fileID: 425224629}
+  - component: {fileID: 425224628}
+  m_Layer: 0
+  m_Name: Scene (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &425224628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425224627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c03dc093293f04f88ca526388419fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: {fileID: 11400000, guid: 37e755a3f0c434b479372be7e08c63de, type: 2}
+  oneTime: 1
+  triggerable: 1
+--- !u!61 &425224629
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425224627}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &425224630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425224627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 232, y: 47.82, z: -47.777344}
+  m_LocalScale: {x: 28.16, y: 9.22, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &446557093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2873,7 +2946,7 @@ GameObject:
   - component: {fileID: 475858897}
   - component: {fileID: 475858898}
   - component: {fileID: 475858899}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: BarrierLeft3
   m_TagString: Bound
   m_Icon: {fileID: 0}
@@ -3058,13 +3131,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 537172473}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BossFightBarriers
   m_TagString: Bound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &537172473
 Transform:
   m_ObjectHideFlags: 0
@@ -3082,7 +3155,7 @@ Transform:
   - {fileID: 1989532319}
   - {fileID: 475858897}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &564131178
 GameObject:
@@ -111049,7 +111122,7 @@ GameObject:
   - component: {fileID: 770221995}
   - component: {fileID: 770221994}
   - component: {fileID: 770221996}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: BarrierRight2
   m_TagString: Bound
   m_Icon: {fileID: 0}
@@ -112697,11 +112770,12 @@ MonoBehaviour:
   chargeMult: 3
   viewDist: 10
   startDir: 1
-  maxHP: 3
+  maxHP: 1
   damageFadeTime: 0.5
   test: 0
   dir: 1
   cutscene: {fileID: 1513736380}
+  endCutscene: {fileID: 425224627}
   barriers: {fileID: 537172472}
 --- !u!50 &1023505467
 Rigidbody2D:
@@ -112766,7 +112840,7 @@ Transform:
   - {fileID: 302165970}
   - {fileID: 58355937}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &1023505470
 Animation:
@@ -113340,7 +113414,7 @@ GameObject:
   - component: {fileID: 1169881887}
   m_Layer: 8
   m_Name: BarrierRight1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114866,7 +114940,7 @@ GameObject:
   - component: {fileID: 1435809903}
   m_Layer: 8
   m_Name: BarrierLeft1
-  m_TagString: Bound
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115128,7 +115202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: {fileID: 11400000, guid: ce20c32f1eaa82742b13fb028440997b, type: 2}
-  oneTime: 0
+  oneTime: 1
   triggerable: 1
 --- !u!61 &1513736382
 BoxCollider2D:
@@ -115239,7 +115313,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1530085907
 GameObject:
@@ -115456,7 +115530,7 @@ PrefabInstance:
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
@@ -116984,7 +117058,7 @@ PrefabInstance:
     - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 4886264583296755184, guid: 17cbca61a89f49c428c3fc51536a7376,
         type: 3}
@@ -117433,9 +117507,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1989532319}
   - component: {fileID: 1989532320}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: BarrierLeft2
-  m_TagString: Bound
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
