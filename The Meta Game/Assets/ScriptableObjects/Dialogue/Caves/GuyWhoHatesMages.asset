@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
+  m_Name: GuyWhoHatesMages
+  m_EditorClassIdentifier: 
+  lines:
+  - name: Angry Miner
+    line: That mage caused all this, we never had a problem till he showed up with
+      his fancy magic lights and look at us now.
+    sprite: {fileID: 0}
+  type: 1
+  branches: []
+  branchDialogues: []
+  relationshipChanges: 
