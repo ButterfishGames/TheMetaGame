@@ -51,6 +51,32 @@ public class CameraScroll : MonoBehaviour
                 posY = player.position.y + yOffset;
                 break;
 
+            case GameController.GameMode.racing:
+                if (player.GetComponent<RaceController>().GetDir() == 1)
+                {
+                    if (player.position.x > transform.position.x)
+                    {
+                        posX = player.position.x;
+                    }
+                    else
+                    {
+                        posX = transform.position.x;
+                    }
+                }
+                else
+                {
+                    if (player.position.x < transform.position.x)
+                    {
+                        posX = player.position.x;
+                    }
+                    else
+                    {
+                        posX = transform.position.x;
+                    }
+                }
+                posY = player.position.y + yOffset;
+                break;
+
             default:
                 posX = transform.position.x;
                 posY = transform.position.y;

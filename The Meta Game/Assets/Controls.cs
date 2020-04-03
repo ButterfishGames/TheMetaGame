@@ -1240,6 +1240,17 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""cc48a883-728b-4093-a656-b43382d03729"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ff84f395-83fa-4dbd-9bd1-18992e5f58f7"",
                     ""path"": ""<XInputController>/buttonEast"",
                     ""interactions"": """",

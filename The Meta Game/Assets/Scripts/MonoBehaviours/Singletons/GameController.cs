@@ -35,7 +35,8 @@ public class GameController : MonoBehaviour
         fps,
         fighting,
         rhythm,
-        dating
+        dating,
+        racing
     };
 
     [Tooltip("Currently equipped gamemode. Should default to platformer.")]
