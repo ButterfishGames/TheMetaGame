@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: NewDialogue
+  m_Name: FirstGuard
   m_EditorClassIdentifier: 
   lines:
-  - name: Guard
-    line: I never thought I would actually meet someone here on this side, I always
-      thought it was pointless to patrol over here.
+  - name: Old Guard
+    line: Hello. It's pretty dangerous up ahead, so you should be careful if.... hmmm...
+      have we met before? You look familiar for some reason.
     sprite: {fileID: 0}
   type: 1
   branches: []

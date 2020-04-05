@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: NewDialogue
+  m_Name: GuardTwo
   m_EditorClassIdentifier: 
   lines:
-  - name: Guard
-    line: I never thought I would actually meet someone here on this side, I always
-      thought it was pointless to patrol over here.
+  - name: Irritated Guard
+    line: This is crazy, I made one little mistake and broke a vase and now I am stuck
+      here on this side of the platform with nothing to do. I can't even read the
+      books here with me.
     sprite: {fileID: 0}
   type: 1
   branches: []
