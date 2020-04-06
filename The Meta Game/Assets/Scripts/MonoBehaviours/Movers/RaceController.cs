@@ -7,15 +7,14 @@ using TMPro;
 
 public class RaceController : Mover
 {
-    public float baseSpeed, maxSpeed, accelRate;
+    public float baseSpeed, maxSpeed, accelRate, maxAccel;
     public float tiltRate, minTilt, maxTilt;
     public float jumpForce;
     public float deathWait;
     public float spawnDiff;
 
     public GameObject enemyRacerPrefab;
-
-    public TextMeshProUGUI placeText;
+    public GameObject racerCol;
 
     private float speed;
     private float accel;
@@ -27,38 +26,80 @@ public class RaceController : Mover
 
     private int dir;
 
-    private bool grounded;
+    private bool grounded = true;
     private bool dying;
 
     private GameObject[] places = new GameObject[4];
+
+    private TextMeshProUGUI placeText;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (placeText == null)
+        {
+            GameObject pTemp = GameObject.Find("PlaceText");
+            if (pTemp != null)
+            {
+                placeText = pTemp.GetComponent<TextMeshProUGUI>();
+
+                placeText.gameObject.SetActive(false);
+            }
+        }
+    }
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
+        dir = transform.rotation == Quaternion.identity ? 1 : -1;
+
         Vector3 spawnPos = transform.position;
-        spawnPos.x += spawnDiff * 3;
+        spawnPos.x += (dir * spawnDiff) * 3;
         for (int i = 0; i < 3; i++)
         {
             places[i] = Instantiate(enemyRacerPrefab, spawnPos, Quaternion.identity);
+            spawnPos.x -= dir * spawnDiff;
+            places[i].GetComponent<RaceEnemy>().SetDir(dir);
         }
         places[3] = gameObject;
 
-        dir = transform.rotation == Quaternion.identity ? 1 : -1;
+        racerCol.SetActive(true);
+
         StartCoroutine(StartRace());
 
         controls.Player.Jump.performed += JumpHandle;
 
         controls.Player.Jump.Enable();
+
+        grounded = true;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
 
+        StopAllCoroutines();
+
         controls.Player.Jump.performed -= JumpHandle;
 
         controls.Player.Jump.Disable();
+
+        for (int i = 3; i > System.Array.IndexOf(places, gameObject); i--)
+        {
+            Destroy(places[i]);
+        }
+
+        speed = 0;
+        accel = 0;
+        tilt = 0;
+        prevX = 0;
+
+        placeText.gameObject.SetActive(false);
+
+        transform.rotation = dir == 1 ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
+        started = false;
     }
 
     private void JumpHandle(InputAction.CallbackContext context)
@@ -96,7 +137,7 @@ public class RaceController : Mover
         {
             for (int i = 0; i < 3; i++)
             {
-                if (places[i].transform.position.x < places[i+1].transform.position.x)
+                if (places[i] == null || (places[i] != null && places[i+1] != null) && (places[i].transform.position.x < places[i+1].transform.position.x))
                 {
                     GameObject temp = places[i];
                     places[i] = places[i+1];
@@ -108,7 +149,7 @@ public class RaceController : Mover
         {
             for (int i = 0; i < 3; i++)
             {
-                if (places[i].transform.position.x > places[i+1].transform.position.x)
+                if (places[i] == null || (places[i] != null && places[i+1] != null) && (places[i].transform.position.x > places[i+1].transform.position.x))
                 {
                     GameObject temp = places[i];
                     places[i] = places[i+1];
@@ -136,22 +177,43 @@ public class RaceController : Mover
 
         if (started && grounded)
         {
-            speed = dir == 1 ? Mathf.Clamp((speed + accel) * Time.deltaTime, 0, maxSpeed) :
-                Mathf.Clamp((speed + accel) * Time.deltaTime, -maxSpeed, 0);
+            speed = dir == 1 ? Mathf.Clamp((speed + accel), 0, maxSpeed) :
+                Mathf.Clamp((speed + accel), -maxSpeed, 0);
         }
 
         prevX = rb.velocity.x;
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        rb.velocity = new Vector2(speed * Time.deltaTime, rb.velocity.y);
         if (Mathf.Round(rb.velocity.x) == 0)
         {
             prevX = 0;
         }
 
-        transform.rotation = Quaternion.Euler(0, 0, tilt);
+        if (grounded && (tilt < minTilt || tilt > maxTilt) && !dying)
+        {
+            dying = true;
+            StartCoroutine(Crash());
+        }
+
+        if (tilt < -360 + maxTilt)
+        {
+            tilt += 360;
+        }
+        else if (tilt > 360 + minTilt)
+        {
+            tilt -= 360;
+        }
+
+        transform.rotation = dir == 1 ? Quaternion.Euler(0, 0, tilt) : Quaternion.Euler(0, 180, tilt);
     }
 
     private IEnumerator StartRace()
     {
+        if (placeText == null)
+        {
+            placeText = GameObject.Find("PlaceText").GetComponent<TextMeshProUGUI>();
+        }
+        placeText.gameObject.SetActive(true);
+
         // Replace with countdown;
         Debug.Log('3');
         yield return new WaitForSeconds(1);
@@ -161,13 +223,19 @@ public class RaceController : Mover
         yield return new WaitForSeconds(1);
         Debug.Log("Go!");
         
+        for (int i = 0; i < 3; i++)
+        {
+            places[i].GetComponent<RaceEnemy>().StartRace(i);
+        }
+
         started = true;
     }
 
     protected override void Move(float h, float v)
     {
-        accel += h * accelRate;
-        tilt = Mathf.Clamp(tilt + v * tiltRate, minTilt, maxTilt);
+        accel = speed > baseSpeed ? Mathf.Clamp(accel + h * accelRate * (baseSpeed / speed), -maxAccel, maxAccel) : 
+            Mathf.Clamp(accel + h * accelRate, -maxAccel, maxAccel);
+        tilt = grounded ? tilt + v * tiltRate : tilt + v * tiltRate * 1.5f;
     }
 
     private void Jump()
@@ -199,16 +267,11 @@ public class RaceController : Mover
         }
         else if (collision.CompareTag("Killbox"))
         {
-            if (!GetComponent<AudioSource>().isPlaying)
-            {
-                GetComponent<AudioSource>().Play();
-            }
-
-            GameController.singleton.Die();
+            StartCoroutine(Crash());
         }
     }
 
-    private IEnumerator Crash()
+    public IEnumerator Crash()
     {
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
 

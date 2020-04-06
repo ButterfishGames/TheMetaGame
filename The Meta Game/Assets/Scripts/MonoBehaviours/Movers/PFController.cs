@@ -35,6 +35,8 @@ public class PFController : Mover
 
     private int wallDir;
 
+    private bool dying;
+
     private BoxCollider2D groundTrigger;
 
     protected override void OnEnable()
@@ -83,6 +85,8 @@ public class PFController : Mover
         {
             SaveManager.singleton.InitScene();
         }
+
+        dying = false;
 
         groundTrigger = null;
         BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
@@ -219,6 +223,12 @@ public class PFController : Mover
 
     public IEnumerator Die(bool hit)
     {
+        if (dying)
+        {
+            yield return null;
+        }
+
+        dying = true;
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
 
         if (hit)

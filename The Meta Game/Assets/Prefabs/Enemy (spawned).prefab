@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 1498483545563416922}
   - component: {fileID: -324677560552814477}
   - component: {fileID: 1499245470291664175}
+  - component: {fileID: 6905069016968555192}
   - component: {fileID: -242363655407120299}
   m_Layer: 11
   m_Name: Enemy (spawned)
@@ -240,6 +241,18 @@ MonoBehaviour:
   hadoDistanceFromEnemy: 0.15
   hadoStartup: 30
   hadoEndLag: 20
+--- !u!114 &6905069016968555192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498483545563416927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2729617a02237147bb0a9ed884cbba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &-242363655407120299
 AudioSource:
   m_ObjectHideFlags: 0

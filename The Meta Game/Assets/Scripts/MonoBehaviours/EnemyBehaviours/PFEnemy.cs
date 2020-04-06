@@ -196,19 +196,23 @@ public class PFEnemy : EnemyBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (enabled)
         {
-            if (collision.collider.gameObject.GetComponent<PFController>().enabled) {
-                rb.velocity = Vector2.zero;
-                PFController pfCon = collision.collider.GetComponent<PFController>();
-                GetComponent<AudioSource>().Play();
-                pfCon.StartCoroutine(pfCon.Die(true));
+            if (collision.collider.CompareTag("Player"))
+            {
+                if (collision.collider.gameObject.GetComponent<PFController>().enabled)
+                {
+                    rb.velocity = Vector2.zero;
+                    PFController pfCon = collision.collider.GetComponent<PFController>();
+                    GetComponent<AudioSource>().Play();
+                    pfCon.StartCoroutine(pfCon.Die(true));
+                }
             }
-        }
 
-        if (collision.collider.CompareTag("Enemy"))
-        {
-            Turn();
+            if (collision.collider.CompareTag("Enemy"))
+            {
+                Turn();
+            }
         }
 
         if (collision.collider.CompareTag("Ground"))
@@ -243,6 +247,11 @@ public class PFEnemy : EnemyBehaviour
 
     private void Turn()
     {
+        if(!enabled)
+        {
+            return;
+        }
+
         turning = true;
         
         animator.SetBool("charging", false);

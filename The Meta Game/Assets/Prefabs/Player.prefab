@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1910378955281090536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3494767994218730556}
+  - component: {fileID: 5053131957795248187}
+  m_Layer: 17
+  m_Name: RacerCol
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3494767994218730556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910378955281090536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2826980262528341208}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &5053131957795248187
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910378955281090536}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 0.7}
+  m_Direction: 1
 --- !u!1 &2826980262181812371
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,6 +106,7 @@ GameObject:
   - component: {fileID: 2826980262528341210}
   - component: {fileID: -7817119665413950357}
   - component: {fileID: 1857426907251737140}
+  - component: {fileID: -3694009146834185256}
   - component: {fileID: 8073731519011545422}
   m_Layer: 9
   m_Name: Player
@@ -82,6 +130,7 @@ Transform:
   - {fileID: 2826980263204802814}
   - {fileID: 2826980262181812380}
   - {fileID: 151994550355385790}
+  - {fileID: 3494767994218730556}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -274,6 +323,39 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: dfccf734445885d47bd6eba50b53afd1, type: 3}
   deathClip: {fileID: 8300000, guid: 789036896d9c4464c87cf1535e8097f3, type: 3}
   inGround: 0
+--- !u!114 &-3694009146834185256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2826980262528341213}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff96e43f4bad88b4db1f47208d3cfdbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 3
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  hor: 0
+  ver: 0
+  hRaw: 0
+  vRaw: 0
+  baseSpeed: 400
+  maxSpeed: 625
+  accelRate: 5
+  maxAccel: 30
+  tiltRate: 1
+  minTilt: -45
+  maxTilt: 45
+  jumpForce: 14
+  deathWait: 1
+  spawnDiff: 1
+  enemyRacerPrefab: {fileID: 1498483545563416927, guid: c0e45d82f7786df439552485f9e7e8f6,
+    type: 3}
+  racerCol: {fileID: 1910378955281090536}
 --- !u!82 &8073731519011545422
 AudioSource:
   m_ObjectHideFlags: 0

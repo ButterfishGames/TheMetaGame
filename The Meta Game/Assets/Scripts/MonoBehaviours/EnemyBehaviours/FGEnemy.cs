@@ -63,7 +63,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// Reference to BoxCollider2D component on object
     /// </summary>
-    private BoxCollider2D col;
+    private CapsuleCollider2D col;
 
     /// <summary>
     /// Main Camera to tell if enemy is within the viewport
@@ -232,7 +232,7 @@ public class FGEnemy : EnemyBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<BoxCollider2D>();
+        col = GetComponent<CapsuleCollider2D>();
         state = EnemyState.neutral;
         hitbox = transform.Find("EnemyHitbox").GetComponent<BoxCollider2D>();
         hitThisFrame = false;

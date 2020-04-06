@@ -145,6 +145,7 @@ public class CutsceneManager : MonoBehaviour
                     {
                         GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(currentScene.steps[i].scene));
                     }
+                    scening = false;
                     StopAllCoroutines();
                     break;
 

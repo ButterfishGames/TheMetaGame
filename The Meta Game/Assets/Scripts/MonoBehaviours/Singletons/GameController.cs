@@ -213,13 +213,11 @@ public class GameController : MonoBehaviour
 
         controls.Player.Menu.performed += MenuHandle;
         controls.UI.Cancel.performed += CancelHandle;
-        controls.UI.Escape.performed += EscapeHandle;
         controls.Player.SwitchMode.started += SwitchHandle;
         controls.Player.Pause.started += PauseHandle;
 
         controls.Player.Menu.Enable();
         controls.UI.Cancel.Enable();
-        controls.UI.Escape.Enable();
         controls.Player.SwitchMode.Enable();
         controls.Player.Pause.Enable();
     }
@@ -228,13 +226,11 @@ public class GameController : MonoBehaviour
     {
         controls.Player.Menu.performed -= MenuHandle;
         controls.UI.Cancel.performed -= CancelHandle;
-        controls.UI.Escape.performed -= EscapeHandle;
         controls.Player.SwitchMode.started -= SwitchHandle;
         controls.Player.Pause.started -= PauseHandle;
 
         controls.Player.Menu.Disable();
         controls.UI.Cancel.Disable();
-        controls.UI.Escape.Disable();
         controls.Player.SwitchMode.Disable();
         controls.Player.Pause.Disable();
     }
@@ -342,24 +338,6 @@ public class GameController : MonoBehaviour
         }
 
         ToggleSwitchMenu();
-    }
-
-    private void EscapeHandle (InputAction.CallbackContext context)
-    {
-        if (switchMenu.activeInHierarchy)
-        {
-            ToggleSwitchMenu();
-        }
-        else
-        {
-            if (demoBuild)
-            {
-                if (!onMenu)
-                {
-                    ReturnToMenu();
-                }
-            }
-        }
     }
 
     private void CancelHandle (InputAction.CallbackContext context)
@@ -678,6 +656,7 @@ public class GameController : MonoBehaviour
                 }
 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
+                player.transform.Find("RacerCol").gameObject.SetActive(false);
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
@@ -767,6 +746,7 @@ public class GameController : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
+                player.transform.Find("RacerCol").gameObject.SetActive(false);
 
                 rCon = player.GetComponent<RhythmController>();
                 if (rCon.enabled)
@@ -882,6 +862,7 @@ public class GameController : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
                 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
+                player.transform.Find("RacerCol").gameObject.SetActive(false);
 
                 rpgCon = player.GetComponent<RPGController>();
                 if (rpgCon.mvmtCoroutine != null)
@@ -1039,6 +1020,7 @@ public class GameController : MonoBehaviour
                 player.GetComponent<Rigidbody2D>().gravityScale = gScale;
 
                 player.GetComponent<CapsuleCollider2D>().enabled = true;
+                player.transform.Find("RacerCol").gameObject.SetActive(false);
 
                 movers = player.GetComponents<Mover>();
                 foreach (Mover mover in movers)
@@ -1151,6 +1133,7 @@ public class GameController : MonoBehaviour
 
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 player.GetComponent<CapsuleCollider2D>().enabled = false;
+                player.transform.Find("RacerCol").gameObject.SetActive(false);
 
                 player.transform.rotation = Quaternion.identity;
 
@@ -1183,6 +1166,131 @@ public class GameController : MonoBehaviour
                 equippedStr = "Dating";
 
                 StartCoroutine(DatingTransition());
+                break;
+            #endregion
+            #region racing
+            case GameMode.racing:
+                modeInt = 6;
+                equippedStr = "Racing";
+
+                if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
+                {
+                    DialogueManager.singleton.EndDialogue(false);
+                }
+
+                if (GameObject.Find("Killbox") != null)
+                {
+                    GameObject.Find("Killbox").tag = "Killbox";
+                }
+                
+                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.name.Equals("CameraWall_L"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    enemy.transform.Find("EnemyHitbox").gameObject.SetActive(false);
+                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+
+                    foreach (EnemyBehaviour behaviour in behaviours)
+                    {
+                        if (behaviour.GetType().Equals(typeof(RaceObst)))
+                        {
+                            behaviour.enabled = true;
+                        }
+                        else
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+                    if (enemy.GetComponent<Rigidbody2D>() != null)
+                    {
+                        enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    }
+                }
+
+                player = GameObject.Find("Player");
+
+                rpgCon = player.GetComponent<RPGController>();
+                if (rpgCon.mvmtCoroutine != null)
+                {
+                    rpgCon.StopCoroutine(rpgCon.mvmtCoroutine);
+                    rpgCon.SetMoving(false);
+                    rpgCon.mvmtCoroutine = null;
+                }
+
+                rCon = player.GetComponent<RhythmController>();
+                if (rCon.enabled)
+                {
+                    player.transform.position = rCon.inGround ? rCon.startPos : player.transform.position;
+                    Camera.main.transform.position = new Vector3(
+                        player.transform.position.x,
+                        Camera.main.transform.position.y,
+                        Camera.main.transform.position.z
+                        );
+                }
+
+                player.GetComponent<Rigidbody2D>().gravityScale = gScale;
+                movers = player.GetComponents<Mover>();
+                foreach (Mover mover in movers)
+                {
+                    mover.transform.Find("Hitbox").gameObject.SetActive(false);
+                    mover.transform.Find("GroundTrigger").gameObject.SetActive(true);
+                    mover.transform.Find("GroundTrigger").GetComponent<BoxCollider2D>().size = new Vector2(0.71f, 0.69f);
+                    if (mover.GetType().Equals(typeof(RaceController)))
+                    {
+                        mover.enabled = true;
+                        mover.GetAnimator().SetBool("platformer", true);
+                        mover.GetAnimator().SetBool("fighter", false);
+                        mover.GetAnimator().SetBool("rpg", false);
+                        mover.GetAnimator().SetBool("rhythm", false);
+                    }
+                    else
+                    {
+                        mover.hor = 0;
+                        mover.ver = 0;
+                        mover.hRaw = 0;
+                        mover.vRaw = 0;
+                        mover.enabled = false;
+                    }
+                }
+
+                player.GetComponent<CapsuleCollider2D>().enabled = false;
+                player.transform.Find("RacerCol").gameObject.SetActive(true);
+
+                Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
+                Camera.main.GetComponent<FPSController>().enabled = false;
+                Camera.main.GetComponent<CameraScroll>().enabled = true;
+                if (onMenu)
+                {
+                    Camera.main.GetComponent<CameraScroll>().hScroll = false;
+                }
+                else
+                {
+                    Camera.main.GetComponent<CameraScroll>().hScroll = true;
+                }
+
+                staff = GameObject.Find("MusicalStaff(Clone)");
+                if (staff != null)
+                {
+                    Destroy(staff);
+                }
+
+                source = GameObject.Find("Song").GetComponent<AudioSource>();
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
                 break;
             #endregion
 
@@ -1382,7 +1490,7 @@ public class GameController : MonoBehaviour
             {
                 modes[i].unlocked = true;
                 unlockPanel.SetActive(true);
-                if (mode.Equals("Fighting") || mode.Equals("Rhythm"))
+                if (mode.Equals("Fighting") || mode.Equals("Rhythm") || mode.Equals("Racing"))
                 {
                     mode += " Game";
                 }
@@ -1630,7 +1738,7 @@ public class GameController : MonoBehaviour
         ToggleSwitchPanel(false);
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1, LoadSceneMode.Additive);
         DialogueManager.singleton.EndDialogue(false);
         yield return new WaitForEndOfFrame();
 
@@ -1670,7 +1778,17 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1);
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
-        SceneManager.UnloadSceneAsync(2);
+
+        int temp = SceneManager.GetActiveScene().buildIndex;
+
+        if (temp % 2 == 0)
+        {
+            SceneManager.UnloadSceneAsync(temp);
+        }
+        else
+        {
+            SceneManager.UnloadSceneAsync(temp+1);
+        }
 
         AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
         source.clip = currentBGM;
