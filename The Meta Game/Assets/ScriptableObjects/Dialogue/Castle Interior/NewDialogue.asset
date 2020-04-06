@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
   m_Name: NewDialogue
   m_EditorClassIdentifier: 
-  lines: []
-  type: 0
+  lines:
+  - name: Guard
+    line: I never thought I would actually meet someone here on this side, I always
+      thought it was pointless to patrol over here.
+    sprite: {fileID: 0}
+  type: 1
   branches: []
   branchDialogues: []
   relationshipChanges: 
