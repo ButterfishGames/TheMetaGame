@@ -349,6 +349,19 @@ public class RhythmController : Mover
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!enabled)
+        {
+            return;
+        }
+
+        if (collision.CompareTag("Ground"))
+        {
+            inGround = true;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!enabled)

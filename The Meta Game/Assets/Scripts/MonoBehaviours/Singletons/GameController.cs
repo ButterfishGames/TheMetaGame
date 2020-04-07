@@ -63,25 +63,6 @@ public class GameController : MonoBehaviour
     [Tooltip("Resets unlocked gamemodes to platformer only at start if enabled")]
     public bool resetUnlocks;
 
-    [System.Serializable]
-    public struct SpellStr
-    {
-        public Spell spell;
-        public bool unlocked;
-    }
-
-    [Tooltip("Spells unlocked. DO NOT DEFAULT TO ANY HEALING SPELLS")]
-    public SpellStr[] spellList;
-
-    [System.Serializable]
-    public struct SkillStr
-    {
-        public Skill skill;
-        public bool unlocked;
-    }
-
-    public SkillStr[] skillList;
-
     [Tooltip("Reference to prefab for game mode buttons in switch menu")]
     public GameObject modeButton;
 
@@ -139,6 +120,45 @@ public class GameController : MonoBehaviour
     public bool dating;
 
     private bool battling;
+
+    [System.Serializable]
+    public struct SpellStr
+    {
+        public Spell spell;
+        public bool unlocked;
+    }
+
+    [System.Serializable]
+    public struct SkillStr
+    {
+        public Skill skill;
+        public bool unlocked;
+    }
+
+    [System.Serializable]
+    public struct ArtStr
+    {
+        public string name;
+        public Sprite img;
+        public bool unlocked;
+        [TextArea(3,10)]
+        public string desc;
+    }
+
+    [System.Serializable]
+    public struct SongStr
+    {
+        public string name;
+        public Sprite img;
+        public AudioClip song;
+        public bool unlocked;
+    }
+
+    [Header("Unlockables")]
+    public SpellStr[] spellList;
+    public SkillStr[] skillList;
+    public ArtStr[] artList;
+    public SongStr[] songList;
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
@@ -1630,6 +1650,7 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(LevelFade(true));
         paused = false;
+        battling = false;
     }
 
     private IEnumerator UnlockFade()
