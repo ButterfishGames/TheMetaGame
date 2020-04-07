@@ -225,6 +225,8 @@ public class FGEnemy : EnemyBehaviour
     private bool comboed;
 
     private bool justComboed;
+
+    private BoxCollider2D groundTrigger;
     #endregion
 
     private void Start()
@@ -242,6 +244,15 @@ public class FGEnemy : EnemyBehaviour
         for (int i = 0; i < usedAttack.Length; i++)
         {
             usedAttack[i] = false;
+        }
+        groundTrigger = null;
+        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D col in cols)
+        {
+            if (col.name.Equals("GroundTrigger"))
+            {
+                groundTrigger = col;
+            }
         }
 
         currHP = maxHP;
@@ -274,6 +285,22 @@ public class FGEnemy : EnemyBehaviour
         }
         if (fighting == true)
         {
+            if (groundTrigger != null)
+            {
+                List<Collider2D> contacts = new List<Collider2D>();
+                groundTrigger.GetContacts(contacts);
+                foreach (Collider2D contact in contacts)
+                {
+                    if (contact.CompareTag("Ground"))
+                    {
+                        grounded = true;
+                    }
+                    else
+                    {
+                        grounded = false;
+                    }
+                }
+            }
             if (grounded == true)
             {
                 animator.SetBool("jumping", false);
@@ -707,22 +734,6 @@ public class FGEnemy : EnemyBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            grounded = true;
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            grounded = true;
-        }
-    }
-
     private void HitBoxSizeAndPos(float offsetX, float offsetY, float sizeX, float sizeY)
     {
         hitbox.offset = new Vector2(offsetX, offsetY);
@@ -789,14 +800,6 @@ public class FGEnemy : EnemyBehaviour
         attacking = false;
         animator.SetBool("attacking", false);
         attackCoRoutineRunning = false;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (grounded && collision.collider.CompareTag("Ground"))
-        {
-            grounded = false;
-        }
     }
 
     private IEnumerator Death()
