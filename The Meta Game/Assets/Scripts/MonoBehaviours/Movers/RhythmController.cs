@@ -63,6 +63,8 @@ public class RhythmController : Mover
         controls.Player.LeftNote.Disable();
         controls.Player.RightNote.Disable();
         controls.Player.DownNote.Disable();
+
+        StopAllCoroutines();
     }
 
     private void UpNoteHandle(InputAction.CallbackContext context)
