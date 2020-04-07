@@ -209,8 +209,8 @@ RectTransform:
   m_Father: {fileID: 6836962810868184633}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3244792, y: 0.19444445}
-  m_AnchorMax: {x: 0.94600004, y: 0.7545556}
+  m_AnchorMin: {x: 0.3785904, y: 0.15470372}
+  m_AnchorMax: {x: 0.93600005, y: 0.80633336}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -235,15 +235,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 20
-    m_Right: 20
+    m_Left: 46
+    m_Right: 45
     m_Top: 20
     m_Bottom: 20
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 150, y: 150}
-  m_Spacing: {x: 20, y: 20}
+  m_CellSize: {x: 175, y: 175}
+  m_Spacing: {x: 46.5, y: 50}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1371302074
@@ -425,10 +425,10 @@ RectTransform:
   m_Father: {fileID: 6836962810868184633}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.034, y: 0.19444445}
-  m_AnchorMax: {x: 0.31352085, y: 0.7545556}
+  m_AnchorMin: {x: 0.039454408, y: 0.15470372}
+  m_AnchorMax: {x: 0.363, y: 0.80633336}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -14, y: -10}
+  m_SizeDelta: {x: -30, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1814747857
 CanvasRenderer:
@@ -456,13 +456,39 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "public class GameController : MonoBehaviour\n{\n    private void SwitchMode(GameMode
-    newMode)\n    {\n        equipped = newMode;\n        GameObject player;\n\n        switch
-    (equipped)\n        {\n            case GameMode.rpg:\n                player.transform.position
-    = \n                    new Vector3(\n                        GridLocker(\n                            player.transform.position.x\n
-    \                       ),   \n                        GridLocker(\n                            player.transform.position.y\n
-    \                       ), \n                        1\n                    );\n\n
-    \               break;\n        }\n    }\n}"
+  m_text: '<color=#57A64A>// Role Playing Game
+
+
+    </color><color=#449CD6>float </color><color=#DCDCDC>moveSpeed = </color><color=#B5CEA8>3.0f</color><color=#DCDCDC>;
+
+    </color><color=#449CD6>bool </color><color=#DCDCDC>canJump = </color><color=#449CD6>false</color><color=#DCDCDC>;
+
+    </color><color=#4EC9B0>
+
+    Movement</color><color=#DCDCDC>.SetMode(</color><color=#4EC9B0>Movement</color><color=#DCDCDC>.gridBased);
+
+    </color><color=#449CD6>
+
+    if </color><color=#DCDCDC>(player.isWalking) {
+
+    </color><color=#449CD6>    int </color><color=#DCDCDC>num = Random.RNG(</color><color=#B5CEA8>15</color><color=#DCDCDC>);
+
+    </color><color=#449CD6>    if </color><color=#DCDCDC>(num == </color><color=#B5CEA8>0</color><color=#DCDCDC>)
+    {
+
+    </color><color=#DCDCDC>        StartBattle();
+
+    </color><color=#DCDCDC>    }
+
+    </color><color=#DCDCDC>}
+
+    </color><color=#DCDCDC>
+
+    ReplaceAll(enemy, npc);
+
+    </color><color=#DCDCDC>npc.canChat = </color><color=#449CD6>true</color><color=#DCDCDC>;
+
+    </color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0319904fd75467745bfdaf1e8dea78e0, type: 2}
   m_sharedMaterial: {fileID: 610186761312855719, guid: 0319904fd75467745bfdaf1e8dea78e0,
@@ -491,8 +517,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -532,12 +558,12 @@ MonoBehaviour:
   m_margin: {x: -3.1458292, y: 0, z: -2.3383052, w: 0}
   m_textInfo:
     textComponent: {fileID: 1814747856}
-    characterCount: 631
+    characterCount: 258
     spriteCount: 0
-    spaceCount: 355
-    wordCount: 35
+    spaceCount: 57
+    wordCount: 32
     linkCount: 0
-    lineCount: 25
+    lineCount: 16
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -917,7 +943,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 380}
+  m_SizeDelta: {x: 600, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1410698064348917954
 CanvasRenderer:
@@ -945,7 +971,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 744776814b98a174786f604ac94b6577, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -970,8 +996,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 50
     m_Right: 50
-    m_Top: 20
-    m_Bottom: 20
+    m_Top: 40
+    m_Bottom: 40
   m_ChildAlignment: 4
   m_Spacing: 20
   m_ChildForceExpandWidth: 1
@@ -1452,6 +1478,7 @@ GameObject:
   - component: {fileID: 8225248870982502569}
   - component: {fileID: 4983660718823084650}
   - component: {fileID: 456783078459561408}
+  - component: {fileID: 1410729344817383825}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -1581,6 +1608,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e52a49eac27cd449077383e76587cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1410729344817383825
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2884110346629138820}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cae29a91d77853046bbaadbc1484292a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3606133096859608185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,8 +1692,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Paused
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0319904fd75467745bfdaf1e8dea78e0, type: 2}
+  m_sharedMaterial: {fileID: 610186761312855719, guid: 0319904fd75467745bfdaf1e8dea78e0,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1773,7 +1820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -310}
+  m_AnchoredPosition: {x: 300, y: -330}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &375553279626311659
@@ -2045,6 +2092,7 @@ GameObject:
   - component: {fileID: 6763996159509170608}
   - component: {fileID: 828196179602611437}
   - component: {fileID: 101715743462222952}
+  - component: {fileID: 7727427393526650612}
   m_Layer: 5
   m_Name: RhythmUnpausePanel
   m_TagString: Untagged
@@ -2093,12 +2141,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -2252410838251696897, guid: f0da5c43174344645baa6190262c869c,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2117,9 +2166,28 @@ CanvasGroup:
   m_GameObject: {fileID: 4079822885804032096}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!95 &7727427393526650612
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4079822885804032096}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e35ffe0abad3bf49b7f29c627dbdfa6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4172809744331007687
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,13 +2806,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 6044181046465288886}
-    characterCount: 0
+    characterCount: 25
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 4
+    wordCount: 4
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 2
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -2872,7 +2940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -70}
+  m_AnchoredPosition: {x: 300, y: -90}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3533875485150674798
@@ -3014,7 +3082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -190}
+  m_AnchoredPosition: {x: 300, y: -210}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1521784809148219976
@@ -3627,7 +3695,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1294, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6836962810868184629
 CanvasRenderer:
@@ -3656,7 +3724,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 0d1ff52afa148964c80697b62e5911e2, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3820,7 +3888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 744776814b98a174786f604ac94b6577, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

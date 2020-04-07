@@ -195,6 +195,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     private int numUnlocked;
 
+    private FPSController fpsCon;
+
     private int strength, magic;
 
     private float gScale;
@@ -306,14 +308,18 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void PauseHandle (InputAction.CallbackContext context)
+    private void PauseHandle(InputAction.CallbackContext context)
     {
         if (unpausing)
         {
             return;
         }
 
-        if (pauseMenu.activeInHierarchy)
+        if (switchMenu.activeInHierarchy)
+        {
+            ToggleSwitchMenu();
+        }
+        else if (pauseMenu.activeInHierarchy)
         {
             if (quitPanel.activeInHierarchy)
             {
@@ -437,6 +443,11 @@ public class GameController : MonoBehaviour
             Cursor.visible = true;
         }
 
+        if (fpsCon == null)
+        {
+            fpsCon = FindObjectOfType<FPSController>();
+        }
+
         /*
         if (glitching)
         {
@@ -465,56 +476,103 @@ public class GameController : MonoBehaviour
         if (switchMenu.activeInHierarchy)
         {
             string selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
-
-            codeText.text = "";
-            codeText.text += "public class ".HexEmbed(keyword) + "GameController".HexEmbed(type) + " : ".HexEmbed(other) + "MonoBehaviour\n".HexEmbed(type);
-            codeText.text += "{\n".HexEmbed(other);
-            codeText.text += "    private void ".HexEmbed(keyword) + "SwitchMode(".HexEmbed(other) + "string ".HexEmbed(keyword) + "newMode)\n".HexEmbed(other);
-            codeText.text += "    {\n".HexEmbed(other);
-            codeText.text += "        equipped = newMode;\n".HexEmbed(other);
-            codeText.text += "        GameObject ".HexEmbed(type) + "player;\n".HexEmbed(other);
-            codeText.text += "        Mover".HexEmbed(type) + "[] movers;\n\n".HexEmbed(other);
-            codeText.text += "        switch ".HexEmbed(type) + "(selected)\n".HexEmbed(other);
-            codeText.text += "        {\n".HexEmbed(other);
-
+            
             switch (selected)
             {
                 case "Platformer":
-                    codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".platformer:\n".HexEmbed(other);
-                    codeText.text += "                player = ".HexEmbed(other) + "GameObject".HexEmbed(type) + ".Find(".HexEmbed(other) + "\"Player\"".HexEmbed(stringLiteral) + ");\n".HexEmbed(other);
-                    codeText.text += "                movers = player.GetComponent<".HexEmbed(other) + "Mover".HexEmbed(type) + ">();\n\n".HexEmbed(other);
-                    codeText.text += "                foreach ".HexEmbed(keyword) + "(".HexEmbed(other) + "Mover ".HexEmbed(type) + "mover ".HexEmbed(other) + "in ".HexEmbed(keyword) + "movers)\n".HexEmbed(other);
-                    codeText.text += "                {\n".HexEmbed(other);
-                    codeText.text += "                    if ".HexEmbed(keyword) + "(mover.GetType() == \n".HexEmbed(other);
-                    codeText.text += "                        typeof".HexEmbed(keyword) + "(".HexEmbed(other) + "PFController".HexEmbed(type) + "))\n".HexEmbed(other);
-                    codeText.text += "                    {\n".HexEmbed(other);
-                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
-                    codeText.text += "                    } ".HexEmbed(other) + "else ".HexEmbed(keyword) + "{\n".HexEmbed(other);
-                    codeText.text += "                        mover.enabled = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
-                    codeText.text += "                    }\n".HexEmbed(other);
-                    codeText.text += "                }\n".HexEmbed(other);
+                    codeText.text = "// Platformer Game\n\n".HexEmbed(comment);
+                    codeText.text += "float ".HexEmbed(keyword) + "moveSpeed = ".HexEmbed(other) + "7.5f".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canJump = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "float ".HexEmbed(keyword) + "jumpHeight = ".HexEmbed(other) + "4.5f".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canGrabWall = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "\nenemy.oneHitKill = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "enemy.chargeOnSight = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    break;
+
+                case "Fighting":
+                    codeText.text = "// Fighting Game\n\n".HexEmbed(comment);
+                    codeText.text += "float ".HexEmbed(keyword) + "moveSpeed = ".HexEmbed(other) + "6.0f".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canJump = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "float ".HexEmbed(keyword) + "jumpHeight = ".HexEmbed(other) + "1.5f".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canGrabWall = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canAttack = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "\nif ".HexEmbed(keyword) + "(inputString.Equals(".HexEmbed(other) + "\"↓🡖🡒A\"".HexEmbed(stringLiteral) + ")) {\n".HexEmbed(other);
+                    codeText.text += "    SpawnProjectile();\n".HexEmbed(other);
+                    codeText.text += "}\n".HexEmbed(other);
+                    codeText.text += "\nenemy.oneHitKill = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "enemy.ActivateAI();\n".HexEmbed(other);
                     break;
 
                 case "RPG":
-                    codeText.text += "            case ".HexEmbed(keyword) + "GameMode".HexEmbed(literal) + ".rpg:\n".HexEmbed(other);
+                    codeText.text = "// Role Playing Game\n\n".HexEmbed(comment);
+                    codeText.text += "float ".HexEmbed(keyword) + "moveSpeed = ".HexEmbed(other) + "3.0f".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canJump = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "\nMovement".HexEmbed(type) + ".SetMode(".HexEmbed(other) + "Movement".HexEmbed(type) + ".gridBased);\n".HexEmbed(other);
+                    codeText.text += "\nif ".HexEmbed(keyword) + "(player.isWalking) {\n".HexEmbed(other);
+                    codeText.text += "    int ".HexEmbed(keyword) + "num = Random.RNG(".HexEmbed(other) + "15".HexEmbed(literal) + ");\n".HexEmbed(other);
+                    codeText.text += "    if ".HexEmbed(keyword) + "(num == ".HexEmbed(other) + "0".HexEmbed(literal) + ") {\n".HexEmbed(other);
+                    codeText.text += "        StartBattle();\n".HexEmbed(other);
+                    codeText.text += "    }\n".HexEmbed(other);
+                    codeText.text += "}\n".HexEmbed(other);
+                    codeText.text += "\nReplaceAll(enemy, npc);\n".HexEmbed(other);
+                    codeText.text += "npc.canChat = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    break;
 
-                    codeText.text += "                player.transform.position = \n".HexEmbed(other);
-                    codeText.text += "                    new ".HexEmbed(keyword) + "Vector3".HexEmbed(type) + "(\n".HexEmbed(other);
-                    codeText.text += "                        GridLocker(\n".HexEmbed(other);
-                    codeText.text += "                            player.transform.position.x\n".HexEmbed(other);
-                    codeText.text += "                        ),\n".HexEmbed(other);
-                    codeText.text += "                        GridLocker(\n".HexEmbed(other);
-                    codeText.text += "                            player.transform.position.y\n".HexEmbed(other);
-                    codeText.text += "                        ),\n".HexEmbed(other);
-                    codeText.text += "                        1\n".HexEmbed(other);
-                    codeText.text += "                    );\n".HexEmbed(other);
+                case "Rhythm":
+                    codeText.text = "// Rhythm Game\n\n".HexEmbed(comment);
+                    codeText.text += "float ".HexEmbed(keyword) + "moveSpeed = ".HexEmbed(other) + "slow".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "collides = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "dancing = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "int ".HexEmbed(keyword) + "numMisses = ".HexEmbed(other) + "3".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "\nMovement".HexEmbed(type) + ".SetMode(".HexEmbed(other) + "Movement".HexEmbed(type) + ".autoScroll);\n".HexEmbed(other);
+                    codeText.text += "Unpause".HexEmbed(type) + ".SetCountdown(".HexEmbed(other) + "true".HexEmbed(keyword) + ");\n".HexEmbed(other);
+                    codeText.text += "\nChangeSong(rhythmSong[currentLevel]);".HexEmbed(other);
+                    break;
+
+                case "Dating":
+                    codeText.text = "// Dating Sim\n\n".HexEmbed(comment);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canJump = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canMove = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canDoAnythingButTalk = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "\nMovement".HexEmbed(type) + ".SetMode(".HexEmbed(other) + "Movement".HexEmbed(type) + ".none);\n".HexEmbed(other);
+                    codeText.text += "\nReplace(enemy, lover);\n".HexEmbed(other);
+                    codeText.text += "lover.relationship = ".HexEmbed(other) + "0".HexEmbed(literal) + ";\n".HexEmbed(other);
+                    codeText.text += "\nif ".HexEmbed(keyword) + "(lover.relationship >= ".HexEmbed(other) + "100".HexEmbed(literal) + ") {\n".HexEmbed(other);
+                    codeText.text += "    OpenDateMap();\n".HexEmbed(other);
+                    codeText.text += "}\n".HexEmbed(other);
+                    break;
+
+                case "Racing":
+                    codeText.text = "// Racing Game\n\n".HexEmbed(comment);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canJump = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canTilt = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "\nif ".HexEmbed(keyword) + "(onGround && tilt > 45) {\n".HexEmbed(other);
+                    codeText.text += "    Crash();\n".HexEmbed(other);
+                    codeText.text += "}\n".HexEmbed(other);
+                    codeText.text += "\nif ".HexEmbed(keyword) + "(player.collidingWithWall) {\n".HexEmbed(other);
+                    codeText.text += "    Crash();\n".HexEmbed(other);
+                    codeText.text += "}\n".HexEmbed(other);
+                    codeText.text += "\nif ".HexEmbed(keyword) + "(player.collidingWithEnemy) {\n".HexEmbed(other);
+                    codeText.text += "    OpenDateMap();\n".HexEmbed(other);
+                    codeText.text += "}\n".HexEmbed(other);
+                    codeText.text += "\nSpawnRacers(".HexEmbed(other) + "3".HexEmbed(literal) + ");".HexEmbed(other);
+                    break;
+
+                case "FPS":
+                    codeText.text = "// First Person Shooter\n\n".HexEmbed(comment);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canJump = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canMove = ".HexEmbed(other) + "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "cameraControl = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "bool ".HexEmbed(keyword) + "canZoom = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+
+                    codeText.text += "bool ".HexEmbed(keyword) + "invertY = ".HexEmbed(other);
+                    codeText.text += fpsCon.invertY ? "true".HexEmbed(keyword) + ";".HexEmbed(other) + " // You heathen\n".HexEmbed(comment)
+                        : "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
+
+                    codeText.text += "\nenemy.oneHitKill = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
+                    codeText.text += "enemy.chargeOnSight = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
                     break;
             }
-
-            codeText.text += "                break".HexEmbed(keyword) + ";\n".HexEmbed(other);
-            codeText.text += "        }\n".HexEmbed(other);
-            codeText.text += "    }\n".HexEmbed(other);
-            codeText.text += "}".HexEmbed(other);
         }
     }
 
@@ -1852,9 +1910,13 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        paused = false;
+        Time.timeScale = 1;
         StartCoroutine(FadeAndLoad(0));
+        onMenu = true;
         ResetUnlocks();
         ToggleSwitchPanel(false);
+        Unpause();
     }
 
     private IEnumerator Switch()
@@ -1950,6 +2012,7 @@ public class GameController : MonoBehaviour
             paused = false;
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
+            CloseQuitMenu();
         }
 
         Cursor.lockState = CursorLockMode.Locked;
