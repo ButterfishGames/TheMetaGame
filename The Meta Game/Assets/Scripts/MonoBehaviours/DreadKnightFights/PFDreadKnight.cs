@@ -5,8 +5,13 @@ using UnityEngine;
 public class PFDreadKnight : EnemyBehaviour
 {
     #region variables
-    [Tooltip("The speed at which enemies move")]
-    public float moveSpeed;
+    /// <summary>
+    /// The speed at which the enemy is currently moving
+    /// </summary>
+    private float moveSpeed;
+
+    [Tooltip("The max walking speed at which enemies move")]
+    public float maxMoveSpeed;
 
     [Tooltip("The amount by which speed is multiplied when an enemy sees the player")]
     public float chargeMult;
@@ -90,16 +95,22 @@ public class PFDreadKnight : EnemyBehaviour
 
     [Tooltip("Boss fight room barriers.")]
     public GameObject barriers;
+
+    private bool bossCutsceneBegun;
+
+    private Transform playerTransform;
     #endregion
 
     // Start is called before the first frame update
     private void Start()
     {
         inCutscene = true;
+        bossCutsceneBegun = false;
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         chargePrepAnimaton = GetComponent<Animation>();
         chargePrepTime = chargePrepAnimaton.clip.length;
+        moveSpeed = maxMoveSpeed;
         switch (startDir)
         {
             case Direction.right:
@@ -135,8 +146,14 @@ public class PFDreadKnight : EnemyBehaviour
             return;
         }
 
-        if (!Camera.main.GetComponent<CameraScroll>().enabled)
+        if (CutsceneManager.singleton.scening)
         {
+            bossCutsceneBegun = true;
+        }
+
+        if (!CutsceneManager.singleton.scening && bossCutsceneBegun)
+        {
+            Debug.Log("Camera locked");
             if(cutscene != null)
             {
                 Destroy(cutscene.gameObject);
@@ -198,31 +215,76 @@ public class PFDreadKnight : EnemyBehaviour
                         currentChargeTime = chargePrepAnimaton.clip.length;
                     }
 
-                        Vector3 origin = transform.position;
-                        dVec = new Vector2(dir, 0);
-                        origin.y -= 0.3f;
-                        hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy2")));
-                        if (hit.collider != null && hit.collider.CompareTag("Player") && !animator.GetBool("charging"))
+                    Vector3 origin = transform.position;
+                    dVec = new Vector2(dir, 0);
+                    origin.y -= 0.3f;
+                    hit = Physics2D.Raycast(origin, dVec, viewDist, ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Enemy2")));
+                    if (hit.collider != null && hit.collider.CompareTag("Player") && !animator.GetBool("charging"))
+                    {
+                        animator.SetBool("chargePrep", true);
+                        currentChargeTime -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        animator.SetBool("chargePrep", false);
+                    }
+                    if (currentChargeTime <= 0)
+                    {
+                        animator.SetBool("moving", false);
+                        animator.SetBool("charging", true);
+                        animator.SetBool("chargePrep", false);
+                        mult = chargeMult;
+                    }
+                    if (!animator.GetBool("chargePrep"))
+                    {
+                        rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
+                    }  
+                }
+                if (animator.GetBool("charging"))
+                {
+                    playerTransform = FindObjectOfType<Mover>().transform;
+                    if(transform.position.x - playerTransform.position.x<0)
+                    {
+                        if(rb.velocity.x >= 0)
                         {
-                            animator.SetBool("chargePrep", true);
-                            currentChargeTime -= Time.deltaTime;
+                            if (dir == -1)
+                            {
+                                Turn();
+                            }
+                            if (moveSpeed < maxMoveSpeed)
+                            {
+                                moveSpeed += Time.deltaTime * 2;
+                            }
                         }
-                        else
+                        else if (rb.velocity.x < 0)
                         {
-                            animator.SetBool("chargePrep", false);
+                            if (moveSpeed > 0)
+                            {
+                                moveSpeed -= Time.deltaTime * 1.5f;
+                            }
                         }
-                        if (currentChargeTime <= 0)
+                    }
+                    else if (transform.position.x - playerTransform.position.x > 0)
+                    {
+                        if (rb.velocity.x > 0)
                         {
-                            animator.SetBool("moving", false);
-                            animator.SetBool("charging", true);
-                            animator.SetBool("chargePrep", false);
-                            mult = chargeMult;
+                            if (moveSpeed > 0)
+                            {
+                                moveSpeed -= Time.deltaTime * 1.5f;
+                            }
                         }
-                        if (!animator.GetBool("chargePrep"))
+                        else if (rb.velocity.x <= 0)
                         {
-                            rb.velocity = new Vector2(dir * moveSpeed * mult, rb.velocity.y);
+                            if (dir == 1)
+                            {
+                                Turn();
+                            }
+                            if (moveSpeed < maxMoveSpeed)
+                            {
+                                moveSpeed += Time.deltaTime * 2;
+                            }
                         }
-                    
+                    }
                 }
                 if (!turning)
                 {
@@ -296,6 +358,7 @@ public class PFDreadKnight : EnemyBehaviour
                 Hit(1);
                 timeGettingUp = timeToGetUp;
                 rb.velocity = new Vector2(-dir, 0.5f);
+                moveSpeed = maxMoveSpeed;
             }
             else
             {
@@ -332,7 +395,7 @@ public class PFDreadKnight : EnemyBehaviour
     {
         turning = true;
 
-        animator.SetBool("charging", false);
+        //animator.SetBool("charging", false);
         dir *= -1;
         mult = 1;
         transform.Rotate(0, 180, 0);
