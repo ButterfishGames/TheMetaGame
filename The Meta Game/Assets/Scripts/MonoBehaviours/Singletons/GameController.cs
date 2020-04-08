@@ -330,7 +330,7 @@ public class GameController : MonoBehaviour
 
     private void PauseHandle(InputAction.CallbackContext context)
     {
-        if (unpausing)
+        if (unpausing || battling)
         {
             return;
         }
