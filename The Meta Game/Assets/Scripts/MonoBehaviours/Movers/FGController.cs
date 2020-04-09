@@ -141,6 +141,8 @@ public class FGController : Mover
     [Tooltip("how much endlag the Hadouken has in frames")]
     public float hadoEndLag;
 
+    public Animator attackEffects;
+
     public FGStatsAttackClass lightAttackStats;
     public FGStatsAttackClass mediumAttackStats;
     public FGStatsAttackClass heavyAttackStats;
@@ -365,6 +367,7 @@ public class FGController : Mover
             if (hitstun <= 0)
             {
                 animator.SetBool("hit", false);
+                attackEffects.SetBool("hit", false);
 
                 Move(hRaw, vRaw);
 
@@ -426,6 +429,7 @@ public class FGController : Mover
             else
             {
                 animator.SetBool("hit", true);
+                attackEffects.SetBool("hit", true);
                 animator.SetBool("attacking", false);
                 hitbox.gameObject.SetActive(false);
                 attacking = false;
@@ -615,6 +619,7 @@ public class FGController : Mover
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
         animator.SetBool(animationAttackBool, true);
+//        attackEffects.SetBool(animationAttackBool, true);
         animationAttackBoolString = animationAttackBool;
         animator.SetTrigger(animationAttackBool);
     }
@@ -662,9 +667,11 @@ public class FGController : Mover
         else
         {
             hitbox.gameObject.SetActive(true);
+            attackEffects.SetBool(animationAttackBool, true);
         }
         yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);
+        attackEffects.SetBool(animationAttackBool, false);
         yield return new WaitForSeconds(endLagTime/60);
         attacking = false;
         attackCoRoutineRunning = false;

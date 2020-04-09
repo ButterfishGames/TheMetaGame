@@ -3427,6 +3427,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7817119665413950357, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
+        type: 3}
+      propertyPath: attackEffects
+      value: 
+      objectReference: {fileID: 751331919}
     - target: {fileID: 2826980262528341208, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3486,6 +3491,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3449858739585566248, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9, type: 3}
@@ -110826,6 +110836,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebe0e1ddf22812e4381e76770ff701dd, type: 3}
+--- !u!95 &751331919 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5103115777615170996, guid: 77d4a239e9f2a614d92cdc69ef9cd1a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 587007690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &756459724
 GameObject:
   m_ObjectHideFlags: 0
@@ -115070,12 +115086,12 @@ PrefabInstance:
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 238.24
+      value: 213.93
       objectReference: {fileID: 0}
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41.74
+      value: 45.88
       objectReference: {fileID: 0}
     - target: {fileID: 1498483545563416923, guid: e950a9e4287fbe640af89e07c7b94e2c,
         type: 3}
@@ -115126,6 +115142,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582582896816852768, guid: e950a9e4287fbe640af89e07c7b94e2c,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e950a9e4287fbe640af89e07c7b94e2c, type: 3}
@@ -117271,12 +117292,12 @@ PrefabInstance:
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
       propertyPath: resetUnlocks
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
       propertyPath: modes.Array.data[3].unlocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}

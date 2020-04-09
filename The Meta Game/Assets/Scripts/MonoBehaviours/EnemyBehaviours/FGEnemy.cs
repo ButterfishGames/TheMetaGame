@@ -205,6 +205,8 @@ public class FGEnemy : EnemyBehaviour
 
     private bool attackCoRoutineRunning;
 
+    public Animator attackEffects;
+
     public FGStatsAttackClass lightAttackStats;
     public FGStatsAttackClass mediumAttackStats;
     public FGStatsAttackClass heavyAttackStats;
@@ -373,6 +375,7 @@ public class FGEnemy : EnemyBehaviour
             if (hitstun <= 0)
             {
                 animator.SetBool("hit", false);
+                attackEffects.SetBool("hit", false);
                 //dVecF = Front, dVecB = Back, offset and facing down
                 if (attacking == false)
                 {
@@ -635,6 +638,7 @@ public class FGEnemy : EnemyBehaviour
                 justComboed = false;
                 animator.SetBool("comboed", false);
                 animator.SetBool("hit", true);
+                attackEffects.SetBool("hit", true);
                 for (int i = 0; i < usedAttack.Length; i++)
                 {
                     usedAttack[i] = false;
@@ -784,9 +788,11 @@ public class FGEnemy : EnemyBehaviour
         }
         else
         {
+            attackEffects.SetBool(animationAttackBoolString, true);
             hitbox.gameObject.SetActive(true);
         }
         yield return new WaitForSeconds(hitBoxActivationTime/60);
+        attackEffects.SetBool(animationAttackBoolString, false);
         hitbox.gameObject.SetActive(false);
         yield return new WaitForSeconds(endLagTime/60);
         randomInt = Random.Range(1, 3);
