@@ -202,6 +202,18 @@ public class SaveManager : MonoBehaviour
         {
             saveData.skillsUnlocked[i] = GameController.singleton.skillList[i].unlocked;
         }
+
+        saveData.artUnlocked = new bool[GameController.singleton.artList.Length];
+        for (int i = 0; i < saveData.artUnlocked.Length; i++)
+        {
+            saveData.artUnlocked[i] = GameController.singleton.artList[i].unlocked;
+        }
+
+        saveData.songsUnlocked = new bool[GameController.singleton.songList.Length];
+        for (int i = 0; i < saveData.songsUnlocked.Length; i++)
+        {
+            saveData.songsUnlocked[i] = GameController.singleton.songList[i].unlocked;
+        }
     }
 
     public void InitScene()
@@ -300,7 +312,17 @@ public class SaveManager : MonoBehaviour
 
         for (int i = 0; i < GameController.singleton.skillList.Length; i++)
         {
-            GameController.singleton.skillList[i].unlocked = saveData.spellsUnlocked[i];
+            GameController.singleton.skillList[i].unlocked = saveData.skillsUnlocked[i];
+        }
+
+        for (int i = 0; i < GameController.singleton.artList.Length; i++)
+        {
+            GameController.singleton.artList[i].unlocked = saveData.artUnlocked[i];
+        }
+
+        for (int i = 0; i < GameController.singleton.songList.Length; i++)
+        {
+            GameController.singleton.songList[i].unlocked = saveData.songsUnlocked[i];
         }
     }
 
@@ -355,6 +377,8 @@ public class SaveData
 
     public bool[] spellsUnlocked;
     public bool[] skillsUnlocked;
+    public bool[] artUnlocked;
+    public bool[] songsUnlocked;
 
     int currentScene;
     float checkpointX, checkpointY, checkpointZ;
@@ -390,6 +414,18 @@ public class SaveData
             for (int i = 0; i < skillsUnlocked.Length; i++)
             {
                 skillsUnlocked[i] = GameController.singleton.skillList[i].unlocked;
+            }
+
+            artUnlocked = new bool[GameController.singleton.artList.Length];
+            for (int i = 0; i < artUnlocked.Length; i++)
+            {
+                artUnlocked[i] = false;
+            }
+
+            songsUnlocked = new bool[GameController.singleton.songList.Length];
+            for (int i = 0; i < songsUnlocked.Length; i++)
+            {
+                songsUnlocked[i] = false;
             }
         }
     }

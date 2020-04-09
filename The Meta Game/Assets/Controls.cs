@@ -169,6 +169,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""UpJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4f8f7ef-bb43-4501-b88b-c58aa228db51"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -1458,6 +1466,94 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e1a0af0-6cc6-4f08-9e50-17412e0385c9"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1209355-4a38-41ca-b725-8483774c402e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba76a0f4-1f86-4bf5-86e5-961817715a67"",
+                    ""path"": ""<XInputController>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""150f0df0-a815-4ea3-8217-77d125193a8b"",
+                    ""path"": ""<XInputController>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e19ab7c-2c7c-4437-9261-47cd601bcead"",
+                    ""path"": ""<DualShockGamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b36923f0-ab82-4dda-8a90-b0dab68935e7"",
+                    ""path"": ""<DualShockGamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73ba4281-051c-4d02-896a-26520e411b2a"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd6ad826-34fc-4dad-bf90-338399e862e1"",
+                    ""path"": ""<SwitchProControllerHID>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1660,6 +1756,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_RightNote = m_Player.FindAction("RightNote", throwIfNotFound: true);
         m_Player_DownNote = m_Player.FindAction("DownNote", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_UpJump = m_Player.FindAction("UpJump", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -1733,6 +1830,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RightNote;
     private readonly InputAction m_Player_DownNote;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_UpJump;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -1756,6 +1854,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @RightNote => m_Wrapper.m_Player_RightNote;
         public InputAction @DownNote => m_Wrapper.m_Player_DownNote;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @UpJump => m_Wrapper.m_Player_UpJump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1822,6 +1921,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @UpJump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpJump;
+                @UpJump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpJump;
+                @UpJump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpJump;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1883,6 +1985,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @UpJump.started += instance.OnUpJump;
+                @UpJump.performed += instance.OnUpJump;
+                @UpJump.canceled += instance.OnUpJump;
             }
         }
     }
@@ -1957,6 +2062,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnRightNote(InputAction.CallbackContext context);
         void OnDownNote(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnUpJump(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
