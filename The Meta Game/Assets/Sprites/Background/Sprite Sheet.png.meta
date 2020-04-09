@@ -6254,6 +6254,9 @@ TextureImporter:
   - first:
       213: 9084590414337556863
     second: Sprite Sheet_2083
+  - first:
+      213: 6267346927657429439
+    second: Sprite Sheet_2084
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -51444,6 +51447,31 @@ TextureImporter:
       bones: []
       spriteID: 1ff41458efa80834d8edaf55a7147170
       internalID: 9084590414337556863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Sheet_2084
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1632
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -15, y: 5}
+        - {x: -15, y: -16}
+        - {x: 15, y: -16}
+        - {x: 15, y: 5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10a899411e5e9ff41a128c3f422ddb3d
+      internalID: 6267346927657429439
       vertices: []
       indices: 
       edges: []
