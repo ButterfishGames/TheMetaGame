@@ -160,6 +160,7 @@ public class FGController : Mover
         base.OnEnable();
 
         controls.Player.Jump.performed += JumpHandle;
+        controls.Player.UpJump.performed += UpJumpHandle;
         controls.Player.Light.performed += LightPerfHandle;
         controls.Player.Light.canceled += LightCancHandle;
         controls.Player.Medium.performed += MedPerfHandle;
@@ -168,6 +169,7 @@ public class FGController : Mover
         controls.Player.Heavy.canceled += HeavyCancHandle;
 
         controls.Player.Jump.Enable();
+        controls.Player.UpJump.Enable();
         controls.Player.Light.Enable();
         controls.Player.Medium.Enable();
         controls.Player.Heavy.Enable();
@@ -178,6 +180,7 @@ public class FGController : Mover
         base.OnDisable();
 
         controls.Player.Jump.performed -= JumpHandle;
+        controls.Player.UpJump.performed -= UpJumpHandle;
         controls.Player.Light.performed -= LightPerfHandle;
         controls.Player.Light.canceled -= LightCancHandle;
         controls.Player.Medium.performed -= MedPerfHandle;
@@ -186,6 +189,7 @@ public class FGController : Mover
         controls.Player.Heavy.canceled -= HeavyCancHandle;
 
         controls.Player.Jump.Disable();
+        controls.Player.UpJump.Disable();
         controls.Player.Light.Disable();
         controls.Player.Medium.Disable();
         controls.Player.Heavy.Disable();
@@ -193,6 +197,31 @@ public class FGController : Mover
 
     private void JumpHandle (InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        {
+            return;
+        }
+
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
+        Jump();
+    }
+
+    private void UpJumpHandle(InputAction.CallbackContext context)
+    {
+        if (!SettingsController.singleton.fgUpJump)
+        {
+            return;
+        }
+
         if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
         {
             return;

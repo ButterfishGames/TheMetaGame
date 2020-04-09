@@ -5,14 +5,8 @@ using UnityEngine.InputSystem;
 
 public class FPSController : MonoBehaviour
 {
-    [Tooltip("Determines the rate at which the mouse moves the camera")]
-    public float sensitivity;
-
     [Tooltip("The factor by which FOV is divided when zooming")]
     public float zoomFactor;
-
-    [Tooltip("Inverts Y axis for mouselook controls")]
-    public bool invertY;
 
     [Tooltip("The damage dealt when shot connects")]
     public int damage;
@@ -85,7 +79,7 @@ public class FPSController : MonoBehaviour
             x = 0;
         }
 
-        x = context.action.ReadValue<float>();
+        x = SettingsController.singleton.invertX ? context.action.ReadValue<float>() * -1 : context.action.ReadValue<float>();
     }
 
     private void LookYHandle (InputAction.CallbackContext context)
@@ -95,7 +89,7 @@ public class FPSController : MonoBehaviour
             y = 0;
         }
 
-        y = invertY ? context.action.ReadValue<float>() : context.action.ReadValue<float>() * -1;
+        y = SettingsController.singleton.invertY ? context.action.ReadValue<float>() : context.action.ReadValue<float>() * -1;
     }
 
     private void ZoomPerfHandle (InputAction.CallbackContext context)
@@ -165,7 +159,8 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        transform.Rotate(y * sensitivity * Time.deltaTime, x * sensitivity * Time.deltaTime, 0);
+        transform.Rotate(y * SettingsController.singleton.sensitivity * Time.deltaTime,
+            x * SettingsController.singleton.sensitivity * Time.deltaTime, 0);
         transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 0);
     }
 }

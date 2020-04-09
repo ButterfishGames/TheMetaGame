@@ -215,8 +215,6 @@ public class GameController : MonoBehaviour
     /// </summary>
     private int numUnlocked;
 
-    private FPSController fpsCon;
-
     private int strength, magic;
 
     private float gScale;
@@ -224,6 +222,8 @@ public class GameController : MonoBehaviour
     private float camSize;
 
     private bool unpausing;
+
+    private bool waitAGoddamnSecond = false;
 
     private GameMode prev;
 
@@ -339,11 +339,11 @@ public class GameController : MonoBehaviour
         {
             ToggleSwitchMenu();
         }
-        else if (pauseMenu.activeInHierarchy)
+        else if (pauseMenu.activeInHierarchy && !(settingsPanel.activeInHierarchy || quitPanel.activeInHierarchy))
         {
-            if (quitPanel.activeInHierarchy)
+            if (waitAGoddamnSecond)
             {
-                CloseQuitMenu();
+                waitAGoddamnSecond = false;
             }
             else
             {
@@ -372,6 +372,18 @@ public class GameController : MonoBehaviour
         {
             ToggleSwitchMenu();
         }
+
+        if (settingsPanel.activeInHierarchy)
+        {
+            CloseSettingsMenu();
+            waitAGoddamnSecond = true;
+        }
+
+        if (quitPanel.activeInHierarchy)
+        {
+            CloseQuitMenu();
+            waitAGoddamnSecond = true;
+        }
     }
 
     // Start is called before the first frame update
@@ -381,6 +393,8 @@ public class GameController : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             singleton = this;
+            SettingsController.singleton = GetComponentInChildren<SettingsController>();
+            settingsPanel.SetActive(false);
         }
         else if (singleton != this)
         {
@@ -461,11 +475,6 @@ public class GameController : MonoBehaviour
         if (Cursor.lockState != CursorLockMode.Locked && !Cursor.visible && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
         {
             Cursor.visible = true;
-        }
-
-        if (fpsCon == null)
-        {
-            fpsCon = FindObjectOfType<FPSController>();
         }
 
         /*
@@ -586,7 +595,7 @@ public class GameController : MonoBehaviour
                     codeText.text += "bool ".HexEmbed(keyword) + "canZoom = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
 
                     codeText.text += "bool ".HexEmbed(keyword) + "invertY = ".HexEmbed(other);
-                    codeText.text += fpsCon.invertY ? "true".HexEmbed(keyword) + ";".HexEmbed(other) + " // You heathen\n".HexEmbed(comment)
+                    codeText.text += SettingsController.singleton.invertY ? "true".HexEmbed(keyword) + ";".HexEmbed(other) + " // You heathen\n".HexEmbed(comment)
                         : "false".HexEmbed(keyword) + ";\n".HexEmbed(other);
 
                     codeText.text += "\nenemy.oneHitKill = ".HexEmbed(other) + "true".HexEmbed(keyword) + ";\n".HexEmbed(other);
@@ -764,7 +773,7 @@ public class GameController : MonoBehaviour
             #endregion
             #region rpg
             case GameMode.rpg:
-                modeInt = 1;
+                modeInt = 2;
                 equippedStr = "RPG";
 
                 if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
@@ -891,7 +900,7 @@ public class GameController : MonoBehaviour
             #endregion
             #region fps
             case GameMode.fps:
-                modeInt = 2;
+                modeInt = 6;
                 equippedStr = "FPS";
 
                 if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
@@ -1004,7 +1013,7 @@ public class GameController : MonoBehaviour
             #endregion
             #region fighting
             case GameMode.fighting:
-                modeInt = 3;
+                modeInt = 1;
                 equippedStr = "Fighting";
 
                 if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
@@ -1145,7 +1154,7 @@ public class GameController : MonoBehaviour
             #endregion
             #region rhythm
             case GameMode.rhythm:
-                modeInt = 4;
+                modeInt = 3;
                 equippedStr = "Rhythm";
 
                 if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
@@ -1240,7 +1249,7 @@ public class GameController : MonoBehaviour
             #endregion
             #region dating
             case GameMode.dating:
-                modeInt = 5;
+                modeInt = 4;
                 equippedStr = "Dating";
 
                 StartCoroutine(DatingTransition());
@@ -1248,7 +1257,7 @@ public class GameController : MonoBehaviour
             #endregion
             #region racing
             case GameMode.racing:
-                modeInt = 6;
+                modeInt = 5;
                 equippedStr = "Racing";
 
                 if (DialogueManager.singleton.GetDisplaying() && prev != GameMode.dating)
@@ -2038,6 +2047,36 @@ public class GameController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void OpenSettingsMenu()
+    {
+        settingsPanel.SetActive(true);
+
+        Button[] buttons = pauseMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
+
+        SettingsController.singleton.ShowGameplaySettings();
+    }
+
+    public void CloseSettingsMenu()
+    {
+        settingsPanel.SetActive(false);
+
+        SettingsController.singleton.Revert();
+
+        Button[] buttons = pauseMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+            if (button.name.Equals("ResumeButton"))
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+            }
+        }
     }
 
     public void OpenQuitMenu()

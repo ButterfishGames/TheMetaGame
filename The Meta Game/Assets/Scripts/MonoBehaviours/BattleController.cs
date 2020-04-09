@@ -157,17 +157,17 @@ public class BattleController : MonoBehaviour
         if (onMagic && EventSystem.current.currentSelectedGameObject != null)
         {
             RectTransform selected = EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>();
-            int posOffset = scrollOffset * 90;
-            if (selected.localPosition.y > (-45 - posOffset))
+            int posOffset = scrollOffset * 80;
+            if (selected.localPosition.y > (-40 - posOffset))
             {
                 optionScroll.content.localPosition = new Vector3(optionScroll.content.localPosition.x,
-                    optionScroll.content.localPosition.y - (selected.localPosition.y + 45 + posOffset), 0);
+                    optionScroll.content.localPosition.y - (selected.localPosition.y + 40 + posOffset), 0);
                 scrollOffset--;
             }
-            else if (selected.localPosition.y < (-315 - posOffset))
+            else if (selected.localPosition.y < (-280 - posOffset))
             {
                 optionScroll.content.localPosition = new Vector3(optionScroll.content.localPosition.x,
-                    optionScroll.content.localPosition.y - (selected.localPosition.y + 315 + posOffset), 0);
+                    optionScroll.content.localPosition.y - (selected.localPosition.y + 280 + posOffset), 0);
                 scrollOffset++;
             }
         }

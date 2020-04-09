@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,9 +23,6 @@ public class PFController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
-    [Tooltip("Can you jump with up on the stick?")]
-    public bool canStickJump;
-
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
@@ -37,6 +34,8 @@ public class PFController : Mover
 
     private bool dying;
 
+    private bool goingThrough;
+
     private BoxCollider2D groundTrigger;
 
     protected override void OnEnable()
@@ -44,9 +43,10 @@ public class PFController : Mover
         base.OnEnable();
 
         controls.Player.Jump.performed += JumpHandle;
+        controls.Player.UpJump.performed += UpJumpHandle;
 
-        controls.Player.MoveV.Enable();
         controls.Player.Jump.Enable();
+        controls.Player.UpJump.Enable();
     }
 
     protected override void OnDisable()
@@ -54,13 +54,39 @@ public class PFController : Mover
         base.OnDisable();
 
         controls.Player.Jump.performed -= JumpHandle;
+        controls.Player.Jump.performed -= UpJumpHandle;
 
-        controls.Player.MoveV.Disable();
         controls.Player.Jump.Disable();
+        controls.Player.UpJump.Disable();
     }
 
     private void JumpHandle(InputAction.CallbackContext context)
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (DialogueManager.singleton.GetDisplaying())
+        {
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
+        Jump();
+    }
+
+    private void UpJumpHandle(InputAction.CallbackContext context)
+    {
+        if (!SettingsController.singleton.pfUpJump)
+        {
+            return;
+        }
+
         if (GameController.singleton.GetPaused())
         {
             return;
@@ -149,13 +175,8 @@ public class PFController : Mover
             return;
         }
 
-        if (v > 0 && (canStickJump || !stickUp))
+        if (v < 0 && !goingThrough)
         {
-            Jump();
-        }
-        else if (v < 0)
-        {
-            StopCoroutine("GoThrough");
             StartCoroutine("GoThrough");
         }
 
@@ -263,9 +284,11 @@ public class PFController : Mover
 
     private IEnumerator GoThrough()
     {
+        goingThrough = true;
         gameObject.layer = LayerMask.NameToLayer("ThroughTemp");
         yield return new WaitForSeconds(0.25f);
         gameObject.layer = LayerMask.NameToLayer("Player");
+        goingThrough = false;
     }
 
     private void GroundWallCheck()
