@@ -196,6 +196,7 @@ public class RhythmController : Mover
         yield return new WaitForSeconds(startWait);
         rb.velocity = new Vector2(speed, 0);
         started = true;
+        StartCoroutine(EndProcessor());
     }
 
     private IEnumerator UpNote()
@@ -358,9 +359,8 @@ public class RhythmController : Mover
         }
     }
 
-    public IEnumerator Win()
+    public IEnumerator EndProcessor()
     {
-        started = false;
         yield return new WaitUntil(() => transform.position.x >= startPos.x + xDiff);
         animator.SetBool("dancing", false);
         transform.position = startPos + new Vector3(xDiff, 0, 0);
@@ -449,5 +449,10 @@ public class RhythmController : Mover
         {
             inGround = false;
         }
+    }
+
+    public void SetStarted(bool val)
+    {
+        started = val;
     }
 }

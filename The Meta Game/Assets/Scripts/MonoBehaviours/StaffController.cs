@@ -93,7 +93,7 @@ public class StaffController : MonoBehaviour
             {
                 if (currentPlay.ToArray().Length == songs[0].notes.Length)
                 {
-                    temp.StartCoroutine(temp.Win());
+                    temp.SetStarted(false);
                 }
                 return true;
             }
