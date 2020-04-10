@@ -72467,12 +72467,17 @@ PrefabInstance:
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
       propertyPath: modes.Array.data[3].unlocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
       propertyPath: resetUnlocks
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
+        type: 3}
+      propertyPath: modes.Array.data[2].unlocked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612568, guid: 9b40e746262972446a4c231183cf4cdb,
         type: 3}
