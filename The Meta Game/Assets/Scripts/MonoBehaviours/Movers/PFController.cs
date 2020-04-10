@@ -111,6 +111,21 @@ public class PFController : Mover
         {
             SaveManager.singleton.InitScene();
         }
+        if (SettingsController.singleton != null)
+        {
+            AudioSource[] sources = FindObjectsOfType<AudioSource>();
+            foreach (AudioSource source in sources)
+            {
+                if (source.gameObject.name.Equals("Player") || source.gameObject.name.Equals("Song"))
+                {
+                    source.volume = SettingsController.singleton.musicVolume;
+                }
+                else
+                {
+                    source.volume = SettingsController.singleton.sfxVolume;
+                }
+            }
+        }
 
         dying = false;
 

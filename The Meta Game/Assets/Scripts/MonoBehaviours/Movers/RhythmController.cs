@@ -45,11 +45,19 @@ public class RhythmController : Mover
         controls.Player.LeftNote.performed += LeftNoteHandle;
         controls.Player.RightNote.performed += RightNoteHandle;
         controls.Player.DownNote.performed += DownNoteHandle;
-        
+        controls.Player.dUpNote.performed += dUpNoteHandle;
+        controls.Player.dLeftNote.performed += dLeftNoteHandle;
+        controls.Player.dRightNote.performed += dRightNoteHandle;
+        controls.Player.dDownNote.performed += dDownNoteHandle;
+
         controls.Player.UpNote.Enable();
         controls.Player.LeftNote.Enable();
         controls.Player.RightNote.Enable();
         controls.Player.DownNote.Enable();
+        controls.Player.dUpNote.Enable();
+        controls.Player.dLeftNote.Enable();
+        controls.Player.dRightNote.Enable();
+        controls.Player.dDownNote.Enable();
     }
 
     protected override void OnDisable()
@@ -58,11 +66,19 @@ public class RhythmController : Mover
         controls.Player.LeftNote.performed -= LeftNoteHandle;
         controls.Player.RightNote.performed -= RightNoteHandle;
         controls.Player.DownNote.performed -= DownNoteHandle;
-        
+        controls.Player.dUpNote.performed -= dUpNoteHandle;
+        controls.Player.dLeftNote.performed -= dLeftNoteHandle;
+        controls.Player.dRightNote.performed -= dRightNoteHandle;
+        controls.Player.dDownNote.performed -= dDownNoteHandle;
+
         controls.Player.UpNote.Disable();
         controls.Player.LeftNote.Disable();
         controls.Player.RightNote.Disable();
         controls.Player.DownNote.Disable();
+        controls.Player.dUpNote.Disable();
+        controls.Player.dLeftNote.Disable();
+        controls.Player.dRightNote.Disable();
+        controls.Player.dDownNote.Disable();
 
         StopAllCoroutines();
     }
@@ -70,6 +86,21 @@ public class RhythmController : Mover
     private void UpNoteHandle(InputAction.CallbackContext context)
     {
         if (!started || dying || GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        StartCoroutine(UpNote());
+    }
+
+    private void dUpNoteHandle(InputAction.CallbackContext context)
+    {
+        if (!started || dying || GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (!SettingsController.singleton.dInput)
         {
             return;
         }
@@ -87,6 +118,21 @@ public class RhythmController : Mover
         StartCoroutine(LeftNote());
     }
 
+    private void dLeftNoteHandle(InputAction.CallbackContext context)
+    {
+        if (!started || dying || GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (!SettingsController.singleton.dInput)
+        {
+            return;
+        }
+
+        StartCoroutine(LeftNote());
+    }
+
     private void RightNoteHandle(InputAction.CallbackContext context)
     {
         if (!started || dying || GameController.singleton.GetPaused())
@@ -97,9 +143,39 @@ public class RhythmController : Mover
         StartCoroutine(RightNote());
     }
 
+    private void dRightNoteHandle(InputAction.CallbackContext context)
+    {
+        if (!started || dying || GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (!SettingsController.singleton.dInput)
+        {
+            return;
+        }
+
+        StartCoroutine(RightNote());
+    }
+
     private void DownNoteHandle(InputAction.CallbackContext context)
     {
         if (!started || dying || GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        StartCoroutine(DownNote());
+    }
+
+    private void dDownNoteHandle(InputAction.CallbackContext context)
+    {
+        if (!started || dying || GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
+        if (!SettingsController.singleton.dInput)
         {
             return;
         }
@@ -120,6 +196,7 @@ public class RhythmController : Mover
         yield return new WaitForSeconds(startWait);
         rb.velocity = new Vector2(speed, 0);
         started = true;
+        StartCoroutine(EndProcessor());
     }
 
     private IEnumerator UpNote()
@@ -282,9 +359,8 @@ public class RhythmController : Mover
         }
     }
 
-    public IEnumerator Win()
+    public IEnumerator EndProcessor()
     {
-        started = false;
         yield return new WaitUntil(() => transform.position.x >= startPos.x + xDiff);
         animator.SetBool("dancing", false);
         transform.position = startPos + new Vector3(xDiff, 0, 0);
@@ -373,5 +449,10 @@ public class RhythmController : Mover
         {
             inGround = false;
         }
+    }
+
+    public void SetStarted(bool val)
+    {
+        started = val;
     }
 }

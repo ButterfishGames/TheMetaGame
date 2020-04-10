@@ -45600,7 +45600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2121762320}
-  m_RootOrder: 43
+  m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &604056274
 PrefabInstance:
@@ -46088,6 +46088,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bookshelf 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036653321590356500, guid: b644801af8ba063499920662cc1d081c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2036653321590356501, guid: b644801af8ba063499920662cc1d081c,
         type: 3}
@@ -47709,6 +47714,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bookshelf 1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036653321590356500, guid: b644801af8ba063499920662cc1d081c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2036653321590356501, guid: b644801af8ba063499920662cc1d081c,
         type: 3}
@@ -51360,6 +51370,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bookshelf 1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2036653321590356500, guid: b644801af8ba063499920662cc1d081c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2036653321590356501, guid: b644801af8ba063499920662cc1d081c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -53588,6 +53603,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bookshelf 1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2036653321590356500, guid: b644801af8ba063499920662cc1d081c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2036653321590356501, guid: b644801af8ba063499920662cc1d081c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -53810,7 +53830,7 @@ PrefabInstance:
     - target: {fileID: 6269611778988518352, guid: c64fbe31ffd1f1d44ab5e946c9fc457d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14
+      value: 13.75
       objectReference: {fileID: 0}
     - target: {fileID: 6269611778988518352, guid: c64fbe31ffd1f1d44ab5e946c9fc457d,
         type: 3}
@@ -54383,8 +54403,8 @@ Transform:
   - {fileID: 1820555030}
   - {fileID: 417705472}
   - {fileID: 1910885431}
-  - {fileID: 1047979829}
   - {fileID: 596201576}
+  - {fileID: 1047979829}
   - {fileID: 343515903}
   - {fileID: 259624532}
   - {fileID: 196292468}

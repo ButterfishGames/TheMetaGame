@@ -139,9 +139,25 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""dUpNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""0d3eb96e-362a-44f7-8b74-9ab8642a649f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""LeftNote"",
                     ""type"": ""Button"",
                     ""id"": ""93961454-9f62-41ec-955a-c47b7da60333"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""dLeftNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""6dc76ab2-adf7-4cb4-8fa5-3da0e10e621c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -155,9 +171,25 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""dRightNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d1b3abf-9aeb-48c6-aa5d-07312859fe40"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""DownNote"",
                     ""type"": ""Button"",
                     ""id"": ""55fd097c-3089-4d6f-82f6-c618324de557"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""dDownNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b6285c1-d2ce-480c-b527-8af4e6fbdf32"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -985,74 +1017,8 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ea27247f-dd07-4fb8-8cf7-10e89d723be6"",
-                    ""path"": ""<XInputController>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b4d2b8cf-97b1-4349-80bc-6dd504330252"",
-                    ""path"": ""<XInputController>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fa9a1f42-c06a-4243-b489-8c279d90aff0"",
-                    ""path"": ""<DualShockGamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c40619de-72eb-4c7e-9c10-840a79aa8a1c"",
-                    ""path"": ""<DualShockGamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""786ddf74-4147-4be8-b4a9-f9d5a147892c"",
                     ""path"": ""<SwitchProControllerHID>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b8be2baa-41de-4697-b1d3-85a15f00b94d"",
-                    ""path"": ""<SwitchProControllerHID>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""13e950c7-3a74-4477-8b48-d716ec1aa7c0"",
-                    ""path"": ""<SwitchProControllerHID>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1106,74 +1072,8 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e7ca360d-e0d2-472a-8c5b-5bbc3f1e9e95"",
-                    ""path"": ""<XInputController>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8329f5bf-b37d-4865-ad01-54fc2fe4ba58"",
-                    ""path"": ""<XInputController>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4cd8dc94-1e27-4fb4-ad74-4df934a22150"",
-                    ""path"": ""<DualShockGamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f22bcc7c-0c37-4a6f-b1fd-062f46b94d44"",
-                    ""path"": ""<DualShockGamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""458f9586-4bab-4e7d-9510-0fdf4bf438d2"",
                     ""path"": ""<SwitchProControllerHID>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a9ce7967-6b7c-4339-a0e6-4f1ed1fcda2a"",
-                    ""path"": ""<SwitchProControllerHID>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""884a3945-3b10-45b1-a220-86efaa5ea3ee"",
-                    ""path"": ""<SwitchProControllerHID>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1227,74 +1127,8 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c22d203d-d96b-4fae-b1fa-0d43560df68e"",
-                    ""path"": ""<XInputController>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b0548ba0-3b6f-4248-9819-f37702fffc70"",
-                    ""path"": ""<XInputController>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9a9e7a1d-1721-4da7-aa43-8473132b16db"",
-                    ""path"": ""<DualShockGamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a8225f4b-a4e7-47ef-bba4-d84794e14c01"",
-                    ""path"": ""<DualShockGamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""7b4fe75e-898c-4cc4-aeb4-40a3efc845b0"",
                     ""path"": ""<SwitchProControllerHID>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e9ddaabc-350f-42a9-9aa1-e4b69cf46b76"",
-                    ""path"": ""<SwitchProControllerHID>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RightNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""47a4b683-1cc0-4ad7-9b28-fc6ec71a0212"",
-                    ""path"": ""<SwitchProControllerHID>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1348,74 +1182,8 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9509ddde-a2c9-41ce-8701-adc593b4280a"",
-                    ""path"": ""<XInputController>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6b90507c-49ba-4e85-8669-d91bd21acf5d"",
-                    ""path"": ""<XInputController>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0080a647-55b9-4929-9160-246d8a9023cb"",
-                    ""path"": ""<DualShockGamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0ac39d8c-0a33-4557-905d-3a7311e2f233"",
-                    ""path"": ""<DualShockGamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c8efdd16-3650-4b02-ad12-119aee92401d"",
                     ""path"": ""<SwitchProControllerHID>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d315af36-ef87-47ba-8adc-b1ebc5f12ff6"",
-                    ""path"": ""<SwitchProControllerHID>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""71014da9-dcdb-4a59-8165-7a65a334ba57"",
-                    ""path"": ""<SwitchProControllerHID>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1552,6 +1320,270 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UpJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4eaceb38-71c8-4f4e-8c04-fc992bd99227"",
+                    ""path"": ""<XInputController>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dUpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f20c79df-cb08-42c7-aa92-a22f324673b3"",
+                    ""path"": ""<XInputController>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dUpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b89d2cc-d8dc-4eab-94b9-27a06b781171"",
+                    ""path"": ""<DualShockGamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dUpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16fc0801-1282-4bdf-8b04-1b44eec0df96"",
+                    ""path"": ""<DualShockGamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dUpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ee0ca08-1d58-40cf-968c-514e28c19e34"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dUpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07b8df87-4253-48fd-a52a-e1026af40c9f"",
+                    ""path"": ""<SwitchProControllerHID>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dUpNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""829650a8-1660-41d9-a32d-6e45a4f2f620"",
+                    ""path"": ""<XInputController>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dLeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c4efc92-c9c2-4cd0-a692-02ff10437be9"",
+                    ""path"": ""<XInputController>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dLeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1efee693-7bb9-42a2-a0ae-b71cbbef9edd"",
+                    ""path"": ""<DualShockGamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dLeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""301f36f1-e474-4f8f-9291-e8c234463a43"",
+                    ""path"": ""<DualShockGamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dLeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""417d9727-9c8e-4372-a96c-1ed0b2b5ac92"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dLeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f51238f-21fe-4353-954c-47a91843e61a"",
+                    ""path"": ""<SwitchProControllerHID>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dLeftNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf4c8428-e11a-4239-a0bd-ac9ded1f22e6"",
+                    ""path"": ""<XInputController>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dRightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f49d9708-18ae-41c3-9457-812cff11dc35"",
+                    ""path"": ""<XInputController>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dRightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bb2f5f9-7514-4cdb-a0c2-19a22142e0bd"",
+                    ""path"": ""<DualShockGamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dRightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04841243-f3c1-4126-8c2e-e055ab8913d6"",
+                    ""path"": ""<DualShockGamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dRightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""891a8d64-f9bc-47fc-8973-efd990be99a5"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dRightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09ddb8e5-8b9b-4f10-8d62-cedce04a76a5"",
+                    ""path"": ""<SwitchProControllerHID>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dRightNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""58950e9e-1e18-4477-b085-65d71949ddc2"",
+                    ""path"": ""<XInputController>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dDownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01d011f8-2c60-4544-8f1b-e6fcbbea2b26"",
+                    ""path"": ""<XInputController>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dDownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b98e6a16-70a4-4708-ad50-50576e58c8d7"",
+                    ""path"": ""<DualShockGamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dDownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77b24fba-ca0b-4213-a4fa-2ad63602791a"",
+                    ""path"": ""<DualShockGamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dDownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4653f6fd-b9e0-47a8-b532-67f92cd29642"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dDownNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26976d7d-c3e1-4dd4-af43-741a0aa1d4fc"",
+                    ""path"": ""<SwitchProControllerHID>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""dDownNote"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1752,9 +1784,13 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_LStick = m_Player.FindAction("LStick", throwIfNotFound: true);
         m_Player_DPad = m_Player.FindAction("DPad", throwIfNotFound: true);
         m_Player_UpNote = m_Player.FindAction("UpNote", throwIfNotFound: true);
+        m_Player_dUpNote = m_Player.FindAction("dUpNote", throwIfNotFound: true);
         m_Player_LeftNote = m_Player.FindAction("LeftNote", throwIfNotFound: true);
+        m_Player_dLeftNote = m_Player.FindAction("dLeftNote", throwIfNotFound: true);
         m_Player_RightNote = m_Player.FindAction("RightNote", throwIfNotFound: true);
+        m_Player_dRightNote = m_Player.FindAction("dRightNote", throwIfNotFound: true);
         m_Player_DownNote = m_Player.FindAction("DownNote", throwIfNotFound: true);
+        m_Player_dDownNote = m_Player.FindAction("dDownNote", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_UpJump = m_Player.FindAction("UpJump", throwIfNotFound: true);
         // UI
@@ -1826,9 +1862,13 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_LStick;
     private readonly InputAction m_Player_DPad;
     private readonly InputAction m_Player_UpNote;
+    private readonly InputAction m_Player_dUpNote;
     private readonly InputAction m_Player_LeftNote;
+    private readonly InputAction m_Player_dLeftNote;
     private readonly InputAction m_Player_RightNote;
+    private readonly InputAction m_Player_dRightNote;
     private readonly InputAction m_Player_DownNote;
+    private readonly InputAction m_Player_dDownNote;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_UpJump;
     public struct PlayerActions
@@ -1850,9 +1890,13 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @LStick => m_Wrapper.m_Player_LStick;
         public InputAction @DPad => m_Wrapper.m_Player_DPad;
         public InputAction @UpNote => m_Wrapper.m_Player_UpNote;
+        public InputAction @dUpNote => m_Wrapper.m_Player_dUpNote;
         public InputAction @LeftNote => m_Wrapper.m_Player_LeftNote;
+        public InputAction @dLeftNote => m_Wrapper.m_Player_dLeftNote;
         public InputAction @RightNote => m_Wrapper.m_Player_RightNote;
+        public InputAction @dRightNote => m_Wrapper.m_Player_dRightNote;
         public InputAction @DownNote => m_Wrapper.m_Player_DownNote;
+        public InputAction @dDownNote => m_Wrapper.m_Player_dDownNote;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @UpJump => m_Wrapper.m_Player_UpJump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1909,15 +1953,27 @@ public class @Controls : IInputActionCollection, IDisposable
                 @UpNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpNote;
                 @UpNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpNote;
                 @UpNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpNote;
+                @dUpNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDUpNote;
+                @dUpNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDUpNote;
+                @dUpNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDUpNote;
                 @LeftNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftNote;
                 @LeftNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftNote;
                 @LeftNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftNote;
+                @dLeftNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDLeftNote;
+                @dLeftNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDLeftNote;
+                @dLeftNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDLeftNote;
                 @RightNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightNote;
                 @RightNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightNote;
                 @RightNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightNote;
+                @dRightNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDRightNote;
+                @dRightNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDRightNote;
+                @dRightNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDRightNote;
                 @DownNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDownNote;
                 @DownNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDownNote;
                 @DownNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDownNote;
+                @dDownNote.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDDownNote;
+                @dDownNote.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDDownNote;
+                @dDownNote.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDDownNote;
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
@@ -1973,15 +2029,27 @@ public class @Controls : IInputActionCollection, IDisposable
                 @UpNote.started += instance.OnUpNote;
                 @UpNote.performed += instance.OnUpNote;
                 @UpNote.canceled += instance.OnUpNote;
+                @dUpNote.started += instance.OnDUpNote;
+                @dUpNote.performed += instance.OnDUpNote;
+                @dUpNote.canceled += instance.OnDUpNote;
                 @LeftNote.started += instance.OnLeftNote;
                 @LeftNote.performed += instance.OnLeftNote;
                 @LeftNote.canceled += instance.OnLeftNote;
+                @dLeftNote.started += instance.OnDLeftNote;
+                @dLeftNote.performed += instance.OnDLeftNote;
+                @dLeftNote.canceled += instance.OnDLeftNote;
                 @RightNote.started += instance.OnRightNote;
                 @RightNote.performed += instance.OnRightNote;
                 @RightNote.canceled += instance.OnRightNote;
+                @dRightNote.started += instance.OnDRightNote;
+                @dRightNote.performed += instance.OnDRightNote;
+                @dRightNote.canceled += instance.OnDRightNote;
                 @DownNote.started += instance.OnDownNote;
                 @DownNote.performed += instance.OnDownNote;
                 @DownNote.canceled += instance.OnDownNote;
+                @dDownNote.started += instance.OnDDownNote;
+                @dDownNote.performed += instance.OnDDownNote;
+                @dDownNote.canceled += instance.OnDDownNote;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -2058,9 +2126,13 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnLStick(InputAction.CallbackContext context);
         void OnDPad(InputAction.CallbackContext context);
         void OnUpNote(InputAction.CallbackContext context);
+        void OnDUpNote(InputAction.CallbackContext context);
         void OnLeftNote(InputAction.CallbackContext context);
+        void OnDLeftNote(InputAction.CallbackContext context);
         void OnRightNote(InputAction.CallbackContext context);
+        void OnDRightNote(InputAction.CallbackContext context);
         void OnDownNote(InputAction.CallbackContext context);
+        void OnDDownNote(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnUpJump(InputAction.CallbackContext context);
     }
