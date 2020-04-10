@@ -37,8 +37,8 @@ public class SettingsController : MonoBehaviour
         invertXHolder, invertYHolder, sensitivityHolder;
 
     // Audio Setting Vars
-    [HideInInspector] public float musicVolume = 0.7f;
-    [HideInInspector] public float sfxVolume = 0.8f;
+    [HideInInspector] public float musicVolume = 0.5f;
+    [HideInInspector] public float sfxVolume = 0.6f;
 
     [Header("Audio Settings UI")]
     public Slider musicVolumeSlider;
@@ -141,8 +141,8 @@ public class SettingsController : MonoBehaviour
         }
         else
         {
-            musicVolumeSlider.value = 0.7f;
-            PlayerPrefs.SetFloat("musicVolume", 0.7f);
+            musicVolumeSlider.value = 0.5f;
+            PlayerPrefs.SetFloat("musicVolume", 0.5f);
             PlayerPrefs.Save();
         }
 
@@ -153,8 +153,8 @@ public class SettingsController : MonoBehaviour
         }
         else
         {
-            sfxVolumeSlider.value = 0.8f;
-            PlayerPrefs.SetFloat("sfxVolume", 0.8f);
+            sfxVolumeSlider.value = 0.6f;
+            PlayerPrefs.SetFloat("sfxVolume", 0.6f);
             PlayerPrefs.Save();
         }
 
@@ -454,14 +454,14 @@ public class SettingsController : MonoBehaviour
                 break;
 
             case Panel.audio:
-                musicVolume = 0.7f;
-                sfxVolume = 0.8f;
+                musicVolume = 0.5f;
+                sfxVolume = 0.6f;
 
-                musicVolumeSlider.value = 0.7f;
-                sfxVolumeSlider.value = 0.8f;
+                musicVolumeSlider.value = 0.5f;
+                sfxVolumeSlider.value = 0.6f;
 
-                PlayerPrefs.SetFloat("musicVolume", 0.7f);
-                PlayerPrefs.SetFloat("sfxVolume", 0.8f);
+                PlayerPrefs.SetFloat("musicVolume", 0.5f);
+                PlayerPrefs.SetFloat("sfxVolume", 0.6f);
 
                 PlayerPrefs.Save();
                 
