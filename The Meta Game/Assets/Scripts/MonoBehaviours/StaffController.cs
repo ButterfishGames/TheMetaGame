@@ -72,6 +72,7 @@ public class StaffController : MonoBehaviour
 
     public void StartSong()
     {
+        source.volume = SettingsController.singleton.musicVolume;
         source.Play();
     }
 

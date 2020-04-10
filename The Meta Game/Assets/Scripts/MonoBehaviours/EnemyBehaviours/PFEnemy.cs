@@ -98,6 +98,8 @@ public class PFEnemy : EnemyBehaviour
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
+
+        GetComponent<AudioSource>().volume = SettingsController.singleton.sfxVolume;
     }
 
     // Update is called once per frame

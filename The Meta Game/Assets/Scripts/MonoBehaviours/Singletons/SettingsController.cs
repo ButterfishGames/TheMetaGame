@@ -161,7 +161,9 @@ public class SettingsController : MonoBehaviour
         AudioSource[] sources = FindObjectsOfType<AudioSource>();
         foreach (AudioSource source in sources)
         {
-            if (source.gameObject.name.Equals("Player") || source.gameObject.name.Equals("Song"))
+            if (source.gameObject.name.Equals("Player") 
+                || source.gameObject.name.Equals("Song") 
+                || source.gameObject.name.Equals("MusicalStaff(Clone)"))
             {
                 source.volume = musicVolume;
             }
@@ -358,7 +360,9 @@ public class SettingsController : MonoBehaviour
                 AudioSource[] sources = FindObjectsOfType<AudioSource>();
                 foreach (AudioSource source in sources)
                 {
-                    if (source.gameObject.name.Equals("Player") || source.gameObject.name.Equals("Song"))
+                    if (source.gameObject.name.Equals("Player")
+                        || source.gameObject.name.Equals("Song")
+                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
                     {
                         source.volume = musicVolume;
                     }
@@ -405,7 +409,9 @@ public class SettingsController : MonoBehaviour
                 AudioSource[] sources = FindObjectsOfType<AudioSource>();
                 foreach (AudioSource source in sources)
                 {
-                    if (source.gameObject.name.Equals("Player") || source.gameObject.name.Equals("Song"))
+                    if (source.gameObject.name.Equals("Player")
+                        || source.gameObject.name.Equals("Song")
+                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
                     {
                         source.volume = musicVolume;
                     }
@@ -462,7 +468,9 @@ public class SettingsController : MonoBehaviour
                 AudioSource[] sources = FindObjectsOfType<AudioSource>();
                 foreach (AudioSource source in sources)
                 {
-                    if (source.gameObject.name.Equals("Player") || source.gameObject.name.Equals("Song"))
+                    if (source.gameObject.name.Equals("Player")
+                        || source.gameObject.name.Equals("Song")
+                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
                     {
                         source.volume = musicVolume;
                     }
