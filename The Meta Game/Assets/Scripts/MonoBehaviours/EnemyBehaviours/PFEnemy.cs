@@ -99,6 +99,12 @@ public class PFEnemy : EnemyBehaviour
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
 
+        StartCoroutine(SetVol());
+    }
+
+    private IEnumerator SetVol()
+    {
+        yield return new WaitUntil(() => SettingsController.singleton != null);
         GetComponent<AudioSource>().volume = SettingsController.singleton.sfxVolume;
     }
 

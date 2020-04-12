@@ -35,6 +35,7 @@ public class Checkpoint : MonoBehaviour
         SaveManager.singleton.UpdateCheckpointPos(loadPos);
         SaveManager.singleton.SaveGame(true);
         animator.SetBool("active", true);
+        //TODO: Add Flag Checkpoint SFX Event
     }
 
     public void Deactivate()

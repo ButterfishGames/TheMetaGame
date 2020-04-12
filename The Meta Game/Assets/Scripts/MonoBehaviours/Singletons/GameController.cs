@@ -121,6 +121,16 @@ public class GameController : MonoBehaviour
 
     private bool battling;
 
+    public enum Scheme
+    {
+        keyboardAndMouse,
+        xboxController,
+        ps4Controller,
+        switchController
+    };
+
+    public Scheme currentScheme;
+
     [System.Serializable]
     public struct SpellStr
     {
@@ -223,6 +233,8 @@ public class GameController : MonoBehaviour
 
     private bool unpausing;
 
+    private bool dated;
+
     private bool waitAGoddamnSecond = false;
 
     private GameMode prev;
@@ -264,7 +276,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        if (DialogueManager.singleton.GetDisplaying())
+        if (DialogueManager.singleton.GetDisplaying() && !dating)
         {
             return;
         }
@@ -368,6 +380,8 @@ public class GameController : MonoBehaviour
 
     private void CancelHandle (InputAction.CallbackContext context)
     {
+        // TODO: Add UI Back SFX Event
+
         if (switchMenu.activeInHierarchy)
         {
             ToggleSwitchMenu();
@@ -400,6 +414,8 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        dated = false;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
 
@@ -626,7 +642,7 @@ public class GameController : MonoBehaviour
 
         if (prev == GameMode.dating && !transitioned)
         {
-            StartCoroutine(DatingUntransitionLite());
+            StartCoroutine(DatingUntransition());
         }
 
         BoxCollider2D[] cameraWalls;
@@ -640,6 +656,8 @@ public class GameController : MonoBehaviour
         RhythmController rCon;
         GameObject staff;
         AudioSource source;
+
+        // TODO: Add Switch Mode SFX Event
 
         switch (equipped)
         {
@@ -1252,6 +1270,12 @@ public class GameController : MonoBehaviour
                 modeInt = 4;
                 equippedStr = "Dating";
 
+                staff = GameObject.Find("MusicalStaff(Clone)");
+                if (staff != null)
+                {
+                    Destroy(staff);
+                }
+
                 StartCoroutine(DatingTransition());
                 break;
             #endregion
@@ -1405,11 +1429,26 @@ public class GameController : MonoBehaviour
         source.Play();
 
         ToggleSwitchPanel(false);
-        DialogueManager.singleton.StartDialogue(datingDialogues[0], true, 0);
+        if (datingDialogues.Length > 1)
+        {
+            if (dated)
+            {
+                int i = Random.Range(1, datingDialogues.Length);
+                DialogueManager.singleton.StartDialogue(datingDialogues[i], true, i);
+            }
+            else
+            {
+                DialogueManager.singleton.StartDialogue(datingDialogues[0], true, 0);
+            }
+        }
+        else
+        {
+            DialogueManager.singleton.StartDialogue(datingDialogues[0], true, 0);
+        }
         StartCoroutine(LevelFade(true));
     }
     
-    private IEnumerator DatingUntransitionLite()
+    private IEnumerator DatingUntransition()
     {
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
@@ -1418,32 +1457,17 @@ public class GameController : MonoBehaviour
             DialogueManager.singleton.EndDialogue(false);
         }
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = currentBGM;
-        source.Play();
-
-        ToggleSwitchPanel(true);
-        StartCoroutine(LevelFade(true));
-        dating = false;
-    }
-
-    public IEnumerator DatingUntransition()
-    {
-        StartCoroutine(LevelFade(false));
-        yield return new WaitForSeconds(levelFadeTime);
-        if (DialogueManager.singleton.GetDisplaying())
+        if (equipped != GameMode.rhythm)
         {
-            DialogueManager.singleton.EndDialogue(false);
+            AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
+            source.clip = currentBGM;
+            source.Play();
         }
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = currentBGM;
-        source.Play();
-
-        StartCoroutine(LevelFade(true));
         ToggleSwitchPanel(true);
+        StartCoroutine(LevelFade(true));
+        yield return new WaitForSeconds(0.1f);
         dating = false;
-        SwitchMode(prev, true);
     }
 
     public static float GridLocker(float pos)
@@ -1584,9 +1608,11 @@ public class GameController : MonoBehaviour
                 else if (mode.Equals("Dating"))
                 {
                     mode += " Sim";
+                    dated = false;
                 }
                 unlockText.text = "You unlocked \n" + mode + " mode!";
                 found = true;
+                // TODO: Add Unlock Mode SFX Event
                 StartCoroutine(UnlockFade());
             }
         }
@@ -1808,7 +1834,11 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(buildIndex);
         yield return new WaitForEndOfFrame();
-        currentBGM = GameObject.Find("Song").GetComponent<AudioSource>().clip;
+        AudioClip clip = GameObject.Find("Song").GetComponent<AudioSource>().clip;
+        if (clip != rpgCombatBGM && clip != datingSimBGM)
+        {
+            currentBGM = clip;
+        }
         SwitchMode(GameMode.platformer);
         
         if (numUnlocked > 1)

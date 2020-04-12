@@ -49,6 +49,7 @@ public class ConceptArtPickup : MonoBehaviour
         {
             GameController.singleton.artList[artInd].unlocked = true;
             SaveManager.singleton.UpdatePlayerData();
+            // TODO: Add Collectible SFX Event
             Destroy(gameObject);
         }
     }

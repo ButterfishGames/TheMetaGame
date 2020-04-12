@@ -77,6 +77,10 @@ public class PFController : Mover
             return;
         }
 
+        Debug.LogError("Manufacturer: " + context.control.device.description.manufacturer);
+        Debug.LogError("Product: " + context.control.device.description.product);
+        Debug.LogError("Device Class: " + context.control.device.description.deviceClass);
+        Debug.LogError("Interface: " + context.control.device.description.interfaceName);
         Jump();
     }
 
@@ -161,7 +165,10 @@ public class PFController : Mover
 
         base.Update();
 
-        GroundWallCheck();
+        if (grounded && !onWall)
+        {
+            GroundWallCheck();
+        }
 
         if (Mathf.Abs(rb.velocity.x) > 0.1f)
         {
@@ -190,10 +197,10 @@ public class PFController : Mover
             return;
         }
 
-        if (v < 0 && !goingThrough)
+        /*if (v < 0 && !goingThrough)
         {
             StartCoroutine("GoThrough");
-        }
+        }*/
 
         float moveX = hRaw == 0 ?
             (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
@@ -230,6 +237,11 @@ public class PFController : Mover
         if (onWall)
         {
             xForce = -wallDir * wallJumpForce;
+            // TODO: Add Player Wall Jump SFX Event
+        }
+        else
+        {
+            // TODO: Add Player Jump SFX Event
         }
 
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
@@ -322,6 +334,11 @@ public class PFController : Mover
                 }
             }
         }
+        else
+        {
+            grounded = true;
+            return;
+        }
 
         if (onGround)
         {
@@ -335,9 +352,11 @@ public class PFController : Mover
             RaycastHit2D hit, hit2;
 
             hit = Physics2D.Raycast(origin, Vector2.down, 0.4f * transform.localScale.y,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor")) 
+                + (1 << LayerMask.NameToLayer("Racer")) + (1 << LayerMask.NameToLayer("Checkpoint"))));
             hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.4f * transform.localScale.y,
-                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))
+                + (1 << LayerMask.NameToLayer("Racer")) + (1 << LayerMask.NameToLayer("Checkpoint"))));
 
             if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
             {
@@ -364,12 +383,14 @@ public class PFController : Mover
                     onWall = true;
                     wallDir = 1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
+                    // TODO: Add Stick to Wall SFX Event
                 }
                 else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
                 {
                     onWall = true;
                     wallDir = -1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
+                    // TODO: Add Stick to Wall SFX Event
                 }
                 else
                 {
@@ -395,6 +416,7 @@ public class PFController : Mover
             animator.SetBool("grounded", false);
             animator.SetBool("walled", false);
             grounded = false;
+            Debug.Log("happens?");
         }
         else
         {

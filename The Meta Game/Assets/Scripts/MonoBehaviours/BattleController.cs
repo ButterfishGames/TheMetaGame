@@ -214,6 +214,7 @@ public class BattleController : MonoBehaviour
 
         if (GameController.singleton.GetHP() <= 0)
         {
+            GameObject.Find("Player").GetComponent<AudioSource>().Play();
             playerStats.text = "Dextra\n"
             + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
@@ -238,6 +239,8 @@ public class BattleController : MonoBehaviour
 
     public void Target(int enemyIndex)
     {
+        // TODO: Add Attack Menu Confirm SFX Event
+
         switch (currCommand)
         {
             case Command.attack:
@@ -349,10 +352,8 @@ public class BattleController : MonoBehaviour
 
             if (currTroop.enemies.Length < 1)
             {
-                messagePanel.SetActive(true);
-                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You win!";
-                GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
                 won = true;
+                Win();
             }
             else if (replaceE1)
             {
@@ -556,10 +557,8 @@ public class BattleController : MonoBehaviour
 
             if (currTroop.enemies.Length < 1)
             {
-                messagePanel.SetActive(true);
-                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You win!";
-                GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
                 won = true;
+                Win();
             }
             else if (replaceE1)
             {
@@ -651,9 +650,7 @@ public class BattleController : MonoBehaviour
 
         if (dead.ToArray().Length == currTroop.enemies.Length)
         {
-            messagePanel.SetActive(true);
-            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You win!";
-            GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
+            Win();
         }
         else
         {
@@ -750,6 +747,7 @@ public class BattleController : MonoBehaviour
 
         if (det < fleeChance)
         {
+            // TODO: Add Flee SFX Event
             messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You successfully escaped!";
             GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
         }
@@ -761,6 +759,7 @@ public class BattleController : MonoBehaviour
 
     private IEnumerator FleeFail()
     {
+        // TODO: Add Flee Fail SFX Event
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You failed to escape!";
         yield return new WaitForSeconds(0.75f);
         NextTurn();
@@ -768,6 +767,8 @@ public class BattleController : MonoBehaviour
 
     private void ReturnToMain()
     {
+        // TODO: Add UI Back SFX Event
+
         onMagic = false;
 
         if (spellButtons[0] != null)
@@ -797,6 +798,14 @@ public class BattleController : MonoBehaviour
             + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
             + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+    }
+
+    private void Win()
+    {
+        // TODO: Add RPG Win SFX Event
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You win!";
+        GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
     }
 }
 

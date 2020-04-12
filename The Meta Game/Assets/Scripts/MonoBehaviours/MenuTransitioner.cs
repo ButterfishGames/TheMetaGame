@@ -21,9 +21,9 @@ public class MenuTransitioner : MonoBehaviour
                 SaveManager.singleton.LoadGame();
                 int sceneInd = SaveManager.singleton.GetCurrentScene();
                 collision.enabled = false;
-                // GameController.singleton.ignoreHints = false;
                 GameController.singleton.onMenu = false;
                 StartCoroutine(SongFade());
+                // TODO: Add Start Game SFX Event
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(sceneInd));
             }
             else if (function == 2)
