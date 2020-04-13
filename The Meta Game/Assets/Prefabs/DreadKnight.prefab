@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 279951374788258752}
   m_Layer: 12
   m_Name: DreadKnight
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   chargeMult: 3
   viewDist: 10
   startDir: 1
-  maxHP: 1
+  maxHP: 3
   damageFadeTime: 0.5
   test: 0
   dir: 1

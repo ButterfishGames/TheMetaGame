@@ -146,14 +146,17 @@ public class PFDreadKnight : EnemyBehaviour
             return;
         }
 
+        //Debug.Log(CutsceneManager.singleton.scening);
+
         if (CutsceneManager.singleton.scening)
         {
+            //Debug.Log("e");
             bossCutsceneBegun = true;
         }
 
         if (!CutsceneManager.singleton.scening && bossCutsceneBegun)
         {
-            Debug.Log("Camera locked");
+            //Debug.Log("Camera locked");
             if(cutscene != null)
             {
                 Destroy(cutscene.gameObject);
@@ -185,6 +188,8 @@ public class PFDreadKnight : EnemyBehaviour
             animator.SetBool("cutscene", false);
             if (timeGettingUp <= 0)
             {
+                Debug.Log(moveSpeed + " " + mult);
+                Debug.Log(rb.velocity.y + " velocity in y direction");
                 animator.SetBool("hitWall", false);
                 RaycastHit2D hit;
                 Vector2 dVec = new Vector2(dir * 0.5f, -1).normalized;
@@ -380,14 +385,6 @@ public class PFDreadKnight : EnemyBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             grounded = false;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Killbox"))
-        {
-            Destroy(gameObject);
         }
     }
 

@@ -198,7 +198,6 @@ MonoBehaviour:
   wallJumpForce: 6
   deathForce: 12
   deathWait: 10
-  canStickJump: 1
 --- !u!114 &2826980262528341210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +257,7 @@ MonoBehaviour:
   hitstun: 0
   hadoStartup: 30
   hadoEndLag: 20
-  attackEffects: {fileID: 0}
+  attackEffects: {fileID: 5103115777615170996}
   lightAttackStats:
     attackName: Light
     hitstun: 50
@@ -266,8 +265,8 @@ MonoBehaviour:
     startup: 5
     hitboxActivationTime: 10
     moveLag: 10
-    xVelocity: 0
-    yVelocity: 0
+    xVelocity: 1
+    yVelocity: 1
     offsetX: 0.65
     offsetY: 0
     sizeX: 0.5
@@ -279,8 +278,8 @@ MonoBehaviour:
     startup: 30
     hitboxActivationTime: 15
     moveLag: 25
-    xVelocity: 0
-    yVelocity: 0
+    xVelocity: 2
+    yVelocity: 2
     offsetX: 1
     offsetY: 0
     sizeX: 1
@@ -292,8 +291,8 @@ MonoBehaviour:
     startup: 25
     hitboxActivationTime: 10
     moveLag: 20
-    xVelocity: 0
-    yVelocity: 0
+    xVelocity: 3
+    yVelocity: 3
     offsetX: 1
     offsetY: 0
     sizeX: 2
