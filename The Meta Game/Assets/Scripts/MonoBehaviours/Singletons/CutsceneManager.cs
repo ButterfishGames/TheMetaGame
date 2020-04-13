@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class CutsceneManager : MonoBehaviour
     private IEnumerator RunCutscene()
     {
         bool lockCam = false;
+        bool glitching = false;
 
         scening = true;
 
@@ -160,6 +162,23 @@ public class CutsceneManager : MonoBehaviour
                     GameController.singleton.ToggleSwitchPanel(true);
                     yield return new WaitForSeconds(GameController.singleton.unlockWaitTime + GameController.singleton.unlockFadeTime);
                     break;
+
+                case StepType.lockMode:
+                    GameController.singleton.Lock(currentScene.steps[i].mode);
+                    yield return new WaitForSeconds(GameController.singleton.unlockWaitTime + GameController.singleton.unlockFadeTime);
+                    break;
+
+                case StepType.deleteTile:
+                    Vector3Int pos = new Vector3Int(Mathf.FloorToInt(currentScene.steps[i].mov.x),
+                        Mathf.FloorToInt(currentScene.steps[i].mov.y),
+                        Mathf.FloorToInt(currentScene.steps[i].mov.z));
+                    GameObject.Find("Tilemap").GetComponent<Tilemap>().SetTile(pos, null);
+                    break;
+
+                case StepType.glitch:
+                    glitching = !glitching;
+                    GameController.singleton.SetGlitching(glitching);
+                    break;
             }
         }
 
@@ -171,6 +190,11 @@ public class CutsceneManager : MonoBehaviour
                 currentScene.animators[i].SetBool("platformer", true);
                 currentScene.animators[i].SetBool("moving", false);
             }
+        }
+
+        if (!glitching)
+        {
+            GameController.singleton.SetGlitching(false);
         }
         
         Camera.main.GetComponent<CameraScroll>().enabled = !lockCam;

@@ -305,8 +305,11 @@ public class PFController : Mover
         {
             childCol.enabled = false;
         }*/
-        yield return new WaitForSeconds(deathWait);
-        GameController.singleton.Die(!hit);
+        if (!CutsceneManager.singleton.scening)
+        {
+            yield return new WaitForSeconds(deathWait);
+            GameController.singleton.Die(!hit);
+        }
     }
 
     private IEnumerator GoThrough()
@@ -353,10 +356,12 @@ public class PFController : Mover
 
             hit = Physics2D.Raycast(origin, Vector2.down, 0.4f * transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor")) 
-                + (1 << LayerMask.NameToLayer("Racer")) + (1 << LayerMask.NameToLayer("Checkpoint"))));
+                + (1 << LayerMask.NameToLayer("Racer")) + (1 << LayerMask.NameToLayer("Checkpoint"))
+                + (1 << LayerMask.NameToLayer("Default"))));
             hit2 = Physics2D.Raycast(origin2, Vector2.down, 0.4f * transform.localScale.y,
                 ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))
-                + (1 << LayerMask.NameToLayer("Racer")) + (1 << LayerMask.NameToLayer("Checkpoint"))));
+                + (1 << LayerMask.NameToLayer("Racer")) + (1 << LayerMask.NameToLayer("Checkpoint"))
+                + (1 << LayerMask.NameToLayer("Default"))));
 
             if ((hit.collider == null || !hit.collider.CompareTag("Ground")) && (hit2.collider == null || !hit2.collider.CompareTag("Ground")))
             {

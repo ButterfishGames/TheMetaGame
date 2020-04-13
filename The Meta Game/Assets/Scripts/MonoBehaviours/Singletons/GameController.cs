@@ -235,6 +235,8 @@ public class GameController : MonoBehaviour
 
     private bool dated;
 
+    private bool loading;
+
     private bool waitAGoddamnSecond = false;
 
     private GameMode prev;
@@ -492,8 +494,7 @@ public class GameController : MonoBehaviour
         {
             Cursor.visible = true;
         }
-
-        /*
+        
         if (glitching)
         {
             GameObject gCam = GameObject.Find("GCam");
@@ -501,7 +502,6 @@ public class GameController : MonoBehaviour
             {
                 gCam.SetActive(true);
             }
-            gCanv.SetActive(true);
 
             Camera.main.GetComponent<Camera>().targetTexture = rTex;
             rTarg.texture = rTex;
@@ -514,9 +514,7 @@ public class GameController : MonoBehaviour
             {
                 gCam.SetActive(false);
             }
-            gCanv.SetActive(false);
         }
-        */
 
         if (switchMenu.activeInHierarchy)
         {
@@ -1423,6 +1421,7 @@ public class GameController : MonoBehaviour
         dating = true;
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
+        SetGlitching(false);
 
         AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
         source.clip = datingSimBGM;
@@ -1625,6 +1624,77 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void Lock(GameMode mode)
+    {
+        string modeStr = "";
+        switch (mode)
+        {
+            case GameMode.platformer:
+                modeStr = "Platformer";
+                break;
+
+            case GameMode.fighting:
+                modeStr = "Fighting";
+                break;
+
+            case GameMode.rpg:
+                modeStr = "RPG";
+                break;
+
+            case GameMode.fps:
+                modeStr = "FPS";
+                break;
+
+            case GameMode.rhythm:
+                modeStr = "Rhythm";
+                break;
+
+            case GameMode.dating:
+                modeStr = "Dating";
+                break;
+        }
+
+        Lock(modeStr);
+    }
+
+    public void Lock(string mode)
+    {
+        bool found = false;
+        for (int i = 0; i < modes.Length && !found; i++)
+        {
+            if (modes[i].name.Equals(mode))
+            {
+                modes[i].unlocked = false;
+                unlockPanel.SetActive(true);
+                if (mode.Equals("Fighting") || mode.Equals("Rhythm") || mode.Equals("Racing"))
+                {
+                    mode += " Game";
+                }
+                else if (mode.Equals("Dating"))
+                {
+                    mode += " Sim";
+                    dated = false;
+                }
+                unlockText.text = "You lost \n" + mode + " mode!";
+                found = true;
+                // TODO: Add Unlock Mode SFX Event
+                StartCoroutine(UnlockFade());
+            }
+        }
+
+        numUnlocked--;
+
+        if (numUnlocked == 1)
+        {
+            ToggleSwitchPanel(false);
+        }
+
+        if (!found)
+        {
+            Debug.Log("ERROR: MODE STRING DID NOT MATCH ANY NAMES IN MODES ARRAY");
+        }
+    }
+
     public void FloorDamage()
     {
         currHP = Mathf.Clamp(currHP - floorDamage, 0, maxHP);
@@ -1655,6 +1725,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(ReloadLevel(false));
         currHP = maxHP;
         currMP = maxMP;
+        currSP = maxSP;
     }
 
     public void Die(bool fall)
@@ -1668,24 +1739,33 @@ public class GameController : MonoBehaviour
 
     private IEnumerator ReloadLevel(bool fall)
     {
-        if (fall)
+        if (loading)
         {
-            levelFadeTime = 2;
+            yield return null;
         }
-        StartCoroutine(LevelFade(false));
-        yield return new WaitForSeconds(levelFadeTime);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        yield return new WaitForEndOfFrame();
-        SwitchMode(GameMode.platformer);
-        if (numUnlocked > 1)
+        else
         {
-            ToggleSwitchPanel(true);
-        }
+            loading = true;
+            if (fall)
+            {
+                levelFadeTime = 2;
+            }
+            StartCoroutine(LevelFade(false));
+            yield return new WaitForSeconds(levelFadeTime);
 
-        StartCoroutine(LevelFade(true));
-        paused = false;
-        battling = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            yield return new WaitForEndOfFrame();
+            SwitchMode(GameMode.platformer, true);
+            if (numUnlocked > 1)
+            {
+                ToggleSwitchPanel(true);
+            }
+
+            StartCoroutine(LevelFade(true));
+            paused = false;
+            battling = false;
+            loading = false;
+        }
     }
 
     private IEnumerator UnlockFade()
@@ -1830,24 +1910,33 @@ public class GameController : MonoBehaviour
 
     public IEnumerator FadeAndLoad(int buildIndex)
     {
-        StartCoroutine(LevelFade(false));
-        yield return new WaitForSeconds(levelFadeTime);
-        SceneManager.LoadScene(buildIndex);
-        yield return new WaitForEndOfFrame();
-        AudioClip clip = GameObject.Find("Song").GetComponent<AudioSource>().clip;
-        if (clip != rpgCombatBGM && clip != datingSimBGM)
+        if (loading)
         {
-            currentBGM = clip;
+            yield return null;
         }
-        SwitchMode(GameMode.platformer);
-        
-        if (numUnlocked > 1)
+        else
         {
-            ToggleSwitchPanel(true);
-        }
+            loading = true;
+            StartCoroutine(LevelFade(false));
+            yield return new WaitForSeconds(levelFadeTime);
+            SceneManager.LoadScene(buildIndex);
+            yield return new WaitForEndOfFrame();
+            AudioClip clip = GameObject.Find("Song").GetComponent<AudioSource>().clip;
+            if (clip != rpgCombatBGM && clip != datingSimBGM)
+            {
+                currentBGM = clip;
+            }
+            SwitchMode(GameMode.platformer, true);
 
-        StartCoroutine(LevelFade(true));
-        paused = false;
+            if (numUnlocked > 1)
+            {
+                ToggleSwitchPanel(true);
+            }
+
+            StartCoroutine(LevelFade(true));
+            paused = false;
+            loading = false;
+        }
     }
 
     public IEnumerator Battle()
@@ -2234,5 +2323,11 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetGlitching (bool val)
+    {
+        glitching = val;
+        gCanv.SetActive(val);
     }
 }

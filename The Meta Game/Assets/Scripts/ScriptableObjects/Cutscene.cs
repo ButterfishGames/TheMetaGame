@@ -73,7 +73,10 @@ public enum StepType
     lockCam,
     loadScene,
     switchMode,
-    unlockMode
+    unlockMode,
+    lockMode,
+    deleteTile,
+    glitch
 }
 
 #if UNITY_EDITOR
@@ -392,6 +395,34 @@ public class CutsceneEditor : Editor
                             songProp.objectReferenceValue = null;
                             sceneProp.intValue = 0;
                             EditorGUILayout.PropertyField(modeProp, new GUIContent("Mode"));
+                            break;
+
+                        case StepType.lockMode:
+                            tranIndProp.intValue = 0;
+                            movProp.vector3Value = Vector3.zero;
+                            rotProp.vector3Value = Vector3.zero;
+                            sclProp.vector3Value = Vector3.one;
+                            dialogueProp.objectReferenceValue = null;
+                            animIndProp.intValue = 0;
+                            stateProp.intValue = 0;
+                            waitProp.floatValue = 0;
+                            songProp.objectReferenceValue = null;
+                            sceneProp.intValue = 0;
+                            EditorGUILayout.PropertyField(modeProp, new GUIContent("Mode"));
+                            break;
+
+                        case StepType.deleteTile:
+                            tranIndProp.intValue = 0;
+                            EditorGUILayout.PropertyField(movProp, new GUIContent("Position"));
+                            rotProp.vector3Value = Vector3.zero;
+                            sclProp.vector3Value = Vector3.one;
+                            dialogueProp.objectReferenceValue = null;
+                            animIndProp.intValue = 0;
+                            stateProp.intValue = 0;
+                            waitProp.floatValue = 0;
+                            songProp.objectReferenceValue = null;
+                            sceneProp.intValue = 0;
+                            modeProp.enumValueIndex = 0;
                             break;
 
                         default:
