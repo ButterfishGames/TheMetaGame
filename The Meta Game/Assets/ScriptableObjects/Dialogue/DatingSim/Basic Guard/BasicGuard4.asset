@@ -10,20 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: BasicGuardStart
+  m_Name: BasicGuard4
   m_EditorClassIdentifier: 
   lines:
   - name: Guard
-    line: "Hello.\t"
-    sprite: {fileID: 21300000, guid: 3025c1b9746886e4a8f8eb9b31a3a16b, type: 3}
-  - name: Guard
-    line: Is there something I can help you with?
-    sprite: {fileID: 0}
+    line: A date? I don't know, it would be bad if I left my post and the boss found
+      out.
+    sprite: {fileID: 21300000, guid: 97844f7b46e14b749a21767f52d1c261, type: 3}
   type: 0
   branches:
-  - Yes
-  - No
+  - You deserve a break
+  - Who cares
   branchDialogues:
-  - {fileID: 11400000, guid: a91190756dd9e1d42831fb701b96bb33, type: 2}
-  - {fileID: 11400000, guid: 53be9f985b1a0a34cb0ca8a295ba04b7, type: 2}
+  - {fileID: 11400000, guid: bbfbaf41dcd79584e9d87905bc12afaf, type: 2}
+  - {fileID: 11400000, guid: bbfbaf41dcd79584e9d87905bc12afaf, type: 2}
   relationshipChanges: 1900000000000000

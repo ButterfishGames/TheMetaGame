@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: BasicGuardFail
+  m_Name: ManaUP
   m_EditorClassIdentifier: 
   lines:
-  - name: Guard
-    line: You know what.I should get back to work, if you wouldn't mind leaving now.
-    sprite: {fileID: 21300000, guid: 2ab97aece327ff24f93eff5999be5f97, type: 3}
+  - name: Weak Mage
+    line: Hello, I am a mage, though not a powerdul one. I know a few tricks about
+      mana conservation though, if you would like I could teach you.
+    sprite: {fileID: 0}
   type: 1
   branches: []
   branchDialogues: []
