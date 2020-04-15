@@ -1,0 +1,212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d6e3b4ed9a4ed40ad9b943b2b4555a, type: 3}
+  m_Name: TestSceneEndFGBossFight
+  m_EditorClassIdentifier: 
+  transforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  transNames:
+  - Player
+  - DreadKnight
+  transformsSize: 2
+  transformsExpanded: 1
+  animators:
+  - {fileID: 0}
+  - {fileID: 0}
+  animNames:
+  - Player
+  - DreadKnight
+  animatorsSize: 2
+  animatorsExpanded: 1
+  gameplayControllers:
+  - {fileID: 9100000, guid: d1cb57b650790de4da5318f644cc6ed3, type: 2}
+  - {fileID: 9100000, guid: e0aa2cf837eefb248a16a50fe7eb3edc, type: 2}
+  gameplayControllersSize: 2
+  gameplayControllersExpanded: 1
+  cutsceneControllers:
+  - {fileID: 9100000, guid: 5329685d8eec2214facbede1123260e9, type: 2}
+  - {fileID: 9100000, guid: bd6a25add83902a47a0d1d2d895f292a, type: 2}
+  cutsceneControllersSize: 2
+  cutsceneControllersExpanded: 1
+  steps:
+  - stepType: 3
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 1
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 0
+    tranInd: 0
+    mov: {x: 490.75, y: 12.39, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 2
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 3
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 3
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 1
+    state: 1
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 0
+    tranInd: 1
+    mov: {x: 500.229, y: 12.95, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 2
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 3
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 1
+    state: 0
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 2
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 11400000, guid: f7db9debb32d561429dd484c3bb4fc2c, type: 2}
+    animInd: 0
+    state: 0
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 9
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 1
+  - stepType: 4
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 2
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 3
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 1
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 0
+    tranInd: 0
+    mov: {x: 253, y: 44.35622, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 4
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 4
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 3.5
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 6
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 0
+    song: {fileID: 0}
+    scene: 0
+    mode: 0
+  - stepType: 7
+    tranInd: 0
+    mov: {x: 0, y: 0, z: 0}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 0
+    song: {fileID: 0}
+    scene: 5
+    mode: 0
+  stepsSize: 14
+  stepsExpanded: 1
+  stepExpanded: 0101010101010101010101010101

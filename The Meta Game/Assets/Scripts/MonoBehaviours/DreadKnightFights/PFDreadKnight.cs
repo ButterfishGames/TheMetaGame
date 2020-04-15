@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PFDreadKnight : EnemyBehaviour
 {
@@ -104,6 +105,11 @@ public class PFDreadKnight : EnemyBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        if(SceneManager.GetActiveScene().name != "CastleApproach")
+        {
+            enabled = false;
+        }
+        animator.SetBool("platformer", true);
         inCutscene = true;
         bossCutsceneBegun = false;
         rb = GetComponent<Rigidbody2D>();
@@ -146,17 +152,13 @@ public class PFDreadKnight : EnemyBehaviour
             return;
         }
 
-        //Debug.Log(CutsceneManager.singleton.scening);
-
         if (CutsceneManager.singleton.scening)
         {
-            //Debug.Log("e");
             bossCutsceneBegun = true;
         }
 
         if (!CutsceneManager.singleton.scening && bossCutsceneBegun)
         {
-            //Debug.Log("Camera locked");
             if(cutscene != null)
             {
                 Destroy(cutscene.gameObject);
@@ -188,8 +190,6 @@ public class PFDreadKnight : EnemyBehaviour
             animator.SetBool("cutscene", false);
             if (timeGettingUp <= 0)
             {
-                Debug.Log(moveSpeed + " " + mult);
-                Debug.Log(rb.velocity.y + " velocity in y direction");
                 animator.SetBool("hitWall", false);
                 RaycastHit2D hit;
                 Vector2 dVec = new Vector2(dir * 0.5f, -1).normalized;

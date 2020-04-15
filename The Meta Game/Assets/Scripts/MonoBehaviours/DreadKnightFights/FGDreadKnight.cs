@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FGDreadKnight : EnemyBehaviour
 {
@@ -9,11 +10,6 @@ public class FGDreadKnight : EnemyBehaviour
     /// Sprite renderer to see if the enemy is visible or not so we know whether to include them in the fight.
     /// </summary>
     private SpriteRenderer spriteRenderer;
-
-    /// <summary>
-    /// Fighting variable to determine whether the enemy should be fighting the player ot not.
-    /// </summary>
-    private bool fighting;
 
     /// <summary>
     /// Players X position so the sprite can face towardsthe player depending on what side they are on.
@@ -69,15 +65,6 @@ public class FGDreadKnight : EnemyBehaviour
     /// Main Camera to tell if enemy is within the viewport
     /// </summary>
     private Camera mainCamera;
-
-    /// <summary>
-    /// This variable is to determine whether the enemy started within the view when switching to fighting mode
-    /// </summary>
-    [HideInInspector] public bool changedInView;
-
-    [Tooltip("How difficult the enemy AI is")]
-    [Range(1, 3)]
-    public int difficultyLevel;
 
     /// <summary>
     /// How long until the enemy switches it's state
@@ -225,10 +212,49 @@ public class FGDreadKnight : EnemyBehaviour
     private bool comboed;
 
     private bool justComboed;
+
+    private BoxCollider2D groundTrigger;
+
+    private bool inCutscene;
+
+    /// <summary>
+    /// How much time until Dread Knight charges
+    /// </summary>
+    private float chargePrepTime;
+
+    /// <summary>
+    /// The Dread Knights charge prep animation
+    /// </summary>
+    private Animation chargePrepAnimaton;
+
+    private float timeToGetUp = 2.08f;
+    private float timeGettingUp;
+
+    private float currentChargeTime;
+
+    [Tooltip("Cutscene before fight.")]
+    public GameObject cutscene;
+
+    [Tooltip("Cutscene after fight. MAKE SURE IT IS INACTIVE IN THE SCENE.")]
+    public GameObject endCutscene;
+
+    [Tooltip("Boss fight room barriers.")]
+    public GameObject barriers;
+
+    private bool bossCutsceneBegun;
+
+    private Transform playerTransform;
     #endregion
 
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name != "CastleInterior" || SceneManager.GetActiveScene().name != "CastleInteriorBossTest")
+        {
+            enabled = false;
+        }
+        animator.SetBool("fighter", true);
+        inCutscene = true;
+        bossCutsceneBegun = false;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -239,6 +265,20 @@ public class FGDreadKnight : EnemyBehaviour
         v3Offset = new Vector3(xOffsetForRay, 0, 0);
         attackCoRoutineRunning = false;
         usedAttack = new bool[3];
+        //switch (startDir)
+        //{
+        //    case Direction.right:
+        //        dir = 1;
+        //        break;
+
+        //    case Direction.left:
+        //        dir = -1;
+        //        break;
+
+        //    default:
+        //        Debug.Log("ERROR: INVALID STARTING DIRECTION");
+        //        break;
+        //}
         for (int i = 0; i < usedAttack.Length; i++)
         {
             usedAttack[i] = false;
@@ -251,31 +291,48 @@ public class FGDreadKnight : EnemyBehaviour
 
     void Update()
     {
-        animator.SetInteger("level", difficultyLevel);
-        hitThisFrame = false;
-        Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
-        if (changedInView == true)
+        if (GameController.singleton.GetPaused())
         {
-            fighting = true;
-            if (viewPos.y < 0.0f)
+            return;
+        }
+
+        if (CutsceneManager.singleton.scening)
+        {
+            bossCutsceneBegun = true;
+        }
+
+        if (!CutsceneManager.singleton.scening && bossCutsceneBegun)
+        {
+            if (cutscene != null)
             {
-                Destroy(gameObject);
+                Destroy(cutscene.gameObject);
             }
-            if (currHP <= 0)
+            if (currHP > 0)
             {
-                if (fighting == true)
+                barriers.SetActive(true);
+                inCutscene = false;
+            }
+            else
+            {
+                if (!animator.GetBool("hitWall"))
                 {
-                    fighting = false;
-                    StartCoroutine(Death());
+                    barriers.SetActive(false);
+                    endCutscene.SetActive(true);
+                    rb.gravityScale = 0.0f;
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    inCutscene = true;
                 }
             }
         }
-        else
+
+        hitThisFrame = false;
+        if (inCutscene)
         {
-            fighting = false;
+            animator.SetBool("cutscene", true);
         }
-        if (fighting == true)
+        if (!inCutscene)
         {
+            GameController.singleton.equipped = GameController.GameMode.fighting;
             if (grounded == true)
             {
                 animator.SetBool("jumping", false);
@@ -295,14 +352,14 @@ public class FGDreadKnight : EnemyBehaviour
                 case Direction.right:
                     if (dir == -1)
                     {
-                        transform.eulerAngles = new Vector3(0, 0, 0);
+                        transform.eulerAngles = new Vector3(0, 180, 0);
                     }
                     dir = 1;
                     break;
                 case Direction.left:
                     if (dir == 1)
                     {
-                        transform.eulerAngles = new Vector3(0, 180, 0);
+                        transform.eulerAngles = new Vector3(0, 0, 0);
                     }
                     dir = -1;
                     break;
@@ -341,7 +398,6 @@ public class FGDreadKnight : EnemyBehaviour
                     }
                     secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
                     stateSwitchTime = 0;
-
                 }
             }
 

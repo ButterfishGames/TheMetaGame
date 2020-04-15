@@ -701,11 +701,7 @@ public class GameController : MonoBehaviour
                             behaviour.GetAnimator().SetBool("platformer", true);
                             behaviour.GetAnimator().SetBool("fighter", false);
                         }
-                        else if (behaviour.GetType().Equals(typeof(PFDreadKnight)))
-                        {
-                            behaviour.enabled = true;
-                        }
-                        else
+                        else if(!behaviour.GetType().Equals(typeof(PFDreadKnight)))
                         {
                             behaviour.enabled = false;
                         }

@@ -153,6 +153,10 @@ public class FGController : Mover
     public float hadoDistanceFromPlayer;
 
     private bool dead;
+
+    private float moveVelX;
+
+    private float moveVelY;
     #endregion
 
     protected override void OnEnable()
@@ -438,7 +442,7 @@ public class FGController : Mover
                     if (!attackCoRoutineRunning)
                     {
                         attackCoRoutineRunning = true;
-                        StartCoroutine(AttackCoRoutine(animationAttackBoolString));
+                        StartCoroutine(AttackCoRoutine(animationAttackBoolString, moveVelX, moveVelY));
                     }
                 }
                 else
@@ -648,12 +652,14 @@ public class FGController : Mover
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
         attacking = true;
         animator.SetBool(animationAttackBool, true);
+        moveVelX = xVelocity;
+        moveVelY = yVelocity;
 //        attackEffects.SetBool(animationAttackBool, true);
         animationAttackBoolString = animationAttackBool;
         animator.SetTrigger(animationAttackBool);
     }
 
-    private IEnumerator AttackCoRoutine(string animationAttackBool)
+    private IEnumerator AttackCoRoutine(string animationAttackBool, float xVel, float yVel)
     {
         if (grounded)
         {
@@ -697,6 +703,23 @@ public class FGController : Mover
         {
             hitbox.gameObject.SetActive(true);
             attackEffects.SetBool(animationAttackBool, true);
+            if (hitbox.gameObject.activeSelf == true)
+            {
+                Debug.Log("hitbox active");
+                List<Collider2D> contacts = new List<Collider2D>();
+                hitbox.GetContacts(contacts);
+                Debug.Log(contacts);
+                Debug.Log(contacts.Count);
+                foreach (Collider2D contact in contacts)
+                {
+                    Debug.Log(contact.tag);
+                    if (contact.CompareTag("Enemy"))
+                    {
+                        Debug.Log("Hit Enemy");
+                        contact.GetComponent<Rigidbody2D>().velocity = new Vector2(xVel * (float)dir, yVel);
+                    }
+                }
+            }
         }
         yield return new WaitForSeconds(hitBoxActivationTime/60);
         hitbox.gameObject.SetActive(false);

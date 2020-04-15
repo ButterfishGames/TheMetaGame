@@ -36,6 +36,7 @@ public class CutsceneManager : MonoBehaviour
         bool glitching = false;
 
         scening = true;
+        GameController.singleton.ToggleSwitchPanel(false);
 
         Camera.main.GetComponent<CameraScroll>().enabled = false;
         
@@ -202,6 +203,10 @@ public class CutsceneManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         currentScene = null;
         scening = false;
+        if (GameController.singleton.GetNumUnlocked() != 1)
+        {
+            GameController.singleton.ToggleSwitchPanel(true);
+        }
         yield return null;
     }
 

@@ -264,6 +264,11 @@ public class FGEnemy : EnemyBehaviour
 
     void Update()
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         animator.SetInteger("level", difficultyLevel);
         hitThisFrame = false;
         Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
