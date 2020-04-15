@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: BasicGuardFail
+  m_Name: BasicGuard5
   m_EditorClassIdentifier: 
   lines:
   - name: Guard
-    line: You know what.I should get back to work, if you wouldn't mind leaving now.
-    sprite: {fileID: 21300000, guid: 2ab97aece327ff24f93eff5999be5f97, type: 3}
-  type: 1
-  branches: []
-  branchDialogues: []
-  relationshipChanges: 
+    line: 'You want to go somewhere? '
+    sprite: {fileID: 21300000, guid: 02352392871719f45a0aaef11f8e639e, type: 3}
+  type: 0
+  branches:
+  - Yes, a date
+  branchDialogues:
+  - {fileID: 11400000, guid: 0b5368e611e83114aa53652b97664ead, type: 2}
+  relationshipChanges: 19000000
