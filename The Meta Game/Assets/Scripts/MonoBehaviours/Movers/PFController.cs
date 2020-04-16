@@ -23,6 +23,9 @@ public class PFController : Mover
     [Tooltip("The time in seconds for which the game waits after death by enemy before reloading")]
     public float deathWait;
 
+    [Range(0, 0.5f)]
+    public float coyoteTime;
+
     /// <summary>
     /// Tracks whether the player is currently on the ground
     /// </summary>
@@ -38,70 +41,28 @@ public class PFController : Mover
 
     private BoxCollider2D groundTrigger;
 
-    protected override void OnEnable()
+    private bool coyote = false;
+
+    private void OnJump(InputValue value)
     {
-        base.OnEnable();
-
-        controls.Player.Jump.performed += JumpHandle;
-        controls.Player.UpJump.performed += UpJumpHandle;
-
-        controls.Player.Jump.Enable();
-        controls.Player.UpJump.Enable();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        controls.Player.Jump.performed -= JumpHandle;
-        controls.Player.Jump.performed -= UpJumpHandle;
-
-        controls.Player.Jump.Disable();
-        controls.Player.UpJump.Disable();
-    }
-
-    private void JumpHandle(InputAction.CallbackContext context)
-    {
-        if (GameController.singleton.GetPaused())
+        if (!enabled
+            || GameController.singleton.GetPaused()
+            || DialogueManager.singleton.GetDisplaying()
+            || CutsceneManager.singleton.scening)
         {
             return;
         }
 
-        if (DialogueManager.singleton.GetDisplaying())
-        {
-            return;
-        }
-
-        if (CutsceneManager.singleton.scening)
-        {
-            return;
-        }
-
-        Debug.LogError("Manufacturer: " + context.control.device.description.manufacturer);
-        Debug.LogError("Product: " + context.control.device.description.product);
-        Debug.LogError("Device Class: " + context.control.device.description.deviceClass);
-        Debug.LogError("Interface: " + context.control.device.description.interfaceName);
         Jump();
     }
 
-    private void UpJumpHandle(InputAction.CallbackContext context)
+    private void OnUpJump(InputValue value)
     {
-        if (!SettingsController.singleton.pfUpJump)
-        {
-            return;
-        }
-
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        if (DialogueManager.singleton.GetDisplaying())
-        {
-            return;
-        }
-
-        if (CutsceneManager.singleton.scening)
+        if (!enabled
+               || GameController.singleton.GetPaused()
+               || DialogueManager.singleton.GetDisplaying()
+               || CutsceneManager.singleton.scening
+               || !SettingsController.singleton.pfUpJump)
         {
             return;
         }
@@ -252,11 +213,6 @@ public class PFController : Mover
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!enabled)
-        {
-            return;
-        }
-
         if (collision.CompareTag("Ground"))
         {
             animator.SetBool("jumping", false);
@@ -266,6 +222,16 @@ public class PFController : Mover
         else if (collision.CompareTag("Killbox"))
         {
             StartCoroutine(Die(false));
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if ((!grounded || onWall) && collision.CompareTag("Ground"))
+        {
+            animator.SetBool("jumping", false);
+            grounded = true;
+            GroundWallCheck();
         }
     }
 
@@ -418,10 +384,10 @@ public class PFController : Mover
         }
         else if (!onWall)
         {
-            animator.SetBool("grounded", false);
-            animator.SetBool("walled", false);
-            grounded = false;
-            Debug.Log("happens?");
+            if (!coyote)
+            {
+                StartCoroutine(CoyoteTime());
+            }
         }
         else
         {
@@ -435,5 +401,20 @@ public class PFController : Mover
                 animator.SetBool("walled", false);
             }
         }
+    }
+
+    private IEnumerator CoyoteTime()
+    {
+        coyote = true;
+        yield return new WaitForSeconds(coyoteTime);
+        animator.SetBool("grounded", false);
+        animator.SetBool("walled", false);
+        grounded = false;
+        coyote = false;
+    }
+
+    public bool GetDying()
+    {
+        return dying;
     }
 }

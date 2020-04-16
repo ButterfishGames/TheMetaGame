@@ -67,7 +67,7 @@ public class BattleController : MonoBehaviour
 
     private Controls controls;
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         controls = new Controls();
 
@@ -81,9 +81,9 @@ public class BattleController : MonoBehaviour
         controls.UI.Cancel.started -= CancelHandle;
 
         controls.UI.Cancel.Disable();
-    }
+    }*/
 
-    private void CancelHandle(InputAction.CallbackContext context)
+    public void OnCancel(InputValue value)
     {
         ReturnToMain();
     }

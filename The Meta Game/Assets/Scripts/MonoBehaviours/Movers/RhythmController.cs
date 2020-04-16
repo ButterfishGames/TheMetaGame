@@ -38,54 +38,19 @@ public class RhythmController : Mover
         startPos = transform.position;
 
         inGround = false;
-
-        controls = new Controls();
-        
-        controls.Player.UpNote.performed += UpNoteHandle;
-        controls.Player.LeftNote.performed += LeftNoteHandle;
-        controls.Player.RightNote.performed += RightNoteHandle;
-        controls.Player.DownNote.performed += DownNoteHandle;
-        controls.Player.dUpNote.performed += dUpNoteHandle;
-        controls.Player.dLeftNote.performed += dLeftNoteHandle;
-        controls.Player.dRightNote.performed += dRightNoteHandle;
-        controls.Player.dDownNote.performed += dDownNoteHandle;
-
-        controls.Player.UpNote.Enable();
-        controls.Player.LeftNote.Enable();
-        controls.Player.RightNote.Enable();
-        controls.Player.DownNote.Enable();
-        controls.Player.dUpNote.Enable();
-        controls.Player.dLeftNote.Enable();
-        controls.Player.dRightNote.Enable();
-        controls.Player.dDownNote.Enable();
     }
 
     protected override void OnDisable()
     {
-        controls.Player.UpNote.performed -= UpNoteHandle;
-        controls.Player.LeftNote.performed -= LeftNoteHandle;
-        controls.Player.RightNote.performed -= RightNoteHandle;
-        controls.Player.DownNote.performed -= DownNoteHandle;
-        controls.Player.dUpNote.performed -= dUpNoteHandle;
-        controls.Player.dLeftNote.performed -= dLeftNoteHandle;
-        controls.Player.dRightNote.performed -= dRightNoteHandle;
-        controls.Player.dDownNote.performed -= dDownNoteHandle;
-
-        controls.Player.UpNote.Disable();
-        controls.Player.LeftNote.Disable();
-        controls.Player.RightNote.Disable();
-        controls.Player.DownNote.Disable();
-        controls.Player.dUpNote.Disable();
-        controls.Player.dLeftNote.Disable();
-        controls.Player.dRightNote.Disable();
-        controls.Player.dDownNote.Disable();
-
         StopAllCoroutines();
     }
 
-    private void UpNoteHandle(InputAction.CallbackContext context)
+    private void OnUpNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -93,9 +58,12 @@ public class RhythmController : Mover
         StartCoroutine(UpNote());
     }
 
-    private void dUpNoteHandle(InputAction.CallbackContext context)
+    private void OnDUpNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -108,9 +76,12 @@ public class RhythmController : Mover
         StartCoroutine(UpNote());
     }
 
-    private void LeftNoteHandle(InputAction.CallbackContext context)
+    private void OnLeftNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -118,9 +89,12 @@ public class RhythmController : Mover
         StartCoroutine(LeftNote());
     }
 
-    private void dLeftNoteHandle(InputAction.CallbackContext context)
+    private void OnDLeftNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -133,9 +107,12 @@ public class RhythmController : Mover
         StartCoroutine(LeftNote());
     }
 
-    private void RightNoteHandle(InputAction.CallbackContext context)
+    private void OnRightNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -143,9 +120,12 @@ public class RhythmController : Mover
         StartCoroutine(RightNote());
     }
 
-    private void dRightNoteHandle(InputAction.CallbackContext context)
+    private void OnDRightNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -158,9 +138,12 @@ public class RhythmController : Mover
         StartCoroutine(RightNote());
     }
 
-    private void DownNoteHandle(InputAction.CallbackContext context)
+    private void OnDownNote(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started
+            || !enabled
+            || dying
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -168,9 +151,12 @@ public class RhythmController : Mover
         StartCoroutine(DownNote());
     }
 
-    private void dDownNoteHandle(InputAction.CallbackContext context)
+    private void dDownNoteHandle(InputValue value)
     {
-        if (!started || dying || GameController.singleton.GetPaused())
+        if (!started 
+            || !enabled 
+            || dying 
+            || GameController.singleton.GetPaused())
         {
             return;
         }
@@ -405,6 +391,7 @@ public class RhythmController : Mover
 
     public IEnumerator Fail()
     {
+        dying = true;
         rb.velocity = Vector2.zero;
         sCon.source.Stop();
         source.Play();
@@ -454,5 +441,10 @@ public class RhythmController : Mover
     public void SetStarted(bool val)
     {
         started = val;
+    }
+
+    public bool GetDying()
+    {
+        return dying;
     }
 }

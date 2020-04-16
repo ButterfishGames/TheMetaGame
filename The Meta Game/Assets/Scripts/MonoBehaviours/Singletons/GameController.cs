@@ -121,16 +121,6 @@ public class GameController : MonoBehaviour
 
     private bool battling;
 
-    public enum Scheme
-    {
-        keyboardAndMouse,
-        xboxController,
-        ps4Controller,
-        switchController
-    };
-
-    public Scheme currentScheme;
-
     [System.Serializable]
     public struct SpellStr
     {
@@ -241,9 +231,9 @@ public class GameController : MonoBehaviour
 
     private GameMode prev;
 
-    private Controls controls;
+    private bool dying;
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         controls = new Controls();
 
@@ -269,11 +259,11 @@ public class GameController : MonoBehaviour
         controls.UI.Cancel.Disable();
         controls.Player.SwitchMode.Disable();
         controls.Player.Pause.Disable();
-    }
+    }*/
 
-    private void SwitchHandle (InputAction.CallbackContext context)
+    public void OnSwitch (InputValue value)
     {
-        if (paused || battling)
+        if (paused || battling || dying)
         {
             return;
         }
@@ -293,7 +283,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        float dir = context.action.ReadValue<float>();
+        float dir = value.Get<float>();
 
         List<Mode> unlocked = new List<Mode>();
         int i = 0;
@@ -342,7 +332,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void PauseHandle(InputAction.CallbackContext context)
+    public void OnPause(InputValue value)
     {
         if (unpausing || battling)
         {
@@ -370,7 +360,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void MenuHandle (InputAction.CallbackContext context)
+    public void OnMenu (InputValue value)
     {
         if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
         {
@@ -380,7 +370,7 @@ public class GameController : MonoBehaviour
         ToggleSwitchMenu();
     }
 
-    private void CancelHandle (InputAction.CallbackContext context)
+    public void OnCancel (InputValue value)
     {
         // TODO: Add UI Back SFX Event
 
@@ -518,7 +508,16 @@ public class GameController : MonoBehaviour
 
         if (switchMenu.activeInHierarchy)
         {
-            string selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
+            string selected;
+
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                selected = EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().text;
+            }
+            else
+            {
+                selected = "";
+            }
             
             switch (selected)
             {
@@ -630,11 +629,46 @@ public class GameController : MonoBehaviour
 
     public void SwitchMode(GameMode newMode)
     {
-        SwitchMode(newMode, false);
+        SwitchMode(newMode, false, false);
     }
 
-    public void SwitchMode(GameMode newMode, bool transitioned)
+    public void SwitchMode(GameMode newMode, bool transitioned, bool reload)
     {
+        if (!reload)
+        {
+            switch (equipped)
+            {
+                case GameMode.fps:
+                case GameMode.platformer:
+                    if (GameObject.Find("Player").GetComponent<PFController>().GetDying())
+                    {
+                        return;
+                    }
+                    break;
+
+                case GameMode.fighting:
+                    if (GameObject.Find("Player").GetComponent<FGController>().GetDying())
+                    {
+                        return;
+                    }
+                    break;
+
+                case GameMode.rhythm:
+                    if (GameObject.Find("Player").GetComponent<RhythmController>().GetDying())
+                    {
+                        return;
+                    }
+                    break;
+
+                case GameMode.racing:
+                    if (GameObject.Find("Player").GetComponent<RaceController>().GetDying())
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+
         prev = equipped;
         equipped = newMode;
 
@@ -1358,10 +1392,6 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(RaceController)))
                     {
                         mover.enabled = true;
-                        mover.GetAnimator().SetBool("platformer", true);
-                        mover.GetAnimator().SetBool("fighter", false);
-                        mover.GetAnimator().SetBool("rpg", false);
-                        mover.GetAnimator().SetBool("rhythm", false);
                     }
                     else
                     {
@@ -1721,6 +1751,12 @@ public class GameController : MonoBehaviour
 
     public void Die()
     {
+        if (dying)
+        {
+            return;
+        }
+
+        dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(false));
         currHP = maxHP;
@@ -1730,6 +1766,12 @@ public class GameController : MonoBehaviour
 
     public void Die(bool fall)
     {
+        if (dying)
+        {
+            return;
+        }
+
+        dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(fall));
         currHP = maxHP;
@@ -1755,12 +1797,13 @@ public class GameController : MonoBehaviour
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             yield return new WaitForEndOfFrame();
-            SwitchMode(GameMode.platformer, true);
+            SwitchMode(GameMode.platformer, true, true);
             if (numUnlocked > 1)
             {
                 ToggleSwitchPanel(true);
             }
-
+            
+            dying = false;
             StartCoroutine(LevelFade(true));
             paused = false;
             battling = false;
@@ -1921,12 +1964,7 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(levelFadeTime);
             SceneManager.LoadScene(buildIndex);
             yield return new WaitForEndOfFrame();
-            AudioClip clip = GameObject.Find("Song").GetComponent<AudioSource>().clip;
-            if (clip != rpgCombatBGM && clip != datingSimBGM)
-            {
-                currentBGM = clip;
-            }
-            SwitchMode(GameMode.platformer, true);
+            SwitchMode(GameMode.platformer, true, true);
 
             if (numUnlocked > 1)
             {
@@ -1936,6 +1974,18 @@ public class GameController : MonoBehaviour
             StartCoroutine(LevelFade(true));
             paused = false;
             loading = false;
+
+            if (numUnlocked > 1)
+            {
+                ToggleSwitchPanel(true);
+            }
+
+            yield return new WaitForSeconds(0.1f);
+            AudioClip clip = GameObject.Find("Song").GetComponent<AudioSource>().clip;
+            if (clip != rpgCombatBGM && clip != datingSimBGM)
+            {
+                currentBGM = clip;
+            }
         }
     }
 

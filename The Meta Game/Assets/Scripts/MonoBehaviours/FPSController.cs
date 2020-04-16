@@ -35,61 +35,75 @@ public class FPSController : MonoBehaviour
     private float aspect;
 
     private float x, y;
+    
+    private InputAction lookX, lookY, zoom, fire;
 
-    private Controls controls;
+    private float schemeMod = 1;
 
     private void OnEnable()
     {
-        controls = new Controls();
-
-        controls.Player.LookX.performed += LookXHandle;
-        controls.Player.LookX.canceled += LookXHandle;
-        controls.Player.LookY.performed += LookYHandle;
-        controls.Player.LookY.canceled += LookYHandle;
-        controls.Player.Zoom.started += ZoomPerfHandle;
-        controls.Player.Zoom.canceled += ZoomCancHandle;
-        controls.Player.Fire.started += FireHandle;
-
-        controls.Player.LookX.Enable();
-        controls.Player.LookY.Enable();
-        controls.Player.Zoom.Enable();
-        controls.Player.Fire.Enable();
+        OnControlsChange(GameObject.Find("Player").GetComponent<PlayerInput>());
     }
 
     private void OnDisable()
     {
-        controls.Player.LookX.performed -= LookXHandle;
-        controls.Player.LookX.canceled -= LookXHandle;
-        controls.Player.LookY.performed -= LookYHandle;
-        controls.Player.LookY.canceled -= LookYHandle;
-        controls.Player.Zoom.started -= ZoomPerfHandle;
-        controls.Player.Zoom.canceled -= ZoomCancHandle;
-        controls.Player.Fire.started -= FireHandle;
-
-        controls.Player.LookX.Disable();
-        controls.Player.LookY.Disable();
-        controls.Player.Zoom.Disable();
-        controls.Player.Fire.Disable();
+        lookX.performed -= LookXHandle;
+        lookX.canceled -= LookXHandle;
+        lookY.performed -= LookYHandle;
+        lookY.canceled -= LookYHandle;
+        zoom.performed -= ZoomPerfHandle;
+        zoom.canceled -= ZoomCancHandle;
+        fire.started -= FireHandle;
     }
 
-    private void LookXHandle (InputAction.CallbackContext context)
+    public void OnControlsChange(PlayerInput pIn)
     {
-        if (GameController.singleton.GetPaused())
+        lookX = pIn.actions["LookX"];
+        lookY = pIn.actions["LookY"];
+        zoom = pIn.actions["Zoom"];
+        fire = pIn.actions["Fire"];
+
+        lookX.performed += LookXHandle;
+        lookX.canceled += LookXHandle;
+        lookY.performed += LookYHandle;
+        lookY.canceled += LookYHandle;
+        zoom.performed += ZoomPerfHandle;
+        zoom.canceled += ZoomCancHandle;
+        fire.started += FireHandle;
+
+        if (pIn.currentControlScheme.Equals("KeyboardAndMouse"))
+        {
+            schemeMod = 1;
+        }
+        else
+        {
+            schemeMod = 3;
+        }
+    }
+
+    public void LookXHandle(InputAction.CallbackContext context)
+    {
+        if (!enabled
+            || GameController.singleton.GetPaused())
         {
             x = 0;
+            return;
         }
 
         x = SettingsController.singleton.invertX ? context.action.ReadValue<float>() * -1 : context.action.ReadValue<float>();
+        x *= schemeMod;
     }
 
-    private void LookYHandle (InputAction.CallbackContext context)
+    public void LookYHandle(InputAction.CallbackContext context)
     {
         if (GameController.singleton.GetPaused())
         {
             y = 0;
+            return;
         }
 
         y = SettingsController.singleton.invertY ? context.action.ReadValue<float>() : context.action.ReadValue<float>() * -1;
+        y *= schemeMod;
     }
 
     private void ZoomPerfHandle (InputAction.CallbackContext context)
@@ -116,7 +130,8 @@ public class FPSController : MonoBehaviour
 
     private void FireHandle (InputAction.CallbackContext context)
     {
-        if (GameController.singleton.GetPaused())
+        if (!enabled
+            || GameController.singleton.GetPaused())
         {
             return;
         }

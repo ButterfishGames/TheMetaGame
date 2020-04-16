@@ -24,6 +24,8 @@ public class RaceEnemy : EnemyBehaviour
     [Tooltip("Difficulty level 0 is hard, 1 is medium, 2 is easy")]
     public float[] jumpForces = new float[3];
 
+    public float deathWait;
+
     private float speed;
     private float accel;
     private float prevX;
@@ -43,6 +45,14 @@ public class RaceEnemy : EnemyBehaviour
     private bool canJump = false;
 
     private Rigidbody2D rb;
+
+    private void OnEnable()
+    {
+        animator.SetBool("platformer", false);
+        animator.SetBool("fighter", false);
+        animator.SetBool("rpg", false);
+        animator.SetBool("racing", true);
+    }
 
     private void OnDisable()
     {
@@ -131,6 +141,10 @@ public class RaceEnemy : EnemyBehaviour
 
     private void Jump()
     {
+        if (dying)
+        {
+            return;
+        }
         if (!grounded)
         {
             return;
@@ -152,6 +166,7 @@ public class RaceEnemy : EnemyBehaviour
         jumpForce = jumpForces[diffLevel];
 
         started = true;
+        animator.SetBool("moving", true);
 
         StartCoroutine(LetJump());
     }
@@ -197,7 +212,8 @@ public class RaceEnemy : EnemyBehaviour
 
     public IEnumerator Crash()
     {
-        // TODO: Implement Crash animation
+        animator.SetBool("dead", true);
+        yield return new WaitForSeconds(deathWait);
         Destroy(gameObject);
         yield return null;
     }

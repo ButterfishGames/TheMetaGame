@@ -13,6 +13,8 @@ public class RaceController : Mover
     public float deathWait;
     public float spawnDiff;
 
+    public float coyoteTime;
+
     public GameObject enemyRacerPrefab;
     public GameObject racerCol;
 
@@ -32,6 +34,8 @@ public class RaceController : Mover
     private GameObject[] places = new GameObject[4];
 
     private TextMeshProUGUI placeText;
+
+    BoxCollider2D groundTrigger;
 
     protected override void Awake()
     {
@@ -53,6 +57,12 @@ public class RaceController : Mover
     {
         base.OnEnable();
 
+        animator.SetBool("platformer", false);
+        animator.SetBool("fighter", false);
+        animator.SetBool("rpg", false);
+        animator.SetBool("rhythm", false);
+        animator.SetBool("racing", true);
+        
         dir = transform.rotation == Quaternion.identity ? 1 : -1;
 
         Vector3 spawnPos = transform.position;
@@ -66,25 +76,28 @@ public class RaceController : Mover
         places[3] = gameObject;
 
         racerCol.SetActive(true);
+        transform.Find("BikeBomb").gameObject.SetActive(true);
 
         StartCoroutine(StartRace());
 
-        controls.Player.Jump.performed += JumpHandle;
-
-        controls.Player.Jump.Enable();
+        groundTrigger = transform.Find("GroundTrigger").GetComponent<BoxCollider2D>();
+        groundTrigger.size = new Vector2(groundTrigger.size.x, 0.8f);
+        groundTrigger.offset = new Vector2(0, -0.17f);
 
         grounded = true;
+
+        //rb.freezeRotation = false;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
 
+        animator.SetBool("racing", false);
+
+        //rb.freezeRotation = true;
+
         StopAllCoroutines();
-
-        controls.Player.Jump.performed -= JumpHandle;
-
-        controls.Player.Jump.Disable();
 
         for (int i = 3; i > System.Array.IndexOf(places, gameObject); i--)
         {
@@ -96,25 +109,28 @@ public class RaceController : Mover
         tilt = 0;
         prevX = 0;
 
+        racerCol.SetActive(false);
+        GameObject bikeBomb = transform.Find("BikeBomb").gameObject;
+        if (bikeBomb != null)
+        {
+            bikeBomb.SetActive(false);
+        }
+
         placeText.gameObject.SetActive(false);
+
+        groundTrigger.size = new Vector2(groundTrigger.size.x, 0.71f);
+        groundTrigger.offset = new Vector2(0, -0.115f);
 
         transform.rotation = dir == 1 ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
         started = false;
     }
 
-    private void JumpHandle(InputAction.CallbackContext context)
+    private void OnJump(InputValue value)
     {
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        if (DialogueManager.singleton.GetDisplaying())
-        {
-            return;
-        }
-
-        if (CutsceneManager.singleton.scening)
+        if (!enabled
+            || GameController.singleton.GetPaused()
+            || DialogueManager.singleton.GetDisplaying()
+            || CutsceneManager.singleton.scening)
         {
             return;
         }
@@ -175,17 +191,39 @@ public class RaceController : Mover
             StartCoroutine(Crash());
         }
 
+        if (hRaw > 0)
+        {
+            animator.SetBool("decelerating", false);
+            animator.SetBool("accelerating", true);
+        }
+        else if (hRaw < 0 && speed != 0)
+        {
+            animator.SetBool("accelerating", false);
+            animator.SetBool("decelerating", true);
+        }
+        else
+        {
+            animator.SetBool("accelerating", false);
+            animator.SetBool("decelerating", false);
+            accel = 0;
+        }
+
         if (started && grounded)
         {
             speed = dir == 1 ? Mathf.Clamp((speed + accel), 0, maxSpeed) :
                 Mathf.Clamp((speed + accel), -maxSpeed, 0);
         }
-
+        
         prevX = rb.velocity.x;
         rb.velocity = new Vector2(speed * Time.deltaTime, rb.velocity.y);
         if (Mathf.Round(rb.velocity.x) == 0)
         {
             prevX = 0;
+            animator.SetBool("moving", false);
+        }
+        else
+        {
+            animator.SetBool("moving", true);
         }
 
         if (grounded && (tilt < minTilt || tilt > maxTilt) && !dying)
@@ -203,7 +241,10 @@ public class RaceController : Mover
             tilt -= 360;
         }
 
-        transform.rotation = dir == 1 ? Quaternion.Euler(0, 0, tilt) : Quaternion.Euler(0, 180, tilt);
+        if (!dying)
+        {
+            transform.rotation = dir == 1 ? Quaternion.Euler(0, 0, tilt) : Quaternion.Euler(0, 180, tilt);
+        }
     }
 
     private IEnumerator StartRace()
@@ -233,9 +274,16 @@ public class RaceController : Mover
 
     protected override void Move(float h, float v)
     {
-        accel = speed > baseSpeed ? Mathf.Clamp(accel + h * accelRate * (baseSpeed / speed), -maxAccel, maxAccel) : 
-            Mathf.Clamp(accel + h * accelRate, -maxAccel, maxAccel);
-        tilt = grounded ? tilt + v * tiltRate : tilt + v * tiltRate * 1.5f;
+        accel = speed > baseSpeed ? Mathf.Clamp(h * accelRate * (baseSpeed / speed), -maxAccel, maxAccel) : 
+            Mathf.Clamp(h * accelRate, -maxAccel, maxAccel);
+        if (v != 0)
+        {
+            tilt = grounded ? tilt + v * tiltRate : tilt + v * tiltRate * 1.5f;
+        }
+        else if (grounded)
+        {
+            tilt = tilt > 0 ? Mathf.Clamp(tilt - tiltRate, 0, tilt) : Mathf.Clamp(tilt + tiltRate, tilt, 0);
+        }
     }
 
     private void Jump()
@@ -271,8 +319,35 @@ public class RaceController : Mover
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            StartCoroutine(CoyoteTime());
+        }
+    }
+
+    public IEnumerator CoyoteTime()
+    {
+        yield return new WaitForSeconds(coyoteTime);
+        grounded = false;
+    }
+
     public IEnumerator Crash()
     {
+        dying = true;
+
+        animator.SetBool("dying", true);
+        transform.Find("BikeBomb").GetComponent<BikeBoom>().enabled = true;
+        transform.Find("BikeBomb").transform.SetParent(null);
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
 
         if (!GetComponent<AudioSource>().isPlaying)
@@ -280,7 +355,17 @@ public class RaceController : Mover
             GetComponent<AudioSource>().Play();
         }
 
-        yield return new WaitForSeconds(deathWait);
+        float t = 0;
+        float timer = 0;
+        while (Mathf.Round(transform.rotation.eulerAngles.z) != 0)
+        {
+            t += Time.deltaTime / deathWait;
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.LerpAngle(transform.rotation.eulerAngles.z, transform.rotation.y, t));
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+        }
+
+        yield return new WaitForSeconds(deathWait - timer);
 
         GameController.singleton.Die();
     }
@@ -288,5 +373,10 @@ public class RaceController : Mover
     public int GetDir()
     {
         return dir;
+    }
+
+    public bool GetDying()
+    {
+        return dying;
     }
 }

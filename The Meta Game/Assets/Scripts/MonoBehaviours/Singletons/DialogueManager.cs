@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject branchButtonPrefab;
 
     public Dialogue[] failDialogues;
+    public Dialogue[] successDialogues;
 
     private Image stillImg;
     private Image charImg;
@@ -40,22 +41,19 @@ public class DialogueManager : MonoBehaviour
 
     private int pInd;
 
+    private InputAction submit;
+
     private void OnEnable()
     {
-        controls = new Controls();
-
-        controls.UI.Submit.started += SubmitStartHandle;
-        controls.UI.Submit.canceled += SubmitCancHandle;
-
-        controls.UI.Submit.Enable();
+        OnControlsChange(GameObject.Find("Player").GetComponent<PlayerInput>());
     }
 
-    private void OnDisable()
+    public void OnControlsChange(PlayerInput pIn)
     {
-        controls.UI.Submit.started -= SubmitStartHandle;
-        controls.UI.Submit.canceled -= SubmitCancHandle;
+        submit = pIn.actions["submit"];
 
-        controls.UI.Submit.Disable();
+        submit.started += SubmitStartHandle;
+        submit.canceled += SubmitCancHandle;
     }
 
     private void SubmitStartHandle(InputAction.CallbackContext context)

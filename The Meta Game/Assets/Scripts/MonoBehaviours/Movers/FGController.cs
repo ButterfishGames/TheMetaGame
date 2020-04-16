@@ -153,65 +153,46 @@ public class FGController : Mover
     public float hadoDistanceFromPlayer;
 
     private bool dead;
+    
+    private InputAction light, medium, heavy;
 
     private float moveVelX;
 
     private float moveVelY;
+
+    private bool dying;
     #endregion
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        controls.Player.Jump.performed += JumpHandle;
-        controls.Player.UpJump.performed += UpJumpHandle;
-        controls.Player.Light.performed += LightPerfHandle;
-        controls.Player.Light.canceled += LightCancHandle;
-        controls.Player.Medium.performed += MedPerfHandle;
-        controls.Player.Medium.canceled += MedCancHandle;
-        controls.Player.Heavy.performed += HeavyPerfHandle;
-        controls.Player.Heavy.canceled += HeavyCancHandle;
-
-        controls.Player.Jump.Enable();
-        controls.Player.UpJump.Enable();
-        controls.Player.Light.Enable();
-        controls.Player.Medium.Enable();
-        controls.Player.Heavy.Enable();
+        dying = false;
+        OnControlsChanged(GetComponent<PlayerInput>());
     }
 
-    protected override void OnDisable()
+    private void OnControlsChanged(PlayerInput pIn)
     {
-        base.OnDisable();
+        light = pIn.actions["Light"];
+        medium = pIn.actions["Medium"];
+        heavy = pIn.actions["Heavy"];
 
-        controls.Player.Jump.performed -= JumpHandle;
-        controls.Player.UpJump.performed -= UpJumpHandle;
-        controls.Player.Light.performed -= LightPerfHandle;
-        controls.Player.Light.canceled -= LightCancHandle;
-        controls.Player.Medium.performed -= MedPerfHandle;
-        controls.Player.Medium.canceled -= MedCancHandle;
-        controls.Player.Heavy.performed -= HeavyPerfHandle;
-        controls.Player.Heavy.canceled -= HeavyCancHandle;
-
-        controls.Player.Jump.Disable();
-        controls.Player.UpJump.Disable();
-        controls.Player.Light.Disable();
-        controls.Player.Medium.Disable();
-        controls.Player.Heavy.Disable();
+        light.performed += LightPerfHandle;
+        light.canceled += LightCancHandle;
+        medium.performed += MedPerfHandle;
+        medium.canceled += MedCancHandle;
+        heavy.performed += HeavyPerfHandle;
+        heavy.canceled += HeavyCancHandle;
     }
 
-    private void JumpHandle (InputAction.CallbackContext context)
+    private void OnJump (InputValue value)
     {
-        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
-        {
-            return;
-        }
-
-        if (DialogueManager.singleton.GetDisplaying())
-        {
-            return;
-        }
-
-        if (CutsceneManager.singleton.scening)
+        if (!enabled
+            || hitstun > 0
+            || attacking
+            || GameController.singleton.GetPaused()
+            || DialogueManager.singleton.GetDisplaying()
+            || CutsceneManager.singleton.scening)
         {
             return;
         }
@@ -219,24 +200,15 @@ public class FGController : Mover
         Jump();
     }
 
-    private void UpJumpHandle(InputAction.CallbackContext context)
+    private void OnUpJump(InputValue value)
     {
-        if (!SettingsController.singleton.fgUpJump)
-        {
-            return;
-        }
-
-        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
-        {
-            return;
-        }
-
-        if (DialogueManager.singleton.GetDisplaying())
-        {
-            return;
-        }
-
-        if (CutsceneManager.singleton.scening)
+        if(!enabled
+            || hitstun > 0
+            || attacking
+            || GameController.singleton.GetPaused()
+            || DialogueManager.singleton.GetDisplaying()
+            || CutsceneManager.singleton.scening
+            || !SettingsController.singleton.fgUpJump)
         {
             return;
         }
@@ -731,6 +703,7 @@ public class FGController : Mover
 
     private IEnumerator Death()
     {
+        dying = true;
         animator.SetBool("dead", true);
         GameController.singleton.SetPaused(true);
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
@@ -740,5 +713,10 @@ public class FGController : Mover
         }
         yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
         GameController.singleton.Die();
+    }
+
+    public bool GetDying()
+    {
+        return dying;
     }
 }
