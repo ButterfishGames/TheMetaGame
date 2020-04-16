@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 
 public class RaceController : Mover
 {
@@ -17,6 +16,9 @@ public class RaceController : Mover
 
     public GameObject enemyRacerPrefab;
     public GameObject racerCol;
+
+    public Sprite redLight, yellowLight, greenLight;
+    public Sprite[] placeSprites;
 
     private float speed;
     private float accel;
@@ -33,7 +35,8 @@ public class RaceController : Mover
 
     private GameObject[] places = new GameObject[4];
 
-    private TextMeshProUGUI placeText;
+    private Image stoplight;
+    private Image placeImg;
 
     BoxCollider2D groundTrigger;
 
@@ -41,14 +44,24 @@ public class RaceController : Mover
     {
         base.Awake();
 
-        if (placeText == null)
+        if (placeImg == null)
         {
-            GameObject pTemp = GameObject.Find("PlaceText");
+            GameObject pTemp = GameObject.Find("PlaceImg");
             if (pTemp != null)
             {
-                placeText = pTemp.GetComponent<TextMeshProUGUI>();
+                placeImg = pTemp.GetComponent<Image>();
 
-                placeText.gameObject.SetActive(false);
+                placeImg.gameObject.SetActive(false);
+            }
+        }
+
+        if (stoplight == null)
+        {
+            GameObject sTemp = GameObject.Find("Stoplight");
+            if (sTemp != null)
+            {
+                stoplight = sTemp.GetComponent<Image>();
+                stoplight.gameObject.SetActive(false);
             }
         }
     }
@@ -110,13 +123,19 @@ public class RaceController : Mover
         prevX = 0;
 
         racerCol.SetActive(false);
-        GameObject bikeBomb = transform.Find("BikeBomb").gameObject;
+        Transform bikeBombT = transform.Find("BikeBomb");
+        GameObject bikeBomb = null;
+        if (bikeBombT != null)
+        {
+            bikeBomb = bikeBombT.gameObject;
+        }
         if (bikeBomb != null)
         {
             bikeBomb.SetActive(false);
         }
 
-        placeText.gameObject.SetActive(false);
+        placeImg.gameObject.SetActive(false);
+        stoplight.gameObject.SetActive(false);
 
         groundTrigger.size = new Vector2(groundTrigger.size.x, 0.71f);
         groundTrigger.offset = new Vector2(0, -0.115f);
@@ -174,7 +193,7 @@ public class RaceController : Mover
             }
         }
 
-        placeText.text = "" + (System.Array.IndexOf(places, gameObject) + 1);
+        placeImg.sprite = placeSprites[System.Array.IndexOf(places, gameObject)];
     }
 
     // Update is called once per frame
@@ -249,20 +268,24 @@ public class RaceController : Mover
 
     private IEnumerator StartRace()
     {
-        if (placeText == null)
+        if (placeImg == null)
         {
-            placeText = GameObject.Find("PlaceText").GetComponent<TextMeshProUGUI>();
+            placeImg = GameObject.Find("PlaceImg").GetComponent<Image>();
         }
-        placeText.gameObject.SetActive(true);
+        placeImg.gameObject.SetActive(true);
+
+        if (stoplight == null)
+        {
+            stoplight = GameObject.Find("Stoplight").GetComponent<Image>();
+        }
+        stoplight.sprite = redLight;
+        stoplight.gameObject.SetActive(true);
 
         // Replace with countdown;
-        Debug.Log('3');
         yield return new WaitForSeconds(1);
-        Debug.Log('2');
+        stoplight.sprite = yellowLight;
         yield return new WaitForSeconds(1);
-        Debug.Log('1');
-        yield return new WaitForSeconds(1);
-        Debug.Log("Go!");
+        stoplight.sprite = greenLight;
         
         for (int i = 0; i < 3; i++)
         {
@@ -270,6 +293,9 @@ public class RaceController : Mover
         }
 
         started = true;
+
+        yield return new WaitForSeconds(1);
+        stoplight.gameObject.SetActive(false);
     }
 
     protected override void Move(float h, float v)

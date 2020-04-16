@@ -389,6 +389,17 @@ MonoBehaviour:
   enemyRacerPrefab: {fileID: 1498483545563416927, guid: c0e45d82f7786df439552485f9e7e8f6,
     type: 3}
   racerCol: {fileID: 1910378955281090536}
+  redLight: {fileID: 4885633276399190761, guid: a1a4e0756b48ae04da1f7ff1a19eaab9,
+    type: 3}
+  yellowLight: {fileID: -2905377276461675539, guid: a1a4e0756b48ae04da1f7ff1a19eaab9,
+    type: 3}
+  greenLight: {fileID: -9010851566657670930, guid: a1a4e0756b48ae04da1f7ff1a19eaab9,
+    type: 3}
+  placeSprites:
+  - {fileID: -1227262162670094611, guid: 1a15312b1f4f3c44bbfa3ae3e2a25f7f, type: 3}
+  - {fileID: -2609685686208065545, guid: 1a15312b1f4f3c44bbfa3ae3e2a25f7f, type: 3}
+  - {fileID: 4101785237709783392, guid: 1a15312b1f4f3c44bbfa3ae3e2a25f7f, type: 3}
+  - {fileID: -4500936269202905708, guid: 1a15312b1f4f3c44bbfa3ae3e2a25f7f, type: 3}
 --- !u!82 &8073731519011545422
 AudioSource:
   m_ObjectHideFlags: 0
@@ -497,8 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 30c3ace5a701d0a47a3814e3014c8d03,
-    type: 3}
+  m_Actions: {fileID: 0}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
