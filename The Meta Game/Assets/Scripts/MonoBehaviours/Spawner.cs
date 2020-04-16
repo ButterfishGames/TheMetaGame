@@ -18,14 +18,14 @@ public class Spawner : MonoBehaviour
 
     private bool respawning;
 
-    private SpriteRenderer renderer;
+    private SpriteRenderer sRend;
 
     // Start is called before the first frame update
     void Start()
     {
         respawning = false;
 
-        renderer = GetComponent<SpriteRenderer>();
+        sRend = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour
 
         yield return new WaitForSeconds(respawnWait);
 
-        renderer.sprite = spawning;
+        sRend.sprite = spawning;
         yield return new WaitForSeconds(preSpawnTime);
         linkedEnemy = Instantiate(enemyPrefab, transform.position + spawnOffset, Quaternion.identity);
         switch (GameController.singleton.equipped)
@@ -102,7 +102,7 @@ public class Spawner : MonoBehaviour
         }
 
         yield return new WaitForSeconds(postSpawnTime);
-        renderer.sprite = idle;
+        sRend.sprite = idle;
 
         respawning = false;
     }

@@ -65,24 +65,6 @@ public class BattleController : MonoBehaviour
 
     private Skill currSkill;
 
-    private Controls controls;
-
-    /*private void OnEnable()
-    {
-        controls = new Controls();
-
-        controls.UI.Cancel.started += CancelHandle;
-
-        controls.UI.Cancel.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.UI.Cancel.started -= CancelHandle;
-
-        controls.UI.Cancel.Disable();
-    }*/
-
     public void OnCancel(InputValue value)
     {
         ReturnToMain();
@@ -767,6 +749,11 @@ public class BattleController : MonoBehaviour
 
     private void ReturnToMain()
     {
+        if (onMain)
+        {
+            return;
+        }
+
         // TODO: Add UI Back SFX Event
 
         onMagic = false;

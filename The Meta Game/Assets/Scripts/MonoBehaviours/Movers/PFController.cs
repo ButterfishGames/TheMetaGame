@@ -289,6 +289,11 @@ public class PFController : Mover
 
     private void GroundWallCheck()
     {
+        if (coyote)
+        {
+            return;
+        }
+
         bool onGround = false;
 
         if (groundTrigger != null)

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class OtherInputHandlers : MonoBehaviour
 {
-    private void OnControlsChange(PlayerInput pIn)
+    private void OnControlsChanged(PlayerInput pIn)
     {
         if (DialogueManager.singleton != null)
         {
