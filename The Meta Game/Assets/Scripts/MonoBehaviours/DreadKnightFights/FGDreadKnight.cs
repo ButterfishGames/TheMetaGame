@@ -248,11 +248,10 @@ public class FGDreadKnight : EnemyBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name != "CastleInterior" || SceneManager.GetActiveScene().name != "CastleInteriorBossTest")
+        if (SceneManager.GetActiveScene().name != "CastleInteriorBossTest")
         {
             enabled = false;
         }
-        animator.SetBool("fighter", true);
         inCutscene = true;
         bossCutsceneBegun = false;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
@@ -296,6 +295,10 @@ public class FGDreadKnight : EnemyBehaviour
             return;
         }
 
+        animator.SetBool("platformer", false);
+        animator.SetBool("fighter", true);
+
+        Debug.Log(CutsceneManager.singleton.scening);
         if (CutsceneManager.singleton.scening)
         {
             bossCutsceneBegun = true;
@@ -571,7 +574,7 @@ public class FGDreadKnight : EnemyBehaviour
                 hitstun -= Time.deltaTime;
             }
         }
-        GetComponent<PFEnemy>().dir = dir;
+        //GetComponent<PFEnemy>().dir = dir;
     }
 
     private void Jump(int jumpChance)
