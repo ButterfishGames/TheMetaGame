@@ -29,6 +29,18 @@ MonoBehaviour:
     line: Press |*SWITCH_L*| and |*SWITCH_R*| to switch modes.
     sprite: {fileID: -7076742389337625004, guid: 987fb30f9faef2348b6630ee6428ea29,
       type: 3}
+  - name: Testo
+    line: Press |*LIGHT*| to light attack in fighter mode.
+    sprite: {fileID: -7076742389337625004, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
+  - name: Testo
+    line: Actually, you can use |*ATTACK*| to attack in a variety of ways.
+    sprite: {fileID: -7076742389337625004, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
+  - name: Testo
+    line: Press |*FIRE*| to shoot in FPS mode.
+    sprite: {fileID: -7076742389337625004, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
   type: 1
   branches: []
   branchDialogues: []

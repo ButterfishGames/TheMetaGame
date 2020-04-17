@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 52e1c5dfd3601a14ea80de63b0dc8382
+guid: 05c7255a469f68a46830b73050d0253e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6491873534544077471
-    second: KeyBoardMouse_0
+      213: 2716163670082594355
+    second: KeyBoardMouseSmall_0
   - first:
-      213: 4914632325951359740
-    second: KeyBoardMouse_1
+      213: 4720203699976158377
+    second: KeyBoardMouseSmall_1
   - first:
-      213: -5380673283461149796
-    second: KeyBoardMouse_2
+      213: 6079060052424495687
+    second: KeyBoardMouseSmall_2
   - first:
-      213: 8533066011150890691
-    second: KeyBoardMouse_3
+      213: 2974971934970599234
+    second: KeyBoardMouseSmall_3
   - first:
-      213: 5013320272210387865
-    second: KeyBoardMouse_4
+      213: 633870019688406236
+    second: KeyBoardMouseSmall_4
   - first:
-      213: 4118363663794480375
-    second: KeyBoardMouse_5
+      213: -720016380000872683
+    second: KeyBoardMouseSmall_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -140,127 +140,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KeyBoardMouse_0
+      name: KeyBoardMouseSmall_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
-        width: 48
-        height: 48
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 11, y: 15, z: 11, w: 11}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 03b2bdddc5ddbd047aeb05c20b63e2dc
-      internalID: 6491873534544077471
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: KeyBoardMouse_1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 96
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d07760d5db6af504fbe0b61ef76e0c3c
-      internalID: 4914632325951359740
+      spriteID: 6b70277a9f27fcd4a9329b846e017369
+      internalID: 2716163670082594355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KeyBoardMouse_2
+      name: KeyBoardMouseSmall_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245473804e7032c41bcff85d5c7eebdb
+      internalID: 4720203699976158377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBoardMouseSmall_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
-        width: 48
-        height: 48
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 159295ff8ee70394ca82714a714790f4
-      internalID: -5380673283461149796
+      spriteID: 2ff4c997a8ae5844ca4838ea69d5bed6
+      internalID: 6079060052424495687
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KeyBoardMouse_3
+      name: KeyBoardMouseSmall_3
       rect:
         serializedVersion: 2
-        x: 48
-        y: 48
-        width: 48
-        height: 48
+        x: 16
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51a03669352c6a547a2d6539a564b694
-      internalID: 8533066011150890691
+      spriteID: c4c0b67bbe46c0e4a8e4473db061897a
+      internalID: 2974971934970599234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KeyBoardMouse_4
+      name: KeyBoardMouseSmall_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 790a1771e8ba1594399ed248d0202bdd
-      internalID: 5013320272210387865
+      spriteID: caaabc1fcf54e53419089eabaac979bb
+      internalID: 633870019688406236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KeyBoardMouse_5
+      name: KeyBoardMouseSmall_5
       rect:
         serializedVersion: 2
-        x: 48
+        x: 16
         y: 0
-        width: 48
-        height: 48
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29bccacaa5ca1bb4ea9103fe97eab224
-      internalID: 4118363663794480375
+      spriteID: 08df96e9eaa0d30448b978c733fbaa93
+      internalID: -720016380000872683
       vertices: []
       indices: 
       edges: []
