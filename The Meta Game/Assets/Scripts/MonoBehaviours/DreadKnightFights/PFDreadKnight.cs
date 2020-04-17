@@ -60,7 +60,7 @@ public class PFDreadKnight : EnemyBehaviour
     /// <summary>
     /// Reference to BoxCollider2D component on object
     /// </summary>
-    private CapsuleCollider2D col;
+    private BoxCollider2D col;
 
     /// <summary>
     /// Value speed is multiplied by to determine if enemy is charging or not
@@ -109,11 +109,11 @@ public class PFDreadKnight : EnemyBehaviour
         {
             enabled = false;
         }
-
+        animator.SetBool("platformer", true);
         inCutscene = true;
         bossCutsceneBegun = false;
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<CapsuleCollider2D>();
+        col = GetComponent<BoxCollider2D>();
         chargePrepAnimaton = GetComponent<Animation>();
         chargePrepTime = chargePrepAnimaton.clip.length;
         moveSpeed = maxMoveSpeed;
@@ -147,9 +147,6 @@ public class PFDreadKnight : EnemyBehaviour
             return;
         }
 
-        animator.SetBool("fighter", false);
-        animator.SetBool("platformer", true);
-
         if (!grounded)
         {
             return;
@@ -178,7 +175,7 @@ public class PFDreadKnight : EnemyBehaviour
                     barriers.SetActive(false);
                     endCutscene.SetActive(true);
                     rb.gravityScale = 0.0f;
-                    GetComponent<CapsuleCollider2D>().enabled = false;
+                    GetComponent<BoxCollider2D>().enabled = false;
                     inCutscene = true;
                 }
             }
