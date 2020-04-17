@@ -1059,44 +1059,49 @@ public class GameController : MonoBehaviour
                 foreach (GameObject enemy in enemies)
                 {
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(true);
-                    enemy.GetComponent<FGEnemy>().hitstun = 0;
-
-                    Camera cam = FindObjectOfType<Camera>();
-                    Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
-
-                    
-
-                    if (GeometryUtility.TestPlanesAABB(planes, enemy.GetComponent<Collider2D>().bounds))
+                    if (enemy.name != "DreadKnight")
                     {
-                        enemy.GetComponent<FGEnemy>().changedInView = true;
-                    }
-                    else
-                    {
-                        enemy.GetComponent<FGEnemy>().changedInView = false;
-                    }
+                        enemy.GetComponent<FGEnemy>().hitstun = 0;
 
-                    EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
-                    if (enemy.GetComponent<Rigidbody2D>() != null)
-                    {
-                        enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-                    }
-                    foreach (EnemyBehaviour behaviour in behaviours)
-                    {
-                        if (behaviour.GetType().Equals(typeof(FGEnemy)))
+
+                        Camera cam = FindObjectOfType<Camera>();
+                        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+
+
+
+                        if (GeometryUtility.TestPlanesAABB(planes, enemy.GetComponent<Collider2D>().bounds))
                         {
-                            behaviour.enabled = true;
-                            behaviour.GetAnimator().SetBool("fighter", true);
-                            behaviour.GetAnimator().SetBool("platformer", false);
+                            enemy.GetComponent<FGEnemy>().changedInView = true;
                         }
                         else
                         {
-                            behaviour.enabled = false;
+                            enemy.GetComponent<FGEnemy>().changedInView = false;
                         }
                     }
-                    if (enemy.GetComponent<Rigidbody2D>() != null)
-                    {
-                        enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
-                    }
+
+                        EnemyBehaviour[] behaviours = enemy.GetComponents<EnemyBehaviour>();
+                        if (enemy.GetComponent<Rigidbody2D>() != null)
+                        {
+                            enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                        }
+                        foreach (EnemyBehaviour behaviour in behaviours)
+                        {
+                            if (behaviour.GetType().Equals(typeof(FGEnemy)))
+                            {
+                                behaviour.enabled = true;
+                                behaviour.GetAnimator().SetBool("fighter", true);
+                                behaviour.GetAnimator().SetBool("platformer", false);
+                            }
+                            else if (!behaviour.GetType().Equals(typeof(FGDreadKnight)))
+                            {
+                                behaviour.enabled = false;
+                            }
+                        }
+                        if (enemy.GetComponent<Rigidbody2D>() != null)
+                        {
+                            enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+                        }
+                    
                 }
 
                 player = GameObject.Find("Player");
