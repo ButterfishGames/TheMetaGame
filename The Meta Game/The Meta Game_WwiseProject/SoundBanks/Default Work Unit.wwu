@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{AA4E8381-0120-40EB-AE84-09A6AC679469}" SchemaVersion="94">
 	<SoundBanks>
-		<WorkUnit Name="Default Work Unit" ID="{AA4E8381-0120-40EB-AE84-09A6AC679469}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{AA4E8381-0120-40EB-AE84-09A6AC679469}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Dextra_Soundbank" ID="{762BFFF1-364D-4AC4-BA3B-A315FD9D94B6}">
+					<ObjectInclusionList>
+						<ObjectRef Name="sfx_walljump" ID="{A349618B-866F-44B7-B06D-4A58BA3C30E9}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="SFX" ID="{B4CB87B1-7764-45F2-A835-706FFD4C29AF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="sfx_jump" ID="{55CA0C34-931A-478D-ADAC-AB9F4D3F4836}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="sfx_knight_talk" ID="{7C468569-8A74-4912-8B5B-336D57134F7D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="sfx_collectable" ID="{3DB63AF1-6593-4FEB-AAFB-9814E52B1558}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
 	</SoundBanks>
 </WwiseDocument>

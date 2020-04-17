@@ -194,15 +194,16 @@ public class PFController : Mover
         animator.SetBool("jumping", true);
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
+        //dayna trying to make walljump sfx work 
         float xForce = 0;
         if (onWall)
         {
             xForce = -wallDir * wallJumpForce;
-            // TODO: Add Player Wall Jump SFX Event
+            AkSoundEngine.PostEvent("sfx_walljump", gameObject);
         }
         else
         {
-            // TODO: Add Player Jump SFX Event
+            AkSoundEngine.PostEvent("sfx_jump", gameObject);
         }
 
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);

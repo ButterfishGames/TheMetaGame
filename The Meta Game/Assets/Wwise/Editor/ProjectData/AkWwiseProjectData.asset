@@ -12,14 +12,133 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98abbd5d851941f0898847946561c24, type: 3}
   m_Name: AkWwiseProjectData
   m_EditorClassIdentifier: 
-  AcousticTextureWwu: []
-  AuxBusWwu: []
-  BankWwu: []
-  EventWwu: []
-  RtpcWwu: []
-  StateWwu: []
-  SwitchWwu: []
-  TriggerWwu: []
-  ExpandedItems: []
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 4c3981cef2691c4298a0504d992525db
+    GuidInternal: 
+    m_lastTime: -8586145249724775808
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: cdac2032fcf69e468d364161c3f11912
+    GuidInternal: 
+    m_lastTime: -8586145249724775808
+    List: []
+  BankWwu:
+  - PhysicalPath: SoundBanks/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 81834eaa2001eb40ae8409a6ac679469
+    GuidInternal: 
+    m_lastTime: -8586145208634775808
+    List:
+    - name: Dextra_Soundbank
+      guid: f1ff2b764d36c44aba3ba315fd9d94b6
+      id: 3360591469
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Dextra_Soundbank
+        ObjectType: 7
+      Path: Default Work Unit/Dextra_Soundbank
+  EventWwu:
+  - PhysicalPath: Events/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: bd962ea42152be4ea0b28a48f06727da
+    GuidInternal: 
+    m_lastTime: -8586145208884775808
+    List:
+    - name: sfx_collectable
+      guid: f13ab63d9365eb4faafb9814e52b1558
+      id: 673464333
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Sound
+        ObjectType: 4
+      - ElementName: sfx_collectable
+        ObjectType: 3
+      Path: Default Work Unit/Sound/sfx_collectable
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_jump
+      guid: 340cca551a938d47adacab9f4d3f4836
+      id: 3695098761
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Sound
+        ObjectType: 4
+      - ElementName: sfx_jump
+        ObjectType: 3
+      Path: Default Work Unit/Sound/sfx_jump
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_knight_talk
+      guid: 6985467c748a12498b5b336d57134f7d
+      id: 1803239799
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Sound
+        ObjectType: 4
+      - ElementName: sfx_knight_talk
+        ObjectType: 3
+      Path: Default Work Unit/Sound/sfx_knight_talk
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_walljump
+      guid: 8b6149a36f86b744b06d4a58ba3c30e9
+      id: 3875906189
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Sound
+        ObjectType: 4
+      - ElementName: sfx_walljump
+        ObjectType: 3
+      Path: Default Work Unit/Sound/sfx_walljump
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  RtpcWwu:
+  - PhysicalPath: Game Parameters/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 50812b6e575d4a4aae8529c2ff5978a3
+    GuidInternal: 
+    m_lastTime: -8586145249724775808
+    List: []
+  StateWwu:
+  - PhysicalPath: States/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 654cedd3e7d0c6488a5d7fa443fadc76
+    GuidInternal: 
+    m_lastTime: -8586145249724775808
+    List: []
+  SwitchWwu:
+  - PhysicalPath: Switches/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 6ba9eb69e1cb984fb4a59d5c8cfaa4bf
+    GuidInternal: 
+    m_lastTime: -8586145249724775808
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: bcc98f0da5905c44a5286d08844dcd56
+    GuidInternal: 
+    m_lastTime: -8586145249724775808
+    List: []
+  ExpandedItems:
+  - /The Meta Game_WwiseProject
+  - /The Meta Game_WwiseProject/Events
+  - /The Meta Game_WwiseProject/Events/Default Work Unit
+  - /The Meta Game_WwiseProject/Events/Default Work Unit/Sound
+  - /The Meta Game_WwiseProject/SoundBanks
+  - /The Meta Game_WwiseProject/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
   CurrentPluginConfig: 
