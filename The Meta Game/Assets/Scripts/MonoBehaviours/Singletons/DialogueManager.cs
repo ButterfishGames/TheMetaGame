@@ -15,7 +15,7 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject branchButtonPrefab;
 
-    public TMP_SpriteAsset xbox, dualshock, switchPro;
+    public TMP_SpriteAsset xbox, dualshock, switchPro, keyboardAndMouse;
     private TMP_SpriteAsset current;
 
     public Dialogue[] failDialogues;
@@ -45,6 +45,8 @@ public class DialogueManager : MonoBehaviour
 
     private InputAction submit;
 
+    private string line;
+
     private void OnEnable()
     {
         OnControlsChange(GameObject.Find("Player").GetComponent<PlayerInput>());
@@ -54,6 +56,10 @@ public class DialogueManager : MonoBehaviour
     {
         switch(pIn.currentControlScheme)
         {
+            case "KeyboardAndMouse":
+                current = keyboardAndMouse;
+                break;
+
             case "DualShock":
                 current = dualshock;
                 break;
@@ -227,7 +233,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         string name = names.Dequeue();
-        string line = sentences.Dequeue();
+        line = sentences.Dequeue();
         Sprite spr = sprites.Dequeue();
 
         line = DialogueParser(line);
@@ -327,12 +333,27 @@ public class DialogueManager : MonoBehaviour
     {
         string output = input;
 
-        output = output.Replace("|*JUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
-        output = output.Replace("|*PAUSE*|", ButtonsLib.singleton.DialogueAction("Pause"));
-        output = output.Replace("|*MENU*|", ButtonsLib.singleton.DialogueAction("Menu"));
-        output = output.Replace("|*SWITCH_L*|", ButtonsLib.singleton.DialogueAction("SwitchModeNeg"));
-        output = output.Replace("|*SWITCH_R*|", ButtonsLib.singleton.DialogueAction("SwitchModePos"));
-        output = output.Replace("|*SUBMIT*|", ButtonsLib.singleton.DialogueAction("Submit"));
+        if (output.Contains("|*JUMP*|")) output = output.Replace("|*JUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
+        if (output.Contains("|*PAUSE*|")) output = output.Replace("|*PAUSE*|", ButtonsLib.singleton.DialogueAction("Pause"));
+        if (output.Contains("|*MENU*|")) output = output.Replace("|*MENU*|", ButtonsLib.singleton.DialogueAction("Menu"));
+        if (output.Contains("|*SWITCH_L*|")) output = output.Replace("|*SWITCH_L*|", ButtonsLib.singleton.DialogueAction("SwitchModeNeg"));
+        if (output.Contains("|*SWITCH_R*|")) output = output.Replace("|*SWITCH_R*|", ButtonsLib.singleton.DialogueAction("SwitchModePos"));
+        if (output.Contains("|*SUBMIT*|")) output = output.Replace("|*SUBMIT*|", ButtonsLib.singleton.DialogueAction("Submit"));
+        if (output.Contains("|*CANCEL*|")) output = output.Replace("|*CANCEL*|", ButtonsLib.singleton.DialogueAction("Cancel"));
+        if (output.Contains("|*LIGHT*|")) output = output.Replace("|*LIGHT*|", ButtonsLib.singleton.DialogueAction("Light"));
+        if (output.Contains("|*MEDIUM*|")) output = output.Replace("|*MEDIUM*|", ButtonsLib.singleton.DialogueAction("Medium"));
+        if (output.Contains("|*HEAVY*|")) output = output.Replace("|*HEAVY*|", ButtonsLib.singleton.DialogueAction("Heavy"));
+        if (output.Contains("|*ZOOM*|")) output = output.Replace("|*ZOOM*|", ButtonsLib.singleton.DialogueAction("Zoom"));
+        if (output.Contains("|*FIRE*|")) output = output.Replace("|*FIRE*|", ButtonsLib.singleton.DialogueAction("Fire"));
+
+        if (output.Contains("|*MOVE*|")) output = output.Replace("|*MOVE*|", ButtonsLib.singleton.DialogueExpl("LStick"));
+        if (output.Contains("|*LOOK*|")) output = output.Replace("|*LOOK*|", ButtonsLib.singleton.DialogueExpl("RStick"));
+        if (output.Contains("|*UP*|")) output = output.Replace("|*UP*|", ButtonsLib.singleton.DialogueExpl("DPadUp"));
+        if (output.Contains("|*RIGHT*|")) output = output.Replace("|*RIGHT*|", ButtonsLib.singleton.DialogueExpl("DPadRight"));
+        if (output.Contains("|*LEFT*|")) output = output.Replace("|*LEFT*|", ButtonsLib.singleton.DialogueExpl("DPadLeft"));
+        if (output.Contains("|*DOWN*|")) output = output.Replace("|*DOWN*|", ButtonsLib.singleton.DialogueExpl("DPadDown"));
+
+        if (output.Contains("|*ATTACK*|")) output = output.Replace("|*ATTACK*|", ButtonsLib.singleton.DialogueAttack());
 
         return output;
     }

@@ -17,6 +17,10 @@ public class ButtonsLib : MonoBehaviour
     const int START = 9;
     const int L_STICK = 10;
     const int R_STICK = 11;
+    const int DPAD_UP = 12;
+    const int DPAD_RIGHT = 13;
+    const int DPAD_LEFT = 14;
+    const int DPAD_DOWN = 15;
 
     public static ButtonsLib singleton;
     
@@ -142,7 +146,6 @@ public class ButtonsLib : MonoBehaviour
         if (currentScheme.Equals("KeyboardAndMouse"))
         {
             string path = "";
-            bool found = false;
             bool? positive = null;
             if (action.Contains("SwitchMode"))
             {
@@ -157,45 +160,74 @@ public class ButtonsLib : MonoBehaviour
 
                 action = "SwitchMode";
             }
-
-            for (int i = 0; i < pInput.actions[action].bindings.Count && !found; i++)
+            
+            List<string> prompts = new List<string>();
+            for (int i = 0; i < pInput.actions[action].bindings.Count; i++)
             {
                 if (pInput.actions[action].bindings[i].groups.Contains(currentScheme))
                 {
                     if (positive == null)
                     {
+                        Debug.Log("happens");
                         path = pInput.actions[action].bindings[i].path;
-                        found = true;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
                     }
                     else if (positive == true && pInput.actions[action].bindings[i].name.Equals("positive"))
                     {
                         path = pInput.actions[action].bindings[i].path;
-                        found = true;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
                     }
                     else if (positive == false && pInput.actions[action].bindings[i].name.Equals("negative"))
                     {
                         path = pInput.actions[action].bindings[i].path;
-                        found = true;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
                     }
                 }
             }
 
-            if (found)
+            output = prompts[0];
+            if (prompts.Count > 1)
             {
-                string temp = path.Substring(path.IndexOf("/") + 1);
-                if (temp.Length > 1)
+                for (int i = 1; i < prompts.Count; i++)
                 {
-                    output = temp.Substring(0, 1).ToUpper() + temp.Substring(1);
-                }
-                else
-                {
-                    output = temp.ToUpper();
+                    output += " or " + prompts[i];
                 }
             }
         }
         else
         {
-            output = "<sprite=" + currentSprites[action] + ">";
+            try
+            {
+                output = "<sprite=" + currentSprites[action] + ">";
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.Log(action);
+            }
 
             if (currentScheme.Equals("DualShock"))
             {
@@ -210,6 +242,15 @@ public class ButtonsLib : MonoBehaviour
             }
         }
 
+        if (output.Equals("LeftButton"))
+        {
+            output = "<sprite=0>Left Mouse Button";
+        }
+        else if (output.Equals("RightButton"))
+        {
+            output = "<sprite=1>Right Mouse Button";
+        }
+
         return output;
     }
 
@@ -219,7 +260,98 @@ public class ButtonsLib : MonoBehaviour
 
         if (currentScheme.Equals("KeyboardAndMouse"))
         {
+            if (input == "LStick") output = "WASD or the Arrow Keys";
+            else if (input == "RStick") output = "the mouse";
+            else if (input == "DPadUp") output = "W or Up Arrow";
+            else if (input == "DPadRight") output = "D or Right Arrow";
+            else if (input == "DPadLeft") output = "A or Left Arrow";
+            else if (input == "DPadDown") output = "S or Down Arrow";
+        }
+        else
+        {
+            output = "<sprite=";
+            if (input == "LStick") output += L_STICK + ">";
+            else if (input == "RStick") output += R_STICK + ">";
+            else if (input == "DPadUp") output += DPAD_UP + ">";
+            else if (input == "DPadRight") output += DPAD_RIGHT + ">";
+            else if (input == "DPadLeft") output += DPAD_LEFT + ">";
+            else if (input == "DPadDown") output += DPAD_DOWN + ">";
+        }
 
+        return output;
+    }
+
+    public string DialogueAttack()
+    {
+        string[] actions = { "Light", "Medium", "Heavy" };
+
+        Dictionary<string, List<string>> listDict = new Dictionary<string, List<string>>();
+
+        string output = "";
+
+        foreach (string action in actions)
+        {
+            if (currentScheme.Equals("KeyboardAndMouse"))
+            {
+                string path = "";
+
+                List<string> prompts = new List<string>();
+                for (int i = 0; i < pInput.actions[action].bindings.Count; i++)
+                {
+                    if (pInput.actions[action].bindings[i].groups.Contains(currentScheme))
+                    {
+                        Debug.Log("happens");
+                        path = pInput.actions[action].bindings[i].path;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
+                    }
+                }
+
+                listDict[action] = prompts;
+            }
+            else
+            {
+                listDict[action] = new List<string>();
+                string current = "";
+                try
+                {
+                    current = "<sprite=" + currentSprites[action] + ">";
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Debug.Log(action);
+                }
+
+                if (currentScheme.Equals("DualShock"))
+                {
+                    if (currentSprites[action] == 8)
+                    {
+                        current += "Share";
+                    }
+                    else if (currentSprites[action] == 9)
+                    {
+                        current += "Options";
+                    }
+                }
+                listDict[action].Add(current);
+            }
+        }
+
+        int num = Mathf.Min(listDict["Light"].Count, listDict["Medium"].Count, listDict["Heavy"].Count);
+        output = listDict["Light"][0] + listDict["Medium"][0] + listDict["Heavy"][0];
+        if (num > 1)
+        {
+            for (int i = 1; i < num; i++)
+            {
+                output += " or " + listDict["Light"][i] + listDict["Medium"][i] + listDict["Heavy"][i];
+            }
         }
 
         return output;

@@ -210,12 +210,12 @@ public class RaceController : Mover
             StartCoroutine(Crash());
         }
 
-        if (hRaw > 0)
+        if (hRaw*dir > 0)
         {
             animator.SetBool("decelerating", false);
             animator.SetBool("accelerating", true);
         }
-        else if (hRaw < 0 && speed != 0)
+        else if (hRaw*dir < 0 && speed != 0)
         {
             animator.SetBool("accelerating", false);
             animator.SetBool("decelerating", true);
@@ -231,6 +231,7 @@ public class RaceController : Mover
         {
             speed = dir == 1 ? Mathf.Clamp((speed + accel), 0, maxSpeed) :
                 Mathf.Clamp((speed + accel), -maxSpeed, 0);
+            Debug.Log(speed);
         }
         
         prevX = rb.velocity.x;
@@ -300,7 +301,7 @@ public class RaceController : Mover
 
     protected override void Move(float h, float v)
     {
-        accel = speed > baseSpeed ? Mathf.Clamp(h * accelRate * (baseSpeed / speed), -maxAccel, maxAccel) : 
+        accel = Mathf.Abs(speed) > baseSpeed ? Mathf.Clamp(h * accelRate * Mathf.Abs(baseSpeed / speed), -maxAccel, maxAccel) : 
             Mathf.Clamp(h * accelRate, -maxAccel, maxAccel);
         if (v != 0)
         {

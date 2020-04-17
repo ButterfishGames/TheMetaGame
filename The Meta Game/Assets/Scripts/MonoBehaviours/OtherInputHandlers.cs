@@ -17,6 +17,12 @@ public class OtherInputHandlers : MonoBehaviour
         {
             fpsCon.OnControlsChange(pIn);
         }
+
+        SwitchPanelUpdater spu = FindObjectOfType<SwitchPanelUpdater>();
+        if (spu != null)
+        {
+            spu.OnControlsChanged(pIn);
+        }
     }
 
     private void OnMenu(InputValue value)

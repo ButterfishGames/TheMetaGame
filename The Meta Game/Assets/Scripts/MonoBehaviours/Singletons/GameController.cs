@@ -595,7 +595,7 @@ public class GameController : MonoBehaviour
                     codeText.text += "    Crash();\n".HexEmbed(other);
                     codeText.text += "}\n".HexEmbed(other);
                     codeText.text += "\nif ".HexEmbed(keyword) + "(player.collidingWithEnemy) {\n".HexEmbed(other);
-                    codeText.text += "    OpenDateMap();\n".HexEmbed(other);
+                    codeText.text += "    Crash();\n".HexEmbed(other);
                     codeText.text += "}\n".HexEmbed(other);
                     codeText.text += "\nSpawnRacers(".HexEmbed(other) + "3".HexEmbed(literal) + ");".HexEmbed(other);
                     break;
