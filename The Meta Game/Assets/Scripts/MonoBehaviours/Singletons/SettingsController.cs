@@ -56,7 +56,7 @@ public class SettingsController : MonoBehaviour
 
     private Image panelImg;
 
-    private void Start()
+    private void Awake()
     {
         panelImg = GetComponent<Image>();
 

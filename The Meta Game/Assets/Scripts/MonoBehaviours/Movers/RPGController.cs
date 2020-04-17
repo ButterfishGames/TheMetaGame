@@ -63,37 +63,12 @@ public class RPGController : Mover
     /// </summary>
     private Direction dir;
 
-    protected override void OnEnable()
+    private void OnSubmit(InputValue value)
     {
-        base.OnEnable();
-
-        controls.UI.Submit.performed += InteractHandle;
-
-        controls.UI.Submit.Enable();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        controls.UI.Submit.performed -= InteractHandle;
-
-        controls.UI.Submit.Disable();
-    }
-
-    private void InteractHandle(InputAction.CallbackContext context)
-    {
-        if (GameController.singleton.GetPaused())
-        {
-            return;
-        }
-
-        if (DialogueManager.singleton.GetDisplaying())
-        {
-            return;
-        }
-
-        if (CutsceneManager.singleton.scening)
+        if (!enabled
+            || GameController.singleton.GetPaused()
+            || DialogueManager.singleton.GetDisplaying()
+            || CutsceneManager.singleton.scening)
         {
             return;
         }

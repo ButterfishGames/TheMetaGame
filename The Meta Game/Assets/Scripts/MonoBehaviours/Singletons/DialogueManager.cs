@@ -15,7 +15,11 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject branchButtonPrefab;
 
+    public TMP_SpriteAsset xbox, dualshock, switchPro;
+    private TMP_SpriteAsset current;
+
     public Dialogue[] failDialogues;
+    public Dialogue[] successDialogues;
 
     private Image stillImg;
     private Image charImg;
@@ -30,7 +34,6 @@ public class DialogueManager : MonoBehaviour
     private Dialogue currentDialogue;
 
     private bool primed;
-    private bool isBranched;
 
     private Controls controls;
 
@@ -40,22 +43,34 @@ public class DialogueManager : MonoBehaviour
 
     private int pInd;
 
+    private InputAction submit;
+
     private void OnEnable()
     {
-        controls = new Controls();
-
-        controls.UI.Submit.started += SubmitStartHandle;
-        controls.UI.Submit.canceled += SubmitCancHandle;
-
-        controls.UI.Submit.Enable();
+        OnControlsChange(GameObject.Find("Player").GetComponent<PlayerInput>());
     }
 
-    private void OnDisable()
+    public void OnControlsChange(PlayerInput pIn)
     {
-        controls.UI.Submit.started -= SubmitStartHandle;
-        controls.UI.Submit.canceled -= SubmitCancHandle;
+        switch(pIn.currentControlScheme)
+        {
+            case "DualShock":
+                current = dualshock;
+                break;
 
-        controls.UI.Submit.Disable();
+            case "Switch":
+                current = switchPro;
+                break;
+
+            default:
+                current = xbox;
+                break;
+        }
+
+        submit = pIn.actions["submit"];
+
+        submit.started += SubmitStartHandle;
+        submit.canceled += SubmitCancHandle;
     }
 
     private void SubmitStartHandle(InputAction.CallbackContext context)
@@ -134,7 +149,6 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, bool datingSim, int partnerInd)
     {
-        isBranched = false;
         dating = datingSim;
         sentences.Clear();
         names.Clear();
@@ -194,6 +208,8 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
+        dialogueText.spriteAsset = current;
+
         displaying = true;
         DisplayNextLine();
     }
@@ -213,6 +229,8 @@ public class DialogueManager : MonoBehaviour
         string name = names.Dequeue();
         string line = sentences.Dequeue();
         Sprite spr = sprites.Dequeue();
+
+        line = DialogueParser(line);
 
         nameText.text = name;
         dialogueText.text = line;
@@ -257,7 +275,6 @@ public class DialogueManager : MonoBehaviour
                     break;
 
                 case DialogueType.branch:
-                    isBranched = true;
                     GameObject branchPanel = GameObject.Find("BranchPanel");
                     for (int i = 0; i < currentDialogue.branches.Length; i++)
                     {
@@ -304,5 +321,19 @@ public class DialogueManager : MonoBehaviour
     public bool GetDisplaying()
     {
         return displaying;
+    }
+
+    public string DialogueParser(string input)
+    {
+        string output = input;
+
+        output = output.Replace("|*JUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
+        output = output.Replace("|*PAUSE*|", ButtonsLib.singleton.DialogueAction("Pause"));
+        output = output.Replace("|*MENU*|", ButtonsLib.singleton.DialogueAction("Menu"));
+        output = output.Replace("|*SWITCH_L*|", ButtonsLib.singleton.DialogueAction("SwitchModeNeg"));
+        output = output.Replace("|*SWITCH_R*|", ButtonsLib.singleton.DialogueAction("SwitchModePos"));
+        output = output.Replace("|*SUBMIT*|", ButtonsLib.singleton.DialogueAction("Submit"));
+
+        return output;
     }
 }

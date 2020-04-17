@@ -29,56 +29,55 @@ public abstract class Mover : MonoBehaviour
 
     protected bool stickUp;
 
+    private InputAction moveH, moveV, lStick, dPad;
+
     protected virtual void OnEnable()
     {
-        controls = new Controls();
-
-        controls.Player.MoveH.performed += MoveHHandle;
-        controls.Player.MoveH.canceled += MoveHHandle;
-        controls.Player.MoveV.performed += MoveVHandle;
-        controls.Player.MoveV.canceled += MoveVHandle;
-        controls.Player.LStick.performed += JoyMoveHandle;
-        controls.Player.LStick.canceled += JoyMoveHandle;
-        controls.Player.DPad.performed += JoyMoveHandle;
-        controls.Player.DPad.canceled += JoyMoveHandle;
-
-        controls.Player.MoveH.Enable();
-        controls.Player.MoveV.Enable();
-        controls.Player.LStick.Enable();
-        controls.Player.DPad.Enable();
+        OnControlsChange(GetComponent<PlayerInput>());
     }
 
     protected virtual void OnDisable()
     {
-        controls.Player.MoveH.performed -= MoveHHandle;
-        controls.Player.MoveH.canceled -= MoveHHandle;
-        controls.Player.MoveV.performed -= MoveVHandle;
-        controls.Player.MoveV.canceled -= MoveVHandle;
-        controls.Player.LStick.performed -= JoyMoveHandle;
-        controls.Player.LStick.canceled -= JoyMoveHandle;
-        controls.Player.DPad.performed -= JoyMoveHandle;
-        controls.Player.DPad.canceled -= JoyMoveHandle;
+        moveH.performed -= MoveHHandle;
+        moveH.canceled -= MoveHHandle;
+        moveV.performed -= MoveVHandle;
+        moveV.canceled -= MoveVHandle;
+        lStick.performed -= JoyMoveHandle;
+        lStick.canceled -= JoyMoveHandle;
+        dPad.performed -= JoyMoveHandle;
+        dPad.canceled -= JoyMoveHandle;
+    }
 
-        controls.Player.MoveH.Disable();
-        controls.Player.MoveV.Disable();
-        controls.Player.LStick.Disable();
-        controls.Player.DPad.Disable();
+    private void OnControlsChange(PlayerInput pIn)
+    {
+        moveH = pIn.actions["MoveH"];
+        moveV = pIn.actions["MoveV"];
+        lStick = pIn.actions["LStick"];
+        dPad = pIn.actions["DPad"];
+
+        moveH.performed += MoveHHandle;
+        moveH.canceled += MoveHHandle;
+        moveV.performed += MoveVHandle;
+        moveV.canceled += MoveVHandle;
+        lStick.performed += JoyMoveHandle;
+        lStick.canceled += JoyMoveHandle;
+        dPad.performed += JoyMoveHandle;
+        dPad.canceled += JoyMoveHandle;
     }
 
     private void MoveHHandle(InputAction.CallbackContext context)
     {
-        hRaw = context.ReadValue<float>();
+        hRaw = context.action.ReadValue<float>();
     }
 
     private void MoveVHandle(InputAction.CallbackContext context)
     {
-        vRaw = context.ReadValue<float>();
-        stickUp = false;
+        vRaw = context.action.ReadValue<float>();
     }
 
     private void JoyMoveHandle(InputAction.CallbackContext context)
     {
-        Vector2 stickRaw = context.ReadValue<Vector2>();
+        Vector2 stickRaw = context.action.ReadValue<Vector2>();
 
         float threshold = Mathf.Cos(5.0f / 18.0f * Mathf.PI); // 5/18 * pi radians = 50 degrees; cos(50 deg) = sin(40 deg)
 
@@ -158,7 +157,7 @@ public abstract class Mover : MonoBehaviour
         return animator;
     }
 
-    private float AxisProc(float axis, float rawAxis)
+    protected float AxisProc(float axis, float rawAxis)
     {
         float res;
 
