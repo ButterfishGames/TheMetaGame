@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class ButtonsLib : MonoBehaviour
 {
+    public Sprite[] xboxButtons = new Sprite[16];
+    public Sprite[] dualshockButtons = new Sprite[16];
+    public Sprite[] switchButtons = new Sprite[16];
+
     const int SOUTH = 0;
     const int EAST = 1;
     const int WEST = 2;
@@ -355,5 +359,20 @@ public class ButtonsLib : MonoBehaviour
         }
 
         return output;
+    }
+
+    public Sprite GetSprite(string action, string scheme)
+    {
+        switch (scheme)
+        {
+            case "DualShock":
+                return dualshockButtons[currentSprites[action]];
+
+            case "Switch":
+                return switchButtons[currentSprites[action]];
+
+            default:
+                return xboxButtons[currentSprites[action]];
+        }
     }
 }
