@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}" SchemaVersion="94">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}" PersistMode="Standalone">
+			<ChildrenList>
+				<RandomSequenceContainer Name="sfx_jump" ID="{E97DDF91-C53B-4C47-AD74-31E8DAFF7CDE}" ShortID="432001650">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="dextra_jump_A" ID="{FBBA9655-828C-41A2-BD3B-BDF3A72A4B11}" ShortID="100966105">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="dextra_jump_A" ID="{7AE6598F-EA40-4724-8B0F-32234A744DB7}" ShortID="922220141">
+									<Language>SFX</Language>
+									<AudioFile>dextra_jump_A.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="dextra_jump_A" ID="{7AE6598F-EA40-4724-8B0F-32234A744DB7}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="dextra_jump_B" ID="{F6A4BB93-F10A-4CD2-8CC8-35109E4420CC}" ShortID="36253289">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="dextra_jump_B" ID="{B88599FC-7ED8-456B-ACFB-22AF90A4D6A6}" ShortID="498525494">
+									<Language>SFX</Language>
+									<AudioFile>dextra_jump_B.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="dextra_jump_B" ID="{B88599FC-7ED8-456B-ACFB-22AF90A4D6A6}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="dextra_jump_C" ID="{36038C3D-272A-40F9-8C50-FAE5590B6444}" ShortID="493950269">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="dextra_jump_C" ID="{8228A85E-935D-42F7-A124-18948FC6211C}" ShortID="702299705">
+									<Language>SFX</Language>
+									<AudioFile>dextra_jump_C.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="dextra_jump_C" ID="{8228A85E-935D-42F7-A124-18948FC6211C}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<Sound Name="sfx_collectable" ID="{5FE71FBD-D738-477B-84D9-A6A54AFE108E}" ShortID="839728952">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="dextra_flagcheckpoint" ID="{82EC2CEA-3230-41C6-9EC1-41B143AD503D}" ShortID="1000854897">
+							<Language>SFX</Language>
+							<AudioFile>dextra_flagcheckpoint.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="dextra_flagcheckpoint" ID="{82EC2CEA-3230-41C6-9EC1-41B143AD503D}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="sfx_walljump" ID="{2CFBE76B-3735-4543-B1A0-510DC58AD30A}" ShortID="846253691">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="dextra_walljumpgrab" ID="{78E7B43F-C248-40C3-BA37-625F596CAF8A}" ShortID="809055740">
+							<Language>SFX</Language>
+							<AudioFile>dextra_walljumpgrab.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="dextra_walljumpgrab" ID="{78E7B43F-C248-40C3-BA37-625F596CAF8A}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="sfx_knight_talk" ID="{0CCDB4FE-0A7B-452D-9E81-5068EEA868E6}" ShortID="249930404">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="dextra_talk_option1" ID="{E9E5D091-2803-49D3-A2B3-D9CC0397316B}" ShortID="110204337">
+							<Language>SFX</Language>
+							<AudioFile>dextra_talk_option1.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="dextra_talk_option1" ID="{E9E5D091-2803-49D3-A2B3-D9CC0397316B}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

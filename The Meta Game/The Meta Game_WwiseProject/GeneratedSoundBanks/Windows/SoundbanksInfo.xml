@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="134">
+	<RootPaths>
+		<ProjectRoot>/Users/dayna/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/Documents/GitHub/TheMetaGame/The Meta Game/The Meta Game_WwiseProject/</ProjectRoot>
+		<SourceFilesRoot>/Users/dayna/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/Documents/GitHub/TheMetaGame/The Meta Game/The Meta Game_WwiseProject/.cache/Windows/</SourceFilesRoot>
+		<SoundBanksRoot>/Users/dayna/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/Documents/GitHub/TheMetaGame/The Meta Game/The Meta Game_WwiseProject/GeneratedSoundBanks/Windows/</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>/Users/dayna/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/Documents/GitHub/TheMetaGame/The Meta Game/The Meta Game_WwiseProject/GeneratedSoundBanks/Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3360591469" Language="SFX">
+			<ObjectPath>\SoundBanks\Default Work Unit\Dextra_Soundbank</ObjectPath>
+			<ShortName>Dextra_Soundbank</ShortName>
+			<Path>Dextra_Soundbank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="673464333" Name="sfx_collectable" ObjectPath="\Events\Default Work Unit\Sound\sfx_collectable" DurationType="OneShot" DurationMin="1.861338" DurationMax="1.861338"/>
+				<Event Id="3695098761" Name="sfx_jump" ObjectPath="\Events\Default Work Unit\Sound\sfx_jump" DurationType="OneShot" DurationMin="0.184014" DurationMax="0.214671"/>
+				<Event Id="1803239799" Name="sfx_knight_talk" ObjectPath="\Events\Default Work Unit\Sound\sfx_knight_talk" DurationType="OneShot" DurationMin="1.929342" DurationMax="1.929342"/>
+				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\Sound\sfx_walljump" DurationType="OneShot" DurationMin="0.587052" DurationMax="0.587052"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="110204337" Language="SFX">
+					<ShortName>dextra_talk_option1.wav</ShortName>
+					<Path>SFX/dextra_talk_option1_10C4C929.wem</Path>
+				</File>
+				<File Id="498525494" Language="SFX">
+					<ShortName>dextra_jump_B.wav</ShortName>
+					<Path>SFX/dextra_jump_B_10C4C929.wem</Path>
+				</File>
+				<File Id="702299705" Language="SFX">
+					<ShortName>dextra_jump_C.wav</ShortName>
+					<Path>SFX/dextra_jump_C_10C4C929.wem</Path>
+				</File>
+				<File Id="809055740" Language="SFX">
+					<ShortName>dextra_walljumpgrab.wav</ShortName>
+					<Path>SFX/dextra_walljumpgrab_10C4C929.wem</Path>
+				</File>
+				<File Id="922220141" Language="SFX">
+					<ShortName>dextra_jump_A.wav</ShortName>
+					<Path>SFX/dextra_jump_A_10C4C929.wem</Path>
+				</File>
+				<File Id="1000854897" Language="SFX">
+					<ShortName>dextra_flagcheckpoint.wav</ShortName>
+					<Path>SFX/dextra_flagcheckpoint_10C4C929.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

@@ -111,6 +111,11 @@ public class PFEnemy : EnemyBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+
         if (enemyType == EnemyType.fullStill)
         {
             return;
