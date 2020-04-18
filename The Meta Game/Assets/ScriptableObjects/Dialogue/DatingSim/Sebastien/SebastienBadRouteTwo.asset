@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: "S\xE9bastienBadRouteOne"
+  m_Name: SebastienBadRouteTwo
   m_EditorClassIdentifier: 
   lines:
   - name: "S\xE9bastien"
-    line: What? Why do you say that?
-    sprite: {fileID: 21300000, guid: 2b580a90c773ace478ab8ae30323bd5f, type: 3}
+    line: Why are you saying this? What has gotten into you? I do not appreciate being
+      called useless.
+    sprite: {fileID: 21300000, guid: eb8a1fe9535b6a243b97bfc502c296da, type: 3}
   type: 0
   branches:
-  - Your still hurt from our battle
-  - I don't think you can help
+  - I can't see you hurt again
+  - You are, thats why He lost
   branchDialogues:
   - {fileID: 11400000, guid: daee0d1c534fa174dbda877440215603, type: 2}
-  - {fileID: 11400000, guid: a50858045d6bf9f4cb7553082b21a9dc, type: 2}
-  relationshipChanges: 1900000000000000
+  - {fileID: 11400000, guid: 3ec44fe2ab1d69f43b30a1650623c37f, type: 2}
+  relationshipChanges: 3200000000000000
