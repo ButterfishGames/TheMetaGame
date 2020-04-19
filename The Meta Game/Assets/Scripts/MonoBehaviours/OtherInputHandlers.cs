@@ -5,11 +5,16 @@ using UnityEngine.InputSystem;
 
 public class OtherInputHandlers : MonoBehaviour
 {
-    private void OnControlsChanged(PlayerInput pIn)
+    public void OnControlsChangedHandle(PlayerInput pIn)
     {
         if (DialogueManager.singleton != null)
         {
             DialogueManager.singleton.OnControlsChange(pIn);
+        }
+        
+        if (SettingsController.singleton != null)
+        {
+            SettingsController.singleton.OnControlsChanged(pIn);
         }
 
         FPSController fpsCon = FindObjectOfType<FPSController>();

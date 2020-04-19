@@ -83,6 +83,11 @@ public class FPSController : MonoBehaviour
 
     public void LookXHandle(InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         if (!enabled
             || GameController.singleton.GetPaused())
         {
@@ -96,6 +101,11 @@ public class FPSController : MonoBehaviour
 
     public void LookYHandle(InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         if (GameController.singleton.GetPaused())
         {
             y = 0;
@@ -108,6 +118,11 @@ public class FPSController : MonoBehaviour
 
     private void ZoomPerfHandle (InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         if (GameController.singleton.GetPaused())
         {
             return;
@@ -119,6 +134,11 @@ public class FPSController : MonoBehaviour
 
     private void ZoomCancHandle (InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         if (GameController.singleton.GetPaused())
         {
             return;
