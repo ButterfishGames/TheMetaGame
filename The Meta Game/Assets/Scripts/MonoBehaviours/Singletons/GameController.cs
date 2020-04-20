@@ -345,14 +345,14 @@ public class GameController : MonoBehaviour
         }
         else if (pauseMenu.activeInHierarchy && !(settingsPanel.activeInHierarchy || quitPanel.activeInHierarchy))
         {
-            if (waitAGoddamnSecond)
+            /*if (waitAGoddamnSecond)
             {
                 waitAGoddamnSecond = false;
             }
             else
-            {
+            {*/
                 Unpause();
-            }
+            //}
         }
         else
         {

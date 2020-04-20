@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
+  m_Name: SebastienBadRouteTwo
+  m_EditorClassIdentifier: 
+  lines:
+  - name: "S\xE9bastien"
+    line: Why are you saying this? What has gotten into you? I do not appreciate being
+      called useless.
+    sprite: {fileID: 21300000, guid: eb8a1fe9535b6a243b97bfc502c296da, type: 3}
+  type: 0
+  branches:
+  - I can't see you hurt again
+  - You are, thats why He lost
+  branchDialogues:
+  - {fileID: 11400000, guid: daee0d1c534fa174dbda877440215603, type: 2}
+  - {fileID: 11400000, guid: 3ec44fe2ab1d69f43b30a1650623c37f, type: 2}
+  relationshipChanges: 3200000000000000

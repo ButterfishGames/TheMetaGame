@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - name: "S\xE9bastien"
-    line: What? Why would you say that? Why wouldn't you want my help?
+    line: What? Why do you say that?
     sprite: {fileID: 21300000, guid: 2b580a90c773ace478ab8ae30323bd5f, type: 3}
   type: 0
   branches:
@@ -22,5 +22,5 @@ MonoBehaviour:
   - I don't think you can help
   branchDialogues:
   - {fileID: 11400000, guid: daee0d1c534fa174dbda877440215603, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: a50858045d6bf9f4cb7553082b21a9dc, type: 2}
   relationshipChanges: 1900000000000000

@@ -91,6 +91,8 @@ public class ButtonsLib : MonoBehaviour
                 }
             }
         }
+
+        GetComponent<OtherInputHandlers>().OnControlsChangedHandle(pIn);
     }
 
     private int SpriteParser(InputAction action, string scheme)
@@ -172,8 +174,9 @@ public class ButtonsLib : MonoBehaviour
                 {
                     if (positive == null)
                     {
-                        Debug.Log("happens");
-                        path = pInput.actions[action].bindings[i].path;
+                        path = pInput.actions[action].bindings[i].overridePath == null ? 
+                            pInput.actions[action].bindings[i].path
+                            : pInput.actions[action].bindings[i].overridePath;
                         string temp = path.Substring(path.IndexOf("/") + 1);
                         if (temp.Length > 1)
                         {
@@ -186,7 +189,9 @@ public class ButtonsLib : MonoBehaviour
                     }
                     else if (positive == true && pInput.actions[action].bindings[i].name.Equals("positive"))
                     {
-                        path = pInput.actions[action].bindings[i].path;
+                        path = pInput.actions[action].bindings[i].overridePath == null ?
+                            pInput.actions[action].bindings[i].path
+                            : pInput.actions[action].bindings[i].overridePath;
                         string temp = path.Substring(path.IndexOf("/") + 1);
                         if (temp.Length > 1)
                         {
@@ -199,7 +204,9 @@ public class ButtonsLib : MonoBehaviour
                     }
                     else if (positive == false && pInput.actions[action].bindings[i].name.Equals("negative"))
                     {
-                        path = pInput.actions[action].bindings[i].path;
+                        path = pInput.actions[action].bindings[i].overridePath == null ?
+                            pInput.actions[action].bindings[i].path
+                            : pInput.actions[action].bindings[i].overridePath;
                         string temp = path.Substring(path.IndexOf("/") + 1);
                         if (temp.Length > 1)
                         {
@@ -253,6 +260,132 @@ public class ButtonsLib : MonoBehaviour
         else if (output.Equals("RightButton"))
         {
             output = "<sprite=1>Right Mouse Button";
+        }
+        else if (output.Equals("LeftShift"))
+        {
+            output = "Left Shift";
+        }
+        else if (output.Equals("RightShift"))
+        {
+            output = "Right Shift";
+        }
+
+        return output;
+    }
+
+    public string DialogueSingleAction(string action)
+    {
+        return DialogueSingleAction(action, 0);
+    }
+
+    public string DialogueSingleAction(string action, int ind)
+    {
+        string output = "";
+
+        if (currentScheme.Equals("KeyboardAndMouse"))
+        {
+            string path = "";
+            bool? positive = null;
+            if (action.Contains("SwitchMode"))
+            {
+                if (action.Contains("Pos"))
+                {
+                    positive = true;
+                }
+                else
+                {
+                    positive = false;
+                }
+
+                action = "SwitchMode";
+            }
+
+            List<string> prompts = new List<string>();
+            for (int i = 0; i < pInput.actions[action].bindings.Count; i++)
+            {
+                if (pInput.actions[action].bindings[i].groups.Contains(currentScheme))
+                {
+                    if (positive == null)
+                    {
+                        path = pInput.actions[action].bindings[i].overridePath == null ?
+                            pInput.actions[action].bindings[i].path
+                            : pInput.actions[action].bindings[i].overridePath;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
+                    }
+                    else if (positive == true && pInput.actions[action].bindings[i].name.Equals("positive"))
+                    {
+                        path = pInput.actions[action].bindings[i].overridePath == null ?
+                            pInput.actions[action].bindings[i].path
+                            : pInput.actions[action].bindings[i].overridePath;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
+                    }
+                    else if (positive == false && pInput.actions[action].bindings[i].name.Equals("negative"))
+                    {
+                        path = pInput.actions[action].bindings[i].overridePath == null ?
+                            pInput.actions[action].bindings[i].path
+                            : pInput.actions[action].bindings[i].overridePath;
+                        string temp = path.Substring(path.IndexOf("/") + 1);
+                        if (temp.Length > 1)
+                        {
+                            prompts.Add(temp.Substring(0, 1).ToUpper() + temp.Substring(1));
+                        }
+                        else
+                        {
+                            prompts.Add(temp.ToUpper());
+                        }
+                    }
+                }
+            }
+
+            output = prompts[ind];
+        }
+        else
+        {
+            try
+            {
+                output = "<sprite=" + currentSprites[action] + ">";
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.Log(action);
+            }
+
+            if (currentScheme.Equals("DualShock"))
+            {
+                if (currentSprites[action] == 8)
+                {
+                    output += "Share";
+                }
+                else if (currentSprites[action] == 9)
+                {
+                    output += "Options";
+                }
+            }
+        }
+
+        if (output.Equals("LeftButton"))
+        {
+            output = "<sprite=0>  LMB";
+        }
+        else if (output.Equals("RightButton"))
+        {
+            output = "<sprite=1>  RMB";
         }
 
         return output;
@@ -349,16 +482,40 @@ public class ButtonsLib : MonoBehaviour
         }
 
         int num = Mathf.Min(listDict["Light"].Count, listDict["Medium"].Count, listDict["Heavy"].Count);
-        output = listDict["Light"][0] + listDict["Medium"][0] + listDict["Heavy"][0];
+        output = listDict["Light"][0] + ", " + listDict["Medium"][0] + ", and " + listDict["Heavy"][0];
         if (num > 1)
         {
             for (int i = 1; i < num; i++)
             {
-                output += " or " + listDict["Light"][i] + listDict["Medium"][i] + listDict["Heavy"][i];
+                output += " or " + listDict["Light"][i] + ", " + listDict["Medium"][i] + ", and " + listDict["Heavy"][i];
             }
         }
 
         return output;
+    }
+
+    public string DialogueNote(string dir)
+    {
+        if (currentScheme.Equals("KeyboardAndMouse") || SettingsController.singleton.dInput)
+        {
+            return DialogueExpl("DPad" + dir);
+        }
+        else
+        {
+            switch (dir)
+            {
+                case "Down":
+                    return "<sprite=" + SOUTH + ">";
+                case "Right":
+                    return "<sprite=" + EAST + ">";
+                case "Left":
+                    return "<sprite=" + WEST + ">";
+                case "Up":
+                    return "<sprite=" + NORTH + ">";
+                default:
+                    return "";
+            }
+        }
     }
 
     public Sprite GetSprite(string action, string scheme)
@@ -374,5 +531,58 @@ public class ButtonsLib : MonoBehaviour
             default:
                 return xboxButtons[currentSprites[action]];
         }
+    }
+
+    public string PathParse(string path)
+    {
+        string output = "";
+        if (currentScheme.Equals("KeyboardAndMouse"))
+        {
+            string temp = path.Substring(path.IndexOf("/") + 1);
+            if (temp.Length > 1)
+            {
+                output = temp.Substring(0, 1).ToUpper() + temp.Substring(1);
+            }
+            else
+            {
+                output = temp.ToUpper();
+            }
+        }
+        else
+        {
+            if (path.Contains("buttonSouth")) output = "<sprite=" + SOUTH + ">";
+            else if (path.Contains("buttonEast")) output = "<sprite=" + EAST + ">";
+            else if (path.Contains("buttonWest")) output = "<sprite=" + WEST + ">";
+            else if (path.Contains("buttonNorth")) output = "<sprite=" + NORTH + ">";
+            else if (path.Contains("rightShoulder")) output = "<sprite=" + R_SHOULDER + ">";
+            else if (path.Contains("rightTrigger")) output = "<sprite=" + R_TRIGGER + ">";
+            else if (path.Contains("leftShoulder")) output = "<sprite=" + L_SHOULDER + ">";
+            else if (path.Contains("leftTrigger")) output = "<sprite=" + L_TRIGGER + ">";
+            else if (path.Contains("select")) output = "<sprite=" + SELECT + ">";
+            else if (path.Contains("start")) output = "<sprite=" + START + ">";
+        }
+
+        if (currentScheme.Equals("DualShock"))
+        {
+            if (output.Equals("<sprite=8>"))
+            {
+                output += "Share";
+            }
+            else if (output.Equals("<sprite=9>"))
+            {
+                output += "Options";
+            }
+        }
+
+        if (output.Equals("LeftButton"))
+        {
+            output = "<sprite=0>";
+        }
+        if (output.Equals("RightButton"))
+        {
+            output = "<sprite=1>";
+        }
+
+        return output;
     }
 }

@@ -333,7 +333,31 @@ public class DialogueManager : MonoBehaviour
     {
         string output = input;
 
-        if (output.Contains("|*JUMP*|")) output = output.Replace("|*JUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
+        if (output.Contains("|*PFJUMP*|"))
+        {
+            if (SettingsController.singleton.pfUpJump)
+            {
+                output = output.Replace("|*PFJUMP*|", ButtonsLib.singleton.DialogueAction("Jump") + " or " + ButtonsLib.singleton.DialogueExpl("DPadUp"));
+            }
+            else
+            {
+                output = output.Replace("|*PFJUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
+            }
+        }
+
+        if (output.Contains("|*FGJUMP*|"))
+        {
+            if (SettingsController.singleton.fgUpJump)
+            {
+                output = output.Replace("|*FGJUMP*|", ButtonsLib.singleton.DialogueAction("Jump") + " or " + ButtonsLib.singleton.DialogueExpl("DPadUp"));
+            }
+            else
+            {
+                output = output.Replace("|*FGJUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
+            }
+        }
+
+
         if (output.Contains("|*PAUSE*|")) output = output.Replace("|*PAUSE*|", ButtonsLib.singleton.DialogueAction("Pause"));
         if (output.Contains("|*MENU*|")) output = output.Replace("|*MENU*|", ButtonsLib.singleton.DialogueAction("Menu"));
         if (output.Contains("|*SWITCH_L*|")) output = output.Replace("|*SWITCH_L*|", ButtonsLib.singleton.DialogueAction("SwitchModeNeg"));
@@ -352,6 +376,11 @@ public class DialogueManager : MonoBehaviour
         if (output.Contains("|*RIGHT*|")) output = output.Replace("|*RIGHT*|", ButtonsLib.singleton.DialogueExpl("DPadRight"));
         if (output.Contains("|*LEFT*|")) output = output.Replace("|*LEFT*|", ButtonsLib.singleton.DialogueExpl("DPadLeft"));
         if (output.Contains("|*DOWN*|")) output = output.Replace("|*DOWN*|", ButtonsLib.singleton.DialogueExpl("DPadDown"));
+
+        if (output.Contains("|*NOTEDOWN*|")) output = output.Replace("|*NOTEDOWN*|", ButtonsLib.singleton.DialogueNote("Down"));
+        if (output.Contains("|*NOTERIGHT*|")) output = output.Replace("|*NOTERIGHT*|", ButtonsLib.singleton.DialogueNote("Right"));
+        if (output.Contains("|*NOTELEFT*|")) output = output.Replace("|*NOTELEFT*|", ButtonsLib.singleton.DialogueNote("Left"));
+        if (output.Contains("|*NOTEUP*|")) output = output.Replace("|*NOTEUP*|", ButtonsLib.singleton.DialogueNote("Up"));
 
         if (output.Contains("|*ATTACK*|")) output = output.Replace("|*ATTACK*|", ButtonsLib.singleton.DialogueAttack());
 

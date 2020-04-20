@@ -158,10 +158,10 @@ public class PFController : Mover
             return;
         }
 
-        /*if (v < 0 && !goingThrough)
+        if (v < 0 && !goingThrough)
         {
             StartCoroutine("GoThrough");
-        }*/
+        }
 
         float moveX = hRaw == 0 ?
             (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :

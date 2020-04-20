@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - name: "S\xE9bastien"
-    line: 
-    sprite: {fileID: 0}
+    line: 'Alright, looks like we passed the game, you should be able to use this
+      to move around zones. '
+    sprite: {fileID: 21300000, guid: 8c40ae3f79063644fb527ff25b459acc, type: 3}
+  - name: "S\xE9bastien"
+    line: And, Kiira? Thank you for this, it felt nice to actually talk with you again
+      as myself and only  myself.
+    sprite: {fileID: 21300000, guid: 452e57ddb7f40b3439658f965cd764df, type: 3}
   type: 1
   branches: []
   branchDialogues: []

@@ -14,13 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - name: "S\xE9bastien"
-    line: 
+    line: Oh.... Thank you Kiira. I had forgotten what it was like, to have someone
+      care.
     sprite: {fileID: 21300000, guid: 452e57ddb7f40b3439658f965cd764df, type: 3}
+  - name: "S\xE9bastien"
+    line: I still want to help with this, but I will be careful. I promise.
+    sprite: {fileID: 21300000, guid: 8c40ae3f79063644fb527ff25b459acc, type: 3}
   type: 0
   branches:
-  - 
-  - 
+  - I promise to be careful too
+  - I will hold you to that promise
   branchDialogues:
-  - {fileID: 0}
-  - {fileID: 0}
-  relationshipChanges: 0000000000000000
+  - {fileID: 11400000, guid: 3ec44fe2ab1d69f43b30a1650623c37f, type: 2}
+  - {fileID: 11400000, guid: 3ec44fe2ab1d69f43b30a1650623c37f, type: 2}
+  relationshipChanges: 3200000019000000
