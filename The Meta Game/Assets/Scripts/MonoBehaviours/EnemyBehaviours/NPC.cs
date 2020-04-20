@@ -28,6 +28,55 @@ public class NPC : EnemyBehaviour
     public void Start()
     {
         interacted = false;
+
+        switch(npcType)
+        {
+            case NPCType.standard:
+                animator.SetInteger("npcType", 0);
+                break;
+
+            case NPCType.restoreHP:
+                animator.SetInteger("npcType", 1);
+                break;
+
+            case NPCType.restoreMP:
+                animator.SetInteger("npcType", 2);
+                break;
+
+            case NPCType.learnSpell:
+                animator.SetInteger("npcType", 3);
+                break;
+
+            case NPCType.learnSkill:
+                animator.SetInteger("npcType", 4);
+                break;
+
+            case NPCType.boostHP:
+                animator.SetInteger("npcType", 5);
+                break;
+
+            case NPCType.boostMP:
+                animator.SetInteger("npcType", 6);
+                break;
+
+            case NPCType.boostStrength:
+                animator.SetInteger("npcType", 7);
+                break;
+
+            case NPCType.boostMagic:
+                animator.SetInteger("npcType", 8);
+                break;
+        }
+    }
+
+    private void OnEnable()
+    {
+        animator.SetBool("rpg", true);
+    }
+
+    private void OnDisable()
+    {
+        animator.SetBool("rpg", false);
     }
 
     public void Interact()
