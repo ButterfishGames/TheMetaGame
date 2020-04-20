@@ -28,6 +28,12 @@ public class OtherInputHandlers : MonoBehaviour
         {
             spu.OnControlsChanged(pIn);
         }
+
+        NoteController[] notes = FindObjectsOfType<NoteController>();
+        foreach (NoteController note in notes)
+        {
+            note.OnControlsChanged(pIn);
+        }
     }
 
     private void OnMenu(InputValue value)
