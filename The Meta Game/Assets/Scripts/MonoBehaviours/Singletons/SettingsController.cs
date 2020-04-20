@@ -58,8 +58,9 @@ public class SettingsController : MonoBehaviour
         medium2Text, heavyText, heavy2Text, fireText, zoomText;
     
     [Header("Control Content Holders")]
-    public GameObject fgControlLabel;
-    public GameObject fgLightHolder, fgMediumHolder, fgHeavyHolder, fpsControlLabel, fpsFireHolder, fpsZoomHolder;
+    public GameObject menuHolder;
+    public GameObject switchLHolder, switchRHolder, fgControlLabel, fgLightHolder, fgMediumHolder, fgHeavyHolder, 
+        fpsControlLabel, fpsFireHolder, fpsZoomHolder;
 
     [Header("Context-Dependent Buttons")]
     public GameObject lightButton2;
@@ -427,6 +428,19 @@ public class SettingsController : MonoBehaviour
         currentPanel = Panel.controls;
         panelImg.sprite = controlSprite;
 
+        if (GameController.singleton.GetNumUnlocked() > 1)
+        {
+            menuHolder.SetActive(true);
+            switchLHolder.SetActive(true);
+            switchRHolder.SetActive(true);
+        }
+        else
+        {
+            menuHolder.SetActive(false);
+            switchLHolder.SetActive(false);
+            switchRHolder.SetActive(false);
+        }
+
         if (GameController.singleton.modes[1].unlocked)
         {
             fgControlLabel.SetActive(true);
@@ -434,12 +448,25 @@ public class SettingsController : MonoBehaviour
             fgMediumHolder.SetActive(true);
             fgHeavyHolder.SetActive(true);
         }
+        else
+        {
+            fgControlLabel.SetActive(false);
+            fgLightHolder.SetActive(false);
+            fgMediumHolder.SetActive(false);
+            fgHeavyHolder.SetActive(false);
+        }
 
         if (GameController.singleton.modes[6].unlocked)
         {
             fpsControlLabel.SetActive(true);
             fpsZoomHolder.SetActive(true);
             fpsFireHolder.SetActive(true);
+        }
+        else
+        {
+            fpsControlLabel.SetActive(false);
+            fpsZoomHolder.SetActive(false);
+            fpsFireHolder.SetActive(false);
         }
 
         InitControlText(pInput);

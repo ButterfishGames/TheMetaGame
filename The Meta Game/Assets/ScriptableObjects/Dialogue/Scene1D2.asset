@@ -14,11 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - name: Dread Knight
-    line: '...'
-    sprite: {fileID: -2208906308446049603, guid: abd38a4b64d097943a6d4b049ff1af67,
+    line: You've defeated me
+    sprite: {fileID: 3723367367073977862, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
+  - name: Dextra
+    line: You don't look very defeated...
+    sprite: {fileID: -5684622053680141831, guid: 987fb30f9faef2348b6630ee6428ea29,
       type: 3}
   - name: Dread Knight
-    line: So anyway, here's Fighting Game mode.
+    line: Maybe I will next week. Who knows?
+    sprite: {fileID: 3723367367073977862, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
+  - name: Dread Knight
+    line: Anyway, here's Fighting Game Mode.
     sprite: {fileID: -2208906308446049603, guid: abd38a4b64d097943a6d4b049ff1af67,
       type: 3}
   type: 1

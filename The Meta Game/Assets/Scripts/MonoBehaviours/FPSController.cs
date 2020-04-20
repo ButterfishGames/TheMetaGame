@@ -58,6 +58,11 @@ public class FPSController : MonoBehaviour
 
     public void OnControlsChange(PlayerInput pIn)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         lookX = pIn.actions["LookX"];
         lookY = pIn.actions["LookY"];
         zoom = pIn.actions["Zoom"];

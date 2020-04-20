@@ -171,6 +171,18 @@ public class FGController : Mover
         OnControlsChanged(GetComponent<PlayerInput>());
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        light.performed -= LightPerfHandle;
+        light.canceled -= LightCancHandle;
+        medium.performed -= MedPerfHandle;
+        medium.canceled -= MedCancHandle;
+        heavy.performed -= HeavyPerfHandle;
+        heavy.canceled -= HeavyCancHandle;
+    }
+
     private void OnControlsChanged(PlayerInput pIn)
     {
         light = pIn.actions["Light"];
