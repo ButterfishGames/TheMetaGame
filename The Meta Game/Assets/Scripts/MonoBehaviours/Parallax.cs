@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
+    public bool constMove = false;
+    public bool parallaxY = true;
+
     public float moveRateMult;
 
     public void UpdatePos(float xDiff, float yDiff)
     {
-        transform.position += new Vector3(xDiff * moveRateMult, yDiff * moveRateMult, 0);
+        float x = constMove ? xDiff - 1 : xDiff;
+        x = x * moveRateMult;
+
+        float y = parallaxY ? yDiff * moveRateMult : yDiff;
+
+        transform.position += new Vector3(x, y, 0);
     }
 }

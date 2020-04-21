@@ -8,6 +8,7 @@ using TMPro;
 
 public class BattleController : MonoBehaviour
 {
+    #region variables
     [Range(0, 1)]
     public float fleeChance;
 
@@ -47,8 +48,6 @@ public class BattleController : MonoBehaviour
 
     private int currTurn;
 
-    private bool onMain;
-
     private bool onMagic;
 
     private enum Command
@@ -64,6 +63,14 @@ public class BattleController : MonoBehaviour
     private Spell currSpell;
 
     private Skill currSkill;
+
+    private bool guarding = false;
+    private bool countering = false;
+    private bool aiming = false;
+    private int aimedInd = -1;
+
+    private bool attacking = false;
+    #endregion
 
     public void OnCancel(InputValue value)
     {
@@ -128,8 +135,6 @@ public class BattleController : MonoBehaviour
             stats.GetComponent<Button>().interactable = false;
         }
         enemyButtons = buttonList.ToArray();
-
-        onMain = true;
         currTurn = 0;
     }
 
@@ -171,6 +176,14 @@ public class BattleController : MonoBehaviour
 
         if (currTurn == 0)
         {
+            GameController.singleton.UseSkill(-1);
+            playerStats.text = "Dextra\n"
+                + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+                + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+                + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+            guarding = false;
+            countering = false;
             ReturnToMain();
         }
         else
@@ -192,7 +205,7 @@ public class BattleController : MonoBehaviour
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = attack.name;
         yield return new WaitForSeconds(0.75f);
 
-        enemy.source.UseAttack(attack);
+        enemy.source.UseAttack(attack, guarding);
 
         if (GameController.singleton.GetHP() <= 0)
         {
@@ -212,8 +225,13 @@ public class BattleController : MonoBehaviour
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
             + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
             yield return new WaitForSeconds(0.75f);
-            messagePanel.SetActive(false);
             enemy.img.GetComponent<RectTransform>().anchoredPosition -= new Vector2(30, 0);
+            if (countering)
+            {
+                StartCoroutine(AttackRtn(currTurn - 1, true));
+                yield return new WaitUntil(() => !attacking);
+            }
+            messagePanel.SetActive(false);
             yield return new WaitForSeconds(0.25f);
             NextTurn();
         }
@@ -226,11 +244,33 @@ public class BattleController : MonoBehaviour
         switch (currCommand)
         {
             case Command.attack:
-                StartCoroutine(AttackRtn(enemyIndex));
+                StartCoroutine(AttackRtn(enemyIndex, false));
                 break;
 
             case Command.magic:
-                StartCoroutine(DmgSpellRtn(currSpell, enemyIndex));
+                if (currSpell.spellType == Spell.SpellType.damage)
+                {
+                    StartCoroutine(DmgSpellRtn(currSpell, enemyIndex));
+                }
+                else
+                {
+                    StartCoroutine(DrainSpellRtn(currSpell, enemyIndex));
+                }
+                break;
+
+            case Command.skill:
+                if (currSkill.skillType == Skill.SkillType.damage)
+                {
+                    StartCoroutine(DmgSkillRtn(currSkill, enemyIndex));
+                }
+                else if (currSkill.skillType == Skill.SkillType.tripleDamage)
+                {
+                    StartCoroutine(TrpDmgSkillRtn(currSkill, enemyIndex));
+                }
+                else
+                {
+                    StartCoroutine(AimSkillRtn(currSkill, enemyIndex));
+                }
                 break;
 
             default:
@@ -242,8 +282,9 @@ public class BattleController : MonoBehaviour
         {
             foreach (Button button in spellButtons)
             {
-                button.interactable = false;
+                Destroy(button.gameObject);
             }
+            optionPanel.SetActive(false);
         }
 
         foreach (Button button in enemyButtons)
@@ -271,14 +312,13 @@ public class BattleController : MonoBehaviour
         {
             button.interactable = false;
         }
-
-        onMain = false;
     }
 
-    private IEnumerator AttackRtn(int enemyIndex)
+    private IEnumerator AttackRtn(int enemyIndex, bool counter)
     {
+        attacking = true;
         messagePanel.SetActive(true);
-        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Attack!";
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = countering ? "Counterattack!" : "Attack!";
         yield return new WaitForSeconds(0.75f);
 
         int str = GameController.singleton.GetStrength();
@@ -286,12 +326,45 @@ public class BattleController : MonoBehaviour
         bool won = false;
         bool crit = false;
 
-        int dmg = Mathf.FloorToInt(str * Random.Range(0.75f, 1.25f));
-        if (dmg == Mathf.FloorToInt(str * 1.25f))
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[enemyIndex].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[enemyIndex].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool("slash", true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool("slash"));
+        yield return new WaitForSeconds(0.1f);
+
+        int dmg;
+        if (aiming && aimedInd == enemyIndex)
         {
             messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Critical hit!";
-            dmg += Mathf.FloorToInt(str * Random.Range(0.75f, 1.25f));
+            dmg = Mathf.FloorToInt(str * 1.25f + str * Random.Range(0.75f, 1.25f));
             crit = true;
+            aiming = false;
+        }
+        else if (aiming && aimedInd != enemyIndex)
+        {
+            dmg = Mathf.FloorToInt(str * 0.75f);
+            aiming = false;
+        }
+        else
+        {
+            dmg = Mathf.FloorToInt(str * Random.Range(0.75f, 1.25f));
+            if (dmg == Mathf.FloorToInt(str * 1.25f))
+            {
+                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Critical hit!";
+                dmg += Mathf.FloorToInt(str * Random.Range(0.75f, 1.25f));
+                crit = true;
+            }
         }
 
         currTroop.enemies[enemyIndex].currHP -= dmg;
@@ -353,13 +426,17 @@ public class BattleController : MonoBehaviour
                 }
             }
         }
-
-        if (!won)
+        
+        if (!counter && !won)
         {
+            aiming = false;
+            aimedInd = -1;
             messagePanel.SetActive(false);
             ReturnToMain();
             NextTurn();
         }
+
+        attacking = false;
     }
 
     public void MagicCmd()
@@ -410,7 +487,6 @@ public class BattleController : MonoBehaviour
         }
 
         EventSystem.current.SetSelectedGameObject(spell1);
-        onMain = false;
         onMagic = true;
     }
 
@@ -452,6 +528,12 @@ public class BattleController : MonoBehaviour
                     button.interactable = false;
                 }
 
+                foreach (Button button in spellButtons)
+                {
+                    Destroy(button.gameObject);
+                }
+                optionPanel.SetActive(false);
+
                 StartCoroutine(DmgAllSpellRtn(spell));
                 break;
 
@@ -461,7 +543,24 @@ public class BattleController : MonoBehaviour
                     button.interactable = false;
                 }
 
+                foreach (Button button in spellButtons)
+                {
+                    Destroy(button.gameObject);
+                }
+                optionPanel.SetActive(false);
+
                 StartCoroutine(HealSpellRtn(spell));
+                break;
+
+            case Spell.SpellType.drain:
+                currCommand = Command.magic;
+                currSpell = spell;
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = true;
+                }
+
+                EventSystem.current.SetSelectedGameObject(enemy1);
                 break;
 
             default:
@@ -502,7 +601,7 @@ public class BattleController : MonoBehaviour
 
         bool won = false;
 
-        int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
+        int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(1-spell.var, 1+spell.var));
 
         currTroop.enemies[enemyIndex].currHP -= dmg;
 
@@ -561,6 +660,8 @@ public class BattleController : MonoBehaviour
 
         if (!won)
         {
+            aiming = false;
+            aimedInd = -1;
             messagePanel.SetActive(false);
             ReturnToMain();
             NextTurn();
@@ -583,7 +684,7 @@ public class BattleController : MonoBehaviour
 
         for (int i = 0; i < currTroop.enemies.Length; i++)
         {
-            int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
+            int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(1-spell.var, 1+spell.var));
 
             Animator effectAnim = null;
             Animator[] animators = currTroop.enemies[i].img.GetComponentsInChildren<Animator>();
@@ -654,6 +755,8 @@ public class BattleController : MonoBehaviour
                 enemy1 = currTroop.enemies[0].stats;
             }
 
+            aiming = false;
+            aimedInd = -1;
             messagePanel.SetActive(false);
             ReturnToMain();
             NextTurn();
@@ -663,6 +766,10 @@ public class BattleController : MonoBehaviour
     private IEnumerator HealSpellRtn(Spell spell)
     {
         GameController.singleton.Cast(spell.manaCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
@@ -692,9 +799,131 @@ public class BattleController : MonoBehaviour
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
             + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
 
+        aiming = false;
+        aimedInd = -1;
         messagePanel.SetActive(false);
         ReturnToMain();
         NextTurn();
+    }
+
+    private IEnumerator DrainSpellRtn(Spell spell, int enemyIndex)
+    {
+        GameController.singleton.Cast(spell.manaCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[enemyIndex].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[enemyIndex].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(spell.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(spell.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        int mag = GameController.singleton.GetMagic();
+
+        bool won = false;
+
+        int dmg = Mathf.FloorToInt((spell.baseAmt + mag) * Random.Range(0.75f, 1.25f));
+
+        currTroop.enemies[enemyIndex].currHP -= dmg;
+
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
+        {
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
+            bool replaceE1 = false;
+
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
+            {
+                replaceE1 = true;
+            }
+
+            List<Enemy> temp = new List<Enemy>(currTroop.enemies);
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
+            currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.stats.GetComponent<Button>());
+            }
+
+            enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
+            GameObject playerImg = GameObject.Find("PlayerImage");
+            effectAnim = null;
+            animators = playerImg.GetComponentsInChildren<Animator>();
+            foreach (Animator animator in animators)
+            {
+                if (animator.gameObject.name.Equals("Effects"))
+                {
+                    effectAnim = animator;
+                    animator.SetBool("sparkle", true);
+                }
+            }
+            yield return new WaitUntil(() => !effectAnim.GetBool("sparkle"));
+            yield return new WaitForSeconds(0.1f);
+
+            int amt = Mathf.FloorToInt(dmg/2);
+
+            GameController.singleton.Damage(-amt);
+
+            playerStats.text = "Dextra\n"
+                + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+                + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+                + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+            if (currTroop.enemies.Length < 1)
+            {
+                won = true;
+                Win();
+            }
+            else if (replaceE1)
+            {
+                enemy1 = currTroop.enemies[0].stats;
+            }
+        }
+        else
+        {
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                if (text.name.Equals("HPText"))
+                {
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
+                }
+            }
+        }
+
+        if (!won)
+        {
+            aiming = false;
+            aimedInd = -1;
+            messagePanel.SetActive(false);
+            ReturnToMain();
+            NextTurn();
+        }
     }
 
     private IEnumerator OutOfMana()
@@ -707,7 +936,537 @@ public class BattleController : MonoBehaviour
 
     public void SkillCmd()
     {
-        // TODO: Implement Skill command (should be pretty similar to magic command)
+        Button[] buttons = FindObjectsOfType<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
+
+        scrollOffset = 0;
+        optionPanel.SetActive(true);
+        optionScroll.content.anchoredPosition = Vector2.zero;
+        GameObject spell1 = null;
+        int count = 0;
+
+        List<Button> buttonList = new List<Button>();
+        foreach (GameController.SkillStr skill in GameController.singleton.skillList)
+        {
+            if (skill.unlocked)
+            {
+                count++;
+                GameObject spellButton = Instantiate(spellButtonPrefab, optionScroll.content);
+                spellButton.GetComponentInChildren<TextMeshProUGUI>().text = skill.skill.skillName + " [" + skill.skill.spCost + "]";
+                spellButton.GetComponent<Button>().onClick.AddListener(() => UseSkill(skill.skill));
+                buttonList.Add(spellButton.GetComponent<Button>());
+                if (spell1 == null)
+                {
+                    spell1 = spellButton;
+                }
+            }
+        }
+        spellButtons = buttonList.ToArray();
+
+        foreach (Button button in spellButtons)
+        {
+            button.interactable = true;
+        }
+
+        foreach (Button button in enemyButtons)
+        {
+            button.interactable = false;
+        }
+
+        foreach (Button button in mainButtons)
+        {
+            button.interactable = false;
+        }
+
+        EventSystem.current.SetSelectedGameObject(spell1);
+        onMagic = true;
+    }
+
+    public void UseSkill(Skill skill)
+    {
+        if (skill.spCost > GameController.singleton.GetSP())
+        {
+            StartCoroutine(OutOfSP());
+            return;
+        }
+
+        onMagic = false;
+        foreach (Button button in spellButtons)
+        {
+            button.interactable = false;
+        }
+
+        foreach (Button button in mainButtons)
+        {
+            button.interactable = false;
+        }
+
+        switch (skill.skillType)
+        {
+            case Skill.SkillType.damage:
+                currCommand = Command.skill;
+                currSkill = skill;
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = true;
+                }
+
+                EventSystem.current.SetSelectedGameObject(enemy1);
+                break;
+
+            case Skill.SkillType.tripleDamage:
+                currCommand = Command.skill;
+                currSkill = skill;
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = true;
+                }
+
+                EventSystem.current.SetSelectedGameObject(enemy1);
+                break;
+
+            case Skill.SkillType.aim:
+                currCommand = Command.skill;
+                currSkill = skill;
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = true;
+                }
+
+                EventSystem.current.SetSelectedGameObject(enemy1);
+                break;
+
+            case Skill.SkillType.guard:
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = false;
+                }
+
+                foreach (Button button in spellButtons)
+                {
+                    Destroy(button.gameObject);
+                }
+                optionPanel.SetActive(false);
+
+                StartCoroutine(GuardSkillRtn(skill));
+                break;
+
+            case Skill.SkillType.focus:
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = false;
+                }
+
+                foreach (Button button in spellButtons)
+                {
+                    Destroy(button.gameObject);
+                }
+                optionPanel.SetActive(false);
+
+                StartCoroutine(FocusSkillRtn(skill));
+                break;
+
+            case Skill.SkillType.counter:
+                foreach (Button button in enemyButtons)
+                {
+                    button.interactable = false;
+                }
+
+                foreach (Button button in spellButtons)
+                {
+                    Destroy(button.gameObject);
+                }
+                optionPanel.SetActive(false);
+
+                StartCoroutine(CounterSkillRtn(skill));
+                break;
+
+            default:
+                Debug.Log("ERROR: INVALID SKILL TYPE");
+                break;
+        }
+    }
+
+    private IEnumerator DmgSkillRtn(Skill skill, int enemyIndex)
+    {
+        GameController.singleton.UseSkill(skill.spCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = skill.skillName;
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[enemyIndex].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[enemyIndex].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(skill.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(skill.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        int str = GameController.singleton.GetStrength();
+
+        bool won = false;
+
+        int dmg = Mathf.FloorToInt((skill.baseAmt + str) * Random.Range(1-skill.var, 1+skill.var));
+
+        currTroop.enemies[enemyIndex].currHP -= dmg;
+
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
+        {
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
+            bool replaceE1 = false;
+
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
+            {
+                replaceE1 = true;
+            }
+
+            List<Enemy> temp = new List<Enemy>(currTroop.enemies);
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
+            currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.stats.GetComponent<Button>());
+            }
+
+            enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
+            yield return new WaitForSeconds(0.75f);
+
+            if (currTroop.enemies.Length < 1)
+            {
+                won = true;
+                Win();
+            }
+            else if (replaceE1)
+            {
+                enemy1 = currTroop.enemies[0].stats;
+            }
+        }
+        else
+        {
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                if (text.name.Equals("HPText"))
+                {
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
+                }
+            }
+        }
+
+        if (!won)
+        {
+            aiming = false;
+            aimedInd = -1;
+            messagePanel.SetActive(false);
+            ReturnToMain();
+            NextTurn();
+        }
+    }
+
+    private IEnumerator TrpDmgSkillRtn(Skill skill, int enemyIndex)
+    {
+        GameController.singleton.UseSkill(skill.spCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Triple Hit";
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[enemyIndex].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[enemyIndex].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(skill.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(skill.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        int str = GameController.singleton.GetStrength();
+
+        bool won = false;
+
+        int dmg = 0;
+        int crits = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            int hitDmg = Mathf.FloorToInt(str * Random.Range(0.75f, 1.25f));
+            dmg += hitDmg;
+            if (hitDmg == Mathf.FloorToInt(str * 1.25f) || (aiming && aimedInd == enemyIndex))
+            {
+                dmg += Mathf.FloorToInt(str * Random.Range(0.75f, 1.25f));
+                crits++;
+            }
+        }
+        
+        if (crits > 0)
+        {
+            if (crits == 1)
+            {
+                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Critical hit!";
+            }
+            else if (crits == 2)
+            {
+                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Double critical!!";
+            }
+            else if (crits >= 3)
+            {
+                messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Triple critical!!!";
+            }
+            yield return new WaitForSeconds(0.75f);
+        }
+
+        currTroop.enemies[enemyIndex].currHP -= dmg;
+
+        if (currTroop.enemies[enemyIndex].currHP <= 0)
+        {
+            messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = currTroop.enemies[enemyIndex].name + " was defeated!";
+            bool replaceE1 = false;
+
+            if (currTroop.enemies[enemyIndex].stats == enemy1)
+            {
+                replaceE1 = true;
+            }
+
+            List<Enemy> temp = new List<Enemy>(currTroop.enemies);
+            temp.Remove(currTroop.enemies[enemyIndex]);
+            Destroy(currTroop.enemies[enemyIndex].stats);
+            Destroy(currTroop.enemies[enemyIndex].img);
+            currTroop.enemies = temp.ToArray();
+            List<Button> buttonList = new List<Button>();
+            foreach (Enemy foe in currTroop.enemies)
+            {
+                buttonList.Add(foe.stats.GetComponent<Button>());
+            }
+
+            enemyButtons = buttonList.ToArray();
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
+
+            yield return new WaitForSeconds(0.75f);
+
+            if (currTroop.enemies.Length < 1)
+            {
+                won = true;
+                Win();
+            }
+            else if (replaceE1)
+            {
+                enemy1 = currTroop.enemies[0].stats;
+            }
+        }
+        else
+        {
+            TextMeshProUGUI[] texts = currTroop.enemies[enemyIndex].stats.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI text in texts)
+            {
+                if (text.name.Equals("HPText"))
+                {
+                    text.text = currTroop.enemies[enemyIndex].currHP + "/" + currTroop.enemies[enemyIndex].source.maxHP;
+                }
+            }
+        }
+
+        if (!won)
+        {
+            aiming = false;
+            aimedInd = -1;
+            messagePanel.SetActive(false);
+            ReturnToMain();
+            NextTurn();
+        }
+    }
+
+    private IEnumerator AimSkillRtn(Skill skill, int enemyIndex)
+    {
+        GameController.singleton.UseSkill(skill.spCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = skill.skillName;
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[enemyIndex].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[enemyIndex].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(skill.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(skill.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        aiming = true;
+        aimedInd = enemyIndex;
+        
+        messagePanel.SetActive(false);
+        ReturnToMain();
+        NextTurn();
+    }
+
+    private IEnumerator GuardSkillRtn(Skill skill)
+    {
+        GameController.singleton.UseSkill(skill.spCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = skill.skillName;
+
+        GameObject playerImg = GameObject.Find("PlayerImage");
+        Animator effectAnim = null;
+        Animator[] animators = playerImg.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject.name.Equals("Effects"))
+            {
+                effectAnim = animator;
+                animator.SetBool(skill.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(skill.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        guarding = true;
+
+        aiming = false;
+        aimedInd = -1;
+        messagePanel.SetActive(false);
+        ReturnToMain();
+        NextTurn();
+    }
+
+    private IEnumerator FocusSkillRtn(Skill skill)
+    {
+        GameController.singleton.UseSkill(skill.spCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = skill.skillName;
+
+        GameObject playerImg = GameObject.Find("PlayerImage");
+        Animator effectAnim = null;
+        Animator[] animators = playerImg.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject.name.Equals("Effects"))
+            {
+                effectAnim = animator;
+                animator.SetBool(skill.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(skill.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        GameController.singleton.Cast(-skill.baseAmt);
+        
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        aiming = false;
+        aimedInd = -1;
+        messagePanel.SetActive(false);
+        ReturnToMain();
+        NextTurn();
+    }
+
+    private IEnumerator CounterSkillRtn(Skill skill)
+    {
+        GameController.singleton.UseSkill(skill.spCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
+
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = skill.skillName;
+
+        GameObject playerImg = GameObject.Find("PlayerImage");
+        Animator effectAnim = null;
+        Animator[] animators = playerImg.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject.name.Equals("Effects"))
+            {
+                effectAnim = animator;
+                animator.SetBool(skill.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(skill.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        guarding = true;
+        countering = true;
+
+        aiming = false;
+        aimedInd = -1;
+        messagePanel.SetActive(false);
+        ReturnToMain();
+        NextTurn();
+    }
+
+    private IEnumerator OutOfSP()
+    {
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "Not enough SP!";
+        yield return new WaitForSeconds(0.75f);
+        messagePanel.SetActive(false);
     }
 
     public void FleeCmd()
@@ -749,11 +1508,6 @@ public class BattleController : MonoBehaviour
 
     private void ReturnToMain()
     {
-        if (onMain)
-        {
-            return;
-        }
-
         // TODO: Add UI Back SFX Event
 
         onMagic = false;
@@ -778,13 +1532,6 @@ public class BattleController : MonoBehaviour
         }
 
         EventSystem.current.SetSelectedGameObject(attackButton);
-        onMain = true;
-
-        GameController.singleton.UseSkill(-1);
-        playerStats.text = "Dextra\n"
-            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
-            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
-            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
     }
 
     private void Win()
