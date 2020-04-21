@@ -8,11 +8,12 @@ public class Parallax : MonoBehaviour
     public bool parallaxY = true;
 
     public float moveRateMult;
+    public float moveSpeed = 0;
 
     public void UpdatePos(float xDiff, float yDiff)
     {
-        float x = constMove ? xDiff - 1 : xDiff;
-        x = x * moveRateMult;
+        float x = xDiff * moveRateMult;
+        x = constMove ? x - moveSpeed : x;
 
         float y = parallaxY ? yDiff * moveRateMult : yDiff;
 

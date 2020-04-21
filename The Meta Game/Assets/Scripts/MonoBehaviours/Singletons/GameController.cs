@@ -180,6 +180,8 @@ public class GameController : MonoBehaviour
 
     private int currSP;
 
+    private int gold;
+
     /// <summary>
     /// Used to make flash fade time calculation more efficient
     /// </summary>
@@ -420,6 +422,7 @@ public class GameController : MonoBehaviour
         currSP = maxSP;
         strength = 10;
         magic = 10;
+        gold = 0;
 
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
@@ -2379,5 +2382,10 @@ public class GameController : MonoBehaviour
     {
         glitching = val;
         gCanv.SetActive(val);
+    }
+
+    public void AddGold(int amt)
+    {
+        gold += amt;
     }
 }

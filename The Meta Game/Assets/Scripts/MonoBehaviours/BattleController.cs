@@ -70,6 +70,8 @@ public class BattleController : MonoBehaviour
     private int aimedInd = -1;
 
     private bool attacking = false;
+
+    private int reward;
     #endregion
 
     public void OnCancel(InputValue value)
@@ -80,6 +82,7 @@ public class BattleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        reward = 0;
         currCommand = Command.none;
 
         mainButtons = FindObjectsOfType<Button>();
@@ -132,6 +135,7 @@ public class BattleController : MonoBehaviour
                 }
             }
 
+            reward += currTroop.enemies[i].source.goldReward;
             stats.GetComponent<Button>().interactable = false;
         }
         enemyButtons = buttonList.ToArray();
@@ -671,6 +675,10 @@ public class BattleController : MonoBehaviour
     private IEnumerator DmgAllSpellRtn(Spell spell)
     {
         GameController.singleton.Cast(spell.manaCost);
+        playerStats.text = "Dextra\n"
+            + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
+            + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"
+            + GameController.singleton.GetSP() + "/" + GameController.singleton.maxSP + " SP";
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = spell.name;
@@ -749,6 +757,13 @@ public class BattleController : MonoBehaviour
                 buttonList.Add(foe.stats.GetComponent<Button>());
             }
             enemyButtons = buttonList.ToArray();
+            
+            for (int i = 0; i < enemyButtons.Length; i++)
+            {
+                int ind = i;
+                enemyButtons[i].onClick.RemoveAllListeners();
+                enemyButtons[i].onClick.AddListener(() => Target(ind));
+            }
 
             if (replaceE1)
             {
@@ -1536,9 +1551,18 @@ public class BattleController : MonoBehaviour
 
     private void Win()
     {
+        StartCoroutine(WinRtn());
+    }
+
+    private IEnumerator WinRtn()
+    {
         // TODO: Add RPG Win SFX Event
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You win!";
+        yield return new WaitForSeconds(1);
+        GameController.singleton.AddGold(reward);
+        messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You received " + reward + "G!";
+        yield return new WaitForSeconds(0.5f);
         GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
     }
 }
