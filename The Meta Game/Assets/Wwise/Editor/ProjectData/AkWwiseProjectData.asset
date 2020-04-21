@@ -17,21 +17,21 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: 4c3981cef2691c4298a0504d992525db
     GuidInternal: 
-    m_lastTime: -8586145249724775808
+    m_lastTime: -8586144550224775808
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: cdac2032fcf69e468d364161c3f11912
     GuidInternal: 
-    m_lastTime: -8586145249724775808
+    m_lastTime: -8586144550224775808
     List: []
   BankWwu:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 81834eaa2001eb40ae8409a6ac679469
     GuidInternal: 
-    m_lastTime: -8586145208634775808
+    m_lastTime: -8586144550224775808
     List:
     - name: Dextra_Soundbank
       guid: f1ff2b764d36c44aba3ba315fd9d94b6
@@ -47,19 +47,89 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: bd962ea42152be4ea0b28a48f06727da
     GuidInternal: 
-    m_lastTime: -8586145208884775808
+    m_lastTime: -8586144550224775808
     List:
+    - name: sfx_checkpoint
+      guid: 44e4d57f9a048846bcc77a5f340cc934
+      id: 24284063
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_checkpoint
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_checkpoint
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_collectable
       guid: f13ab63d9365eb4faafb9814e52b1558
       id: 673464333
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Sound
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_collectable
         ObjectType: 3
-      Path: Default Work Unit/Sound/sfx_collectable
+      Path: Default Work Unit/SFX/sfx_collectable
+      maxAttenuation: 0
+      maxDuration: 1.861338
+      minDuration: 1.861338
+    - name: sfx_flee_failure
+      guid: e6d7852fadfe3a49b7332b53b4e358b9
+      id: 2940090998
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_flee_failure
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_flee_failure
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_flee_success
+      guid: d2645ee5cc66164b95ed50ec9b2d7a8d
+      id: 3582953825
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_flee_success
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_flee_success
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_fps_hit
+      guid: 3b3982ffa312a74e8b5a32e76e2c2fcc
+      id: 1048287188
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_fps_hit
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_fps_hit
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_fps_shot
+      guid: 5a2645b9c20cfa4c9ef77d3b6c69a4f8
+      id: 2634636601
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_fps_shot
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_fps_shot
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -69,11 +139,25 @@ MonoBehaviour:
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Sound
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_jump
         ObjectType: 3
-      Path: Default Work Unit/Sound/sfx_jump
+      Path: Default Work Unit/SFX/sfx_jump
+      maxAttenuation: 0
+      maxDuration: 0.214671
+      minDuration: 0.184014
+    - name: sfx_kick
+      guid: 642cfad6dc60d545b6751cb6623c9627
+      id: 2043286607
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_kick
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_kick
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -83,11 +167,249 @@ MonoBehaviour:
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Sound
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_knight_talk
         ObjectType: 3
-      Path: Default Work Unit/Sound/sfx_knight_talk
+      Path: Default Work Unit/SFX/sfx_knight_talk
+      maxAttenuation: 0
+      maxDuration: 1.929342
+      minDuration: 1.929342
+    - name: sfx_magic_fire
+      guid: 39adc3b387dff3429b7e2fc67f846ddc
+      id: 1965088569
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_magic_fire
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_magic_fire
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_magic_heal
+      guid: 94bbf14462a2b3499bdc29480c1ebe7d
+      id: 2156021983
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_magic_heal
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_magic_heal
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_magic_ice
+      guid: 5e21bd29d49d66419a887710c532d965
+      id: 3829629126
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_magic_ice
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_magic_ice
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_magic_lightning
+      guid: 281e86d228edcf4ca37f369c65ffd636
+      id: 2707288665
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_magic_lightning
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_magic_lightning
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_miss_punch
+      guid: 8fd393744b675c4a9b23b72568ca2ab6
+      id: 3959035188
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_miss_punch
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_miss_punch
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_mode_switch
+      guid: a5959afccf4bb54aa84509ff2ce2ae5c
+      id: 2006245931
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_mode_switch
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_mode_switch
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_new_mode_unlocked
+      guid: 35ae942bf1155347ac22dedd4ecf6536
+      id: 848617979
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_new_mode_unlocked
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_new_mode_unlocked
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_player_talk
+      guid: 3c2541e606bd2543bcd8480b1b1aafff
+      id: 2018269707
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_player_talk
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_player_talk
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_projectile
+      guid: 9c48ad7c974d9d4ebe0752037e89bfc0
+      id: 37122652
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_projectile
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_projectile
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_punch
+      guid: fd95e6ccb42626469b7a721a365a5b98
+      id: 643452507
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_punch
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_punch
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_rpg_battle_death
+      guid: 103e4ad45bc21940a190ee3340d67065
+      id: 3654319392
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_rpg_battle_death
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_rpg_battle_death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_rpg_battle_victory
+      guid: a7e9ba27a1b12a468c430b9f0f52afb8
+      id: 2809605252
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_rpg_battle_victory
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_rpg_battle_victory
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_start_game
+      guid: 6a3bccd33dc1bd4fa3a5f2d589b0edd0
+      id: 527172796
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_start_game
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_start_game
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_ui_back
+      guid: 245fed33d055384eae4b499b763f2c71
+      id: 2405914575
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_ui_back
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_ui_back
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_ui_rpg_menu_confirm
+      guid: bae1b9eb52cb9643a9d451d669e0c815
+      id: 323185506
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_ui_rpg_menu_confirm
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_ui_rpg_menu_confirm
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_ui_select
+      guid: 45f57933a7e75948909ef7f2e965a3ab
+      id: 3753159394
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_ui_select
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_ui_select
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_uppercut
+      guid: 30d7fe42de04da4aa09b1bdfe94b3770
+      id: 3797926101
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Empty Events
+        ObjectType: 4
+      - ElementName: sfx_uppercut
+        ObjectType: 3
+      Path: Default Work Unit/Empty Events/sfx_uppercut
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -97,47 +419,46 @@ MonoBehaviour:
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Sound
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_walljump
         ObjectType: 3
-      Path: Default Work Unit/Sound/sfx_walljump
+      Path: Default Work Unit/SFX/sfx_walljump
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.587052
+      minDuration: 0.587052
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 50812b6e575d4a4aae8529c2ff5978a3
     GuidInternal: 
-    m_lastTime: -8586145249724775808
+    m_lastTime: -8586144550224775808
     List: []
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 654cedd3e7d0c6488a5d7fa443fadc76
     GuidInternal: 
-    m_lastTime: -8586145249724775808
+    m_lastTime: -8586144550224775808
     List: []
   SwitchWwu:
   - PhysicalPath: Switches/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 6ba9eb69e1cb984fb4a59d5c8cfaa4bf
     GuidInternal: 
-    m_lastTime: -8586145249724775808
+    m_lastTime: -8586144550224775808
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: bcc98f0da5905c44a5286d08844dcd56
     GuidInternal: 
-    m_lastTime: -8586145249724775808
+    m_lastTime: -8586144550224775808
     List: []
   ExpandedItems:
   - /The Meta Game_WwiseProject
   - /The Meta Game_WwiseProject/Events
   - /The Meta Game_WwiseProject/Events/Default Work Unit
-  - /The Meta Game_WwiseProject/Events/Default Work Unit/Sound
   - /The Meta Game_WwiseProject/SoundBanks
   - /The Meta Game_WwiseProject/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1

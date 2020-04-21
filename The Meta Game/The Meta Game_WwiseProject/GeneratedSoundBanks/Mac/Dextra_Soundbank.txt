@@ -1,14 +1,43 @@
 Event	ID	Name			Wwise Object Path	Notes
-	673464333	sfx_collectable			\Default Work Unit\Sound\sfx_collectable	
-	1803239799	sfx_knight_talk			\Default Work Unit\Sound\sfx_knight_talk	
-	3695098761	sfx_jump			\Default Work Unit\Sound\sfx_jump	
-	3875906189	sfx_walljump			\Default Work Unit\Sound\sfx_walljump	
+	37122652	sfx_projectile			\Default Work Unit\Empty Events\sfx_projectile	
+	323185506	sfx_ui_rpg_menu_confirm			\Default Work Unit\Empty Events\sfx_ui_rpg_menu_confirm	
+	527172796	sfx_start_game			\Default Work Unit\Empty Events\sfx_start_game	
+	643452507	sfx_punch			\Default Work Unit\Empty Events\sfx_punch	
+	673464333	sfx_collectable			\Default Work Unit\SFX\sfx_collectable	
+	848617979	sfx_new_mode_unlocked			\Default Work Unit\Empty Events\sfx_new_mode_unlocked	
+	1048287188	sfx_fps_hit			\Default Work Unit\Empty Events\sfx_fps_hit	
+	1803239799	sfx_knight_talk			\Default Work Unit\SFX\sfx_knight_talk	
+	1965088569	sfx_magic_fire			\Default Work Unit\Empty Events\sfx_magic_fire	
+	2006245931	sfx_mode_switch			\Default Work Unit\Empty Events\sfx_mode_switch	
+	2018269707	sfx_player_talk			\Default Work Unit\Empty Events\sfx_player_talk	
+	2043286607	sfx_kick			\Default Work Unit\Empty Events\sfx_kick	
+	2156021983	sfx_magic_heal			\Default Work Unit\Empty Events\sfx_magic_heal	
+	2405914575	sfx_ui_back			\Default Work Unit\Empty Events\sfx_ui_back	
+	2518317382	sfx_knightcharge			\Default Work Unit\SFX\sfx_knightcharge	
+	2634636601	sfx_fps_shot			\Default Work Unit\Empty Events\sfx_fps_shot	
+	2688667465	sfx_flagcheckpoint			\Default Work Unit\SFX\sfx_flagcheckpoint	
+	2707288665	sfx_magic_lightning			\Default Work Unit\Empty Events\sfx_magic_lightning	
+	2809605252	sfx_rpg_battle_victory			\Default Work Unit\Empty Events\sfx_rpg_battle_victory	
+	2940090998	sfx_flee_failure			\Default Work Unit\Empty Events\sfx_flee_failure	
+	3582953825	sfx_flee_success			\Default Work Unit\Empty Events\sfx_flee_success	
+	3654319392	sfx_rpg_battle_death			\Default Work Unit\Empty Events\sfx_rpg_battle_death	
+	3695098761	sfx_jump			\Default Work Unit\SFX\sfx_jump	
+	3753159394	sfx_ui_select			\Default Work Unit\Empty Events\sfx_ui_select	
+	3797926101	sfx_uppercut			\Default Work Unit\Empty Events\sfx_uppercut	
+	3829629126	sfx_magic_ice			\Default Work Unit\Empty Events\sfx_magic_ice	
+	3875906189	sfx_walljump			\Default Work Unit\SFX\sfx_walljump	
+	3959035188	sfx_miss_punch			\Default Work Unit\Empty Events\sfx_miss_punch	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	110204337	sfx_knight_talk	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_talk_option1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knight_talk		340400
+	157873061	sfx_knightcharge_03	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_03		1152064
+	316698430	sfx_knightcharge_01	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_01		1152064
+	322634655	sfx_flagcheckpoint	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_flagcheckpoint_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_flagcheckpoint		768064
+	412860449	sfx_knightcharge_02	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_02		1152064
 	498525494	dextra_jump_B	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_B_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_B		37932
 	702299705	dextra_jump_C	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_C_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_C		32524
 	809055740	sfx_walljump	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_walljumpgrab_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_walljump		103620
+	815115313	sfx_knightcharge_04	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_04		1152064
 	922220141	dextra_jump_A	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_A_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_A		35500
 	1000854897	sfx_collectable	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_flagcheckpoint_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_collectable		328404
 
