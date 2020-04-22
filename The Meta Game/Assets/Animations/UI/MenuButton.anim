@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CustomUIButton
+  m_Name: MenuButton
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -55,6 +55,9 @@ AnimationClip:
     - time: 0.9166667
       value: {fileID: -8063508869936337806, guid: 90fafddf5775b6b4ab6dae28038bbe1d,
         type: 3}
+    - time: 1
+      value: {fileID: 6795774875562666429, guid: 90fafddf5775b6b4ab6dae28038bbe1d,
+        type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -86,12 +89,13 @@ AnimationClip:
     - {fileID: 4693252499693491684, guid: 90fafddf5775b6b4ab6dae28038bbe1d, type: 3}
     - {fileID: 3503462998927023218, guid: 90fafddf5775b6b4ab6dae28038bbe1d, type: 3}
     - {fileID: -8063508869936337806, guid: 90fafddf5775b6b4ab6dae28038bbe1d, type: 3}
+    - {fileID: 6795774875562666429, guid: 90fafddf5775b6b4ab6dae28038bbe1d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.0833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
