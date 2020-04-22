@@ -735,7 +735,7 @@ public class GameController : MonoBehaviour
                             behaviour.GetAnimator().SetBool("platformer", true);
                             behaviour.GetAnimator().SetBool("fighter", false);
                         }
-                        else if(!behaviour.GetType().Equals(typeof(PFDreadKnight)))
+                        else
                         {
                             behaviour.enabled = false;
                         }
@@ -1169,6 +1169,7 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(FGController)))
                     {
                         mover.enabled = true;
+                        Debug.Log("Changing to fighter");
                         mover.GetAnimator().SetBool("fighter", true);
                         mover.GetAnimator().SetBool("platformer", false);
                         mover.GetAnimator().SetBool("rpg", false);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PFDreadKnight : EnemyBehaviour
+public class PFDreadKnight : DreadKnightBehavior
 {
     #region variables
     /// <summary>

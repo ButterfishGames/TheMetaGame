@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class FGDreadKnight : EnemyBehaviour
+public class FGDreadKnight : DreadKnightBehavior
 {
     #region variables
     /// <summary>
@@ -59,12 +58,7 @@ public class FGDreadKnight : EnemyBehaviour
     /// <summary>
     /// Reference to BoxCollider2D component on object
     /// </summary>
-    private BoxCollider2D col;
-
-    /// <summary>
-    /// Main Camera to tell if enemy is within the viewport
-    /// </summary>
-    private Camera mainCamera;
+    private CapsuleCollider2D col;
 
     /// <summary>
     /// How long until the enemy switches it's state
@@ -192,6 +186,8 @@ public class FGDreadKnight : EnemyBehaviour
 
     private bool attackCoRoutineRunning;
 
+    public Animator attackEffects;
+
     public FGStatsAttackClass lightAttackStats;
     public FGStatsAttackClass mediumAttackStats;
     public FGStatsAttackClass heavyAttackStats;
@@ -248,40 +244,31 @@ public class FGDreadKnight : EnemyBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name != "CastleInterior" || SceneManager.GetActiveScene().name != "CastleInteriorBossTest")
-        {
-            enabled = false;
-        }
         animator.SetBool("fighter", true);
         inCutscene = true;
         bossCutsceneBegun = false;
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<BoxCollider2D>();
+        col = GetComponent<CapsuleCollider2D>();
+        gameObject.layer = LayerMask.NameToLayer("Blocking");
         state = EnemyState.neutral;
         hitbox = transform.Find("EnemyHitbox").GetComponent<BoxCollider2D>();
         hitThisFrame = false;
         v3Offset = new Vector3(xOffsetForRay, 0, 0);
         attackCoRoutineRunning = false;
         usedAttack = new bool[3];
-        //switch (startDir)
-        //{
-        //    case Direction.right:
-        //        dir = 1;
-        //        break;
-
-        //    case Direction.left:
-        //        dir = -1;
-        //        break;
-
-        //    default:
-        //        Debug.Log("ERROR: INVALID STARTING DIRECTION");
-        //        break;
-        //}
         for (int i = 0; i < usedAttack.Length; i++)
         {
             usedAttack[i] = false;
+        }
+        groundTrigger = null;
+        BoxCollider2D[] cols = GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D col in cols)
+        {
+            if (col.name.Equals("GroundTrigger"))
+            {
+                groundTrigger = col;
+            }
         }
 
         currHP = maxHP;
@@ -303,14 +290,25 @@ public class FGDreadKnight : EnemyBehaviour
 
         if (!CutsceneManager.singleton.scening && bossCutsceneBegun)
         {
+            if (GameController.singleton.equipped != GameController.GameMode.fighting)
+            {
+                GameController.singleton.SwitchMode(GameController.GameMode.fighting);
+            }
+            if (GameController.singleton.IsUnlocked("Platformer"))
+            {
+                GameController.singleton.Lock("Platformer");
+            }
             if (cutscene != null)
             {
                 Destroy(cutscene.gameObject);
             }
             if (currHP > 0)
             {
+                gameObject.layer = LayerMask.NameToLayer("Enemy2");
                 barriers.SetActive(true);
                 inCutscene = false;
+                rb.gravityScale = 1.0f;
+                col.enabled = true;
             }
             else
             {
@@ -319,7 +317,7 @@ public class FGDreadKnight : EnemyBehaviour
                     barriers.SetActive(false);
                     endCutscene.SetActive(true);
                     rb.gravityScale = 0.0f;
-                    GetComponent<BoxCollider2D>().enabled = false;
+                    col.enabled = false;
                     inCutscene = true;
                 }
             }
@@ -332,12 +330,28 @@ public class FGDreadKnight : EnemyBehaviour
         }
         if (!inCutscene)
         {
-            GameController.singleton.equipped = GameController.GameMode.fighting;
+            animator.SetBool("cutscene", false);
+            
+            if (groundTrigger != null)
+            {
+                List<Collider2D> contacts = new List<Collider2D>();
+                groundTrigger.GetContacts(contacts);
+                foreach (Collider2D contact in contacts)
+                {
+                    if (contact.CompareTag("Ground"))
+                    {
+                        grounded = true;
+                    }
+                    else
+                    {
+                        grounded = false;
+                    }
+                }
+            }
             if (grounded == true)
             {
                 animator.SetBool("jumping", false);
             }
-
             player = GameObject.FindGameObjectWithTag("Player");
             if (transform.position.x > player.transform.position.x)
             {
@@ -404,6 +418,7 @@ public class FGDreadKnight : EnemyBehaviour
             if (hitstun <= 0)
             {
                 animator.SetBool("hit", false);
+                attackEffects.SetBool("hit", false);
                 //dVecF = Front, dVecB = Back, offset and facing down
                 if (attacking == false)
                 {
@@ -418,8 +433,10 @@ public class FGDreadKnight : EnemyBehaviour
                 Vector2 dVec = new Vector2(0, -1).normalized;
                 LayerMask mask = ~((1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Enemy2")) + (1 << LayerMask.NameToLayer("Bounds")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Player")));
 
-                hitF = Physics2D.Raycast(transform.position + (v3Offset * dir), dVec, 0.5f, mask);
-                hitB = Physics2D.Raycast(transform.position - (v3Offset * dir), dVec, 0.5f, mask);
+                hitF = Physics2D.Raycast(transform.position + (v3Offset * dir), dVec, 1.75f, mask);
+                hitB = Physics2D.Raycast(transform.position - (v3Offset * dir), dVec, 1.75f, mask);
+                Debug.Log(hitF.collider + "F");
+                Debug.Log(hitB.collider + "B");
                 Debug.DrawRay(transform.position + (v3Offset * dir), new Vector2(0, -1).normalized, Color.black);
                 Debug.DrawRay(transform.position - (v3Offset * dir), new Vector2(0, -1).normalized, Color.grey);
                 Debug.Log(state);
@@ -472,11 +489,11 @@ public class FGDreadKnight : EnemyBehaviour
                     case EnemyState.offense:
                         #region offense
                         inNeutral = false;
-                        choseTime = false;
-                                
+                        choseTime = false;  
                         if (!attacking)
                         {
                             JumpCheck(5.0f, 10);
+                            Debug.Log(hitF.collider);
                             if (hitF.collider != null)
                             {
                                 animator.SetBool("moving", true);
@@ -484,6 +501,7 @@ public class FGDreadKnight : EnemyBehaviour
                             }
                             else
                             {
+                                Debug.Log("collider not hit");
                                 Jump(100);
                                 animator.SetBool("moving", false);
                             }
@@ -557,6 +575,7 @@ public class FGDreadKnight : EnemyBehaviour
                 justComboed = false;
                 animator.SetBool("comboed", false);
                 animator.SetBool("hit", true);
+                attackEffects.SetBool("hit", true);
                 for (int i = 0; i < usedAttack.Length; i++)
                 {
                     usedAttack[i] = false;
@@ -571,7 +590,7 @@ public class FGDreadKnight : EnemyBehaviour
                 hitstun -= Time.deltaTime;
             }
         }
-        GetComponent<PFEnemy>().dir = dir;
+        //GetComponent<PFEnemy>().dir = dir;
     }
 
     private void Jump(int jumpChance)
@@ -585,7 +604,6 @@ public class FGDreadKnight : EnemyBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(new Vector2((jumpForce / 2) * dir, jumpForce), ForceMode2D.Impulse);
             grounded = false;
-            animator.SetBool("jumping", true);
         }
     }
 
@@ -723,9 +741,11 @@ public class FGDreadKnight : EnemyBehaviour
         }
         else
         {
+            attackEffects.SetBool(animationAttackBoolString, true);
             hitbox.gameObject.SetActive(true);
         }
         yield return new WaitForSeconds(hitBoxActivationTime / 60);
+        attackEffects.SetBool(animationAttackBoolString, false);
         hitbox.gameObject.SetActive(false);
         yield return new WaitForSeconds(endLagTime / 60);
         randomInt = Random.Range(1, 3);
@@ -771,6 +791,7 @@ public class FGDreadKnight : EnemyBehaviour
                 }
                 else
                 {
+                    Debug.Log("Neutral no move right");
                     animator.SetBool("moving", false);
                 }
             }
@@ -783,6 +804,7 @@ public class FGDreadKnight : EnemyBehaviour
                 }
                 else
                 {
+                    Debug.Log("Neutral no move left");
                     animator.SetBool("moving", false);
                 }
             }
@@ -814,11 +836,13 @@ public class FGDreadKnight : EnemyBehaviour
             }
             else
             {
+                Debug.Log("Defense no move back");
                 animator.SetBool("moving", false);
             }
         }
         else
         {
+            Debug.Log("Defense no move back");
             animator.SetBool("moving", false);
         }
         if (justComboed == false)

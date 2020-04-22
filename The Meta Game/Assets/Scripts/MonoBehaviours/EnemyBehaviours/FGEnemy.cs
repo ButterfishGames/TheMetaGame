@@ -373,7 +373,6 @@ public class FGEnemy : EnemyBehaviour
                         }
                         secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
                         stateSwitchTime = 0;
-                    
                 }
             }
 
