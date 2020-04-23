@@ -86,6 +86,7 @@ public class CameraScroll : MonoBehaviour
         if (!hScroll)
         {
             posX = transform.position.x;
+            posY = transform.position.y;
         }
         
         posX = Mathf.Clamp(posX, min.x, max.x);

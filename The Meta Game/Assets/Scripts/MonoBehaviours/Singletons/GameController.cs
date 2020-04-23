@@ -265,7 +265,7 @@ public class GameController : MonoBehaviour
 
     public void OnSwitch (InputValue value)
     {
-        if (paused || battling || dying)
+        if (paused || battling || dying || FindObjectOfType<RPGController>().shopping)
         {
             return;
         }
@@ -336,7 +336,7 @@ public class GameController : MonoBehaviour
 
     public void OnPause(InputValue value)
     {
-        if (unpausing || battling)
+        if (unpausing || battling || FindObjectOfType<RPGController>().shopping)
         {
             return;
         }
@@ -364,7 +364,7 @@ public class GameController : MonoBehaviour
 
     public void OnMenu (InputValue value)
     {
-        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
+        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy) || FindObjectOfType<RPGController>().shopping)
         {
             return;
         }
@@ -1457,9 +1457,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(levelFadeTime);
         SetGlitching(false);
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = datingSimBGM;
-        source.Play();
+        // TOOD: Switch music to Dating Sim music
 
         ToggleSwitchPanel(false);
         if (datingDialogues.Length > 1)
@@ -2388,5 +2386,15 @@ public class GameController : MonoBehaviour
     public void AddGold(int amt)
     {
         gold += amt;
+    }
+
+    public int GetGold()
+    {
+        return gold;
+    }
+
+    public void SetGold(int val)
+    {
+        gold = val;
     }
 }

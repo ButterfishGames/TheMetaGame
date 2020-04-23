@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class RPGController : Mover
 {
@@ -23,6 +24,8 @@ public class RPGController : Mover
 
     [Tooltip("How many steps can you go with 0 chance of encounter after a battle")]
     public int encGrace;
+
+    public bool shopping;
 
     private int grace;
 
@@ -66,6 +69,7 @@ public class RPGController : Mover
     private void OnSubmit(InputValue value)
     {
         if (!enabled
+            || shopping
             || GameController.singleton.GetPaused()
             || DialogueManager.singleton.GetDisplaying()
             || CutsceneManager.singleton.scening)
@@ -74,6 +78,25 @@ public class RPGController : Mover
         }
 
         Interact();
+    }
+
+    private void OnCancel(InputValue value)
+    {
+        if (shopping)
+        {
+            GameObject shopPanel = GameObject.Find("ShopPanel");
+            Button[] buttons = shopPanel.GetComponentsInChildren<Button>();
+            foreach (Button button in buttons)
+            {
+                Destroy(button.gameObject);
+            }
+            shopPanel.SetActive(false);
+            if (GameController.singleton.GetNumUnlocked() > 1)
+            {
+                GameController.singleton.ToggleSwitchPanel(true);
+            }
+            shopping = false;
+        }
     }
 
     // Start is called before the first frame update
@@ -92,7 +115,7 @@ public class RPGController : Mover
 
     protected override void Move(float h, float v)
     {
-        if (moving || encountering)
+        if (moving || encountering || shopping)
         {
             return;
         }

@@ -6456,7 +6456,7 @@ Animator:
   m_GameObject: {fileID: 2884110346629138820}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cae29a91d77853046bbaadbc1484292a, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -16271,13 +16271,34 @@ MonoBehaviour:
   - skill: {fileID: 11400000, guid: dac6955b66c3d87489772286a304be34, type: 2}
     unlocked: 0
   artList:
+  - name: The Protagonist
+    img: {fileID: 21300000, guid: 7b06e828072c73444811019f003b4914, type: 3}
+    unlocked: 0
+    desc: Maybe her name is Dextra. Maybe it's Kiira. We can't keep track anymore.
+  - name: Charger
+    img: {fileID: 21300000, guid: ce92b3c1a055fca4080759c1bcddd0a2, type: 3}
+    unlocked: 0
+    desc: The grey knights that patrol the various areas around Castle Rose. They'll
+      rush you with their horns if they see you.
+  - name: Castle Approach
+    img: {fileID: 21300000, guid: c39f74881509ca64482d2e14d5f599ad, type: 3}
+    unlocked: 0
+    desc: Green grass. Blue sky. A beautiful place to jump around and try not to die.
   - name: Protag with Nose
     img: {fileID: 21300000, guid: 0ea2dba73e89fc841a5fb7b7bc5dd7f4, type: 3}
     unlocked: 0
-    desc: Dextra. With a nose. Maybe Kiira with a nose? We can't tell.
+    desc: Dextra. With a nose. Maybe Kiira with a nose? Either way, it was a mistake.
+  - name: TMG
+    img: {fileID: 21300000, guid: 2cc50b612456fe741a0ee7c1716fb6e5, type: 3}
+    unlocked: 0
+    desc: Where it all began.
   songList:
   - name: The Menu
     img: {fileID: -6716097629584414818, guid: c5a4dc00189f3cd47a06a477fc6057a6, type: 3}
+    song: {fileID: 8300000, guid: df9613ddb8e898d49bcb9b21a82197c2, type: 3}
+    unlocked: 0
+  - name: Castle Approach
+    img: {fileID: 21300000, guid: c39f74881509ca64482d2e14d5f599ad, type: 3}
     song: {fileID: 8300000, guid: df9613ddb8e898d49bcb9b21a82197c2, type: 3}
     unlocked: 0
   keyword: {r: 0.26666668, g: 0.6117647, b: 0.8392157, a: 1}
