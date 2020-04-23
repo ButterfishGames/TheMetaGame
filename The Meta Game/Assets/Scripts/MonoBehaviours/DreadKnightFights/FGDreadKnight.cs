@@ -240,10 +240,13 @@ public class FGDreadKnight : DreadKnightBehavior
     private bool bossCutsceneBegun;
 
     private Transform playerTransform;
+    private Animator playerAnimator;
     #endregion
 
     private void Start()
     {
+        player = GameObject.Find("Player");
+        playerAnimator = player.GetComponentInChildren<Animator>();
         animator.SetBool("fighter", true);
         inCutscene = true;
         bossCutsceneBegun = false;
@@ -290,14 +293,6 @@ public class FGDreadKnight : DreadKnightBehavior
 
         if (!CutsceneManager.singleton.scening && bossCutsceneBegun)
         {
-            if (GameController.singleton.equipped != GameController.GameMode.fighting)
-            {
-                GameController.singleton.SwitchMode(GameController.GameMode.fighting);
-            }
-            if (GameController.singleton.IsUnlocked("Platformer"))
-            {
-                GameController.singleton.Lock("Platformer");
-            }
             if (cutscene != null)
             {
                 Destroy(cutscene.gameObject);
@@ -330,6 +325,17 @@ public class FGDreadKnight : DreadKnightBehavior
         }
         if (!inCutscene)
         {
+            if (GameController.singleton.IsUnlocked("Platformer"))
+            {
+                GameController.singleton.Lock("Platformer");
+            }
+            if (GameController.singleton.equipped != GameController.GameMode.fighting)
+            {
+                GameController.singleton.SwitchMode(GameController.GameMode.fighting);
+            }
+            playerAnimator.SetBool("fighter", true);
+            playerAnimator.SetBool("platformer", false);
+
             animator.SetBool("cutscene", false);
             
             if (groundTrigger != null)
