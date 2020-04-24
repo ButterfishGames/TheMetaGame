@@ -1,6 +1,1398 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" SchemaVersion="94">
 	<InteractiveMusic>
-		<WorkUnit Name="Default Work Unit" ID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" PersistMode="Standalone">
+			<ChildrenList>
+				<MusicSwitchContainer Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" ShortID="617312078">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicPlaylistContainer Name="Final_Boss" ID="{45C405AB-8A5B-4690-856F-434631DB9FDF}" ShortID="56166447">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Final Boss" ID="{79F84D8D-6A50-48C6-9686-51C6CFB2634A}" ShortID="558376135">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="92656.3265306122"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Final Boss" ID="{9D9941EB-18FF-4186-BFF1-A48880DBAC64}" ShortID="50856350">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Final Boss" ID="{E258F963-6EDF-4911-95C8-080DB23A68CF}" ShortID="889196030">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Final Boss.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{6D6CDF51-2841-483A-B34A-98A354F3A5F6}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{0FEF2148-AE4A-496A-AF23-97AA07899BDE}">
+													<ClipList>
+														<MusicClip Name="Dextra Final Boss" ID="{49F3DFE2-A101-44E0-B9C8-BA8A742A4626}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="92656.3265306122"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Final Boss" ID="{E258F963-6EDF-4911-95C8-080DB23A68CF}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{841C13B1-251D-47B7-BE25-356210A9166D}"/>
+										<MusicCue Name="Exit Cue" ID="{C82B13BA-5891-4D65-8C07-DFB694A657D7}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="92656.3265306122"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{A6D9435D-B2F1-4A0E-900C-2961C10982BC}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{543C10E3-5793-4540-B6C6-B597389523C4}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{C4C6E6AB-47A6-4651-B60E-B36931DDCAEA}" ShortID="839665214">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{E9E1E7C7-01FF-4147-8EDD-133788BBA3AD}" ShortID="884374037">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Final Boss" ID="{79F84D8D-6A50-48C6-9686-51C6CFB2634A}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Dev_Room" ID="{3323E9C1-70D7-43FF-B6C9-F472B54DA470}" ShortID="1073502564">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Dev Room" ID="{BCE970CE-F370-4B24-98A4-F4FDE4E0BED5}" ShortID="502075323">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="128966.530612245"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Dev Room" ID="{B22DBFB7-B3CE-4DA7-8F69-67295D3861DB}" ShortID="188107379">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Dev Room" ID="{2CAD03D7-D342-4166-AB42-47F49B6B8470}" ShortID="805520227">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Dev Room.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{D573C513-EC44-4E77-850F-DD098C8AE86B}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{954BB6AE-5A70-4FA2-AD5C-FA1BDDED1F09}">
+													<ClipList>
+														<MusicClip Name="Dextra Dev Room" ID="{52330381-11AA-4333-A439-D17BCFBC9772}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="128966.530612245"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Dev Room" ID="{2CAD03D7-D342-4166-AB42-47F49B6B8470}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{2D623E0A-5D89-457E-B1D7-7865FAD8C291}"/>
+										<MusicCue Name="Exit Cue" ID="{3BDDDBA1-EE1B-48FC-B464-A3B90414C37D}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="128966.530612245"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{34BB2943-13D4-435F-A9F7-DE859B0234CD}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{1B590952-665C-4647-ACEB-C719DDB30B20}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{4CAFE26D-5E92-48EC-9835-B17F3006C7AF}" ShortID="364189596">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{F9D78656-9706-4EFB-8E1D-8E5157AFE661}" ShortID="851694327">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Dev Room" ID="{BCE970CE-F370-4B24-98A4-F4FDE4E0BED5}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="End_Credits" ID="{B6472762-0256-454F-9D15-1D0CFCBD4866}" ShortID="8678267">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra End Credits" ID="{72D98AE4-3E70-4182-B3D9-77530419B12E}" ShortID="611115133">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="62223.6734693878"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra End Credits" ID="{D24CEB80-58BA-428F-A0A5-010DC3391353}" ShortID="411944493">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra End Credits" ID="{2FCF80E9-134C-4B70-A744-2DE55926CFEF}" ShortID="324660396">
+													<Language>SFX</Language>
+													<AudioFile>Dextra End Credits.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{09C72F01-90AA-4730-988B-31710E07590A}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{4F15C268-8688-42AF-B159-C71B8D643D41}">
+													<ClipList>
+														<MusicClip Name="Dextra End Credits" ID="{8C3FBCB3-54B2-4A4B-9382-7E99BFE9818E}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="62223.6734693878"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra End Credits" ID="{2FCF80E9-134C-4B70-A744-2DE55926CFEF}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{C4FD94D7-A131-4B14-8481-1E6D47A3FBF5}"/>
+										<MusicCue Name="Exit Cue" ID="{EC853FF2-DCA0-4783-80B9-AAF825F73C81}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="62223.6734693878"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{7EB895B6-6C75-408B-8A83-E9D7B8E79D66}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{98A21ED6-BEAD-4749-8E38-215E9FF2DBDC}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{FC94554B-49D5-4020-8AE5-A6DEE7B67FF4}" ShortID="871812540">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{92EC9197-9130-4D14-9DA2-66DA515E0968}" ShortID="984778755">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra End Credits" ID="{72D98AE4-3E70-4182-B3D9-77530419B12E}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Crystal_Caverns" ID="{58D343D1-2A4A-402F-BC9A-BF9F5A3D6CCD}" ShortID="1001621423">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Crystal Caverns" ID="{FC4F9946-8CD8-4661-BAB2-C31EA1288F86}" ShortID="259856321">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="110602.448979592"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Crystal Caverns" ID="{A8183EB0-DF33-4C88-8197-BB7D05002BA3}" ShortID="802558606">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Crystal Caverns" ID="{7EFA100D-F0C7-4009-8CC0-A26AA9C35230}" ShortID="579614672">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Crystal Caverns.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{FB74551C-0DF0-48F5-89A2-244965EB653C}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{27C645D8-532E-455D-A10F-C79860A43F8E}">
+													<ClipList>
+														<MusicClip Name="Dextra Crystal Caverns" ID="{B5A4EEF5-647D-4114-93EC-C5E1CCA69A38}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="110602.448979592"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Crystal Caverns" ID="{7EFA100D-F0C7-4009-8CC0-A26AA9C35230}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{3CF6DB7C-50A0-40DE-8325-2F51C7A6AE1E}"/>
+										<MusicCue Name="Exit Cue" ID="{A27B5CAC-2F66-4F72-A345-05B66987F779}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="110602.448979592"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{93403609-8CFF-49B2-A652-7E7D725527F9}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{CC2D88C4-3196-4816-977F-EFC53647F378}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{61960A5C-272B-490D-A3B5-65E54B3E42CB}" ShortID="719144751">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{BE1CB586-93F0-4FF3-A888-F6C293C0BD2B}" ShortID="377786588">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Crystal Caverns" ID="{FC4F9946-8CD8-4661-BAB2-C31EA1288F86}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Castle_Rose" ID="{5BEF291D-A5AD-49E0-874C-73840BF55AEE}" ShortID="444859759">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Castle Rose" ID="{137C8273-EFCB-4D0A-95D5-3AADE13AE9D2}" ShortID="456094463">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="122200.816326531"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Castle Rose" ID="{C2D31399-2FA2-426E-845B-A557FE31D8B3}" ShortID="653891384">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Castle Rose" ID="{FCF8258F-56CF-44B7-A04A-DA2940E59064}" ShortID="307784005">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Castle Rose.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{CC58124D-633C-4836-86F0-695BD923D507}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{D92DB1E5-FD7A-4CC0-ABF8-D65A3C579181}">
+													<ClipList>
+														<MusicClip Name="Dextra Castle Rose" ID="{48097CA8-8B1E-41BD-8020-22467E8E5568}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="122200.816326531"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Castle Rose" ID="{FCF8258F-56CF-44B7-A04A-DA2940E59064}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{90447C5F-DAC5-4A7A-90FB-30BC51C858A4}"/>
+										<MusicCue Name="Exit Cue" ID="{B40BC86D-B071-4751-A192-714FAFAC7871}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="122200.816326531"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{6CC4171C-0E1D-4155-9ECF-0E9C0B64A450}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{1D623438-7BCB-4802-937F-6AF6CB8FB521}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{94F5A1BD-779D-4E0C-876E-5705FFF0CB55}" ShortID="654173458">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{229B8F78-942A-4F80-BE14-23165DA2F4DD}" ShortID="297824305">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Castle Rose" ID="{137C8273-EFCB-4D0A-95D5-3AADE13AE9D2}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Dating_Sim" ID="{34B4905C-B194-468C-8129-A2FEDA0223C1}" ShortID="421094325">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Dating Sim" ID="{AE0BF6E0-707D-4064-8ED9-2089E1E6D22F}" ShortID="308147502">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="76904.4897959184"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Dating Sim" ID="{1FF4A17C-F679-48BE-A164-01823D571B1E}" ShortID="506308254">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Dating Sim" ID="{DF8C82A0-B6BE-40F4-B445-F890C3C291CA}" ShortID="992790617">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Dating Sim.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{2E78CA84-FABA-4197-9AAD-9DEBDCA6DA47}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{99DDAB23-3479-4169-918D-E92F687CE96F}">
+													<ClipList>
+														<MusicClip Name="Dextra Dating Sim" ID="{E866CD39-2CAE-420D-96D6-FFAC98A66BBF}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="76904.4897959184"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Dating Sim" ID="{DF8C82A0-B6BE-40F4-B445-F890C3C291CA}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{22811589-C85D-4959-BAB6-CA8437FE7FF0}"/>
+										<MusicCue Name="Exit Cue" ID="{AC936830-42FC-4C39-A750-06D2B4D0B98A}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="76904.4897959184"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{554CBC0A-6A41-4984-B127-F695BB45C1BD}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{69B9BEC2-16E1-43E9-B685-BBB3D30FB083}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{4C20155D-D6F0-425B-8582-1626C97AB0B2}" ShortID="272511528">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{C52C393B-204D-4425-B069-CA0E4F6270B7}" ShortID="184195461">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Dating Sim" ID="{AE0BF6E0-707D-4064-8ED9-2089E1E6D22F}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Boss_1" ID="{C83734B9-008C-4F14-B17A-D512A165CBA8}" ShortID="188847832">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Boss 1" ID="{32651A4F-FF60-4B0A-BA90-942612CFC2AE}" ShortID="498202991">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="85890.612244898"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Boss 1" ID="{3713400F-2226-4F11-9E62-53115FB78499}" ShortID="739598571">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Boss 1" ID="{74E97CAA-BB30-498C-9D8E-75791521120F}" ShortID="572005381">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Boss 1.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{D16FC800-556D-4CEB-B98C-08EE6962D99C}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{82960ABC-9C1F-4ED8-95D5-56AF11014A42}">
+													<ClipList>
+														<MusicClip Name="Dextra Boss 1" ID="{0F221BCB-BA06-4532-A122-E6BD73A26189}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="85890.612244898"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Boss 1" ID="{74E97CAA-BB30-498C-9D8E-75791521120F}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{941E51DE-D5E5-4FEB-B56E-74BF6B3A627B}"/>
+										<MusicCue Name="Exit Cue" ID="{84ED9B47-FD00-4AFB-93AB-261AADAF3F49}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="85890.612244898"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{86737AA7-9B56-486F-A144-BF3606071B38}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{035F4FA5-7AEC-46AA-BB89-0C36A2EDD3C7}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{CC9927B6-3E94-402A-8706-CA1E27F063F6}" ShortID="72794557">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{123830AD-1165-4143-A03E-C2FDDB1FC876}" ShortID="691432341">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Boss 1" ID="{32651A4F-FF60-4B0A-BA90-942612CFC2AE}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Castle_Approach" ID="{04680C82-A692-4E34-9C76-97F97B34A86D}" ShortID="62719453">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Castle Approach" ID="{372BB173-C7AB-443B-B0F2-208CD2F03606}" ShortID="532599433">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="89808.9795918367"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Castle Approach" ID="{9696F0EE-6916-4A67-AEED-3D71E7252E8D}" ShortID="767114486">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Castle Approach" ID="{B7467A4D-592E-4006-97CF-97DA22C119F2}" ShortID="338454890">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Castle Approach.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{80E86A92-3A19-4474-AE30-A8F08A678100}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{8708DCFD-3150-4A8C-AA31-6578D5362851}">
+													<ClipList>
+														<MusicClip Name="Dextra Castle Approach" ID="{DE4623D3-D3B4-406A-B8AE-A8FD0E8742F9}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="89808.9795918367"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutDuration" Type="Real64" Value="982.592774527744"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Castle Approach" ID="{B7467A4D-592E-4006-97CF-97DA22C119F2}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{855D4510-4232-4F5E-8B2E-D071532E1BC0}"/>
+										<MusicCue Name="Exit Cue" ID="{39D5FB83-11C0-48E5-A0B6-28063156CB37}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="89808.9795918367"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{61288F0E-E77F-445F-B4BA-3190E46B5250}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{5CE45C0A-ECCC-4B4E-B0BB-D0E3239F4690}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{20C73310-D7CC-4A64-AD36-1CE9A033A36B}" ShortID="188038096">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{2EEB44C1-50BF-47EE-9617-5E95A7FF57B9}" ShortID="269395785">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Castle Approach" ID="{372BB173-C7AB-443B-B0F2-208CD2F03606}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Main_Menu" ID="{0F7EB29C-4EDA-4DB1-B3D1-716C5837407B}" ShortID="51920427">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Main Menu" ID="{CA1AB04E-99CD-40DB-817A-68811B18608C}" ShortID="604903754">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="140225.306122449"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Main Menu" ID="{E0958F52-0D9E-4BA4-8726-788F06E3146E}" ShortID="691947877">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Main Menu" ID="{9DC1C0AF-E117-486E-A1EE-6245A0FDE88B}" ShortID="573152289">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Main Menu.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{9AC0658B-8B44-4FB1-8D40-347AEC57E818}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{35F01B4F-735A-40D3-A8B1-9CB4479AE3B0}">
+													<ClipList>
+														<MusicClip Name="Dextra Main Menu" ID="{AB3D47EA-3DF0-49E2-8C75-4873CB8E7253}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="140225.306122449"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Main Menu" ID="{9DC1C0AF-E117-486E-A1EE-6245A0FDE88B}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{A9B148A9-74EA-4C5F-A69D-36A99EB25BAA}"/>
+										<MusicCue Name="Exit Cue" ID="{12E780D8-014F-4142-88C9-5CB25E369D36}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="140225.306122449"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{638CF07E-3CA2-466A-9AE8-FCCACD3F9D31}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{9AD694A7-268D-450D-AF50-64F87283211B}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{20C56BB2-0DD2-4DF3-A4BE-D06A3F1C4FAC}" ShortID="904279849">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{29D27853-F671-45C9-9619-112520A282F8}" ShortID="788920779">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Main Menu" ID="{CA1AB04E-99CD-40DB-817A-68811B18608C}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="RPG_Battle" ID="{4F827DBA-84D2-49A9-83AE-4A6B53393FCF}" ShortID="731412524">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra RPG Battle" ID="{13DD869C-9B23-4046-BB62-2ED7515B2646}" ShortID="275790268">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="83931.4285714286"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra RPG Battle" ID="{117BE841-8543-4511-A54C-A72DC8BC6D54}" ShortID="382798165">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra RPG Battle" ID="{B4F1EE1E-F22C-4BEA-984F-2354462F043F}" ShortID="1043003091">
+													<Language>SFX</Language>
+													<AudioFile>Dextra RPG Battle.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{4B45508F-C1A6-40F0-AAC3-A0C5D99D6B5B}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{19996849-4C1E-436F-96D5-F6ABA37C88ED}">
+													<ClipList>
+														<MusicClip Name="Dextra RPG Battle" ID="{DC76F069-4823-4753-AB1F-2439DBF5A430}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="83931.4285714286"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra RPG Battle" ID="{B4F1EE1E-F22C-4BEA-984F-2354462F043F}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{57651F47-0DD9-4D84-B672-3F482D15C614}"/>
+										<MusicCue Name="Exit Cue" ID="{93E26D16-4A91-4405-9216-851C619E90BD}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="83931.4285714286"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{28293E70-C375-416B-9618-132874EDDBED}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{348F056C-557A-47C7-8BC2-00104E222570}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{30B2E535-9EC0-4E13-AEED-3D36155A2874}" ShortID="1028847655">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{B4DEFE30-6868-4D4F-AF88-360BB0DD1FAA}" ShortID="633581359">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra RPG Battle" ID="{13DD869C-9B23-4046-BB62-2ED7515B2646}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Sundered_Castle" ID="{48EB0F53-C0AD-4D66-83B9-016C38BEEA73}" ShortID="588375374">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Dextra Sundered Castle" ID="{14313F74-24D3-4BFA-820E-5183B1C24227}" ShortID="726445890">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="102556.734693878"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Dextra Sundered Castle" ID="{35BCB933-C26C-44BD-835B-7268C9579811}" ShortID="341958183">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Dextra Sundered Castle" ID="{BE239259-F7D4-4782-B803-E7D9CA0718C8}" ShortID="518012236">
+													<Language>SFX</Language>
+													<AudioFile>Dextra Sundered Castle.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{A93735CD-30A5-46E3-ACB0-AB371913CABB}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{C0FA3FAD-7306-4661-8186-158C7D277B11}">
+													<ClipList>
+														<MusicClip Name="Dextra Sundered Castle" ID="{A3E9A7E5-BD5A-44D8-9495-F370BAFE6732}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="102556.734693878"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Dextra Sundered Castle" ID="{BE239259-F7D4-4782-B803-E7D9CA0718C8}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{8B6CC26E-9DF0-4DF2-9577-F203492D291A}"/>
+										<MusicCue Name="Exit Cue" ID="{78AF127E-BD6F-454F-957B-F46331C73256}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="102556.734693878"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{163FCD86-0616-424B-B757-D989BEFA38C7}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{58DFA6FC-C96D-4C5F-971A-9B1B1F7EF63D}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{F3DA3ABE-4F4F-48B3-9023-B1ED080DCCA3}" ShortID="781416584">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{37D18157-65F3-4365-AC58-46562CC81013}" ShortID="539823909">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Dextra Sundered Castle" ID="{14313F74-24D3-4BFA-820E-5183B1C24227}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicSegment Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" ShortID="828969882">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="4461.10838208369"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Dextra Death Jingle" ID="{7F01FA52-7B22-4233-BB74-59DE020A1522}" ShortID="376927025">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Dextra Death Jingle" ID="{7D64B8B8-04A4-4267-A9D1-4DA80FC48275}" ShortID="130448338">
+											<Language>SFX</Language>
+											<AudioFile>Dextra Death Jingle.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<TransitionList>
+										<MusicTransition Name="Root" ID="{6F38A04B-E1C9-4FE5-8D84-BD9450774CF8}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</TransitionList>
+									<SequenceList>
+										<MusicTrackSequence Name="" ID="{EA4702D4-F1B7-47B4-9E0D-EBA164D62B9B}">
+											<ClipList>
+												<MusicClip Name="Dextra Death Jingle" ID="{8FBDEE30-3C46-41B7-8ADB-0E6A44023783}">
+													<PropertyList>
+														<Property Name="BeginTrimOffset" Type="Real64" Value="80.1679096146117"/>
+														<Property Name="EndTrimOffset" Type="Real64" Value="4310.20408163265"/>
+														<Property Name="FadeInMode" Type="int16" Value="0"/>
+														<Property Name="FadeOutMode" Type="int16" Value="0"/>
+														<Property Name="PlayAt" Type="Real64" Value="-80.1679096146117"/>
+													</PropertyList>
+													<AudioSourceRef Name="Dextra Death Jingle" ID="{7D64B8B8-04A4-4267-A9D1-4DA80FC48275}"/>
+													<PropertyCurveList>
+														<PropertyCurve PropertyName="Highpass">
+															<Curve Name="" ID="{15E91729-C3F6-4A08-A7D6-CE194D26611A}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="1"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0.08017</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>4.31020408163265</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</PropertyCurve>
+														<PropertyCurve PropertyName="Lowpass">
+															<Curve Name="" ID="{59FF8ACF-A4E8-4F6D-93A5-7813D4A3E0D5}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="1"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0.08017</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>4.31020408163265</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</PropertyCurve>
+														<PropertyCurve PropertyName="Volume">
+															<Curve Name="" ID="{2A81580C-3284-4631-8EC9-1FC65F5DE2BC}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0.08017</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>4.31020408163265</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</PropertyCurve>
+													</PropertyCurveList>
+												</MusicClip>
+											</ClipList>
+										</MusicTrackSequence>
+									</SequenceList>
+								</MusicTrack>
+							</ChildrenList>
+							<CueList>
+								<MusicCue Name="Entry Cue" ID="{32B6414E-68BE-4089-A631-5DEF1F5450C0}"/>
+								<MusicCue Name="Exit Cue" ID="{648A34D2-0AD8-4C6D-92FC-8AC1E73018DE}">
+									<PropertyList>
+										<Property Name="CueType" Type="int16" Value="1"/>
+										<Property Name="TimeMs" Type="Real64" Value="4310.20408163266"/>
+									</PropertyList>
+								</MusicCue>
+							</CueList>
+						</MusicSegment>
+					</ChildrenList>
+					<TransitionList>
+						<MusicTransition Name="Root" ID="{22B6C4F2-FCD0-4579-98B3-1D2A26E82A58}">
+							<PropertyList>
+								<Property Name="IsFolder" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<MusicTransition Name="Transition" ID="{7DB500DB-7F4E-4419-AFA7-4DEDD3A20BD8}">
+									<PropertyList>
+										<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
+										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+										<Property Name="ExitSourceAt" Type="int16" Value="2"/>
+									</PropertyList>
+									<TransitionInfo>
+										<SourceFadeOut>
+											<MusicFade Name="Source Fade-out" ID="{FB51CC13-7EDD-4221-9804-5A5902A6EB1F}">
+												<PropertyList>
+													<Property Name="FadeCurve" Type="int16" Value="1"/>
+													<Property Name="FadeOffset" Type="Real64" Value="1"/>
+													<Property Name="FadeTime" Type="Real64" Value="2"/>
+													<Property Name="FadeType" Type="int16" Value="1"/>
+												</PropertyList>
+											</MusicFade>
+										</SourceFadeOut>
+										<DestinationFadeIn>
+											<MusicFade Name="Destination Fade-in" ID="{7DDEAA50-B445-4454-8B80-787DAB79A3DA}">
+												<PropertyList>
+													<Property Name="FadeCurve" Type="int16" Value="1"/>
+													<Property Name="FadeOffset" Type="Real64" Value="-1"/>
+													<Property Name="FadeTime" Type="Real64" Value="2"/>
+												</PropertyList>
+											</MusicFade>
+										</DestinationFadeIn>
+									</TransitionInfo>
+								</MusicTransition>
+								<MusicTransition Name="Transition" ID="{63C50D61-FEAF-4D45-93A9-803396B9578D}">
+									<PropertyList>
+										<Property Name="DestinationContextType" Type="int16" Value="2"/>
+										<Property Name="SourceContextType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="DestinationContextObject">
+											<ObjectRef Name="RPG_Battle" ID="{4F827DBA-84D2-49A9-83AE-4A6B53393FCF}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+										<Reference Name="SourceContextObject">
+											<ObjectRef Name="Castle_Approach" ID="{04680C82-A692-4E34-9C76-97F97B34A86D}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+									<TransitionInfo/>
+								</MusicTransition>
+								<MusicTransition Name="Transition" ID="{7936039C-1C01-41C1-8721-48617425CA1D}">
+									<PropertyList>
+										<Property Name="DestinationContextType" Type="int16" Value="2"/>
+										<Property Name="DestinationPlaylistJumpTo" Type="int16" Value="3"/>
+										<Property Name="SourceContextType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="DestinationContextObject">
+											<ObjectRef Name="Castle_Approach" ID="{04680C82-A692-4E34-9C76-97F97B34A86D}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+										<Reference Name="SourceContextObject">
+											<ObjectRef Name="RPG_Battle" ID="{4F827DBA-84D2-49A9-83AE-4A6B53393FCF}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</ChildrenList>
+							<TransitionInfo/>
+						</MusicTransition>
+					</TransitionList>
+					<StingerList>
+						<MusicStinger Name="" ID="{73681CF7-1495-43FD-A305-65EAA4177193}">
+							<TriggerRef Name="Death_Jingle" ID="{ABCC9FD8-EBD9-4EBF-96F2-FB001C5CC88A}" WorkUnitID="{0D8FC9BC-90A5-445C-A528-6D08844DCD56}"/>
+							<SegmentRef Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+						</MusicStinger>
+					</StingerList>
+					<ArgumentList>
+						<ArgumentRef Name="Gameplay_Stategroup" ID="{D9FC5234-E974-4E86-96E6-443B4FA88904}"/>
+					</ArgumentList>
+					<EntryList>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Boss_1" ID="{94787BE6-2B8B-48E5-8B72-2BE476479489}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Boss_1" ID="{C83734B9-008C-4F14-B17A-D512A165CBA8}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Castle_Approach" ID="{BA026651-9526-4547-944A-EE39039229A1}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Castle_Approach" ID="{04680C82-A692-4E34-9C76-97F97B34A86D}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Castle_Rose" ID="{8543E374-A127-427B-8D7C-1E4BCB7B7B84}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Castle_Rose" ID="{5BEF291D-A5AD-49E0-874C-73840BF55AEE}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Crystal_Caverns" ID="{310B1B84-82DF-4532-840A-CFEFD1114C17}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Crystal_Caverns" ID="{58D343D1-2A4A-402F-BC9A-BF9F5A3D6CCD}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Dating_Sim" ID="{A829B498-69C3-4DF6-813A-332621F6717A}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Dating_Sim" ID="{34B4905C-B194-468C-8129-A2FEDA0223C1}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Dev_Room" ID="{3D6183FD-4A04-46D6-924E-4AC17983D424}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Dev_Room" ID="{3323E9C1-70D7-43FF-B6C9-F472B54DA470}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="End_Credits" ID="{76073BE1-36C1-4099-AD7C-7FBE75C70877}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="End_Credits" ID="{B6472762-0256-454F-9D15-1D0CFCBD4866}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Final_Boss" ID="{8914A035-9F45-46DC-9B9A-3586667C15B9}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Final_Boss" ID="{45C405AB-8A5B-4690-856F-434631DB9FDF}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Main_Menu" ID="{D339B3A8-56B7-47C5-A5B7-6F3F67822E83}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Main_Menu" ID="{0F7EB29C-4EDA-4DB1-B3D1-716C5837407B}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="RPG_Battle" ID="{2B7F50E1-1E23-4823-9D6D-F7EB8D6C5BD9}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="RPG_Battle" ID="{4F827DBA-84D2-49A9-83AE-4A6B53393FCF}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Sundered_Castle" ID="{1FFB8E16-DD1D-40EE-B943-5BF68FDFAB68}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Sundered_Castle" ID="{48EB0F53-C0AD-4D66-83B9-016C38BEEA73}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+					</EntryList>
+				</MusicSwitchContainer>
+			</ChildrenList>
+		</WorkUnit>
 	</InteractiveMusic>
 </WwiseDocument>

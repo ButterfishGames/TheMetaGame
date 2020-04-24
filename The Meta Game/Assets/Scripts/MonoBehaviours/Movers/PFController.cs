@@ -194,12 +194,12 @@ public class PFController : Mover
         animator.SetBool("jumping", true);
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
-        //dayna trying to make walljump sfx work 
+        //dayna trying to make walljump sfx work
         float xForce = 0;
         if (onWall)
         {
             xForce = -wallDir * wallJumpForce;
-            AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+            AkSoundEngine.PostEvent("sfx_jump", gameObject);
         }
         else
         {
@@ -368,14 +368,14 @@ public class PFController : Mover
                     onWall = true;
                     wallDir = 1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-                    // TODO: Add Stick to Wall SFX Event
+                    AkSoundEngine.PostEvent("sfx_walljump", gameObject);
                 }
                 else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
                 {
                     onWall = true;
                     wallDir = -1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-                    // TODO: Add Stick to Wall SFX Event
+                    AkSoundEngine.PostEvent("sfx_walljump", gameObject);
                 }
                 else
                 {

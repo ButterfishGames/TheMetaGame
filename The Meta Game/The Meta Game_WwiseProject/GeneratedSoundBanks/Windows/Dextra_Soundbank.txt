@@ -1,14 +1,88 @@
 Event	ID	Name			Wwise Object Path	Notes
-	673464333	sfx_collectable			\Default Work Unit\Sound\sfx_collectable	
-	1803239799	sfx_knight_talk			\Default Work Unit\Sound\sfx_knight_talk	
-	3695098761	sfx_jump			\Default Work Unit\Sound\sfx_jump	
-	3875906189	sfx_walljump			\Default Work Unit\Sound\sfx_walljump	
+	37122652	sfx_projectile			\Default Work Unit\Empty Events\sfx_projectile	
+	84803132	Dev_Room			\Default Work Unit\MX\Dev_Room	
+	323185506	sfx_ui_rpg_menu_confirm			\Default Work Unit\Empty Events\sfx_ui_rpg_menu_confirm	
+	332969635	RPG_Battle			\Default Work Unit\MX\RPG_Battle	
+	491254729	Castle_Rose			\Default Work Unit\MX\Castle_Rose	
+	527172796	sfx_start_game			\Default Work Unit\Empty Events\sfx_start_game	
+	643452507	sfx_punch			\Default Work Unit\Empty Events\sfx_punch	
+	673464333	sfx_collectable			\Default Work Unit\SFX\sfx_collectable	
+	848617979	sfx_new_mode_unlocked			\Default Work Unit\Empty Events\sfx_new_mode_unlocked	
+	1048287188	sfx_fps_hit			\Default Work Unit\Empty Events\sfx_fps_hit	
+	1114964412	Start_Game			\Default Work Unit\MX\Start_Game	
+	1272574122	Boss_1			\Default Work Unit\MX\Boss_1	
+	1803239799	sfx_knight_talk			\Default Work Unit\SFX\sfx_knight_talk	
+	1965088569	sfx_magic_fire			\Default Work Unit\Empty Events\sfx_magic_fire	
+	2005704188	Main_Menu			\Default Work Unit\MX\Main_Menu	
+	2006245931	sfx_mode_switch			\Default Work Unit\Empty Events\sfx_mode_switch	
+	2018269707	sfx_player_talk			\Default Work Unit\Empty Events\sfx_player_talk	
+	2043286607	sfx_kick			\Default Work Unit\Empty Events\sfx_kick	
+	2156021983	sfx_magic_heal			\Default Work Unit\Empty Events\sfx_magic_heal	
+	2294576446	Crystal_Caverns			\Default Work Unit\MX\Crystal_Caverns	
+	2345047989	Final_Boss			\Default Work Unit\MX\Final_Boss	
+	2405914575	sfx_ui_back			\Default Work Unit\Empty Events\sfx_ui_back	
+	2420110896	Sundered_Castle			\Default Work Unit\MX\Sundered_Castle	
+	2518317382	sfx_knightcharge			\Default Work Unit\SFX\sfx_knightcharge	
+	2634636601	sfx_fps_shot			\Default Work Unit\Empty Events\sfx_fps_shot	
+	2688667465	sfx_flagcheckpoint			\Default Work Unit\SFX\sfx_flagcheckpoint	
+	2707288665	sfx_magic_lightning			\Default Work Unit\Empty Events\sfx_magic_lightning	
+	2809605252	sfx_rpg_battle_victory			\Default Work Unit\Empty Events\sfx_rpg_battle_victory	
+	2926820552	Castle_Approach			\Default Work Unit\MX\Castle_Approach	
+	2940090998	sfx_flee_failure			\Default Work Unit\Empty Events\sfx_flee_failure	
+	3131203835	Death_Jingle			\Default Work Unit\MX\Death_Jingle	
+	3582953825	sfx_flee_success			\Default Work Unit\Empty Events\sfx_flee_success	
+	3625439640	Dating_Sim			\Default Work Unit\MX\Dating_Sim	
+	3654319392	sfx_rpg_battle_death			\Default Work Unit\Empty Events\sfx_rpg_battle_death	
+	3695098761	sfx_jump			\Default Work Unit\SFX\sfx_jump	
+	3753159394	sfx_ui_select			\Default Work Unit\Empty Events\sfx_ui_select	
+	3797583859	End_Credits			\Default Work Unit\MX\End_Credits	
+	3797926101	sfx_uppercut			\Default Work Unit\Empty Events\sfx_uppercut	
+	3829629126	sfx_magic_ice			\Default Work Unit\Empty Events\sfx_magic_ice	
+	3875906189	sfx_walljump			\Default Work Unit\SFX\sfx_walljump	
+	3959035188	sfx_miss_punch			\Default Work Unit\Empty Events\sfx_miss_punch	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	4070416336	Gameplay_Stategroup			\Default Work Unit\Gameplay_Stategroup	
+
+State	ID	Name	State Group			Notes
+	0	None	Gameplay_Stategroup			
+	84803132	Dev_Room	Gameplay_Stategroup			
+	332969635	RPG_Battle	Gameplay_Stategroup			
+	491254729	Castle_Rose	Gameplay_Stategroup			
+	1272574122	Boss_1	Gameplay_Stategroup			
+	2005704188	Main_Menu	Gameplay_Stategroup			
+	2294576446	Crystal_Caverns	Gameplay_Stategroup			
+	2345047989	Final_Boss	Gameplay_Stategroup			
+	2420110896	Sundered_Castle	Gameplay_Stategroup			
+	2926820552	Castle_Approach	Gameplay_Stategroup			
+	3625439640	Dating_Sim	Gameplay_Stategroup			
+	3797583859	End_Credits	Gameplay_Stategroup			
+
+Trigger	ID	Name			Wwise Object Path	Notes
+	3131203835	Death_Jingle			\Default Work Unit\Death_Jingle	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	110204337	sfx_knight_talk	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\dextra_talk_option1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knight_talk		340400
+	130448338	Dextra Death Jingle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Death Jingle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\ST_Death_Jingle\Dextra Death Jingle		760384
+	157873061	sfx_knightcharge_03	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\sfx_knightcharge_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_03		1152064
+	307784005	Dextra Castle Rose	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Castle Rose_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Castle_Rose\Dextra Castle Rose\Dextra Castle Rose		21556288
+	316698430	sfx_knightcharge_01	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\sfx_knightcharge_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_01		1152064
+	322634655	sfx_flagcheckpoint	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\sfx_flagcheckpoint_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_flagcheckpoint		768064
+	324660396	Dextra End Credits	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra End Credits_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\End_Credits\Dextra End Credits\Dextra End Credits		10976320
+	338454890	Dextra Castle Approach	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Castle Approach_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Castle_Approach\Dextra Castle Approach\Dextra Castle Approach		15842368
+	412860449	sfx_knightcharge_02	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\sfx_knightcharge_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_02		1152064
 	498525494	dextra_jump_B	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\dextra_jump_B_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_B		37932
+	518012236	Dextra Sundered Castle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Sundered Castle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Sundered_Castle\Dextra Sundered Castle\Dextra Sundered Castle		18091072
+	572005381	Dextra Boss 1	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Boss 1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Boss_1\Dextra Boss 1\Dextra Boss 1		15151168
+	573152289	Dextra Main Menu	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Main Menu_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Main_Menu\Dextra Main Menu\Dextra Main Menu		24735808
+	579614672	Dextra Crystal Caverns	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Crystal Caverns_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Crystal_Caverns\Dextra Crystal Caverns\Dextra Crystal Caverns		19510336
 	702299705	dextra_jump_C	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\dextra_jump_C_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_C		32524
+	805520227	Dextra Dev Room	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Dev Room_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Dev_Room\Dextra Dev Room\Dextra Dev Room		22749760
 	809055740	sfx_walljump	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\dextra_walljumpgrab_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_walljump		103620
+	815115313	sfx_knightcharge_04	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\sfx_knightcharge_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_04		1152064
+	889196030	Dextra Final Boss	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Final Boss_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Final_Boss\Dextra Final Boss\Dextra Final Boss		16344640
 	922220141	dextra_jump_A	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\dextra_jump_A_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_A		35500
+	992790617	Dextra Dating Sim	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra Dating Sim_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Dating_Sim\Dextra Dating Sim\Dextra Dating Sim		13566016
 	1000854897	sfx_collectable	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\dextra_flagcheckpoint_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_collectable		328404
+	1043003091	Dextra RPG Battle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Windows\SFX\Dextra RPG Battle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\RPG_Battle\Dextra RPG Battle\Dextra RPG Battle		14805568
 

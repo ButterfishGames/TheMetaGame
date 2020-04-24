@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}" SchemaVersion="94">
 	<States>
-		<WorkUnit Name="Default Work Unit" ID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="Gameplay_Stategroup" ID="{D9FC5234-E974-4E86-96E6-443B4FA88904}">
+					<ChildrenList>
+						<State Name="None" ID="{BB5498D0-D437-4933-8812-F6EE3A04563E}"/>
+						<State Name="Boss_1" ID="{94787BE6-2B8B-48E5-8B72-2BE476479489}"/>
+						<State Name="Castle_Approach" ID="{BA026651-9526-4547-944A-EE39039229A1}"/>
+						<State Name="Castle_Rose" ID="{8543E374-A127-427B-8D7C-1E4BCB7B7B84}"/>
+						<State Name="Crystal_Caverns" ID="{310B1B84-82DF-4532-840A-CFEFD1114C17}"/>
+						<State Name="Dating_Sim" ID="{A829B498-69C3-4DF6-813A-332621F6717A}"/>
+						<State Name="Dev_Room" ID="{3D6183FD-4A04-46D6-924E-4AC17983D424}"/>
+						<State Name="End_Credits" ID="{76073BE1-36C1-4099-AD7C-7FBE75C70877}"/>
+						<State Name="Final_Boss" ID="{8914A035-9F45-46DC-9B9A-3586667C15B9}"/>
+						<State Name="Main_Menu" ID="{D339B3A8-56B7-47C5-A5B7-6F3F67822E83}"/>
+						<State Name="RPG_Battle" ID="{2B7F50E1-1E23-4823-9D6D-F7EB8D6C5BD9}"/>
+						<State Name="Sundered_Castle" ID="{1FFB8E16-DD1D-40EE-B943-5BF68FDFAB68}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</States>
 </WwiseDocument>
