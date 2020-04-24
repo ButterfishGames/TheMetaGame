@@ -1795,6 +1795,7 @@ public class GameController : MonoBehaviour
                 levelFadeTime = 2;
             }
             StartCoroutine(LevelFade(false));
+            SaveManager.singleton.InitGameController();
             yield return new WaitForSeconds(levelFadeTime);
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

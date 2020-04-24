@@ -236,6 +236,14 @@ public class PFController : Mover
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            StartCoroutine(CoyoteTime());
+        }
+    }
+
     public IEnumerator Die(bool hit)
     {
         if (dying)

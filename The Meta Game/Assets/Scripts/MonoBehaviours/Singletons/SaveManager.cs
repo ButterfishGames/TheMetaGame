@@ -62,10 +62,18 @@ public class SaveManager : MonoBehaviour
             {
                 InitGameController();
             }
+            else
+            {
+                InitGallery();
+            }
         }
         else
         {
             CreateSave();
+            if (!initGC)
+            {
+                InitGallery();
+            }
         }
     }
 
@@ -344,6 +352,36 @@ public class SaveManager : MonoBehaviour
         for (int i = 0; i < GameController.singleton.songList.Length; i++)
         {
             GameController.singleton.songList[i].unlocked = saveData.songsUnlocked[i];
+        }
+    }
+
+    private void InitGallery()
+    {
+        GalleryUpdater[] pics = FindObjectsOfType<GalleryUpdater>();
+
+        int swaps = 1;
+        for (int i = 0; i < pics.Length && swaps > 0; i++)
+        {
+            swaps = 0;
+            for (int j = 0; j < pics.Length-i-1; j++)
+            {
+                if (pics[j].GetInd() > pics[j+1].GetInd())
+                {
+                    GalleryUpdater temp = pics[j];
+                    pics[j] = pics[j + 1];
+                    pics[j + 1] = temp;
+                    swaps++;
+                }
+            }
+        }
+
+        for (int i = 0; i < pics.Length; i++)
+        {
+            pics[i].SetUnlocked(saveData.artUnlocked[i]);
+            if (saveData.artUnlocked[i])
+            {
+                Debug.Log(i);
+            }
         }
     }
 

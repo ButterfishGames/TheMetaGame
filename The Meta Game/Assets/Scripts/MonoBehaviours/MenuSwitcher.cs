@@ -9,12 +9,16 @@ public class MenuSwitcher : MonoBehaviour
     public Cutscene transition;
     public bool startActive;
 
+    private Transform player;
+
     private void Start()
     {
         if (startActive)
         {
             active = this;
         }
+
+        player = GameObject.Find("Player").transform;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,8 +28,11 @@ public class MenuSwitcher : MonoBehaviour
             return;
         }
 
-        CutsceneManager.singleton.StartScene(transition);
-        SaveManager.singleton.LoadGame(false);
-        active = other;
+        if (collision.CompareTag("Player"))
+        {
+            CutsceneManager.singleton.StartScene(transition);
+            SaveManager.singleton.LoadGame(false);
+            active = other;
+        }
     }
 }

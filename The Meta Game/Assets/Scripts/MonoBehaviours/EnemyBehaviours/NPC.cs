@@ -226,6 +226,7 @@ public class NPC : EnemyBehaviour
             if (GameController.singleton.spellList[3].unlocked)
             {
                 iButton.interactable = false;
+                iButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>().text = "SOLD OUT";
             }
             else
             {
@@ -244,6 +245,7 @@ public class NPC : EnemyBehaviour
             if (boostsPurchased[i])
             {
                 iButton.interactable = false;
+                iButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>().text = "SOLD OUT";
             }
             else
             {
@@ -262,10 +264,11 @@ public class NPC : EnemyBehaviour
             if (GameController.singleton.artList[artInds[i]].unlocked)
             {
                 iButton.interactable = false;
+                iButton.transform.Find("ItemText").GetComponent<TextMeshProUGUI>().text = "SOLD OUT";
             }
             else
             {
-                iButton.onClick.AddListener(() => Buy("ConceptArt", temp, artCosts[temp], iButton));
+                iButton.onClick.AddListener(() => Buy("ConceptArt", artInds[temp], artCosts[temp], iButton));
             }
         }
 
@@ -284,7 +287,7 @@ public class NPC : EnemyBehaviour
             }
             else
             {
-                iButton.onClick.AddListener(() => Buy("Music", temp, songCosts[temp], iButton));
+                iButton.onClick.AddListener(() => Buy("Music", songInds[temp], songCosts[temp], iButton));
             }
         }
 
