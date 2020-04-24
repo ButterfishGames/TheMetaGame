@@ -21,6 +21,17 @@
 			<ShortName>Dextra_Soundbank</ShortName>
 			<Path>Dextra_Soundbank.bnk</Path>
 			<IncludedEvents>
+				<Event Id="1272574122" Name="Boss_1" ObjectPath="\Events\Default Work Unit\MX\Boss_1" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2926820552" Name="Castle_Approach" ObjectPath="\Events\Default Work Unit\MX\Castle_Approach" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="491254729" Name="Castle_Rose" ObjectPath="\Events\Default Work Unit\MX\Castle_Rose" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2294576446" Name="Crystal_Caverns" ObjectPath="\Events\Default Work Unit\MX\Crystal_Caverns" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="3625439640" Name="Dating_Sim" ObjectPath="\Events\Default Work Unit\MX\Dating_Sim" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="3131203835" Name="Death_Jingle" ObjectPath="\Events\Default Work Unit\MX\Death_Jingle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="84803132" Name="Dev_Room" ObjectPath="\Events\Default Work Unit\MX\Dev_Room" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="3797583859" Name="End_Credits" ObjectPath="\Events\Default Work Unit\MX\End_Credits" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2345047989" Name="Final_Boss" ObjectPath="\Events\Default Work Unit\MX\Final_Boss" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2005704188" Name="Main_Menu" ObjectPath="\Events\Default Work Unit\MX\Main_Menu" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="332969635" Name="RPG_Battle" ObjectPath="\Events\Default Work Unit\MX\RPG_Battle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="673464333" Name="sfx_collectable" ObjectPath="\Events\Default Work Unit\SFX\sfx_collectable" DurationType="OneShot" DurationMin="1.861338" DurationMax="1.861338"/>
 				<Event Id="2688667465" Name="sfx_flagcheckpoint" ObjectPath="\Events\Default Work Unit\SFX\sfx_flagcheckpoint" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
 				<Event Id="2940090998" Name="sfx_flee_failure" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_flee_failure" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
@@ -49,15 +60,25 @@
 				<Event Id="3753159394" Name="sfx_ui_select" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_select" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3797926101" Name="sfx_uppercut" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_uppercut" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\SFX\sfx_walljump" DurationType="OneShot" DurationMin="0.587052" DurationMax="0.587052"/>
+				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\MX\Start_Game" DurationType="Infinite"/>
+				<Event Id="2420110896" Name="Sundered_Castle" ObjectPath="\Events\Default Work Unit\MX\Sundered_Castle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
 				<File Id="110204337" Language="SFX">
 					<ShortName>dextra_talk_option1.wav</ShortName>
 					<Path>SFX/dextra_talk_option1_10C4C929.wem</Path>
 				</File>
+				<File Id="130448338" Language="SFX">
+					<ShortName>Dextra Death Jingle.wav</ShortName>
+					<Path>SFX/Dextra Death Jingle_D79FB2B7.wem</Path>
+				</File>
 				<File Id="157873061" Language="SFX">
 					<ShortName>sfx_knightcharge_03.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_03_10C4C929.wem</Path>
+				</File>
+				<File Id="307784005" Language="SFX">
+					<ShortName>Dextra Castle Rose.wav</ShortName>
+					<Path>SFX/Dextra Castle Rose_D79FB2B7.wem</Path>
 				</File>
 				<File Id="316698430" Language="SFX">
 					<ShortName>sfx_knightcharge_01.wav</ShortName>
@@ -67,6 +88,14 @@
 					<ShortName>sfx_flagcheckpoint.wav</ShortName>
 					<Path>SFX/sfx_flagcheckpoint_10C4C929.wem</Path>
 				</File>
+				<File Id="324660396" Language="SFX">
+					<ShortName>Dextra End Credits.wav</ShortName>
+					<Path>SFX/Dextra End Credits_D79FB2B7.wem</Path>
+				</File>
+				<File Id="338454890" Language="SFX">
+					<ShortName>Dextra Castle Approach.wav</ShortName>
+					<Path>SFX/Dextra Castle Approach_D79FB2B7.wem</Path>
+				</File>
 				<File Id="412860449" Language="SFX">
 					<ShortName>sfx_knightcharge_02.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_02_10C4C929.wem</Path>
@@ -75,9 +104,29 @@
 					<ShortName>dextra_jump_B.wav</ShortName>
 					<Path>SFX/dextra_jump_B_10C4C929.wem</Path>
 				</File>
+				<File Id="518012236" Language="SFX">
+					<ShortName>Dextra Sundered Castle.wav</ShortName>
+					<Path>SFX/Dextra Sundered Castle_D79FB2B7.wem</Path>
+				</File>
+				<File Id="572005381" Language="SFX">
+					<ShortName>Dextra Boss 1.wav</ShortName>
+					<Path>SFX/Dextra Boss 1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="573152289" Language="SFX">
+					<ShortName>Dextra Main Menu.wav</ShortName>
+					<Path>SFX/Dextra Main Menu_D79FB2B7.wem</Path>
+				</File>
+				<File Id="579614672" Language="SFX">
+					<ShortName>Dextra Crystal Caverns.wav</ShortName>
+					<Path>SFX/Dextra Crystal Caverns_D79FB2B7.wem</Path>
+				</File>
 				<File Id="702299705" Language="SFX">
 					<ShortName>dextra_jump_C.wav</ShortName>
 					<Path>SFX/dextra_jump_C_10C4C929.wem</Path>
+				</File>
+				<File Id="805520227" Language="SFX">
+					<ShortName>Dextra Dev Room.wav</ShortName>
+					<Path>SFX/Dextra Dev Room_D79FB2B7.wem</Path>
 				</File>
 				<File Id="809055740" Language="SFX">
 					<ShortName>dextra_walljumpgrab.wav</ShortName>
@@ -87,13 +136,25 @@
 					<ShortName>sfx_knightcharge_04.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_04_10C4C929.wem</Path>
 				</File>
+				<File Id="889196030" Language="SFX">
+					<ShortName>Dextra Final Boss.wav</ShortName>
+					<Path>SFX/Dextra Final Boss_D79FB2B7.wem</Path>
+				</File>
 				<File Id="922220141" Language="SFX">
 					<ShortName>dextra_jump_A.wav</ShortName>
 					<Path>SFX/dextra_jump_A_10C4C929.wem</Path>
 				</File>
+				<File Id="992790617" Language="SFX">
+					<ShortName>Dextra Dating Sim.wav</ShortName>
+					<Path>SFX/Dextra Dating Sim_D79FB2B7.wem</Path>
+				</File>
 				<File Id="1000854897" Language="SFX">
 					<ShortName>dextra_flagcheckpoint.wav</ShortName>
 					<Path>SFX/dextra_flagcheckpoint_10C4C929.wem</Path>
+				</File>
+				<File Id="1043003091" Language="SFX">
+					<ShortName>Dextra RPG Battle.wav</ShortName>
+					<Path>SFX/Dextra RPG Battle_D79FB2B7.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

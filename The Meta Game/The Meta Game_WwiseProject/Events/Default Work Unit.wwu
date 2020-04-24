@@ -204,7 +204,17 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Start_Game" ID="{A1AC27DE-7FC4-4E2F-8A0A-78C202F426F6}"/>
+						<Event Name="Start_Game" ID="{A1AC27DE-7FC4-4E2F-8A0A-78C202F426F6}">
+							<ChildrenList>
+								<Action Name="" ID="{2D296A62-C83D-4858-A3FA-351F0F56BF85}" ShortID="440234790">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 						<Event Name="Castle_Approach" ID="{C4A55D9E-C4D6-442D-A6A1-116D56A4D7AB}">
 							<ChildrenList>
 								<Action Name="" ID="{BD0EE097-E7F4-4308-B92C-1A1428F2B8E0}" ShortID="339832273">
@@ -219,7 +229,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Dev_Room" ID="{235F664F-60A7-4500-AC81-8BBC7FDB28B7}"/>
+						<Event Name="Dev_Room" ID="{235F664F-60A7-4500-AC81-8BBC7FDB28B7}">
+							<ChildrenList>
+								<Action Name="" ID="{AD000151-B454-48EA-A7B8-89F73953B602}" ShortID="493425917">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Dev_Room" ID="{3D6183FD-4A04-46D6-924E-4AC17983D424}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 						<Event Name="Dating_Sim" ID="{3EF3106B-6D0B-4347-8AA0-402FDDFBCE3A}">
 							<ChildrenList>
 								<Action Name="" ID="{D83C86EA-BA4C-4B45-96E2-5A43422BF21E}" ShortID="857357146">
@@ -234,8 +257,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Main_Menu" ID="{567427EC-04BD-4D38-9C9B-D9DE2389A4CE}"/>
-						<Event Name="End_Credits" ID="{16BE34FA-2D03-4288-905C-E745814175D8}"/>
+						<Event Name="Main_Menu" ID="{567427EC-04BD-4D38-9C9B-D9DE2389A4CE}">
+							<ChildrenList>
+								<Action Name="" ID="{126C08EB-6DE7-4816-806D-1F6C04F17EBD}" ShortID="45787119">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Main_Menu" ID="{D339B3A8-56B7-47C5-A5B7-6F3F67822E83}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="End_Credits" ID="{16BE34FA-2D03-4288-905C-E745814175D8}">
+							<ChildrenList>
+								<Action Name="" ID="{39C3E9E3-7291-460A-88F8-F742C5937D59}" ShortID="805042661">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="End_Credits" ID="{76073BE1-36C1-4099-AD7C-7FBE75C70877}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 						<Event Name="Castle_Rose" ID="{AC8EEBCE-AE49-4179-9226-33E56E86E8AF}">
 							<ChildrenList>
 								<Action Name="" ID="{879130CE-9FE6-483E-A933-F7F6EC52D35F}" ShortID="837330079">
@@ -278,9 +327,48 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Final_Boss" ID="{B09DB7EC-C72B-4DEE-8D1A-B38012A5A3A3}"/>
-						<Event Name="Sundered_Castle" ID="{175CA990-F931-4F33-96C6-B82AE4678076}"/>
-						<Event Name="RPG_Battle" ID="{BAC84137-F863-46EE-9612-2992FF41F8B4}"/>
+						<Event Name="Final_Boss" ID="{B09DB7EC-C72B-4DEE-8D1A-B38012A5A3A3}">
+							<ChildrenList>
+								<Action Name="" ID="{6A7A669B-233E-44CB-B114-112A46014AC5}" ShortID="366616748">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Final_Boss" ID="{8914A035-9F45-46DC-9B9A-3586667C15B9}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Sundered_Castle" ID="{175CA990-F931-4F33-96C6-B82AE4678076}">
+							<ChildrenList>
+								<Action Name="" ID="{20889967-58BD-4847-898F-EF892A978A0C}" ShortID="254892592">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Sundered_Castle" ID="{1FFB8E16-DD1D-40EE-B943-5BF68FDFAB68}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="RPG_Battle" ID="{BAC84137-F863-46EE-9612-2992FF41F8B4}">
+							<ChildrenList>
+								<Action Name="" ID="{6C2435D8-2F00-42AD-8383-5061D971CA0A}" ShortID="643160056">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RPG_Battle" ID="{2B7F50E1-1E23-4823-9D6D-F7EB8D6C5BD9}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

@@ -194,7 +194,7 @@ public class PFController : Mover
         animator.SetBool("jumping", true);
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
-        //dayna trying to make walljump sfx work 
+        //dayna trying to make walljump sfx work
         float xForce = 0;
         if (onWall)
         {

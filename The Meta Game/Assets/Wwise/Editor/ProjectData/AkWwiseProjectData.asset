@@ -47,7 +47,7 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: bd962ea42152be4ea0b28a48f06727da
     GuidInternal: 
-    m_lastTime: -8586140955184775808
+    m_lastTime: -8586140948604775808
     List:
     - name: Boss_1
       guid: 1bf700cd4a2b704ba5848cefdf854d9e
@@ -61,8 +61,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Boss_1
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Castle_Approach
       guid: 9e5da5c4d6c42d44a6a1116d56a4d7ab
       id: 2926820552
@@ -75,8 +75,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Castle_Approach
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Castle_Rose
       guid: ceeb8eac49ae7941922633e56e86e8af
       id: 491254729
@@ -89,8 +89,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Castle_Rose
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Crystal_Caverns
       guid: 1dcaa974c6fcb749bdd8b64ce50d2e8d
       id: 2294576446
@@ -103,8 +103,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Crystal_Caverns
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Dating_Sim
       guid: 6b10f33e0b6d47438aa0402fddfbce3a
       id: 3625439640
@@ -117,8 +117,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Dating_Sim
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Death_Jingle
       guid: 12c20c25fbce964bb13e9352c8355651
       id: 3131203835
@@ -131,8 +131,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Death_Jingle
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Dev_Room
       guid: 4f665f23a7600045ac818bbc7fdb28b7
       id: 84803132
@@ -145,8 +145,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Dev_Room
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: End_Credits
       guid: fa34be16032d8842905ce745814175d8
       id: 3797583859
@@ -159,8 +159,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/End_Credits
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Final_Boss
       guid: ecb79db02bc7ee4d8d1ab38012a5a3a3
       id: 2345047989
@@ -173,8 +173,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Final_Boss
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Main_Menu
       guid: ec277456bd04384d9c9bd9de2389a4ce
       id: 2005704188
@@ -187,8 +187,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Main_Menu
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: RPG_Battle
       guid: 3741c8ba63f8ee4696122992ff41f8b4
       id: 332969635
@@ -201,8 +201,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/RPG_Battle
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: sfx_collectable
       guid: f13ab63d9365eb4faafb9814e52b1558
       id: 673464333
@@ -621,8 +621,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Sundered_Castle
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
     ParentPhysicalPath: 
@@ -749,7 +749,7 @@ MonoBehaviour:
   - /The Meta Game_WwiseProject
   - /The Meta Game_WwiseProject/Events
   - /The Meta Game_WwiseProject/Events/Default Work Unit
-  - /The Meta Game_WwiseProject/Events/Default Work Unit/SFX
+  - /The Meta Game_WwiseProject/Events/Default Work Unit/MX
   - /The Meta Game_WwiseProject/SoundBanks
   - /The Meta Game_WwiseProject/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
