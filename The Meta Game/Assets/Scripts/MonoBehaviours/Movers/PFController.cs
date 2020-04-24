@@ -303,6 +303,12 @@ public class PFController : Mover
             return;
         }
 
+        bool play = true;
+        if (onWall)
+        {
+            play = false;
+        }
+
         bool onGround = false;
 
         if (groundTrigger != null)
@@ -368,14 +374,20 @@ public class PFController : Mover
                     onWall = true;
                     wallDir = 1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-                    AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    if (play)
+                    {
+                        AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    }
                 }
                 else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
                 {
                     onWall = true;
                     wallDir = -1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-                    AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    if (play)
+                    {
+                        AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    }
                 }
                 else
                 {
