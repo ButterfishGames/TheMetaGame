@@ -180,6 +180,8 @@ public class GameController : MonoBehaviour
 
     private int currSP;
 
+    private int gold;
+
     /// <summary>
     /// Used to make flash fade time calculation more efficient
     /// </summary>
@@ -263,7 +265,7 @@ public class GameController : MonoBehaviour
 
     public void OnSwitch (InputValue value)
     {
-        if (paused || battling || dying)
+        if (paused || battling || dying || FindObjectOfType<RPGController>().shopping)
         {
             return;
         }
@@ -334,7 +336,7 @@ public class GameController : MonoBehaviour
 
     public void OnPause(InputValue value)
     {
-        if (unpausing || battling)
+        if (unpausing || battling || FindObjectOfType<RPGController>().shopping)
         {
             return;
         }
@@ -345,14 +347,14 @@ public class GameController : MonoBehaviour
         }
         else if (pauseMenu.activeInHierarchy && !(settingsPanel.activeInHierarchy || quitPanel.activeInHierarchy))
         {
-            if (waitAGoddamnSecond)
+            /*if (waitAGoddamnSecond)
             {
                 waitAGoddamnSecond = false;
             }
             else
-            {
+            {*/
                 Unpause();
-            }
+            //}
         }
         else
         {
@@ -362,7 +364,7 @@ public class GameController : MonoBehaviour
 
     public void OnMenu (InputValue value)
     {
-        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy))
+        if (numUnlocked < 2 || (paused && !switchMenu.activeInHierarchy) || FindObjectOfType<RPGController>().shopping)
         {
             return;
         }
@@ -405,6 +407,7 @@ public class GameController : MonoBehaviour
         else if (singleton != this)
         {
             Destroy(gameObject);
+            return;
         }
 
         dated = false;
@@ -420,6 +423,7 @@ public class GameController : MonoBehaviour
         currSP = maxSP;
         strength = 10;
         magic = 10;
+        gold = 0;
 
         RectTransform[] rects = GetComponentsInChildren<RectTransform>(true);
 
@@ -475,6 +479,8 @@ public class GameController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        AkSoundEngine.PostEvent("start_game", gameObject);
     }
 
     // Update is called once per frame
@@ -735,7 +741,7 @@ public class GameController : MonoBehaviour
                             behaviour.GetAnimator().SetBool("platformer", true);
                             behaviour.GetAnimator().SetBool("fighter", false);
                         }
-                        else if(!behaviour.GetType().Equals(typeof(PFDreadKnight)))
+                        else
                         {
                             behaviour.enabled = false;
                         }
@@ -1169,6 +1175,7 @@ public class GameController : MonoBehaviour
                     if (mover.GetType().Equals(typeof(FGController)))
                     {
                         mover.enabled = true;
+                        Debug.Log("Changing to fighter");
                         mover.GetAnimator().SetBool("fighter", true);
                         mover.GetAnimator().SetBool("platformer", false);
                         mover.GetAnimator().SetBool("rpg", false);
@@ -1450,12 +1457,11 @@ public class GameController : MonoBehaviour
     {
         dating = true;
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("Dating_Sim", gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         SetGlitching(false);
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = datingSimBGM;
-        source.Play();
+        // TOOD: Switch music to Dating Sim music
 
         ToggleSwitchPanel(false);
         if (datingDialogues.Length > 1)
@@ -1480,6 +1486,7 @@ public class GameController : MonoBehaviour
     private IEnumerator DatingUntransition()
     {
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         if (DialogueManager.singleton.GetDisplaying())
         {
@@ -1793,6 +1800,7 @@ public class GameController : MonoBehaviour
                 levelFadeTime = 2;
             }
             StartCoroutine(LevelFade(false));
+            SaveManager.singleton.InitGameController();
             yield return new WaitForSeconds(levelFadeTime);
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -2379,5 +2387,20 @@ public class GameController : MonoBehaviour
     {
         glitching = val;
         gCanv.SetActive(val);
+    }
+
+    public void AddGold(int amt)
+    {
+        gold += amt;
+    }
+
+    public int GetGold()
+    {
+        return gold;
+    }
+
+    public void SetGold(int val)
+    {
+        gold = val;
     }
 }

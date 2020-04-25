@@ -228,30 +228,50 @@ public class CutsceneManager : MonoBehaviour
             // trans.localScale += scl * invTime * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        trans.position = mov;
+        trans.rotation = Quaternion.Euler(rot);
+        trans.localScale = scl;
     }
 
     private IEnumerator CameraMove(Vector3 mov, float wait)
     {
         float invTime = 1.0f / wait;
         float maxDist = Vector3.Distance(Camera.main.transform.position, mov) * invTime;
+        float xDiff, yDiff;
+        Parallax[] pObjs;
 
         for (float t = 0; t <= wait; t += Time.deltaTime)
         {
-            float xDiff = -Camera.main.transform.position.x;
-            float yDiff = -Camera.main.transform.position.y;
+            xDiff = -Camera.main.transform.position.x;
+            yDiff = -Camera.main.transform.position.y;
 
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, mov, maxDist * Time.deltaTime);
 
             xDiff += Camera.main.transform.position.x;
             yDiff += Camera.main.transform.position.y;
 
-            Parallax[] pObjs = FindObjectsOfType<Parallax>();
+            pObjs = FindObjectsOfType<Parallax>();
             foreach (Parallax obj in pObjs)
             {
                 obj.UpdatePos(xDiff, yDiff);
             }
 
             yield return new WaitForEndOfFrame();
+        }
+
+        xDiff = -Camera.main.transform.position.x;
+        yDiff = -Camera.main.transform.position.y;
+
+        Camera.main.transform.position = mov;
+
+        xDiff += Camera.main.transform.position.x;
+        yDiff += Camera.main.transform.position.y;
+
+        pObjs = FindObjectsOfType<Parallax>();
+        foreach (Parallax obj in pObjs)
+        {
+            obj.UpdatePos(xDiff, yDiff);
         }
     }
 }

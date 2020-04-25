@@ -20,6 +20,8 @@ public class Spawner : MonoBehaviour
 
     private SpriteRenderer sRend;
 
+    private MobRoomController mrc;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,12 @@ public class Spawner : MonoBehaviour
         sRend.sprite = spawning;
         yield return new WaitForSeconds(preSpawnTime);
         linkedEnemy = Instantiate(enemyPrefab, transform.position + spawnOffset, Quaternion.identity);
+
+        if (mrc != null)
+        {
+            mrc.IncSpawnCounter();
+            linkedEnemy.GetComponent<FGEnemy>().SetMRC(mrc);
+        }
         switch (GameController.singleton.equipped)
         {
             case GameController.GameMode.fighting:
@@ -105,5 +113,10 @@ public class Spawner : MonoBehaviour
         sRend.sprite = idle;
 
         respawning = false;
+    }
+
+    public void SetMRC(MobRoomController newMRC)
+    {
+        mrc = newMRC;
     }
 }

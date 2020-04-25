@@ -10,7 +10,11 @@ public class Skill : ScriptableObject
     public enum SkillType
     {
         damage,
-        damageAll
+        tripleDamage,
+        guard,
+        aim,
+        focus,
+        counter
     }
 
     public SkillType skillType;

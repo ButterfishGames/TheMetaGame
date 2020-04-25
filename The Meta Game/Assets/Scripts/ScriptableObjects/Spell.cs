@@ -11,7 +11,8 @@ public class Spell : ScriptableObject
     {
         damage,
         damageAll,
-        heal
+        heal,
+        drain
     }
     public SpellType spellType;
 
@@ -19,7 +20,8 @@ public class Spell : ScriptableObject
     {
         fire,
         ice,
-        lightning
+        lightning,
+        magic
     }
     public DamageType damageType;
 

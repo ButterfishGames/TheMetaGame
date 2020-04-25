@@ -229,6 +229,10 @@ public class FGEnemy : EnemyBehaviour
     private bool justComboed;
 
     private BoxCollider2D groundTrigger;
+
+    private MobRoomController mrc;
+
+    private bool dying;
     #endregion
 
     private void Start()
@@ -260,6 +264,8 @@ public class FGEnemy : EnemyBehaviour
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
+
+        dying = false;
     }
 
     void Update()
@@ -280,8 +286,8 @@ public class FGEnemy : EnemyBehaviour
             }
             if(currHP <= 0)
             {
-                if (fighting == true) {
-                    fighting = false;
+                if (!dying) {
+                    dying = true;
                     StartCoroutine(Death());
                 }
             }
@@ -373,7 +379,6 @@ public class FGEnemy : EnemyBehaviour
                         }
                         secondsUntilStateSwitch = Random.Range(minSecondsUntilStateSwitch, maxSecondsUntilStateSwitch);
                         stateSwitchTime = 0;
-                    
                 }
             }
 
@@ -818,6 +823,10 @@ public class FGEnemy : EnemyBehaviour
         animator.SetBool("dead", true);
         Destroy(rb);
         col.enabled = false;
+        if (mrc != null)
+        {
+            mrc.IncDefeatCounter();
+        }
         yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
         Destroy(gameObject);
     }
@@ -888,5 +897,10 @@ public class FGEnemy : EnemyBehaviour
         if (justComboed == false) {
             AutoOffenseSwitch(distanceSwitch);
         }
+    }
+
+    public void SetMRC(MobRoomController newMRC)
+    {
+        mrc = newMRC;
     }
 }

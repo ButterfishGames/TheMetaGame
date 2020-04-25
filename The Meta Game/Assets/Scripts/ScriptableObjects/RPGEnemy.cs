@@ -10,11 +10,21 @@ public class RPGEnemy : ScriptableObject
     public Sprite sprite;
     public int maxHP;
     public Attack[] attacks;
+    public int goldReward;
 
-    public void UseAttack(Attack attack)
+    private void OnDestroy()
+    {
+        Debug.Log(goldReward);
+    }
+
+    public void UseAttack(Attack attack, bool guarding)
     {
         int damage = attack.baseDmg;
         damage = Mathf.FloorToInt(damage * Random.Range(1 - attack.var, 1 + attack.var));
+        if (guarding)
+        {
+            damage = Mathf.FloorToInt(damage / 2);
+        }
         GameController.singleton.Damage(damage);
     }
 }

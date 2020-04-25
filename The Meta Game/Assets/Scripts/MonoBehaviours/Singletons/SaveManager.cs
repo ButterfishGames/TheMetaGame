@@ -42,6 +42,11 @@ public class SaveManager : MonoBehaviour
 
     public void LoadGame()
     {
+        LoadGame(true);
+    }
+
+    public void LoadGame(bool initGC)
+    {
         if (!active)
         {
             return;
@@ -53,11 +58,22 @@ public class SaveManager : MonoBehaviour
             FileStream file = File.Open(dataPath, FileMode.Open);
             saveData = (SaveData)bf.Deserialize(file);
             file.Close();
-            InitGameController();
+            if (initGC)
+            {
+                InitGameController();
+            }
+            else
+            {
+                InitGallery();
+            }
         }
         else
         {
             CreateSave();
+            if (!initGC)
+            {
+                InitGallery();
+            }
         }
     }
 
@@ -129,7 +145,7 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length);
+            temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length, NPC.shopkeeper.boostsPurchased.Length);
         }
 
         foreach (NPC npc in npcs)
@@ -146,6 +162,8 @@ public class SaveManager : MonoBehaviour
             int ind = int.Parse(trigger.gameObject.name.Substring(7, 1));
             temp.cutsceneTriggerable[ind] = trigger.triggerable;
         }
+
+        temp.boostsPurchased = NPC.shopkeeper.boostsPurchased;
 
         saveData.SetSceneData(buildIndex, temp);
         saveData.SetCurrentScene(buildIndex);
@@ -182,6 +200,7 @@ public class SaveManager : MonoBehaviour
         saveData.maxMP = GameController.singleton.maxMP;
         saveData.strength = GameController.singleton.GetStrength();
         saveData.magic = GameController.singleton.GetMagic();
+        saveData.gold = GameController.singleton.GetGold();
 
         saveData.numUnlocked = GameController.singleton.GetNumUnlocked();
         saveData.modes = new MiniMode[GameController.singleton.modes.Length];
@@ -232,6 +251,13 @@ public class SaveManager : MonoBehaviour
         SceneData temp;
 
         NPC[] npcs = FindObjectsOfType<NPC>();
+        for (int i = 0; i < npcs.Length && NPC.shopkeeper == null; i++)
+        {
+            if (npcs[i].npcType == NPC.NPCType.shop)
+            {
+                NPC.shopkeeper = npcs[i];
+            }
+        }
         CutsceneTrigger[] triggers = FindObjectsOfType<CutsceneTrigger>();
 
         if (saveData.SceneExists(buildIndex))
@@ -240,7 +266,7 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length);
+            temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length, NPC.shopkeeper.boostsPurchased.Length);
         }
 
         for (int i = 0; i < npcs.Length; i++)
@@ -257,6 +283,8 @@ public class SaveManager : MonoBehaviour
             int ind = int.Parse(triggers[i].gameObject.name.Substring(7, 1));
             triggers[i].triggerable = temp.cutsceneTriggerable[ind];
         }
+
+        NPC.shopkeeper.boostsPurchased = temp.boostsPurchased;
 
         if (buildIndex == saveData.GetCurrentScene())
         {
@@ -297,6 +325,7 @@ public class SaveManager : MonoBehaviour
         GameController.singleton.maxMP = saveData.maxMP;
         GameController.singleton.SetStrength(saveData.strength);
         GameController.singleton.SetMagic(saveData.magic);
+        GameController.singleton.SetGold(saveData.gold);
 
         GameController.singleton.SetNumUnlocked(saveData.numUnlocked);
         for (int i = 0; i < GameController.singleton.modes.Length; i++)
@@ -323,6 +352,36 @@ public class SaveManager : MonoBehaviour
         for (int i = 0; i < GameController.singleton.songList.Length; i++)
         {
             GameController.singleton.songList[i].unlocked = saveData.songsUnlocked[i];
+        }
+    }
+
+    private void InitGallery()
+    {
+        GalleryUpdater[] pics = FindObjectsOfType<GalleryUpdater>();
+
+        int swaps = 1;
+        for (int i = 0; i < pics.Length && swaps > 0; i++)
+        {
+            swaps = 0;
+            for (int j = 0; j < pics.Length-i-1; j++)
+            {
+                if (pics[j].GetInd() > pics[j+1].GetInd())
+                {
+                    GalleryUpdater temp = pics[j];
+                    pics[j] = pics[j + 1];
+                    pics[j + 1] = temp;
+                    swaps++;
+                }
+            }
+        }
+
+        for (int i = 0; i < pics.Length; i++)
+        {
+            pics[i].SetUnlocked(saveData.artUnlocked[i]);
+            if (saveData.artUnlocked[i])
+            {
+                Debug.Log(i);
+            }
         }
     }
 
@@ -371,6 +430,7 @@ public class SaveData
     public int maxMP;
     public int strength;
     public int magic;
+    public int gold;
 
     public int numUnlocked;
     public MiniMode[] modes;
@@ -395,6 +455,7 @@ public class SaveData
             maxMP = GameController.singleton.maxMP;
             strength = GameController.singleton.GetStrength();
             magic = GameController.singleton.GetMagic();
+            gold = GameController.singleton.GetGold();
 
             numUnlocked = 1;
             modes = new MiniMode[GameController.singleton.modes.Length];
@@ -435,9 +496,9 @@ public class SaveData
         return scenes.ContainsKey(index);
     }
 
-    public SceneData CreateSceneData(int index, int numEnemies, int numScenes)
+    public SceneData CreateSceneData(int index, int numEnemies, int numScenes, int numShopBoosts)
     {
-        scenes.Add(index, new SceneData(index, numEnemies, numScenes));
+        scenes.Add(index, new SceneData(index, numEnemies, numScenes, numShopBoosts));
         return scenes[index];
     }
 
@@ -480,8 +541,9 @@ public class SceneData
     int buildIndex;
     public bool[] npcInteracted;
     public bool[] cutsceneTriggerable;
+    public bool[] boostsPurchased;
 
-    public SceneData(int index, int numEnemies, int numCutscenes)
+    public SceneData(int index, int numEnemies, int numCutscenes, int numBoostsInShop)
     {
         buildIndex = index;
         npcInteracted = new bool[numEnemies];
@@ -494,6 +556,12 @@ public class SceneData
         for (int i = 0; i < numCutscenes; i++)
         {
             cutsceneTriggerable[i] = true;
+        }
+
+        boostsPurchased = new bool[numBoostsInShop];
+        for (int i = 0; i < numBoostsInShop; i++)
+        {
+            boostsPurchased[i] = false;
         }
     }
 }

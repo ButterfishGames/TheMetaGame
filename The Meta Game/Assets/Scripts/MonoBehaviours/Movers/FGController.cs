@@ -171,6 +171,18 @@ public class FGController : Mover
         OnControlsChanged(GetComponent<PlayerInput>());
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        light.performed -= LightPerfHandle;
+        light.canceled -= LightCancHandle;
+        medium.performed -= MedPerfHandle;
+        medium.canceled -= MedCancHandle;
+        heavy.performed -= HeavyPerfHandle;
+        heavy.canceled -= HeavyCancHandle;
+    }
+
     private void OnControlsChanged(PlayerInput pIn)
     {
         light = pIn.actions["Light"];
@@ -218,7 +230,7 @@ public class FGController : Mover
 
     private void LightPerfHandle(InputAction.CallbackContext context)
     {
-        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        if (!enabled || GameController.singleton.GetPaused() || hitstun > 0 || attacking)
         {
             return;
         }
@@ -250,12 +262,17 @@ public class FGController : Mover
 
     private void LightCancHandle(InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         heldAttackButton[0] = false;
     }
 
     private void MedPerfHandle(InputAction.CallbackContext context)
     {
-        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        if (!enabled || GameController.singleton.GetPaused() || hitstun > 0 || attacking)
         {
             return;
         }
@@ -287,12 +304,17 @@ public class FGController : Mover
 
     private void MedCancHandle(InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         heldAttackButton[1] = false;
     }
 
     private void HeavyPerfHandle(InputAction.CallbackContext context)
     {
-        if (GameController.singleton.GetPaused() || hitstun > 0 || attacking)
+        if (!enabled || GameController.singleton.GetPaused() || hitstun > 0 || attacking)
         {
             return;
         }
@@ -324,6 +346,11 @@ public class FGController : Mover
 
     private void HeavyCancHandle(InputAction.CallbackContext context)
     {
+        if (!enabled)
+        {
+            return;
+        }
+
         heldAttackButton[2] = false;
     }
 

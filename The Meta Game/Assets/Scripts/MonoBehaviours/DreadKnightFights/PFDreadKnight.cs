@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PFDreadKnight : EnemyBehaviour
+public class PFDreadKnight : DreadKnightBehavior
 {
     #region variables
     /// <summary>
@@ -105,10 +105,6 @@ public class PFDreadKnight : EnemyBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name != "CastleApproach")
-        {
-            enabled = false;
-        }
         animator.SetBool("platformer", true);
         inCutscene = true;
         bossCutsceneBegun = false;
@@ -175,7 +171,7 @@ public class PFDreadKnight : EnemyBehaviour
                     barriers.SetActive(false);
                     endCutscene.SetActive(true);
                     rb.gravityScale = 0.0f;
-                    GetComponent<BoxCollider2D>().enabled = false;
+                    GetComponent<CapsuleCollider2D>().enabled = false;
                     inCutscene = true;
                 }
             }

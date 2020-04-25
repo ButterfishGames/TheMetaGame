@@ -158,10 +158,10 @@ public class PFController : Mover
             return;
         }
 
-        /*if (v < 0 && !goingThrough)
+        if (v < 0 && !goingThrough)
         {
             StartCoroutine("GoThrough");
-        }*/
+        }
 
         float moveX = hRaw == 0 ?
             (grounded ? h * moveSpeed * Time.deltaTime : rb.velocity.x) :
@@ -236,6 +236,14 @@ public class PFController : Mover
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            StartCoroutine(CoyoteTime());
+        }
+    }
+
     public IEnumerator Die(bool hit)
     {
         if (dying)
@@ -293,6 +301,12 @@ public class PFController : Mover
         if (coyote)
         {
             return;
+        }
+
+        bool play = true;
+        if (onWall)
+        {
+            play = false;
         }
 
         bool onGround = false;
@@ -360,14 +374,20 @@ public class PFController : Mover
                     onWall = true;
                     wallDir = 1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-                    AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    if (play)
+                    {
+                        AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    }
                 }
                 else if ((hit3.collider != null && hit3.collider.CompareTag("Ground")) || (hit4.collider != null && hit4.collider.CompareTag("Ground")))
                 {
                     onWall = true;
                     wallDir = -1;
                     transform.rotation = Quaternion.Euler(0, 90 + (wallDir * 90), 0);
-                    AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    if (play)
+                    {
+                        AkSoundEngine.PostEvent("sfx_walljump", gameObject);
+                    }
                 }
                 else
                 {

@@ -100,9 +100,21 @@ MonoBehaviour:
   - {fileID: -2507743459351277454, guid: a9263527d6fc2454fbecfeea75b82669, type: 3}
   - {fileID: 3798507943890893475, guid: a9263527d6fc2454fbecfeea75b82669, type: 3}
   - {fileID: -1668956813370955060, guid: a9263527d6fc2454fbecfeea75b82669, type: 3}
-  xboxSprites: []
-  ps4Sprites: []
-  switchSprites: []
+  xboxSprites:
+  - {fileID: 8756291859709656080, guid: da9895dc2a54a984dacb64feb9db563f, type: 3}
+  - {fileID: 3941574668557000596, guid: da9895dc2a54a984dacb64feb9db563f, type: 3}
+  - {fileID: 7970741899601259855, guid: da9895dc2a54a984dacb64feb9db563f, type: 3}
+  - {fileID: -8145776961771631612, guid: da9895dc2a54a984dacb64feb9db563f, type: 3}
+  ps4Sprites:
+  - {fileID: -9095806811870560020, guid: d40e7419827b84f499ad8934a5979bc7, type: 3}
+  - {fileID: 9067101511670903516, guid: d40e7419827b84f499ad8934a5979bc7, type: 3}
+  - {fileID: -3447868941108033006, guid: d40e7419827b84f499ad8934a5979bc7, type: 3}
+  - {fileID: 4902401061295159565, guid: d40e7419827b84f499ad8934a5979bc7, type: 3}
+  switchSprites:
+  - {fileID: -7331398522223817835, guid: 9eb69933130bae2408ca45d3b0c818f3, type: 3}
+  - {fileID: -3644088685130052956, guid: 9eb69933130bae2408ca45d3b0c818f3, type: 3}
+  - {fileID: -2671077900545391690, guid: 9eb69933130bae2408ca45d3b0c818f3, type: 3}
+  - {fileID: 8158136525362908842, guid: 9eb69933130bae2408ca45d3b0c818f3, type: 3}
 --- !u!61 &-1973393936399150782
 BoxCollider2D:
   m_ObjectHideFlags: 0
