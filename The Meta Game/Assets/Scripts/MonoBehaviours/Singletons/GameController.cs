@@ -407,6 +407,7 @@ public class GameController : MonoBehaviour
         else if (singleton != this)
         {
             Destroy(gameObject);
+            return;
         }
 
         dated = false;
@@ -478,6 +479,8 @@ public class GameController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        AkSoundEngine.PostEvent("start_game", gameObject);
     }
 
     // Update is called once per frame
@@ -1454,6 +1457,7 @@ public class GameController : MonoBehaviour
     {
         dating = true;
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("Dating_Sim", gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         SetGlitching(false);
 
@@ -1482,6 +1486,7 @@ public class GameController : MonoBehaviour
     private IEnumerator DatingUntransition()
     {
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         if (DialogueManager.singleton.GetDisplaying())
         {
