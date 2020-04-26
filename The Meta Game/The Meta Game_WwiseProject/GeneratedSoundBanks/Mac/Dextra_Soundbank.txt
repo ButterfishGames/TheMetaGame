@@ -41,6 +41,9 @@ State	ID	Name	State Group			Notes
 Trigger	ID	Name			Wwise Object Path	Notes
 	3131203835	Death_Jingle			\Default Work Unit\Death_Jingle	
 
+Effect plug-ins	ID	Name	Type				Notes
+	3604890626	High_Pass_60Hz	Wwise Parametric EQ			
+
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	110204337	sfx_knight_talk	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_talk_option1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knight_talk		340400
 	130448338	Dextra Death Jingle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Death Jingle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\ST_Death_Jingle\Dextra Death Jingle		760384
@@ -52,6 +55,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	324660396	Dextra End Credits	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra End Credits_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\End_Credits\Dextra End Credits\Dextra End Credits		10976320
 	338454890	Dextra Castle Approach	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Castle Approach_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Castle_Approach\Dextra Castle Approach\Dextra Castle Approach		15842368
 	412860449	sfx_knightcharge_02	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_02		1152064
+	426678672	sfx_walljump_NEW	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_walljump_NEW_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_walljump_NEW		768064
 	485708020	sfx_startgame	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_startgame_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_startgame		1152064
 	498525494	dextra_jump_B	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_B_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_B		37932
 	518012236	Dextra Sundered Castle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Sundered Castle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Sundered_Castle\Dextra Sundered Castle\Dextra Sundered Castle		18091072
@@ -60,7 +64,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	579614672	Dextra Crystal Caverns	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Crystal Caverns_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Crystal_Caverns\Dextra Crystal Caverns\Dextra Crystal Caverns		19510336
 	702299705	dextra_jump_C	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_C_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_C		32524
 	805520227	Dextra Dev Room	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Dev Room_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Dev_Room\Dextra Dev Room\Dextra Dev Room		22749760
-	809055740	sfx_walljump	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_walljumpgrab_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_walljump		103620
 	815115313	sfx_knightcharge_04	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_knightcharge\sfx_knightcharge_04		1152064
 	889196030	Dextra Final Boss	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Final Boss_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Final_Boss\Dextra Final Boss\Dextra Final Boss		16344640
 	922220141	dextra_jump_A	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_A_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_jump\dextra_jump_A		35500

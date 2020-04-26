@@ -39,7 +39,7 @@
 				<Event Id="2518317382" Name="sfx_knightcharge" ObjectPath="\Events\Default Work Unit\SFX\sfx_knightcharge" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
 				<Event Id="527172796" Name="sfx_start_game" ObjectPath="\Events\Default Work Unit\SFX\sfx_start_game" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
 				<Event Id="2405914575" Name="sfx_ui_back" ObjectPath="\Events\Default Work Unit\SFX\sfx_ui_back" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
-				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\SFX\sfx_walljump" DurationType="OneShot" DurationMin="0.587052" DurationMax="0.587052"/>
+				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\SFX\sfx_walljump" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
 				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\MX\Start_Game" DurationType="Infinite"/>
 				<Event Id="2420110896" Name="Sundered_Castle" ObjectPath="\Events\Default Work Unit\MX\Sundered_Castle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 			</IncludedEvents>
@@ -84,6 +84,10 @@
 					<ShortName>sfx_knightcharge_02.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_02_10C4C929.wem</Path>
 				</File>
+				<File Id="426678672" Language="SFX">
+					<ShortName>sfx_walljump_NEW.wav</ShortName>
+					<Path>SFX/sfx_walljump_NEW_10C4C929.wem</Path>
+				</File>
 				<File Id="485708020" Language="SFX">
 					<ShortName>sfx_startgame.wav</ShortName>
 					<Path>SFX/sfx_startgame_10C4C929.wem</Path>
@@ -115,10 +119,6 @@
 				<File Id="805520227" Language="SFX">
 					<ShortName>Dextra Dev Room.wav</ShortName>
 					<Path>SFX/Dextra Dev Room_D79FB2B7.wem</Path>
-				</File>
-				<File Id="809055740" Language="SFX">
-					<ShortName>dextra_walljumpgrab.wav</ShortName>
-					<Path>SFX/dextra_walljumpgrab_10C4C929.wem</Path>
 				</File>
 				<File Id="815115313" Language="SFX">
 					<ShortName>sfx_knightcharge_04.wav</ShortName>
