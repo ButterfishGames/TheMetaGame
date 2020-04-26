@@ -225,6 +225,28 @@
 										</Reference>
 									</ReferenceList>
 								</Action>
+								<Action Name="" ID="{0CF10EBB-895E-498A-B571-90A1E0599E6C}" ShortID="935058296">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="38"/>
+										<Property Name="GameParameterValue" Type="Real64" Value="50"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="MX_Volume" ID="{EBD6A327-C0E9-478A-9302-3FBE6EFB3B50}" WorkUnitID="{6E2B8150-5D57-4A4A-AE85-29C2FF5978A3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{42A42C3B-2246-4F48-A391-00D86380A6C4}" ShortID="33393077">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="38"/>
+										<Property Name="GameParameterValue" Type="Real64" Value="50"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_Volume" ID="{BABB477F-A993-4826-BE0B-EDF66D5BF21D}" WorkUnitID="{6E2B8150-5D57-4A4A-AE85-29C2FF5978A3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 							</ChildrenList>
 						</Event>
 						<Event Name="Castle_Approach" ID="{C4A55D9E-C4D6-442D-A6A1-116D56A4D7AB}">

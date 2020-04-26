@@ -3,27 +3,103 @@
 	<AudioObjects>
 		<WorkUnit Name="Default Work Unit" ID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}" PersistMode="Standalone">
 			<ChildrenList>
-				<RandomSequenceContainer Name="sfx_jump" ID="{E97DDF91-C53B-4C47-AD74-31E8DAFF7CDE}" ShortID="432001650">
-					<PropertyList>
-						<Property Name="Volume" Type="Real64">
-							<ValueList>
-								<Value>-6</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
+				<ActorMixer Name="SFX" ID="{4CE2B0A1-EDEC-4152-A4A8-A0342EB20F53}" ShortID="34297417">
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
 						</Reference>
-						<Reference Name="Effect0" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
-							<ObjectRef Name="High_Pass_60Hz" ID="{F9627628-0B10-4272-BC30-D4C20423CB38}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
-						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+							<ObjectRef Name="SFX" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<Sound Name="dextra_jump_A" ID="{FBBA9655-828C-41A2-BD3B-BDF3A72A4B11}" ShortID="100966105">
+						<RandomSequenceContainer Name="sfx_jump" ID="{E97DDF91-C53B-4C47-AD74-31E8DAFF7CDE}" ShortID="432001650">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-6</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="Effect0" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+									<ObjectRef Name="High_Pass_60Hz" ID="{F9627628-0B10-4272-BC30-D4C20423CB38}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="dextra_jump_A" ID="{FBBA9655-828C-41A2-BD3B-BDF3A72A4B11}" ShortID="100966105">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_jump_A" ID="{7AE6598F-EA40-4724-8B0F-32234A744DB7}" ShortID="922220141">
+											<Language>SFX</Language>
+											<AudioFile>dextra_jump_A.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_jump_A" ID="{7AE6598F-EA40-4724-8B0F-32234A744DB7}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="dextra_jump_B" ID="{F6A4BB93-F10A-4CD2-8CC8-35109E4420CC}" ShortID="36253289">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_jump_B" ID="{B88599FC-7ED8-456B-ACFB-22AF90A4D6A6}" ShortID="498525494">
+											<Language>SFX</Language>
+											<AudioFile>dextra_jump_B.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_jump_B" ID="{B88599FC-7ED8-456B-ACFB-22AF90A4D6A6}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="dextra_jump_C" ID="{36038C3D-272A-40F9-8C50-FAE5590B6444}" ShortID="493950269">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_jump_C" ID="{8228A85E-935D-42F7-A124-18948FC6211C}" ShortID="702299705">
+											<Language>SFX</Language>
+											<AudioFile>dextra_jump_C.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_jump_C" ID="{8228A85E-935D-42F7-A124-18948FC6211C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+						<Sound Name="sfx_collectable" ID="{5FE71FBD-D738-477B-84D9-A6A54AFE108E}" ShortID="839728952">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -33,16 +109,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="dextra_jump_A" ID="{7AE6598F-EA40-4724-8B0F-32234A744DB7}" ShortID="922220141">
+								<AudioFileSource Name="dextra_flagcheckpoint" ID="{82EC2CEA-3230-41C6-9EC1-41B143AD503D}" ShortID="1000854897">
 									<Language>SFX</Language>
-									<AudioFile>dextra_jump_A.wav</AudioFile>
+									<AudioFile>dextra_flagcheckpoint.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="dextra_jump_A" ID="{7AE6598F-EA40-4724-8B0F-32234A744DB7}" Platform="Linked"/>
+								<ActiveSource Name="dextra_flagcheckpoint" ID="{82EC2CEA-3230-41C6-9EC1-41B143AD503D}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="dextra_jump_B" ID="{F6A4BB93-F10A-4CD2-8CC8-35109E4420CC}" ShortID="36253289">
+						<Sound Name="sfx_knight_talk" ID="{0CCDB4FE-0A7B-452D-9E81-5068EEA868E6}" ShortID="249930404">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -52,16 +135,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="dextra_jump_B" ID="{B88599FC-7ED8-456B-ACFB-22AF90A4D6A6}" ShortID="498525494">
+								<AudioFileSource Name="dextra_talk_option1" ID="{E9E5D091-2803-49D3-A2B3-D9CC0397316B}" ShortID="110204337">
 									<Language>SFX</Language>
-									<AudioFile>dextra_jump_B.wav</AudioFile>
+									<AudioFile>dextra_talk_option1.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="dextra_jump_B" ID="{B88599FC-7ED8-456B-ACFB-22AF90A4D6A6}" Platform="Linked"/>
+								<ActiveSource Name="dextra_talk_option1" ID="{E9E5D091-2803-49D3-A2B3-D9CC0397316B}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="dextra_jump_C" ID="{36038C3D-272A-40F9-8C50-FAE5590B6444}" ShortID="493950269">
+						<RandomSequenceContainer Name="sfx_knightcharge" ID="{3C201239-58E9-4BF7-8885-8D1CEAA35F60}" ShortID="757184683">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>9</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -71,87 +161,85 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="dextra_jump_C" ID="{8228A85E-935D-42F7-A124-18948FC6211C}" ShortID="702299705">
-									<Language>SFX</Language>
-									<AudioFile>dextra_jump_C.wav</AudioFile>
-								</AudioFileSource>
+								<Sound Name="sfx_knightcharge_01" ID="{7D4CAA87-2F48-4BF6-975F-C86D16BF75F3}" ShortID="54601994">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_knightcharge_01" ID="{36425A28-6618-4731-B6C9-D896E90DF490}" ShortID="316698430">
+											<Language>SFX</Language>
+											<AudioFile>sfx_knightcharge_01.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_knightcharge_01" ID="{36425A28-6618-4731-B6C9-D896E90DF490}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_knightcharge_02" ID="{FF868C2C-5C08-4F76-B1AB-7CF2F78640D8}" ShortID="16001643">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_knightcharge_02" ID="{92A7BD68-4217-4D10-80F6-BEC511EA6109}" ShortID="412860449">
+											<Language>SFX</Language>
+											<AudioFile>sfx_knightcharge_02.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_knightcharge_02" ID="{92A7BD68-4217-4D10-80F6-BEC511EA6109}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_knightcharge_03" ID="{575C6E47-2CA7-46C6-900F-96EA8EF7901C}" ShortID="364402821">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_knightcharge_03" ID="{35FF6ED5-6087-4EC3-97A8-810FF536D652}" ShortID="157873061">
+											<Language>SFX</Language>
+											<AudioFile>sfx_knightcharge_03.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_knightcharge_03" ID="{35FF6ED5-6087-4EC3-97A8-810FF536D652}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_knightcharge_04" ID="{4CB28531-4574-4EFA-94E0-A4A1831B8425}" ShortID="137515467">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_knightcharge_04" ID="{B5558DFA-0D86-4D8C-824F-ECB96FFA05DD}" ShortID="815115313">
+											<Language>SFX</Language>
+											<AudioFile>sfx_knightcharge_04.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_knightcharge_04" ID="{B5558DFA-0D86-4D8C-824F-ECB96FFA05DD}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="dextra_jump_C" ID="{8228A85E-935D-42F7-A124-18948FC6211C}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-					</ChildrenList>
-				</RandomSequenceContainer>
-				<Sound Name="sfx_collectable" ID="{5FE71FBD-D738-477B-84D9-A6A54AFE108E}" ShortID="839728952">
-					<PropertyList>
-						<Property Name="Volume" Type="Real64">
-							<ValueList>
-								<Value>5</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="dextra_flagcheckpoint" ID="{82EC2CEA-3230-41C6-9EC1-41B143AD503D}" ShortID="1000854897">
-							<Language>SFX</Language>
-							<AudioFile>dextra_flagcheckpoint.wav</AudioFile>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="dextra_flagcheckpoint" ID="{82EC2CEA-3230-41C6-9EC1-41B143AD503D}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="sfx_knight_talk" ID="{0CCDB4FE-0A7B-452D-9E81-5068EEA868E6}" ShortID="249930404">
-					<PropertyList>
-						<Property Name="Volume" Type="Real64">
-							<ValueList>
-								<Value>5</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="dextra_talk_option1" ID="{E9E5D091-2803-49D3-A2B3-D9CC0397316B}" ShortID="110204337">
-							<Language>SFX</Language>
-							<AudioFile>dextra_talk_option1.wav</AudioFile>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="dextra_talk_option1" ID="{E9E5D091-2803-49D3-A2B3-D9CC0397316B}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<RandomSequenceContainer Name="sfx_knightcharge" ID="{3C201239-58E9-4BF7-8885-8D1CEAA35F60}" ShortID="757184683">
-					<PropertyList>
-						<Property Name="Volume" Type="Real64">
-							<ValueList>
-								<Value>9</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<Sound Name="sfx_knightcharge_01" ID="{7D4CAA87-2F48-4BF6-975F-C86D16BF75F3}" ShortID="54601994">
+						</RandomSequenceContainer>
+						<Sound Name="sfx_flagcheckpoint" ID="{B05BF534-4BA9-4574-A2AD-C89160B9393A}" ShortID="229445105">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -161,16 +249,16 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="sfx_knightcharge_01" ID="{36425A28-6618-4731-B6C9-D896E90DF490}" ShortID="316698430">
+								<AudioFileSource Name="sfx_flagcheckpoint" ID="{AB4A56CD-AB73-44A0-8A0E-ED1D520E1DFE}" ShortID="322634655">
 									<Language>SFX</Language>
-									<AudioFile>sfx_knightcharge_01.wav</AudioFile>
+									<AudioFile>sfx_flagcheckpoint.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="sfx_knightcharge_01" ID="{36425A28-6618-4731-B6C9-D896E90DF490}" Platform="Linked"/>
+								<ActiveSource Name="sfx_flagcheckpoint" ID="{AB4A56CD-AB73-44A0-8A0E-ED1D520E1DFE}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="sfx_knightcharge_02" ID="{FF868C2C-5C08-4F76-B1AB-7CF2F78640D8}" ShortID="16001643">
+						<Sound Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" ShortID="807498282">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -180,16 +268,16 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="sfx_knightcharge_02" ID="{92A7BD68-4217-4D10-80F6-BEC511EA6109}" ShortID="412860449">
+								<AudioFileSource Name="sfx_startgame" ID="{6D090A41-00E3-4CF1-8E8D-84D16BB1998B}" ShortID="485708020">
 									<Language>SFX</Language>
-									<AudioFile>sfx_knightcharge_02.wav</AudioFile>
+									<AudioFile>sfx_startgame.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="sfx_knightcharge_02" ID="{92A7BD68-4217-4D10-80F6-BEC511EA6109}" Platform="Linked"/>
+								<ActiveSource Name="sfx_startgame" ID="{6D090A41-00E3-4CF1-8E8D-84D16BB1998B}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="sfx_knightcharge_03" ID="{575C6E47-2CA7-46C6-900F-96EA8EF7901C}" ShortID="364402821">
+						<Sound Name="sfx_walljump_NEW" ID="{079B8F2A-507F-4E9C-880B-C04369ADFD17}" ShortID="247601343">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -199,16 +287,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="sfx_knightcharge_03" ID="{35FF6ED5-6087-4EC3-97A8-810FF536D652}" ShortID="157873061">
+								<AudioFileSource Name="sfx_walljump_NEW" ID="{8A496ED8-DC3F-4F77-AFE9-14973B7CBD38}" ShortID="426678672">
 									<Language>SFX</Language>
-									<AudioFile>sfx_knightcharge_03.wav</AudioFile>
+									<AudioFile>sfx_walljump_NEW.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="sfx_knightcharge_03" ID="{35FF6ED5-6087-4EC3-97A8-810FF536D652}" Platform="Linked"/>
+								<ActiveSource Name="sfx_walljump_NEW" ID="{8A496ED8-DC3F-4F77-AFE9-14973B7CBD38}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="sfx_knightcharge_04" ID="{4CB28531-4574-4EFA-94E0-A4A1831B8425}" ShortID="137515467">
+						<Sound Name="sfx_back" ID="{F68F309B-3170-4688-98EF-032CFA4A4354}" ShortID="427921778">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -218,100 +313,17 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="sfx_knightcharge_04" ID="{B5558DFA-0D86-4D8C-824F-ECB96FFA05DD}" ShortID="815115313">
+								<AudioFileSource Name="sfx_back" ID="{622D0A8B-E296-43F3-97EF-3A9EE1679E2E}" ShortID="165292959">
 									<Language>SFX</Language>
-									<AudioFile>sfx_knightcharge_04.wav</AudioFile>
+									<AudioFile>sfx_back.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="sfx_knightcharge_04" ID="{B5558DFA-0D86-4D8C-824F-ECB96FFA05DD}" Platform="Linked"/>
+								<ActiveSource Name="sfx_back" ID="{622D0A8B-E296-43F3-97EF-3A9EE1679E2E}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
-				</RandomSequenceContainer>
-				<Sound Name="sfx_flagcheckpoint" ID="{B05BF534-4BA9-4574-A2AD-C89160B9393A}" ShortID="229445105">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="sfx_flagcheckpoint" ID="{AB4A56CD-AB73-44A0-8A0E-ED1D520E1DFE}" ShortID="322634655">
-							<Language>SFX</Language>
-							<AudioFile>sfx_flagcheckpoint.wav</AudioFile>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="sfx_flagcheckpoint" ID="{AB4A56CD-AB73-44A0-8A0E-ED1D520E1DFE}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" ShortID="807498282">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="sfx_startgame" ID="{6D090A41-00E3-4CF1-8E8D-84D16BB1998B}" ShortID="485708020">
-							<Language>SFX</Language>
-							<AudioFile>sfx_startgame.wav</AudioFile>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="sfx_startgame" ID="{6D090A41-00E3-4CF1-8E8D-84D16BB1998B}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="sfx_back" ID="{F68F309B-3170-4688-98EF-032CFA4A4354}" ShortID="427921778">
-					<PropertyList>
-						<Property Name="Volume" Type="Real64">
-							<ValueList>
-								<Value>10</Value>
-							</ValueList>
-						</Property>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="sfx_back" ID="{622D0A8B-E296-43F3-97EF-3A9EE1679E2E}" ShortID="165292959">
-							<Language>SFX</Language>
-							<AudioFile>sfx_back.wav</AudioFile>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="sfx_back" ID="{622D0A8B-E296-43F3-97EF-3A9EE1679E2E}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="sfx_walljump_NEW" ID="{079B8F2A-507F-4E9C-880B-C04369ADFD17}" ShortID="247601343">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="sfx_walljump_NEW" ID="{8A496ED8-DC3F-4F77-AFE9-14973B7CBD38}" ShortID="426678672">
-							<Language>SFX</Language>
-							<AudioFile>sfx_walljump_NEW.wav</AudioFile>
-						</AudioFileSource>
-					</ChildrenList>
-					<ActiveSourceList>
-						<ActiveSource Name="sfx_walljump_NEW" ID="{8A496ED8-DC3F-4F77-AFE9-14973B7CBD38}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
+				</ActorMixer>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
