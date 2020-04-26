@@ -54,7 +54,7 @@
 				<Event Id="643452507" Name="sfx_punch" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_punch" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3654319392" Name="sfx_rpg_battle_death" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_rpg_battle_death" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2809605252" Name="sfx_rpg_battle_victory" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_rpg_battle_victory" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="527172796" Name="sfx_start_game" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_start_game" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="527172796" Name="sfx_start_game" ObjectPath="\Events\Default Work Unit\SFX\sfx_start_game" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
 				<Event Id="2405914575" Name="sfx_ui_back" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_back" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="323185506" Name="sfx_ui_rpg_menu_confirm" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_rpg_menu_confirm" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3753159394" Name="sfx_ui_select" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_select" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
@@ -99,6 +99,10 @@
 				<File Id="412860449" Language="SFX">
 					<ShortName>sfx_knightcharge_02.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_02_10C4C929.wem</Path>
+				</File>
+				<File Id="485708020" Language="SFX">
+					<ShortName>sfx_startgame.wav</ShortName>
+					<Path>SFX/sfx_startgame_10C4C929.wem</Path>
 				</File>
 				<File Id="498525494" Language="SFX">
 					<ShortName>dextra_jump_B.wav</ShortName>

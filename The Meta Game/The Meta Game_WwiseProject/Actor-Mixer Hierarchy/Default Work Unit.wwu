@@ -4,6 +4,13 @@
 		<WorkUnit Name="Default Work Unit" ID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}" PersistMode="Standalone">
 			<ChildrenList>
 				<RandomSequenceContainer Name="sfx_jump" ID="{E97DDF91-C53B-4C47-AD74-31E8DAFF7CDE}" ShortID="432001650">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-3</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -255,6 +262,25 @@
 					</ChildrenList>
 					<ActiveSourceList>
 						<ActiveSource Name="sfx_flagcheckpoint" ID="{AB4A56CD-AB73-44A0-8A0E-ED1D520E1DFE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" ShortID="807498282">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="sfx_startgame" ID="{6D090A41-00E3-4CF1-8E8D-84D16BB1998B}" ShortID="485708020">
+							<Language>SFX</Language>
+							<AudioFile>sfx_startgame.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="sfx_startgame" ID="{6D090A41-00E3-4CF1-8E8D-84D16BB1998B}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

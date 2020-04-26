@@ -7,16 +7,22 @@
 					<ObjectInclusionList>
 						<ObjectRef Name="sfx_rpg_battle_death" ID="{D44A3E10-C25B-4019-A190-EE3340D67065}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_magic_ice" ID="{29BD215E-9DD4-4166-9A88-7710C532D965}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Castle_Rose" ID="{AC8EEBCE-AE49-4179-9226-33E56E86E8AF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Empty Events" ID="{F79CDEC9-3861-419F-9EF4-6DE8B87756E3}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="End_Credits" ID="{16BE34FA-2D03-4288-905C-E745814175D8}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_magic_fire" ID="{B3C3AD39-DF87-42F3-9B7E-2FC67F846DDC}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_player_talk" ID="{E641253C-BD06-4325-BCD8-480B1B1AAFFF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Dating_Sim" ID="{3EF3106B-6D0B-4347-8AA0-402FDDFBCE3A}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_ui_rpg_menu_confirm" ID="{EBB9E1BA-CB52-4396-A9D4-51D669E0C815}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Castle_Approach" ID="{C4A55D9E-C4D6-442D-A6A1-116D56A4D7AB}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_walljump" ID="{A349618B-866F-44B7-B06D-4A58BA3C30E9}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Dev_Room" ID="{235F664F-60A7-4500-AC81-8BBC7FDB28B7}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_kick" ID="{D6FA2C64-60DC-45D5-B675-1CB6623C9627}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="SFX" ID="{B4CB87B1-7764-45F2-A835-706FFD4C29AF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_punch" ID="{CCE695FD-26B4-4626-9B7A-721A365A5B98}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_rpg_battle_victory" ID="{27BAE9A7-B1A1-462A-8C43-0B9F0F52AFB8}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_flagcheckpoint" ID="{7FD5E444-049A-4688-BCC7-7A5F340CC934}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="RPG_Battle" ID="{BAC84137-F863-46EE-9612-2992FF41F8B4}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_new_mode_unlocked" ID="{2B94AE35-15F1-4753-AC22-DEDD4ECF6536}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_jump" ID="{55CA0C34-931A-478D-ADAC-AB9F4D3F4836}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_ui_select" ID="{3379F545-E7A7-4859-909E-F7F2E965A3AB}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
@@ -24,16 +30,23 @@
 						<ObjectRef Name="sfx_knight_talk" ID="{7C468569-8A74-4912-8B5B-336D57134F7D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_flee_failure" ID="{2F85D7E6-FEAD-493A-B733-2B53B4E358B9}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_magic_heal" ID="{44F1BB94-A262-49B3-9BDC-29480C1EBE7D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Crystal_Caverns" ID="{74A9CA1D-FCC6-49B7-BDD8-B64CE50D2E8D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_miss_punch" ID="{7493D38F-674B-4A5C-9B23-B72568CA2AB6}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_knightcharge" ID="{D7D0C365-4FEE-4A72-A19C-A4BF82A1167F}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_mode_switch" ID="{FC9A95A5-4BCF-4AB5-A845-09FF2CE2AE5C}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_uppercut" ID="{42FED730-04DE-4ADA-A09B-1BDFE94B3770}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_flee_success" ID="{E55E64D2-66CC-4B16-95ED-50EC9B2D7A8D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Boss_1" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Death_Jingle" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_magic_lightning" ID="{D2861E28-ED28-4CCF-A37F-369C65FFD636}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_fps_shot" ID="{B945265A-0CC2-4CFA-9EF7-7D3B6C69A4F8}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Main_Menu" ID="{567427EC-04BD-4D38-9C9B-D9DE2389A4CE}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Final_Boss" ID="{B09DB7EC-C72B-4DEE-8D1A-B38012A5A3A3}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Start_Game" ID="{A1AC27DE-7FC4-4E2F-8A0A-78C202F426F6}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_projectile" ID="{7CAD489C-4D97-4E9D-BE07-52037E89BFC0}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_fps_hit" ID="{FF82393B-12A3-4EA7-8B5A-32E76E2C2FCC}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Sundered_Castle" ID="{175CA990-F931-4F33-96C6-B82AE4678076}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_start_game" ID="{D3CC3B6A-C13D-4FBD-A3A5-F2D589B0EDD0}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="sfx_collectable" ID="{3DB63AF1-6593-4FEB-AAFB-9814E52B1558}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 					</ObjectInclusionList>
