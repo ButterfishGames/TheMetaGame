@@ -82,6 +82,17 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}">
+							<ChildrenList>
+								<Action Name="" ID="{1ADC8C23-3AC8-46EE-8405-AC81AE26BCA1}" ShortID="647068934">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_back" ID="{F68F309B-3170-4688-98EF-032CFA4A4354}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Empty Events" ID="{F79CDEC9-3861-419F-9EF4-6DE8B87756E3}" ShortID="410579419">
@@ -89,11 +100,6 @@
 						<Event Name="sfx_ui_select" ID="{3379F545-E7A7-4859-909E-F7F2E965A3AB}">
 							<ChildrenList>
 								<Action Name="" ID="{3CA14CE8-A36B-42D0-8364-DDE7E8AD2B2E}" ShortID="228437544"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}">
-							<ChildrenList>
-								<Action Name="" ID="{1ADC8C23-3AC8-46EE-8405-AC81AE26BCA1}" ShortID="647068934"/>
 							</ChildrenList>
 						</Event>
 						<Event Name="sfx_player_talk" ID="{E641253C-BD06-4325-BCD8-480B1B1AAFFF}">
