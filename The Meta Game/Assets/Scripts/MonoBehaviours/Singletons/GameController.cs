@@ -1648,7 +1648,7 @@ public class GameController : MonoBehaviour
                 }
                 unlockText.text = "You unlocked \n" + mode + " mode!";
                 found = true;
-                // TODO: Add Unlock Mode SFX Event
+                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
                 StartCoroutine(UnlockFade());
             }
         }

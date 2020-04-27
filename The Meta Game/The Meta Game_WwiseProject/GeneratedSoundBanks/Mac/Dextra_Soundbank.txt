@@ -5,7 +5,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	527172796	sfx_start_game			\Default Work Unit\SFX\sfx_start_game	
 	673464333	sfx_collectable			\Default Work Unit\SFX\sfx_collectable	
 	1114964412	Start_Game			\Default Work Unit\MX\Start_Game	
-	1272574122	Boss_1			\Default Work Unit\MX\Boss_1	
+	1431648729	Rhythm_Mode			\Default Work Unit\MX\Rhythm_Mode	
 	1803239799	sfx_knight_talk			\Default Work Unit\SFX\sfx_knight_talk	
 	2005704188	Main_Menu			\Default Work Unit\MX\Main_Menu	
 	2294576446	Crystal_Caverns			\Default Work Unit\MX\Crystal_Caverns	
@@ -13,10 +13,12 @@ Event	ID	Name			Wwise Object Path	Notes
 	2405914575	sfx_ui_back			\Default Work Unit\SFX\sfx_ui_back	
 	2420110896	Sundered_Castle			\Default Work Unit\MX\Sundered_Castle	
 	2518317382	sfx_knightcharge			\Default Work Unit\SFX\sfx_knightcharge	
+	2587904569	sfx_game_mode_unlocked			\Default Work Unit\SFX\sfx_game_mode_unlocked	
 	2688667465	sfx_flagcheckpoint			\Default Work Unit\SFX\sfx_flagcheckpoint	
 	2926820552	Castle_Approach			\Default Work Unit\MX\Castle_Approach	
 	3131203835	Death_Jingle			\Default Work Unit\MX\Death_Jingle	
 	3625439640	Dating_Sim			\Default Work Unit\MX\Dating_Sim	
+	3688152761	Boss_Fight			\Default Work Unit\MX\Boss_Fight	
 	3695098761	sfx_jump			\Default Work Unit\SFX\sfx_jump	
 	3797583859	End_Credits			\Default Work Unit\MX\End_Credits	
 	3875906189	sfx_walljump			\Default Work Unit\SFX\sfx_walljump	
@@ -31,6 +33,7 @@ State	ID	Name	State Group			Notes
 	332969635	RPG_Battle	Gameplay_Stategroup			
 	491254729	Castle_Rose	Gameplay_Stategroup			
 	1272574122	Boss_1	Gameplay_Stategroup			
+	1431648729	Rhythm_Mode	Gameplay_Stategroup			
 	2005704188	Main_Menu	Gameplay_Stategroup			
 	2294576446	Crystal_Caverns	Gameplay_Stategroup			
 	2345047989	Final_Boss	Gameplay_Stategroup			
@@ -55,11 +58,13 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	412860449	sfx_knightcharge_02	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_knightcharge\sfx_knightcharge_02		1152064
 	426678672	sfx_walljump_NEW	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_walljump_NEW_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_walljump_NEW		768064
 	485708020	sfx_startgame	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_startgame_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_startgame		1152064
+	494491441	Rhythm Game Theme copy	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Rhythm Game Theme copy_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Rhythm_Mode\Rhythm Mode\Rhythm Game Theme copy		4949056
 	498525494	dextra_jump_B	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_B_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_jump\dextra_jump_B		37932
 	518012236	Dextra Sundered Castle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Sundered Castle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Sundered_Castle\Dextra Sundered Castle\Dextra Sundered Castle		18091072
 	572005381	Dextra Boss 1	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Boss 1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Boss_1\Dextra Boss 1\Dextra Boss 1		15151168
 	573152289	Dextra Main Menu	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Main Menu_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Main_Menu\Dextra Main Menu\Dextra Main Menu		24735808
 	579614672	Dextra Crystal Caverns	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Crystal Caverns_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Crystal_Caverns\Dextra Crystal Caverns\Dextra Crystal Caverns		19510336
+	592181689	sfx_GM_unlock	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_GM_unlock_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_GM_unlock		744064
 	702299705	dextra_jump_C	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_jump_C_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_jump\dextra_jump_C		32524
 	805520227	Dextra Dev Room	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Dev Room_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Dev_Room\Dextra Dev Room\Dextra Dev Room		22749760
 	815115313	sfx_knightcharge_04	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_knightcharge\sfx_knightcharge_04		1152064

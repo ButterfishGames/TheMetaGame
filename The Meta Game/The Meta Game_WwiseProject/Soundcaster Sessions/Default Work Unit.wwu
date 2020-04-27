@@ -30,7 +30,7 @@
 							<Position X="1" Y="0"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="Boss_1" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<ObjectRef Name="Boss_Fight" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="1" Y="1"/>
 						</Module>
 						<Module>
@@ -40,6 +40,10 @@
 						<Module>
 							<ObjectRef Name="Final_Boss" ID="{B09DB7EC-C72B-4DEE-8D1A-B38012A5A3A3}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="1" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Rhythm_Mode" ID="{2D2011C7-C915-41AC-AD35-A95CBFBC97F4}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="0"/>
 						</Module>
 						<Module>
 							<ObjectRef Name="Castle_Approach" ID="{C4A55D9E-C4D6-442D-A6A1-116D56A4D7AB}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
@@ -109,7 +113,7 @@
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="Main_Menu" ID="{D339B3A8-56B7-47C5-A5B7-6F3F67822E83}"/>
+						<CurrentStateRef Name="Rhythm_Mode" ID="{8FC2C513-B3F6-4A68-B09B-BF1E0F0E5348}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>

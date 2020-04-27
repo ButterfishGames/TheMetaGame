@@ -13,7 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID BOSS_1 = 1272574122U;
+        static const AkUniqueID BOSS_FIGHT = 3688152761U;
         static const AkUniqueID CASTLE_APPROACH = 2926820552U;
         static const AkUniqueID CASTLE_ROSE = 491254729U;
         static const AkUniqueID CRYSTAL_CAVERNS = 2294576446U;
@@ -24,9 +24,11 @@ namespace AK
         static const AkUniqueID END_CREDITS = 3797583859U;
         static const AkUniqueID FINAL_BOSS = 2345047989U;
         static const AkUniqueID MAIN_MENU = 2005704188U;
+        static const AkUniqueID RHYTHM_MODE = 1431648729U;
         static const AkUniqueID RPG_BATTLE = 332969635U;
         static const AkUniqueID SFX_COLLECTABLE = 673464333U;
         static const AkUniqueID SFX_FLAGCHECKPOINT = 2688667465U;
+        static const AkUniqueID SFX_GAME_MODE_UNLOCKED = 2587904569U;
         static const AkUniqueID SFX_JUMP = 3695098761U;
         static const AkUniqueID SFX_KNIGHT_TALK = 1803239799U;
         static const AkUniqueID SFX_KNIGHTCHARGE = 2518317382U;
@@ -54,6 +56,7 @@ namespace AK
                 static const AkUniqueID END_CREDITS = 3797583859U;
                 static const AkUniqueID FINAL_BOSS = 2345047989U;
                 static const AkUniqueID MAIN_MENU = 2005704188U;
+                static const AkUniqueID RHYTHM_MODE = 1431648729U;
                 static const AkUniqueID RPG_BATTLE = 332969635U;
                 static const AkUniqueID SUNDERED_CASTLE = 2420110896U;
             } // namespace STATE

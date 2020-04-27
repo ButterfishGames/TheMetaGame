@@ -93,6 +93,17 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="sfx_game_mode_unlocked" ID="{2B94AE35-15F1-4753-AC22-DEDD4ECF6536}">
+							<ChildrenList>
+								<Action Name="" ID="{DBCF6BA8-E922-4327-82FF-E736004CB548}" ShortID="886826444">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_GM_unlock" ID="{EA8E7748-B805-43BE-8E0B-05A56525D6C0}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Empty Events" ID="{F79CDEC9-3861-419F-9EF4-6DE8B87756E3}" ShortID="410579419">
@@ -135,11 +146,6 @@
 						<Event Name="sfx_mode_switch" ID="{FC9A95A5-4BCF-4AB5-A845-09FF2CE2AE5C}">
 							<ChildrenList>
 								<Action Name="" ID="{298B3C7A-A927-4FA0-BA4F-7F1A9DE7F614}" ShortID="591340935"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_new_mode_unlocked" ID="{2B94AE35-15F1-4753-AC22-DEDD4ECF6536}">
-							<ChildrenList>
-								<Action Name="" ID="{DBCF6BA8-E922-4327-82FF-E736004CB548}" ShortID="886826444"/>
 							</ChildrenList>
 						</Event>
 						<Event Name="sfx_magic_fire" ID="{B3C3AD39-DF87-42F3-9B7E-2FC67F846DDC}">
@@ -202,7 +208,7 @@
 				</Folder>
 				<Folder Name="MX" ID="{4627DD5C-9A76-4887-B365-86F316728C00}" ShortID="239585595">
 					<ChildrenList>
-						<Event Name="Boss_1" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}">
+						<Event Name="Boss_Fight" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}">
 							<ChildrenList>
 								<Action Name="" ID="{24DC4DAF-1692-4672-9756-06373A411EA3}" ShortID="672639523">
 									<PropertyList>
@@ -419,6 +425,20 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Rhythm_Mode" ID="{2D2011C7-C915-41AC-AD35-A95CBFBC97F4}">
+							<ChildrenList>
+								<Action Name="" ID="{E743AC2B-3199-4A5C-97AA-E3AFF0B97956}" ShortID="934883073">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Rhythm_Mode" ID="{8FC2C513-B3F6-4A68-B09B-BF1E0F0E5348}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
