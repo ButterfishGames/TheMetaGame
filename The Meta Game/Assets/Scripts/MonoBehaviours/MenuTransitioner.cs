@@ -23,7 +23,7 @@ public class MenuTransitioner : MonoBehaviour
                 collision.enabled = false;
                 GameController.singleton.onMenu = false;
                 StartCoroutine(SongFade());
-                // TODO: Add Start Game SFX Event
+                AkSoundEngine.PostEvent("sfx_start_game", gameObject);
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(sceneInd));
             }
             else if (function == 2)

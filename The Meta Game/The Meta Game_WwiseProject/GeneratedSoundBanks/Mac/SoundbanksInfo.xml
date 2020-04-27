@@ -34,32 +34,12 @@
 				<Event Id="332969635" Name="RPG_Battle" ObjectPath="\Events\Default Work Unit\MX\RPG_Battle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="673464333" Name="sfx_collectable" ObjectPath="\Events\Default Work Unit\SFX\sfx_collectable" DurationType="OneShot" DurationMin="1.861338" DurationMax="1.861338"/>
 				<Event Id="2688667465" Name="sfx_flagcheckpoint" ObjectPath="\Events\Default Work Unit\SFX\sfx_flagcheckpoint" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
-				<Event Id="2940090998" Name="sfx_flee_failure" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_flee_failure" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3582953825" Name="sfx_flee_success" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_flee_success" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="1048287188" Name="sfx_fps_hit" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_fps_hit" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2634636601" Name="sfx_fps_shot" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_fps_shot" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3695098761" Name="sfx_jump" ObjectPath="\Events\Default Work Unit\SFX\sfx_jump" DurationType="OneShot" DurationMin="0.184014" DurationMax="0.214671"/>
-				<Event Id="2043286607" Name="sfx_kick" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_kick" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="1803239799" Name="sfx_knight_talk" ObjectPath="\Events\Default Work Unit\SFX\sfx_knight_talk" DurationType="OneShot" DurationMin="1.929342" DurationMax="1.929342"/>
 				<Event Id="2518317382" Name="sfx_knightcharge" ObjectPath="\Events\Default Work Unit\SFX\sfx_knightcharge" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
-				<Event Id="1965088569" Name="sfx_magic_fire" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_magic_fire" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2156021983" Name="sfx_magic_heal" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_magic_heal" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3829629126" Name="sfx_magic_ice" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_magic_ice" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2707288665" Name="sfx_magic_lightning" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_magic_lightning" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3959035188" Name="sfx_miss_punch" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_miss_punch" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2006245931" Name="sfx_mode_switch" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_mode_switch" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="848617979" Name="sfx_new_mode_unlocked" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_new_mode_unlocked" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2018269707" Name="sfx_player_talk" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_player_talk" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="37122652" Name="sfx_projectile" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_projectile" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="643452507" Name="sfx_punch" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_punch" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3654319392" Name="sfx_rpg_battle_death" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_rpg_battle_death" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2809605252" Name="sfx_rpg_battle_victory" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_rpg_battle_victory" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="527172796" Name="sfx_start_game" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_start_game" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="2405914575" Name="sfx_ui_back" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_back" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="323185506" Name="sfx_ui_rpg_menu_confirm" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_rpg_menu_confirm" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3753159394" Name="sfx_ui_select" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_ui_select" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3797926101" Name="sfx_uppercut" ObjectPath="\Events\Default Work Unit\Empty Events\sfx_uppercut" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\SFX\sfx_walljump" DurationType="OneShot" DurationMin="0.587052" DurationMax="0.587052"/>
+				<Event Id="527172796" Name="sfx_start_game" ObjectPath="\Events\Default Work Unit\SFX\sfx_start_game" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
+				<Event Id="2405914575" Name="sfx_ui_back" ObjectPath="\Events\Default Work Unit\SFX\sfx_ui_back" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
+				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\SFX\sfx_walljump" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
 				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\MX\Start_Game" DurationType="Infinite"/>
 				<Event Id="2420110896" Name="Sundered_Castle" ObjectPath="\Events\Default Work Unit\MX\Sundered_Castle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 			</IncludedEvents>
@@ -75,6 +55,10 @@
 				<File Id="157873061" Language="SFX">
 					<ShortName>sfx_knightcharge_03.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_03_10C4C929.wem</Path>
+				</File>
+				<File Id="165292959" Language="SFX">
+					<ShortName>sfx_back.wav</ShortName>
+					<Path>SFX/sfx_back_10C4C929.wem</Path>
 				</File>
 				<File Id="307784005" Language="SFX">
 					<ShortName>Dextra Castle Rose.wav</ShortName>
@@ -99,6 +83,14 @@
 				<File Id="412860449" Language="SFX">
 					<ShortName>sfx_knightcharge_02.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_02_10C4C929.wem</Path>
+				</File>
+				<File Id="426678672" Language="SFX">
+					<ShortName>sfx_walljump_NEW.wav</ShortName>
+					<Path>SFX/sfx_walljump_NEW_10C4C929.wem</Path>
+				</File>
+				<File Id="485708020" Language="SFX">
+					<ShortName>sfx_startgame.wav</ShortName>
+					<Path>SFX/sfx_startgame_10C4C929.wem</Path>
 				</File>
 				<File Id="498525494" Language="SFX">
 					<ShortName>dextra_jump_B.wav</ShortName>
@@ -127,10 +119,6 @@
 				<File Id="805520227" Language="SFX">
 					<ShortName>Dextra Dev Room.wav</ShortName>
 					<Path>SFX/Dextra Dev Room_D79FB2B7.wem</Path>
-				</File>
-				<File Id="809055740" Language="SFX">
-					<ShortName>dextra_walljumpgrab.wav</ShortName>
-					<Path>SFX/dextra_walljumpgrab_10C4C929.wem</Path>
 				</File>
 				<File Id="815115313" Language="SFX">
 					<ShortName>sfx_knightcharge_04.wav</ShortName>

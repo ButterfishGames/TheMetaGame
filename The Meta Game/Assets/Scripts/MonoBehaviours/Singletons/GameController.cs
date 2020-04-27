@@ -374,7 +374,7 @@ public class GameController : MonoBehaviour
 
     public void OnCancel (InputValue value)
     {
-        // TODO: Add UI Back SFX Event
+        AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
 
         if (switchMenu.activeInHierarchy)
         {

@@ -32,7 +32,7 @@
 								<Action Name="" ID="{609FDAF8-EE87-4114-AA4B-1F3DB5D240CB}" ShortID="394243434">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="sfx_walljump" ID="{2CFBE76B-3735-4543-B1A0-510DC58AD30A}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+											<ObjectRef Name="sfx_walljump_NEW" ID="{079B8F2A-507F-4E9C-880B-C04369ADFD17}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -71,6 +71,28 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="sfx_start_game" ID="{D3CC3B6A-C13D-4FBD-A3A5-F2D589B0EDD0}">
+							<ChildrenList>
+								<Action Name="" ID="{6A3647BE-0081-4B80-A1D9-545EC28EC680}" ShortID="599815278">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}">
+							<ChildrenList>
+								<Action Name="" ID="{1ADC8C23-3AC8-46EE-8405-AC81AE26BCA1}" ShortID="647068934">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_back" ID="{F68F309B-3170-4688-98EF-032CFA4A4354}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Empty Events" ID="{F79CDEC9-3861-419F-9EF4-6DE8B87756E3}" ShortID="410579419">
@@ -78,16 +100,6 @@
 						<Event Name="sfx_ui_select" ID="{3379F545-E7A7-4859-909E-F7F2E965A3AB}">
 							<ChildrenList>
 								<Action Name="" ID="{3CA14CE8-A36B-42D0-8364-DDE7E8AD2B2E}" ShortID="228437544"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}">
-							<ChildrenList>
-								<Action Name="" ID="{1ADC8C23-3AC8-46EE-8405-AC81AE26BCA1}" ShortID="647068934"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_start_game" ID="{D3CC3B6A-C13D-4FBD-A3A5-F2D589B0EDD0}">
-							<ChildrenList>
-								<Action Name="" ID="{6A3647BE-0081-4B80-A1D9-545EC28EC680}" ShortID="599815278"/>
 							</ChildrenList>
 						</Event>
 						<Event Name="sfx_player_talk" ID="{E641253C-BD06-4325-BCD8-480B1B1AAFFF}">
@@ -210,6 +222,28 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{0CF10EBB-895E-498A-B571-90A1E0599E6C}" ShortID="935058296">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="38"/>
+										<Property Name="GameParameterValue" Type="Real64" Value="50"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="MX_Volume" ID="{EBD6A327-C0E9-478A-9302-3FBE6EFB3B50}" WorkUnitID="{6E2B8150-5D57-4A4A-AE85-29C2FF5978A3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{42A42C3B-2246-4F48-A391-00D86380A6C4}" ShortID="33393077">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="38"/>
+										<Property Name="GameParameterValue" Type="Real64" Value="50"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_Volume" ID="{BABB477F-A993-4826-BE0B-EDF66D5BF21D}" WorkUnitID="{6E2B8150-5D57-4A4A-AE85-29C2FF5978A3}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
