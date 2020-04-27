@@ -374,7 +374,7 @@ public class GameController : MonoBehaviour
 
     public void OnCancel (InputValue value)
     {
-        // TODO: Add UI Back SFX Event
+        AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
 
         if (switchMenu.activeInHierarchy)
         {
@@ -407,6 +407,7 @@ public class GameController : MonoBehaviour
         else if (singleton != this)
         {
             Destroy(gameObject);
+            return;
         }
 
         dated = false;
@@ -478,6 +479,8 @@ public class GameController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        AkSoundEngine.PostEvent("start_game", gameObject);
     }
 
     // Update is called once per frame
@@ -692,7 +695,8 @@ public class GameController : MonoBehaviour
         GameObject staff;
         AudioSource source;
 
-        // TODO: Add Switch Mode SFX Event
+       //This effect is triggering on start for some reason 
+        //AkSoundEngine.PostEvent("sfx_game_mode_switch", gameObject);
 
         switch (equipped)
         {
@@ -1454,6 +1458,7 @@ public class GameController : MonoBehaviour
     {
         dating = true;
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("Dating_Sim", gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         SetGlitching(false);
 
@@ -1482,6 +1487,7 @@ public class GameController : MonoBehaviour
     private IEnumerator DatingUntransition()
     {
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         if (DialogueManager.singleton.GetDisplaying())
         {
@@ -1709,7 +1715,7 @@ public class GameController : MonoBehaviour
                 }
                 unlockText.text = "You lost \n" + mode + " mode!";
                 found = true;
-                // TODO: Add Unlock Mode SFX Event
+                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
                 StartCoroutine(UnlockFade());
             }
         }
@@ -1757,6 +1763,9 @@ public class GameController : MonoBehaviour
         {
             return;
         }
+        
+        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
 
         dying = true;
         paused = true;
@@ -1773,6 +1782,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        // TODO: Post Death jingle event
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(fall));
@@ -1997,6 +2007,7 @@ public class GameController : MonoBehaviour
         battling = true;
         ToggleSwitchPanel(false);
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("RPG_Battle", gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1, LoadSceneMode.Additive);
         DialogueManager.singleton.EndDialogue(false);
@@ -2037,6 +2048,7 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
 
         int temp = SceneManager.GetActiveScene().buildIndex;

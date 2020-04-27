@@ -24,14 +24,14 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: cdac2032fcf69e468d364161c3f11912
     GuidInternal: 
-    m_lastTime: -8586144550224775808
+    m_lastTime: -8586136479064775808
     List: []
   BankWwu:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 81834eaa2001eb40ae8409a6ac679469
     GuidInternal: 
-    m_lastTime: -8586140974784775808
+    m_lastTime: -8586136461284775808
     List:
     - name: Dextra_Soundbank
       guid: f1ff2b764d36c44aba3ba315fd9d94b6
@@ -47,19 +47,19 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: bd962ea42152be4ea0b28a48f06727da
     GuidInternal: 
-    m_lastTime: -8586140948604775808
+    m_lastTime: -8586136463554775808
     List:
-    - name: Boss_1
+    - name: Boss_Fight
       guid: 1bf700cd4a2b704ba5848cefdf854d9e
-      id: 1272574122
+      id: 3688152761
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
       - ElementName: MX
         ObjectType: 4
-      - ElementName: Boss_1
+      - ElementName: Boss_Fight
         ObjectType: 3
-      Path: Default Work Unit/MX/Boss_1
+      Path: Default Work Unit/MX/Boss_Fight
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
     - name: Death_Jingle
-      guid: 12c20c25fbce964bb13e9352c8355651
+      guid: 8c69431d38d8874aa6a1dd0fb9c77e40
       id: 3131203835
       PathAndIcons:
       - ElementName: Default Work Unit
@@ -131,8 +131,22 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Death_Jingle
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: 4.310204
+      minDuration: 4.310204
+    - name: Death_Jingle_MuteMusic
+      guid: 12c20c25fbce964bb13e9352c8355651
+      id: 4150336450
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: MX
+        ObjectType: 4
+      - ElementName: Death_Jingle_MuteMusic
+        ObjectType: 3
+      Path: Default Work Unit/MX/Death_Jingle_MuteMusic
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Dev_Room
       guid: 4f665f23a7600045ac818bbc7fdb28b7
       id: 84803132
@@ -186,6 +200,20 @@ MonoBehaviour:
       - ElementName: Main_Menu
         ObjectType: 3
       Path: Default Work Unit/MX/Main_Menu
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Rhythm_Mode
+      guid: c711202d15c9ac41ad35a95cbfbc97f4
+      id: 1431648729
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: MX
+        ObjectType: 4
+      - ElementName: Rhythm_Mode
+        ObjectType: 3
+      Path: Default Work Unit/MX/Rhythm_Mode
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -243,8 +271,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_flee_failure
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_flee_success
       guid: d2645ee5cc66164b95ed50ec9b2d7a8d
       id: 3582953825
@@ -257,8 +285,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_flee_success
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_fps_hit
       guid: 3b3982ffa312a74e8b5a32e76e2c2fcc
       id: 1048287188
@@ -271,8 +299,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_fps_hit
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_fps_shot
       guid: 5a2645b9c20cfa4c9ef77d3b6c69a4f8
       id: 2634636601
@@ -285,8 +313,36 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_fps_shot
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_game_mode_switch
+      guid: a5959afccf4bb54aa84509ff2ce2ae5c
+      id: 832314226
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: sfx_game_mode_switch
+        ObjectType: 3
+      Path: Default Work Unit/SFX/sfx_game_mode_switch
+      maxAttenuation: 0
+      maxDuration: 1.662521
+      minDuration: 1.662521
+    - name: sfx_game_mode_unlocked
+      guid: 35ae942bf1155347ac22dedd4ecf6536
+      id: 2587904569
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: sfx_game_mode_unlocked
+        ObjectType: 3
+      Path: Default Work Unit/SFX/sfx_game_mode_unlocked
+      maxAttenuation: 0
+      maxDuration: 3.875
+      minDuration: 3.875
     - name: sfx_jump
       guid: 340cca551a938d47adacab9f4d3f4836
       id: 3695098761
@@ -313,8 +369,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_kick
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_knight_talk
       guid: 6985467c748a12498b5b336d57134f7d
       id: 1803239799
@@ -349,14 +405,14 @@ MonoBehaviour:
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Empty Events
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_magic_fire
         ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_magic_fire
+      Path: Default Work Unit/SFX/sfx_magic_fire
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: 2
+      minDuration: 2
     - name: sfx_magic_heal
       guid: 94bbf14462a2b3499bdc29480c1ebe7d
       id: 2156021983
@@ -369,22 +425,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_magic_heal
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: sfx_magic_ice
-      guid: 5e21bd29d49d66419a887710c532d965
-      id: 3829629126
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Empty Events
-        ObjectType: 4
-      - ElementName: sfx_magic_ice
-        ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_magic_ice
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_magic_lightning
       guid: 281e86d228edcf4ca37f369c65ffd636
       id: 2707288665
@@ -397,8 +439,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_magic_lightning
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_miss_punch
       guid: 8fd393744b675c4a9b23b72568ca2ab6
       id: 3959035188
@@ -411,36 +453,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_miss_punch
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: sfx_mode_switch
-      guid: a5959afccf4bb54aa84509ff2ce2ae5c
-      id: 2006245931
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Empty Events
-        ObjectType: 4
-      - ElementName: sfx_mode_switch
-        ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_mode_switch
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
-    - name: sfx_new_mode_unlocked
-      guid: 35ae942bf1155347ac22dedd4ecf6536
-      id: 848617979
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Empty Events
-        ObjectType: 4
-      - ElementName: sfx_new_mode_unlocked
-        ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_new_mode_unlocked
-      maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_player_talk
       guid: 3c2541e606bd2543bcd8480b1b1aafff
       id: 2018269707
@@ -453,8 +467,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_player_talk
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_projectile
       guid: 9c48ad7c974d9d4ebe0752037e89bfc0
       id: 37122652
@@ -467,8 +481,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_projectile
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_punch
       guid: fd95e6ccb42626469b7a721a365a5b98
       id: 643452507
@@ -481,8 +495,22 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_punch
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: sfx_rpg_attack
+      guid: 5e21bd29d49d66419a887710c532d965
+      id: 4013886705
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: sfx_rpg_attack
+        ObjectType: 3
+      Path: Default Work Unit/SFX/sfx_rpg_attack
+      maxAttenuation: 0
+      maxDuration: 2
+      minDuration: 2
     - name: sfx_rpg_battle_death
       guid: 103e4ad45bc21940a190ee3340d67065
       id: 3654319392
@@ -495,8 +523,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_rpg_battle_death
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_rpg_battle_victory
       guid: a7e9ba27a1b12a468c430b9f0f52afb8
       id: 2809605252
@@ -509,36 +537,36 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_rpg_battle_victory
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_start_game
       guid: 6a3bccd33dc1bd4fa3a5f2d589b0edd0
       id: 527172796
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Empty Events
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_start_game
         ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_start_game
+      Path: Default Work Unit/SFX/sfx_start_game
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: 6
+      minDuration: 6
     - name: sfx_ui_back
       guid: 245fed33d055384eae4b499b763f2c71
       id: 2405914575
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Empty Events
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_ui_back
         ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_ui_back
+      Path: Default Work Unit/SFX/sfx_ui_back
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: 4
+      minDuration: 4
     - name: sfx_ui_rpg_menu_confirm
       guid: bae1b9eb52cb9643a9d451d669e0c815
       id: 323185506
@@ -551,8 +579,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_ui_rpg_menu_confirm
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_ui_select
       guid: 45f57933a7e75948909ef7f2e965a3ab
       id: 3753159394
@@ -565,8 +593,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_ui_select
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_uppercut
       guid: 30d7fe42de04da4aa09b1bdfe94b3770
       id: 3797926101
@@ -579,8 +607,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_uppercut
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_walljump
       guid: 8b6149a36f86b744b06d4a58ba3c30e9
       id: 3875906189
@@ -593,8 +621,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_walljump
       maxAttenuation: 0
-      maxDuration: 0.587052
-      minDuration: 0.587052
+      maxDuration: 4
+      minDuration: 4
     - name: Start_Game
       guid: de27aca1c47f2f4e8a0a78c202f426f6
       id: 1114964412
@@ -628,14 +656,32 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: 50812b6e575d4a4aae8529c2ff5978a3
     GuidInternal: 
-    m_lastTime: -8586144550224775808
-    List: []
+    m_lastTime: -8586136706094775808
+    List:
+    - name: MX_Volume
+      guid: 27a3d6ebe9c08a4793023fbe6efb3b50
+      id: 1441253587
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: MX_Volume
+        ObjectType: 13
+      Path: Default Work Unit/MX_Volume
+    - name: SFX_Volume
+      guid: 7f47bbba93a92648be0bedf66d5bf21d
+      id: 1564184899
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX_Volume
+        ObjectType: 13
+      Path: Default Work Unit/SFX_Volume
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 654cedd3e7d0c6488a5d7fa443fadc76
     GuidInternal: 
-    m_lastTime: -8586140955184775808
+    m_lastTime: -8586136495374775808
     List:
     - name: Gameplay_Stategroup
       guid: 3452fcd974e9864e96e6443b4fa88904
@@ -707,6 +753,12 @@ MonoBehaviour:
         PathAndIcons:
         - ElementName: None
           ObjectType: 8
+      - name: Rhythm_Mode
+        guid: 13c5c28ff6b3684ab09bbf1e0f0e5348
+        id: 1431648729
+        PathAndIcons:
+        - ElementName: Rhythm_Mode
+          ObjectType: 8
       - name: RPG_Battle
         guid: e1507f2b231e23489d6df7eb8d6c5bd9
         id: 332969635
@@ -750,7 +802,5 @@ MonoBehaviour:
   - /The Meta Game_WwiseProject/Events
   - /The Meta Game_WwiseProject/Events/Default Work Unit
   - /The Meta Game_WwiseProject/Events/Default Work Unit/MX
-  - /The Meta Game_WwiseProject/SoundBanks
-  - /The Meta Game_WwiseProject/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
   CurrentPluginConfig: 

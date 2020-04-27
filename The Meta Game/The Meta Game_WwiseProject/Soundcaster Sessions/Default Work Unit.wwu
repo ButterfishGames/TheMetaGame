@@ -6,13 +6,114 @@
 				<SoundcasterSession Name="sfx_test" ID="{9B3C2A97-98E6-425C-B1A4-97269F6CCAAD}">
 					<ModuleList>
 						<Module>
-							<ObjectRef Name="sfx_jump" ID="{55CA0C34-931A-478D-ADAC-AB9F4D3F4836}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<ObjectRef Name="Death_Jingle_MuteMusic" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="0" Y="0"/>
 						</Module>
+						<Module>
+							<ObjectRef Name="RPG_Battle" ID="{BAC84137-F863-46EE-9612-2992FF41F8B4}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Crystal_Caverns" ID="{74A9CA1D-FCC6-49B7-BDD8-B64CE50D2E8D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="0" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="End_Credits" ID="{16BE34FA-2D03-4288-905C-E745814175D8}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="0" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Sundered_Castle" ID="{175CA990-F931-4F33-96C6-B82AE4678076}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="0" Y="4"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Death_Jingle" ID="{1D43698C-D838-4A87-A6A1-DD0FB9C77E40}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Boss_Fight" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Dating_Sim" ID="{3EF3106B-6D0B-4347-8AA0-402FDDFBCE3A}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Final_Boss" ID="{B09DB7EC-C72B-4DEE-8D1A-B38012A5A3A3}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Rhythm_Mode" ID="{2D2011C7-C915-41AC-AD35-A95CBFBC97F4}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Castle_Approach" ID="{C4A55D9E-C4D6-442D-A6A1-116D56A4D7AB}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Death_Jingle_MuteMusic" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Main_Menu" ID="{567427EC-04BD-4D38-9C9B-D9DE2389A4CE}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_knight_talk" ID="{7C468569-8A74-4912-8B5B-336D57134F7D}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="4"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_flagcheckpoint" ID="{7FD5E444-049A-4688-BCC7-7A5F340CC934}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="5"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_knightcharge" ID="{D7D0C365-4FEE-4A72-A19C-A4BF82A1167F}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="6"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="2" Y="7"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Castle_Rose" ID="{AC8EEBCE-AE49-4179-9226-33E56E86E8AF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Dev_Room" ID="{235F664F-60A7-4500-AC81-8BBC7FDB28B7}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Start_Game" ID="{A1AC27DE-7FC4-4E2F-8A0A-78C202F426F6}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="3"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_collectable" ID="{3DB63AF1-6593-4FEB-AAFB-9814E52B1558}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="4"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_jump" ID="{55CA0C34-931A-478D-ADAC-AB9F4D3F4836}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="5"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_start_game" ID="{D3CC3B6A-C13D-4FBD-A3A5-F2D589B0EDD0}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="6"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_walljump" ID="{A349618B-866F-44B7-B06D-4A58BA3C30E9}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="7"/>
+						</Module>
 					</ModuleList>
-					<RTPCValueList ShowAll="true"/>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="MX_Volume" ID="{EBD6A327-C0E9-478A-9302-3FBE6EFB3B50}"/>
+							<Value>50</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="SFX_Volume" ID="{BABB477F-A993-4826-BE0B-EDF66D5BF21D}"/>
+							<Value>7.3342693361526E-316</Value>
+						</RTPCValue>
+					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="None" ID="{BB5498D0-D437-4933-8812-F6EE3A04563E}"/>
+						<CurrentStateRef Name="Rhythm_Mode" ID="{8FC2C513-B3F6-4A68-B09B-BF1E0F0E5348}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>

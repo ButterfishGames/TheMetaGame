@@ -189,21 +189,9 @@ public class SettingsController : MonoBehaviour
             PlayerPrefs.SetFloat("sfxVolume", 0.6f);
             PlayerPrefs.Save();
         }
-
-        AudioSource[] sources = FindObjectsOfType<AudioSource>();
-        foreach (AudioSource source in sources)
-        {
-            if (source.gameObject.name.Equals("Player") 
-                || source.gameObject.name.Equals("Song") 
-                || source.gameObject.name.Equals("MusicalStaff(Clone)"))
-            {
-                source.volume = musicVolume;
-            }
-            else
-            {
-                source.volume = sfxVolume;
-            }
-        }
+        
+        MixLevels.SetSfxLvl(sfxVolume);
+        MixLevels.SetMxLvl(musicVolume);
         #endregion
         #region Control Settings
         foreach (string action in actions)
@@ -218,6 +206,12 @@ public class SettingsController : MonoBehaviour
         #endregion
 
         OnControlsChanged(pInput);
+    }
+
+    public void InitAudio()
+    {
+        MixLevels.SetSfxLvl(sfxVolume * 50);
+        MixLevels.SetMxLvl(musicVolume * 50);
     }
 
     public void OnControlsChanged(PlayerInput pIn)
@@ -503,20 +497,7 @@ public class SettingsController : MonoBehaviour
 
                 PlayerPrefs.Save();
 
-                AudioSource[] sources = FindObjectsOfType<AudioSource>();
-                foreach (AudioSource source in sources)
-                {
-                    if (source.gameObject.name.Equals("Player")
-                        || source.gameObject.name.Equals("Song")
-                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
-                    {
-                        source.volume = musicVolume;
-                    }
-                    else
-                    {
-                        source.volume = sfxVolume;
-                    }
-                }
+                InitAudio();
                 break;
 
             case Panel.controls:
@@ -543,20 +524,7 @@ public class SettingsController : MonoBehaviour
                 musicVolume = musicVolumeSlider.value;
                 sfxVolume = sfxVolumeSlider.value;
 
-                AudioSource[] sources = FindObjectsOfType<AudioSource>();
-                foreach (AudioSource source in sources)
-                {
-                    if (source.gameObject.name.Equals("Player")
-                        || source.gameObject.name.Equals("Song")
-                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
-                    {
-                        source.volume = musicVolume;
-                    }
-                    else
-                    {
-                        source.volume = sfxVolume;
-                    }
-                }
+                InitAudio();
                 break;
         }
     }
@@ -590,20 +558,7 @@ public class SettingsController : MonoBehaviour
                 musicVolumeSlider.value = musicVolume;
                 sfxVolumeSlider.value = sfxVolume;
 
-                AudioSource[] sources = FindObjectsOfType<AudioSource>();
-                foreach (AudioSource source in sources)
-                {
-                    if (source.gameObject.name.Equals("Player")
-                        || source.gameObject.name.Equals("Song")
-                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
-                    {
-                        source.volume = musicVolume;
-                    }
-                    else
-                    {
-                        source.volume = sfxVolume;
-                    }
-                }
+                InitAudio();
                 break;
 
             case Panel.controls:
@@ -661,21 +616,8 @@ public class SettingsController : MonoBehaviour
                 PlayerPrefs.SetFloat("sfxVolume", 0.6f);
 
                 PlayerPrefs.Save();
-                
-                AudioSource[] sources = FindObjectsOfType<AudioSource>();
-                foreach (AudioSource source in sources)
-                {
-                    if (source.gameObject.name.Equals("Player")
-                        || source.gameObject.name.Equals("Song")
-                        || source.gameObject.name.Equals("MusicalStaff(Clone)"))
-                    {
-                        source.volume = musicVolume;
-                    }
-                    else
-                    {
-                        source.volume = sfxVolume;
-                    }
-                }
+
+                InitAudio();
                 break;
 
             case Panel.controls:

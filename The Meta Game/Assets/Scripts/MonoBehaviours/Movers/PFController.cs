@@ -78,18 +78,7 @@ public class PFController : Mover
         }
         if (SettingsController.singleton != null)
         {
-            AudioSource[] sources = FindObjectsOfType<AudioSource>();
-            foreach (AudioSource source in sources)
-            {
-                if (source.gameObject.name.Equals("Player") || source.gameObject.name.Equals("Song"))
-                {
-                    source.volume = SettingsController.singleton.musicVolume;
-                }
-                else
-                {
-                    source.volume = SettingsController.singleton.sfxVolume;
-                }
-            }
+            SettingsController.singleton.InitAudio();
         }
 
         dying = false;
@@ -105,6 +94,13 @@ public class PFController : Mover
         }
 
         onWall = false;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        animator.SetBool("platformer", true);
     }
 
     private void LateUpdate()
@@ -272,14 +268,6 @@ public class PFController : Mover
             col.enabled = false;
         }
 
-        if (!GetComponent<AudioSource>().isPlaying)
-        {
-            GetComponent<AudioSource>().Play();
-        }
-        /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
-        {
-            childCol.enabled = false;
-        }*/
         if (!CutsceneManager.singleton.scening)
         {
             yield return new WaitForSeconds(deathWait);

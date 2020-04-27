@@ -7,6 +7,7 @@ State	ID	Name	State Group			Notes
 	332969635	RPG_Battle	Gameplay_Stategroup			
 	491254729	Castle_Rose	Gameplay_Stategroup			
 	1272574122	Boss_1	Gameplay_Stategroup			
+	1431648729	Rhythm_Mode	Gameplay_Stategroup			
 	2005704188	Main_Menu	Gameplay_Stategroup			
 	2294576446	Crystal_Caverns	Gameplay_Stategroup			
 	2345047989	Final_Boss	Gameplay_Stategroup			
@@ -15,7 +16,13 @@ State	ID	Name	State Group			Notes
 	3625439640	Dating_Sim	Gameplay_Stategroup			
 	3797583859	End_Credits	Gameplay_Stategroup			
 
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	1441253587	MX_Volume			\Default Work Unit\MX_Volume	
+	1564184899	SFX_Volume			\Default Work Unit\SFX_Volume	
+
 Audio Bus	ID	Name			Wwise Object Path	Notes
+	393239870	SFX			\Default Work Unit\Master Audio Bus\SFX	
+	1685527054	MX			\Default Work Unit\Master Audio Bus\MX	
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 Audio Devices	ID	Name	Type				Notes

@@ -32,7 +32,7 @@
 								<Action Name="" ID="{609FDAF8-EE87-4114-AA4B-1F3DB5D240CB}" ShortID="394243434">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="sfx_walljump" ID="{2CFBE76B-3735-4543-B1A0-510DC58AD30A}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+											<ObjectRef Name="sfx_walljump_NEW" ID="{079B8F2A-507F-4E9C-880B-C04369ADFD17}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -71,6 +71,72 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="sfx_start_game" ID="{D3CC3B6A-C13D-4FBD-A3A5-F2D589B0EDD0}">
+							<ChildrenList>
+								<Action Name="" ID="{6A3647BE-0081-4B80-A1D9-545EC28EC680}" ShortID="599815278">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}">
+							<ChildrenList>
+								<Action Name="" ID="{1ADC8C23-3AC8-46EE-8405-AC81AE26BCA1}" ShortID="647068934">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_back" ID="{F68F309B-3170-4688-98EF-032CFA4A4354}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_game_mode_unlocked" ID="{2B94AE35-15F1-4753-AC22-DEDD4ECF6536}">
+							<ChildrenList>
+								<Action Name="" ID="{DBCF6BA8-E922-4327-82FF-E736004CB548}" ShortID="886826444">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_GM_unlock" ID="{24ECEDDD-36A4-41DC-91C7-D9196236E7AE}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_game_mode_switch" ID="{FC9A95A5-4BCF-4AB5-A845-09FF2CE2AE5C}">
+							<ChildrenList>
+								<Action Name="" ID="{298B3C7A-A927-4FA0-BA4F-7F1A9DE7F614}" ShortID="591340935">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_GM_switch" ID="{C9CFD4AF-0C0B-4CA6-8DDB-ECD8342FC95B}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_magic_fire" ID="{B3C3AD39-DF87-42F3-9B7E-2FC67F846DDC}">
+							<ChildrenList>
+								<Action Name="" ID="{A09FE47B-2272-4ECB-84CC-8784A76A129A}" ShortID="573407984">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_fire" ID="{309C8A3E-BB86-4DDE-981D-398E8E1E0D64}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_rpg_attack" ID="{29BD215E-9DD4-4166-9A88-7710C532D965}">
+							<ChildrenList>
+								<Action Name="" ID="{3E5FDC43-B3CB-4D98-87F8-69AA038A3FFC}" ShortID="230447854">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_rpg_attack" ID="{F6E6467A-C707-4A49-98B2-A20D5AE0B3FB}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Empty Events" ID="{F79CDEC9-3861-419F-9EF4-6DE8B87756E3}" ShortID="410579419">
@@ -78,16 +144,6 @@
 						<Event Name="sfx_ui_select" ID="{3379F545-E7A7-4859-909E-F7F2E965A3AB}">
 							<ChildrenList>
 								<Action Name="" ID="{3CA14CE8-A36B-42D0-8364-DDE7E8AD2B2E}" ShortID="228437544"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}">
-							<ChildrenList>
-								<Action Name="" ID="{1ADC8C23-3AC8-46EE-8405-AC81AE26BCA1}" ShortID="647068934"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_start_game" ID="{D3CC3B6A-C13D-4FBD-A3A5-F2D589B0EDD0}">
-							<ChildrenList>
-								<Action Name="" ID="{6A3647BE-0081-4B80-A1D9-545EC28EC680}" ShortID="599815278"/>
 							</ChildrenList>
 						</Event>
 						<Event Name="sfx_player_talk" ID="{E641253C-BD06-4325-BCD8-480B1B1AAFFF}">
@@ -120,29 +176,9 @@
 								<Action Name="" ID="{7BA6B6F2-754E-4570-B099-028826CF68E5}" ShortID="513280209"/>
 							</ChildrenList>
 						</Event>
-						<Event Name="sfx_mode_switch" ID="{FC9A95A5-4BCF-4AB5-A845-09FF2CE2AE5C}">
-							<ChildrenList>
-								<Action Name="" ID="{298B3C7A-A927-4FA0-BA4F-7F1A9DE7F614}" ShortID="591340935"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_new_mode_unlocked" ID="{2B94AE35-15F1-4753-AC22-DEDD4ECF6536}">
-							<ChildrenList>
-								<Action Name="" ID="{DBCF6BA8-E922-4327-82FF-E736004CB548}" ShortID="886826444"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_magic_fire" ID="{B3C3AD39-DF87-42F3-9B7E-2FC67F846DDC}">
-							<ChildrenList>
-								<Action Name="" ID="{A09FE47B-2272-4ECB-84CC-8784A76A129A}" ShortID="573407984"/>
-							</ChildrenList>
-						</Event>
 						<Event Name="sfx_ui_rpg_menu_confirm" ID="{EBB9E1BA-CB52-4396-A9D4-51D669E0C815}">
 							<ChildrenList>
 								<Action Name="" ID="{B56B0EAE-2E95-4048-A9FE-CE1FFC97EE5F}" ShortID="1036466816"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_magic_ice" ID="{29BD215E-9DD4-4166-9A88-7710C532D965}">
-							<ChildrenList>
-								<Action Name="" ID="{3E5FDC43-B3CB-4D98-87F8-69AA038A3FFC}" ShortID="230447854"/>
 							</ChildrenList>
 						</Event>
 						<Event Name="sfx_magic_lightning" ID="{D2861E28-ED28-4CCF-A37F-369C65FFD636}">
@@ -190,7 +226,7 @@
 				</Folder>
 				<Folder Name="MX" ID="{4627DD5C-9A76-4887-B365-86F316728C00}" ShortID="239585595">
 					<ChildrenList>
-						<Event Name="Boss_1" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}">
+						<Event Name="Boss_Fight" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}">
 							<ChildrenList>
 								<Action Name="" ID="{24DC4DAF-1692-4672-9756-06373A411EA3}" ShortID="672639523">
 									<PropertyList>
@@ -210,6 +246,28 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{0CF10EBB-895E-498A-B571-90A1E0599E6C}" ShortID="935058296">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="38"/>
+										<Property Name="GameParameterValue" Type="Real64" Value="50"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="MX_Volume" ID="{EBD6A327-C0E9-478A-9302-3FBE6EFB3B50}" WorkUnitID="{6E2B8150-5D57-4A4A-AE85-29C2FF5978A3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{42A42C3B-2246-4F48-A391-00D86380A6C4}" ShortID="33393077">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="38"/>
+										<Property Name="GameParameterValue" Type="Real64" Value="50"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_Volume" ID="{BABB477F-A993-4826-BE0B-EDF66D5BF21D}" WorkUnitID="{6E2B8150-5D57-4A4A-AE85-29C2FF5978A3}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -313,15 +371,25 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Death_Jingle" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}">
+						<Event Name="Death_Jingle_MuteMusic" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}">
 							<ChildrenList>
 								<Action Name="" ID="{CD5874BA-9039-4594-9C1A-173E97BB808E}" ShortID="200798043">
 									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="35"/>
+										<Property Name="ActionType" Type="int16" Value="7"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="Death_Jingle" ID="{ABCC9FD8-EBD9-4EBF-96F2-FB001C5CC88A}" WorkUnitID="{0D8FC9BC-90A5-445C-A528-6D08844DCD56}"/>
+											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{DA170914-6ED1-4036-95BD-4821E4986DF5}" ShortID="91443965">
+									<PropertyList>
+										<Property Name="Delay" Type="Real64" Value="4"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -364,6 +432,31 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="RPG_Battle" ID="{2B7F50E1-1E23-4823-9D6D-F7EB8D6C5BD9}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Death_Jingle" ID="{1D43698C-D838-4A87-A6A1-DD0FB9C77E40}">
+							<ChildrenList>
+								<Action Name="" ID="{9D02B4B7-D1DB-4A64-903A-7AB2C8375A27}" ShortID="850380456">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Rhythm_Mode" ID="{2D2011C7-C915-41AC-AD35-A95CBFBC97F4}">
+							<ChildrenList>
+								<Action Name="" ID="{E743AC2B-3199-4A5C-97AA-E3AFF0B97956}" ShortID="934883073">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Rhythm_Mode" ID="{8FC2C513-B3F6-4A68-B09B-BF1E0F0E5348}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
