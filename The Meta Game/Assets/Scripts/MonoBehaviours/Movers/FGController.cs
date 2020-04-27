@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class FGController : Mover
 {
@@ -161,11 +162,24 @@ public class FGController : Mover
     private float moveVelY;
 
     private bool dying;
+
+    private Slider healthSlider;
+
+    private Slider hitstunSlider;
     #endregion
 
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        if (healthSlider != null)
+        {
+            healthSlider.gameObject.SetActive(true);
+        }
+        if (hitstunSlider != null)
+        {
+            hitstunSlider.gameObject.SetActive(true);
+        }
 
         dying = false;
         OnControlsChanged(GetComponent<PlayerInput>());
@@ -174,6 +188,15 @@ public class FGController : Mover
     protected override void OnDisable()
     {
         base.OnDisable();
+
+        if (healthSlider != null)
+        {
+            healthSlider.gameObject.SetActive(false);
+        }
+        if (hitstunSlider != null)
+        {
+            hitstunSlider.gameObject.SetActive(false);
+        }
 
         light.performed -= LightPerfHandle;
         light.canceled -= LightCancHandle;
@@ -354,6 +377,31 @@ public class FGController : Mover
         heldAttackButton[2] = false;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (healthSlider == null)
+        {
+            GameObject healthBarTemp = GameObject.Find("PlayerHealthBar");
+            if (healthBarTemp != null)
+            {
+                healthSlider = healthBarTemp.GetComponent<Slider>();
+                healthSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (hitstunSlider == null)
+        {
+            GameObject hitstunSliderTemp = GameObject.Find("PlayerHitstunBar");
+            if (hitstunSliderTemp != null)
+            {
+                hitstunSlider = hitstunSliderTemp.GetComponent<Slider>();
+                hitstunSlider.gameObject.SetActive(false);
+            }
+        }
+    }
+
     private void Start()
     {
         inputs = new InputDirection[3];
@@ -377,6 +425,8 @@ public class FGController : Mover
 
     protected override void Update()
     {
+        healthSlider.value = GameController.singleton.GetHP();
+        hitstunSlider.value = hitstun;
         if (GameController.singleton.GetHP() <= 0)
         {
             if (!dead)
