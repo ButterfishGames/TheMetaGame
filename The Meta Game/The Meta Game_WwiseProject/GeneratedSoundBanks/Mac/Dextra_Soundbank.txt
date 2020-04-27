@@ -20,6 +20,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3695098761	sfx_jump			\Default Work Unit\SFX\sfx_jump	
 	3797583859	End_Credits			\Default Work Unit\MX\End_Credits	
 	3875906189	sfx_walljump			\Default Work Unit\SFX\sfx_walljump	
+	4150336450	Death_Jingle_MuteMusic			\Default Work Unit\MX\Death_Jingle_MuteMusic	
 
 State Group	ID	Name			Wwise Object Path	Notes
 	4070416336	Gameplay_Stategroup			\Default Work Unit\Gameplay_Stategroup	
@@ -43,7 +44,7 @@ Trigger	ID	Name			Wwise Object Path	Notes
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	110204337	sfx_knight_talk	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\dextra_talk_option1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_knight_talk		340400
-	130448338	Dextra Death Jingle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Death Jingle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\ST_Death_Jingle\Dextra Death Jingle		760384
+	130448338	Dextra Death Jingle	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Death Jingle_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\ST_Death_Jingle\Dextra Death Jingle		760384
 	157873061	sfx_knightcharge_03	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_knightcharge_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_knightcharge\sfx_knightcharge_03		1152064
 	165292959	sfx_back	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\sfx_back_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX\sfx_back		768064
 	307784005	Dextra Castle Rose	Y:\Documents\GitHub\TheMetaGame\The Meta Game\The Meta Game_WwiseProject\.cache\Mac\SFX\Dextra Castle Rose_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Dextra_GameplaySwitch\Castle_Rose\Dextra Castle Rose\Dextra Castle Rose		21556288

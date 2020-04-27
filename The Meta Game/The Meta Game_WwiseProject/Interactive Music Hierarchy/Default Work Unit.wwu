@@ -1147,126 +1147,6 @@
 								</MusicPlaylistItem>
 							</Playlist>
 						</MusicPlaylistContainer>
-						<MusicSegment Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" ShortID="828969882">
-							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="4461.10838208369"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<MusicTrack Name="Dextra Death Jingle" ID="{7F01FA52-7B22-4233-BB74-59DE020A1522}" ShortID="376927025">
-									<ReferenceList>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
-										</Reference>
-									</ReferenceList>
-									<ChildrenList>
-										<AudioFileSource Name="Dextra Death Jingle" ID="{7D64B8B8-04A4-4267-A9D1-4DA80FC48275}" ShortID="130448338">
-											<Language>SFX</Language>
-											<AudioFile>Dextra Death Jingle.wav</AudioFile>
-										</AudioFileSource>
-									</ChildrenList>
-									<TransitionList>
-										<MusicTransition Name="Root" ID="{6F38A04B-E1C9-4FE5-8D84-BD9450774CF8}">
-											<PropertyList>
-												<Property Name="IsFolder" Type="bool" Value="True"/>
-											</PropertyList>
-											<TransitionInfo/>
-										</MusicTransition>
-									</TransitionList>
-									<SequenceList>
-										<MusicTrackSequence Name="" ID="{EA4702D4-F1B7-47B4-9E0D-EBA164D62B9B}">
-											<ClipList>
-												<MusicClip Name="Dextra Death Jingle" ID="{8FBDEE30-3C46-41B7-8ADB-0E6A44023783}">
-													<PropertyList>
-														<Property Name="BeginTrimOffset" Type="Real64" Value="80.1679096146117"/>
-														<Property Name="EndTrimOffset" Type="Real64" Value="4310.20408163265"/>
-														<Property Name="FadeInMode" Type="int16" Value="0"/>
-														<Property Name="FadeOutMode" Type="int16" Value="0"/>
-														<Property Name="PlayAt" Type="Real64" Value="-80.1679096146117"/>
-													</PropertyList>
-													<AudioSourceRef Name="Dextra Death Jingle" ID="{7D64B8B8-04A4-4267-A9D1-4DA80FC48275}"/>
-													<PropertyCurveList>
-														<PropertyCurve PropertyName="Highpass">
-															<Curve Name="" ID="{15E91729-C3F6-4A08-A7D6-CE194D26611A}">
-																<PropertyList>
-																	<Property Name="Flags" Type="int32" Value="1"/>
-																</PropertyList>
-																<PointList>
-																	<Point>
-																		<XPos>0.08017</XPos>
-																		<YPos>0</YPos>
-																		<Flags>5</Flags>
-																	</Point>
-																	<Point>
-																		<XPos>4.31020408163265</XPos>
-																		<YPos>0</YPos>
-																		<Flags>37</Flags>
-																	</Point>
-																</PointList>
-															</Curve>
-														</PropertyCurve>
-														<PropertyCurve PropertyName="Lowpass">
-															<Curve Name="" ID="{59FF8ACF-A4E8-4F6D-93A5-7813D4A3E0D5}">
-																<PropertyList>
-																	<Property Name="Flags" Type="int32" Value="1"/>
-																</PropertyList>
-																<PointList>
-																	<Point>
-																		<XPos>0.08017</XPos>
-																		<YPos>0</YPos>
-																		<Flags>5</Flags>
-																	</Point>
-																	<Point>
-																		<XPos>4.31020408163265</XPos>
-																		<YPos>0</YPos>
-																		<Flags>37</Flags>
-																	</Point>
-																</PointList>
-															</Curve>
-														</PropertyCurve>
-														<PropertyCurve PropertyName="Volume">
-															<Curve Name="" ID="{2A81580C-3284-4631-8EC9-1FC65F5DE2BC}">
-																<PropertyList>
-																	<Property Name="Flags" Type="int32" Value="3"/>
-																</PropertyList>
-																<PointList>
-																	<Point>
-																		<XPos>0.08017</XPos>
-																		<YPos>0</YPos>
-																		<Flags>5</Flags>
-																	</Point>
-																	<Point>
-																		<XPos>4.31020408163265</XPos>
-																		<YPos>0</YPos>
-																		<Flags>37</Flags>
-																	</Point>
-																</PointList>
-															</Curve>
-														</PropertyCurve>
-													</PropertyCurveList>
-												</MusicClip>
-											</ClipList>
-										</MusicTrackSequence>
-									</SequenceList>
-								</MusicTrack>
-							</ChildrenList>
-							<CueList>
-								<MusicCue Name="Entry Cue" ID="{32B6414E-68BE-4089-A631-5DEF1F5450C0}"/>
-								<MusicCue Name="Exit Cue" ID="{648A34D2-0AD8-4C6D-92FC-8AC1E73018DE}">
-									<PropertyList>
-										<Property Name="CueType" Type="int16" Value="1"/>
-										<Property Name="TimeMs" Type="Real64" Value="4310.20408163266"/>
-									</PropertyList>
-								</MusicCue>
-							</CueList>
-						</MusicSegment>
 					</ChildrenList>
 					<TransitionList>
 						<MusicTransition Name="Root" ID="{22B6C4F2-FCD0-4579-98B3-1D2A26E82A58}">
@@ -1305,7 +1185,6 @@
 									<PropertyList>
 										<Property Name="SourceContextType" Type="int16" Value="1"/>
 									</PropertyList>
-									<ReferenceList/>
 									<TransitionInfo/>
 								</MusicTransition>
 								<MusicTransition Name="Transition" ID="{63C50D61-FEAF-4D45-93A9-803396B9578D}">
@@ -1448,6 +1327,127 @@
 						</Entry>
 					</EntryList>
 				</MusicSwitchContainer>
+				<MusicSegment Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" ShortID="828969882">
+					<PropertyList>
+						<Property Name="EndPosition" Type="Real64" Value="4461.10838208369"/>
+						<Property Name="OverrideOutput" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicTrack Name="Dextra Death Jingle" ID="{7F01FA52-7B22-4233-BB74-59DE020A1522}" ShortID="376927025">
+							<ReferenceList>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Dextra Death Jingle" ID="{7D64B8B8-04A4-4267-A9D1-4DA80FC48275}" ShortID="130448338">
+									<Language>SFX</Language>
+									<AudioFile>Dextra Death Jingle.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{6F38A04B-E1C9-4FE5-8D84-BD9450774CF8}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<SequenceList>
+								<MusicTrackSequence Name="" ID="{EA4702D4-F1B7-47B4-9E0D-EBA164D62B9B}">
+									<ClipList>
+										<MusicClip Name="Dextra Death Jingle" ID="{8FBDEE30-3C46-41B7-8ADB-0E6A44023783}">
+											<PropertyList>
+												<Property Name="BeginTrimOffset" Type="Real64" Value="80.1679096146117"/>
+												<Property Name="EndTrimOffset" Type="Real64" Value="4310.20408163265"/>
+												<Property Name="FadeInMode" Type="int16" Value="0"/>
+												<Property Name="FadeOutMode" Type="int16" Value="0"/>
+												<Property Name="PlayAt" Type="Real64" Value="-80.1679096146117"/>
+											</PropertyList>
+											<AudioSourceRef Name="Dextra Death Jingle" ID="{7D64B8B8-04A4-4267-A9D1-4DA80FC48275}"/>
+											<PropertyCurveList>
+												<PropertyCurve PropertyName="Highpass">
+													<Curve Name="" ID="{15E91729-C3F6-4A08-A7D6-CE194D26611A}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="1"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0.08017</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>4.31020408163265</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</PropertyCurve>
+												<PropertyCurve PropertyName="Lowpass">
+													<Curve Name="" ID="{59FF8ACF-A4E8-4F6D-93A5-7813D4A3E0D5}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="1"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0.08017</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>4.31020408163265</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</PropertyCurve>
+												<PropertyCurve PropertyName="Volume">
+													<Curve Name="" ID="{2A81580C-3284-4631-8EC9-1FC65F5DE2BC}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0.08017</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>4.31020408163265</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</PropertyCurve>
+											</PropertyCurveList>
+										</MusicClip>
+									</ClipList>
+								</MusicTrackSequence>
+							</SequenceList>
+						</MusicTrack>
+					</ChildrenList>
+					<CueList>
+						<MusicCue Name="Entry Cue" ID="{32B6414E-68BE-4089-A631-5DEF1F5450C0}"/>
+						<MusicCue Name="Exit Cue" ID="{648A34D2-0AD8-4C6D-92FC-8AC1E73018DE}">
+							<PropertyList>
+								<Property Name="CueType" Type="int16" Value="1"/>
+								<Property Name="TimeMs" Type="Real64" Value="4310.20408163266"/>
+							</PropertyList>
+						</MusicCue>
+					</CueList>
+				</MusicSegment>
 			</ChildrenList>
 		</WorkUnit>
 	</InteractiveMusic>

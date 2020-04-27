@@ -1763,6 +1763,9 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(false));
@@ -1778,7 +1781,9 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        // TODO: Post Death jingle event
+        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(fall));
