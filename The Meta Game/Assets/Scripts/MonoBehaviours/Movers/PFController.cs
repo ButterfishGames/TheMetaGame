@@ -268,14 +268,6 @@ public class PFController : Mover
             col.enabled = false;
         }
 
-        if (!GetComponent<AudioSource>().isPlaying)
-        {
-            GetComponent<AudioSource>().Play();
-        }
-        /*foreach (BoxCollider2D childCol in GetComponentsInChildren<BoxCollider2D>())
-        {
-            childCol.enabled = false;
-        }*/
         if (!CutsceneManager.singleton.scening)
         {
             yield return new WaitForSeconds(deathWait);
