@@ -24,14 +24,14 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: cdac2032fcf69e468d364161c3f11912
     GuidInternal: 
-    m_lastTime: -8586136706094775808
+    m_lastTime: -8586136524544775808
     List: []
   BankWwu:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 81834eaa2001eb40ae8409a6ac679469
     GuidInternal: 
-    m_lastTime: -8586136766164775808
+    m_lastTime: -8586136516384775808
     List:
     - name: Dextra_Soundbank
       guid: f1ff2b764d36c44aba3ba315fd9d94b6
@@ -47,7 +47,7 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: bd962ea42152be4ea0b28a48f06727da
     GuidInternal: 
-    m_lastTime: -8586136706094775808
+    m_lastTime: -8586136516964775808
     List:
     - name: Boss_1
       guid: 1bf700cd4a2b704ba5848cefdf854d9e
@@ -120,7 +120,7 @@ MonoBehaviour:
       maxDuration: 0
       minDuration: 0
     - name: Death_Jingle
-      guid: 12c20c25fbce964bb13e9352c8355651
+      guid: 8c69431d38d8874aa6a1dd0fb9c77e40
       id: 3131203835
       PathAndIcons:
       - ElementName: Default Work Unit
@@ -130,6 +130,20 @@ MonoBehaviour:
       - ElementName: Death_Jingle
         ObjectType: 3
       Path: Default Work Unit/MX/Death_Jingle
+      maxAttenuation: 0
+      maxDuration: 4.310204
+      minDuration: 4.310204
+    - name: Death_Jingle_MuteMusic
+      guid: 12c20c25fbce964bb13e9352c8355651
+      id: 4150336450
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: MX
+        ObjectType: 4
+      - ElementName: Death_Jingle_MuteMusic
+        ObjectType: 3
+      Path: Default Work Unit/MX/Death_Jingle_MuteMusic
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -765,5 +779,8 @@ MonoBehaviour:
       Path: Default Work Unit/Death_Jingle
   ExpandedItems:
   - /The Meta Game_WwiseProject
+  - /The Meta Game_WwiseProject/Events
+  - /The Meta Game_WwiseProject/Events/Default Work Unit
+  - /The Meta Game_WwiseProject/Events/Default Work Unit/MX
   autoPopulateEnabled: 1
   CurrentPluginConfig: 

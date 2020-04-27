@@ -19,6 +19,7 @@ namespace AK
         static const AkUniqueID CRYSTAL_CAVERNS = 2294576446U;
         static const AkUniqueID DATING_SIM = 3625439640U;
         static const AkUniqueID DEATH_JINGLE = 3131203835U;
+        static const AkUniqueID DEATH_JINGLE_MUTEMUSIC = 4150336450U;
         static const AkUniqueID DEV_ROOM = 84803132U;
         static const AkUniqueID END_CREDITS = 3797583859U;
         static const AkUniqueID FINAL_BOSS = 2345047989U;

@@ -26,7 +26,8 @@
 				<Event Id="491254729" Name="Castle_Rose" ObjectPath="\Events\Default Work Unit\MX\Castle_Rose" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2294576446" Name="Crystal_Caverns" ObjectPath="\Events\Default Work Unit\MX\Crystal_Caverns" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3625439640" Name="Dating_Sim" ObjectPath="\Events\Default Work Unit\MX\Dating_Sim" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3131203835" Name="Death_Jingle" ObjectPath="\Events\Default Work Unit\MX\Death_Jingle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="3131203835" Name="Death_Jingle" ObjectPath="\Events\Default Work Unit\MX\Death_Jingle" DurationType="OneShot" DurationMin="4.310204" DurationMax="4.310204"/>
+				<Event Id="4150336450" Name="Death_Jingle_MuteMusic" ObjectPath="\Events\Default Work Unit\MX\Death_Jingle_MuteMusic" DurationType="Infinite"/>
 				<Event Id="84803132" Name="Dev_Room" ObjectPath="\Events\Default Work Unit\MX\Dev_Room" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="3797583859" Name="End_Credits" ObjectPath="\Events\Default Work Unit\MX\End_Credits" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2345047989" Name="Final_Boss" ObjectPath="\Events\Default Work Unit\MX\Final_Boss" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>

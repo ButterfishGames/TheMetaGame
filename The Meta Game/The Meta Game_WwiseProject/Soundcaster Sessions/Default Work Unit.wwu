@@ -6,6 +6,10 @@
 				<SoundcasterSession Name="sfx_test" ID="{9B3C2A97-98E6-425C-B1A4-97269F6CCAAD}">
 					<ModuleList>
 						<Module>
+							<ObjectRef Name="Death_Jingle_MuteMusic" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
 							<ObjectRef Name="RPG_Battle" ID="{BAC84137-F863-46EE-9612-2992FF41F8B4}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="0" Y="1"/>
 						</Module>
@@ -20,6 +24,10 @@
 						<Module>
 							<ObjectRef Name="Sundered_Castle" ID="{175CA990-F931-4F33-96C6-B82AE4678076}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="0" Y="4"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Death_Jingle" ID="{1D43698C-D838-4A87-A6A1-DD0FB9C77E40}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="0"/>
 						</Module>
 						<Module>
 							<ObjectRef Name="Boss_1" ID="{CD00F71B-2B4A-4B70-A584-8CEFDF854D9E}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
@@ -38,7 +46,7 @@
 							<Position X="2" Y="1"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="Death_Jingle" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<ObjectRef Name="Death_Jingle_MuteMusic" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="2" Y="2"/>
 						</Module>
 						<Module>
@@ -101,7 +109,7 @@
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="Castle_Approach" ID="{BA026651-9526-4547-944A-EE39039229A1}"/>
+						<CurrentStateRef Name="Main_Menu" ID="{D339B3A8-56B7-47C5-A5B7-6F3F67822E83}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>

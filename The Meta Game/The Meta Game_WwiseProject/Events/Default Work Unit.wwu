@@ -347,15 +347,25 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Death_Jingle" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}">
+						<Event Name="Death_Jingle_MuteMusic" ID="{250CC212-CEFB-4B96-B13E-9352C8355651}">
 							<ChildrenList>
 								<Action Name="" ID="{CD5874BA-9039-4594-9C1A-173E97BB808E}" ShortID="200798043">
 									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="35"/>
+										<Property Name="ActionType" Type="int16" Value="7"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="Death_Jingle" ID="{ABCC9FD8-EBD9-4EBF-96F2-FB001C5CC88A}" WorkUnitID="{0D8FC9BC-90A5-445C-A528-6D08844DCD56}"/>
+											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{DA170914-6ED1-4036-95BD-4821E4986DF5}" ShortID="91443965">
+									<PropertyList>
+										<Property Name="Delay" Type="Real64" Value="4"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -398,6 +408,17 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="RPG_Battle" ID="{2B7F50E1-1E23-4823-9D6D-F7EB8D6C5BD9}" WorkUnitID="{D3ED4C65-D0E7-48C6-8A5D-7FA443FADC76}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Death_Jingle" ID="{1D43698C-D838-4A87-A6A1-DD0FB9C77E40}">
+							<ChildrenList>
+								<Action Name="" ID="{9D02B4B7-D1DB-4A64-903A-7AB2C8375A27}" ShortID="850380456">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
