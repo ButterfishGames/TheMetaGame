@@ -168,11 +168,72 @@
 													<ClipList>
 														<MusicClip Name="Dextra Dev Room" ID="{52330381-11AA-4333-A439-D17BCFBC9772}">
 															<PropertyList>
+																<Property Name="BeginTrimOffset" Type="Real64" Value="942.370112173456"/>
 																<Property Name="EndTrimOffset" Type="Real64" Value="128966.530612245"/>
 																<Property Name="FadeInMode" Type="int16" Value="0"/>
 																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																<Property Name="PlayAt" Type="Real64" Value="-942.370112173456"/>
 															</PropertyList>
 															<AudioSourceRef Name="Dextra Dev Room" ID="{2CAD03D7-D342-4166-AB42-47F49B6B8470}"/>
+															<PropertyCurveList>
+																<PropertyCurve PropertyName="Highpass">
+																	<Curve Name="" ID="{2B631F10-0221-47CB-8990-650568B89199}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0.94237</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>128.966530612245</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Lowpass">
+																	<Curve Name="" ID="{DDBF03DF-6824-4806-995C-8B2F59579D78}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0.94237</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>128.966530612245</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Volume">
+																	<Curve Name="" ID="{84889F2C-235E-4E19-84FC-1672191E0C5D}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0.94237</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>128.966530612245</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+															</PropertyCurveList>
 														</MusicClip>
 													</ClipList>
 												</MusicTrackSequence>
@@ -184,7 +245,7 @@
 										<MusicCue Name="Exit Cue" ID="{3BDDDBA1-EE1B-48FC-B464-A3B90414C37D}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="128966.530612245"/>
+												<Property Name="TimeMs" Type="Real64" Value="127837.720716295"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -283,7 +344,7 @@
 										<MusicCue Name="Exit Cue" ID="{EC853FF2-DCA0-4783-80B9-AAF825F73C81}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="62223.6734693878"/>
+												<Property Name="TimeMs" Type="Real64" Value="56096.6159067566"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -334,7 +395,7 @@
 							<ChildrenList>
 								<MusicSegment Name="Dextra Crystal Caverns" ID="{FC4F9946-8CD8-4661-BAB2-C31EA1288F86}" ShortID="259856321">
 									<PropertyList>
-										<Property Name="EndPosition" Type="Real64" Value="110602.448979592"/>
+										<Property Name="EndPosition" Type="Real64" Value="119115.495989972"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -386,7 +447,7 @@
 										<MusicCue Name="Exit Cue" ID="{A27B5CAC-2F66-4F72-A345-05B66987F779}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="110602.448979592"/>
+												<Property Name="TimeMs" Type="Real64" Value="109628.440690286"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -489,7 +550,7 @@
 										<MusicCue Name="Exit Cue" ID="{B40BC86D-B071-4751-A192-714FAFAC7871}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="122200.816326531"/>
+												<Property Name="TimeMs" Type="Real64" Value="120195.332469969"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -540,7 +601,7 @@
 							<ChildrenList>
 								<MusicSegment Name="Dextra Dating Sim" ID="{AE0BF6E0-707D-4064-8ED9-2089E1E6D22F}" ShortID="308147502">
 									<PropertyList>
-										<Property Name="EndPosition" Type="Real64" Value="76904.4897959184"/>
+										<Property Name="EndPosition" Type="Real64" Value="84561.2825436521"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -592,7 +653,7 @@
 										<MusicCue Name="Exit Cue" ID="{AC936830-42FC-4C39-A750-06D2B4D0B98A}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="76904.4897959184"/>
+												<Property Name="TimeMs" Type="Real64" Value="75810.6622605279"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -643,7 +704,7 @@
 							<ChildrenList>
 								<MusicSegment Name="Dextra Boss 1" ID="{32651A4F-FF60-4B0A-BA90-942612CFC2AE}" ShortID="498202991">
 									<PropertyList>
-										<Property Name="EndPosition" Type="Real64" Value="85890.612244898"/>
+										<Property Name="EndPosition" Type="Real64" Value="95663.7234850177"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -695,7 +756,7 @@
 										<MusicCue Name="Exit Cue" ID="{84ED9B47-FD00-4AFB-93AB-261AADAF3F49}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="85890.612244898"/>
+												<Property Name="TimeMs" Type="Real64" Value="85044.8622337338"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -782,11 +843,70 @@
 													<ClipList>
 														<MusicClip Name="Dextra Castle Approach" ID="{DE4623D3-D3B4-406A-B8AE-A8FD0E8742F9}">
 															<PropertyList>
-																<Property Name="EndTrimOffset" Type="Real64" Value="89808.9795918367"/>
+																<Property Name="EndTrimOffset" Type="Real64" Value="85610.158859267"/>
 																<Property Name="FadeInMode" Type="int16" Value="0"/>
-																<Property Name="FadeOutDuration" Type="Real64" Value="982.592774527744"/>
+																<Property Name="FadeOutDuration" Type="Real64" Value="256.558535877848"/>
 															</PropertyList>
 															<AudioSourceRef Name="Dextra Castle Approach" ID="{B7467A4D-592E-4006-97CF-97DA22C119F2}"/>
+															<PropertyCurveList>
+																<PropertyCurve PropertyName="Highpass">
+																	<Curve Name="" ID="{140C1BBD-0CCD-49A2-8BC8-363D810A9857}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>85.61016</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Lowpass">
+																	<Curve Name="" ID="{3BE4F59E-418D-4DC1-855E-40EF5C4F510B}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>85.61016</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Volume">
+																	<Curve Name="" ID="{21EB93EB-20E0-47F3-8247-F3AFF26C27FC}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>85.61016</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+															</PropertyCurveList>
 														</MusicClip>
 													</ClipList>
 												</MusicTrackSequence>
@@ -798,7 +918,7 @@
 										<MusicCue Name="Exit Cue" ID="{39D5FB83-11C0-48E5-A0B6-28063156CB37}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="89808.9795918367"/>
+												<Property Name="TimeMs" Type="Real64" Value="85610.1588592669"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -885,11 +1005,70 @@
 													<ClipList>
 														<MusicClip Name="Dextra Main Menu" ID="{AB3D47EA-3DF0-49E2-8C75-4873CB8E7253}">
 															<PropertyList>
-																<Property Name="EndTrimOffset" Type="Real64" Value="140225.306122449"/>
+																<Property Name="EndTrimOffset" Type="Real64" Value="134395.369981691"/>
 																<Property Name="FadeInMode" Type="int16" Value="0"/>
-																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutDuration" Type="Real64" Value="1234.74335137192"/>
 															</PropertyList>
 															<AudioSourceRef Name="Dextra Main Menu" ID="{9DC1C0AF-E117-486E-A1EE-6245A0FDE88B}"/>
+															<PropertyCurveList>
+																<PropertyCurve PropertyName="Highpass">
+																	<Curve Name="" ID="{072CFAC0-CA1D-4EC6-9ABB-0B956B156EA2}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>134.39537</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Lowpass">
+																	<Curve Name="" ID="{2D2F94DB-8AB9-40EA-8B51-F7C867ED5E68}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="1"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>134.39537</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+																<PropertyCurve PropertyName="Volume">
+																	<Curve Name="" ID="{CCC7E894-F700-4274-B375-36370B680E2C}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>134.39537</XPos>
+																				<YPos>0</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</PropertyCurve>
+															</PropertyCurveList>
 														</MusicClip>
 													</ClipList>
 												</MusicTrackSequence>
@@ -901,7 +1080,7 @@
 										<MusicCue Name="Exit Cue" ID="{12E780D8-014F-4142-88C9-5CB25E369D36}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="140225.306122449"/>
+												<Property Name="TimeMs" Type="Real64" Value="132546.949141818"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>
@@ -952,7 +1131,7 @@
 							<ChildrenList>
 								<MusicSegment Name="Dextra RPG Battle" ID="{13DD869C-9B23-4046-BB62-2ED7515B2646}" ShortID="275790268">
 									<PropertyList>
-										<Property Name="EndPosition" Type="Real64" Value="83931.4285714286"/>
+										<Property Name="EndPosition" Type="Real64" Value="99634.1356673961"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -1045,7 +1224,7 @@
 								<Property Name="Tempo" Type="Real64" Value="102"/>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>5</Value>
+										<Value>1</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -1098,7 +1277,7 @@
 															<PropertyList>
 																<Property Name="EndTrimOffset" Type="Real64" Value="102556.734693878"/>
 																<Property Name="FadeInMode" Type="int16" Value="0"/>
-																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutDuration" Type="Real64" Value="3245.39974260848"/>
 															</PropertyList>
 															<AudioSourceRef Name="Dextra Sundered Castle" ID="{BE239259-F7D4-4782-B803-E7D9CA0718C8}"/>
 														</MusicClip>
@@ -1112,7 +1291,7 @@
 										<MusicCue Name="Exit Cue" ID="{78AF127E-BD6F-454F-957B-F46331C73256}">
 											<PropertyList>
 												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="102556.734693878"/>
+												<Property Name="TimeMs" Type="Real64" Value="98807.4828755189"/>
 											</PropertyList>
 										</MusicCue>
 									</CueList>

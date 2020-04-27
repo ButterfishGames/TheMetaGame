@@ -13,6 +13,9 @@
 						<Bus Name="SFX" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}">
 							<PropertyList>
 								<Property Name="BusVolume" Type="Real64">
+									<ValueList>
+										<Value>2</Value>
+									</ValueList>
 									<RTPCList>
 										<RTPC Name="" ID="{348C7F52-61ED-4CD0-B35E-804100175D96}" ShortID="191185237">
 											<ReferenceList>
@@ -45,6 +48,9 @@
 						<Bus Name="MX" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}">
 							<PropertyList>
 								<Property Name="BusVolume" Type="Real64">
+									<ValueList>
+										<Value>-6</Value>
+									</ValueList>
 									<RTPCList>
 										<RTPC Name="" ID="{5C268B28-386D-44F6-889C-CCAA752B814E}" ShortID="496383502">
 											<ReferenceList>
