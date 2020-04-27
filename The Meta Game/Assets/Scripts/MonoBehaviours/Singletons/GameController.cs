@@ -1778,6 +1778,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        // TODO: Post Death jingle event
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(fall));
