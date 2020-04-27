@@ -1764,6 +1764,10 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        // Uncomment the below lines when the death jingle isn't deafening
+        //AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(false));
