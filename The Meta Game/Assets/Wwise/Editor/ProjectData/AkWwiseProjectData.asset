@@ -31,7 +31,7 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: 81834eaa2001eb40ae8409a6ac679469
     GuidInternal: 
-    m_lastTime: -8586136516384775808
+    m_lastTime: -8586136495124775808
     List:
     - name: Dextra_Soundbank
       guid: f1ff2b764d36c44aba3ba315fd9d94b6
@@ -47,19 +47,19 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: bd962ea42152be4ea0b28a48f06727da
     GuidInternal: 
-    m_lastTime: -8586136516964775808
+    m_lastTime: -8586136495374775808
     List:
-    - name: Boss_1
+    - name: Boss_Fight
       guid: 1bf700cd4a2b704ba5848cefdf854d9e
-      id: 1272574122
+      id: 3688152761
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
       - ElementName: MX
         ObjectType: 4
-      - ElementName: Boss_1
+      - ElementName: Boss_Fight
         ObjectType: 3
-      Path: Default Work Unit/MX/Boss_1
+      Path: Default Work Unit/MX/Boss_Fight
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -145,8 +145,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Death_Jingle_MuteMusic
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Dev_Room
       guid: 4f665f23a7600045ac818bbc7fdb28b7
       id: 84803132
@@ -200,6 +200,20 @@ MonoBehaviour:
       - ElementName: Main_Menu
         ObjectType: 3
       Path: Default Work Unit/MX/Main_Menu
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Rhythm_Mode
+      guid: c711202d15c9ac41ad35a95cbfbc97f4
+      id: 1431648729
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: MX
+        ObjectType: 4
+      - ElementName: Rhythm_Mode
+        ObjectType: 3
+      Path: Default Work Unit/MX/Rhythm_Mode
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -301,6 +315,20 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: sfx_game_mode_unlocked
+      guid: 35ae942bf1155347ac22dedd4ecf6536
+      id: 2587904569
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SFX
+        ObjectType: 4
+      - ElementName: sfx_game_mode_unlocked
+        ObjectType: 3
+      Path: Default Work Unit/SFX/sfx_game_mode_unlocked
+      maxAttenuation: 0
+      maxDuration: 3.875
+      minDuration: 3.875
     - name: sfx_jump
       guid: 340cca551a938d47adacab9f4d3f4836
       id: 3695098761
@@ -438,20 +466,6 @@ MonoBehaviour:
       - ElementName: sfx_mode_switch
         ObjectType: 3
       Path: Default Work Unit/Empty Events/sfx_mode_switch
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: sfx_new_mode_unlocked
-      guid: 35ae942bf1155347ac22dedd4ecf6536
-      id: 848617979
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: Empty Events
-        ObjectType: 4
-      - ElementName: sfx_new_mode_unlocked
-        ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_new_mode_unlocked
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -667,7 +681,7 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: 654cedd3e7d0c6488a5d7fa443fadc76
     GuidInternal: 
-    m_lastTime: -8586140955184775808
+    m_lastTime: -8586136495374775808
     List:
     - name: Gameplay_Stategroup
       guid: 3452fcd974e9864e96e6443b4fa88904
@@ -738,6 +752,12 @@ MonoBehaviour:
         id: 748895195
         PathAndIcons:
         - ElementName: None
+          ObjectType: 8
+      - name: Rhythm_Mode
+        guid: 13c5c28ff6b3684ab09bbf1e0f0e5348
+        id: 1431648729
+        PathAndIcons:
+        - ElementName: Rhythm_Mode
           ObjectType: 8
       - name: RPG_Battle
         guid: e1507f2b231e23489d6df7eb8d6c5bd9

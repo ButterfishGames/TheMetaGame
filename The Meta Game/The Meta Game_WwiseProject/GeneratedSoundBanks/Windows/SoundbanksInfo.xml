@@ -21,7 +21,7 @@
 			<ShortName>Dextra_Soundbank</ShortName>
 			<Path>Dextra_Soundbank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="1272574122" Name="Boss_1" ObjectPath="\Events\Default Work Unit\MX\Boss_1" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="3688152761" Name="Boss_Fight" ObjectPath="\Events\Default Work Unit\MX\Boss_Fight" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2926820552" Name="Castle_Approach" ObjectPath="\Events\Default Work Unit\MX\Castle_Approach" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="491254729" Name="Castle_Rose" ObjectPath="\Events\Default Work Unit\MX\Castle_Rose" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2294576446" Name="Crystal_Caverns" ObjectPath="\Events\Default Work Unit\MX\Crystal_Caverns" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
@@ -32,9 +32,11 @@
 				<Event Id="3797583859" Name="End_Credits" ObjectPath="\Events\Default Work Unit\MX\End_Credits" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2345047989" Name="Final_Boss" ObjectPath="\Events\Default Work Unit\MX\Final_Boss" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="2005704188" Name="Main_Menu" ObjectPath="\Events\Default Work Unit\MX\Main_Menu" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="1431648729" Name="Rhythm_Mode" ObjectPath="\Events\Default Work Unit\MX\Rhythm_Mode" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="332969635" Name="RPG_Battle" ObjectPath="\Events\Default Work Unit\MX\RPG_Battle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="673464333" Name="sfx_collectable" ObjectPath="\Events\Default Work Unit\SFX\sfx_collectable" DurationType="OneShot" DurationMin="1.861338" DurationMax="1.861338"/>
 				<Event Id="2688667465" Name="sfx_flagcheckpoint" ObjectPath="\Events\Default Work Unit\SFX\sfx_flagcheckpoint" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
+				<Event Id="2587904569" Name="sfx_game_mode_unlocked" ObjectPath="\Events\Default Work Unit\SFX\sfx_game_mode_unlocked" DurationType="OneShot" DurationMin="3.875000" DurationMax="3.875000"/>
 				<Event Id="3695098761" Name="sfx_jump" ObjectPath="\Events\Default Work Unit\SFX\sfx_jump" DurationType="OneShot" DurationMin="0.184014" DurationMax="0.214671"/>
 				<Event Id="1803239799" Name="sfx_knight_talk" ObjectPath="\Events\Default Work Unit\SFX\sfx_knight_talk" DurationType="OneShot" DurationMin="1.929342" DurationMax="1.929342"/>
 				<Event Id="2518317382" Name="sfx_knightcharge" ObjectPath="\Events\Default Work Unit\SFX\sfx_knightcharge" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
@@ -93,6 +95,10 @@
 					<ShortName>sfx_startgame.wav</ShortName>
 					<Path>SFX/sfx_startgame_10C4C929.wem</Path>
 				</File>
+				<File Id="494491441" Language="SFX">
+					<ShortName>Rhythm Game Theme copy.wav</ShortName>
+					<Path>SFX/Rhythm Game Theme copy_D79FB2B7.wem</Path>
+				</File>
 				<File Id="498525494" Language="SFX">
 					<ShortName>dextra_jump_B.wav</ShortName>
 					<Path>SFX/dextra_jump_B_10C4C929.wem</Path>
@@ -112,6 +118,10 @@
 				<File Id="579614672" Language="SFX">
 					<ShortName>Dextra Crystal Caverns.wav</ShortName>
 					<Path>SFX/Dextra Crystal Caverns_D79FB2B7.wem</Path>
+				</File>
+				<File Id="592181689" Language="SFX">
+					<ShortName>sfx_GM_unlock.wav</ShortName>
+					<Path>SFX/sfx_GM_unlock_10C4C929.wem</Path>
 				</File>
 				<File Id="702299705" Language="SFX">
 					<ShortName>dextra_jump_C.wav</ShortName>
