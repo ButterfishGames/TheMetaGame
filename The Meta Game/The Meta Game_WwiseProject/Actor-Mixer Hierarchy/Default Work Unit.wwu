@@ -322,7 +322,7 @@
 								<ActiveSource Name="sfx_back" ID="{622D0A8B-E296-43F3-97EF-3A9EE1679E2E}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="sfx_GM_unlock" ID="{EA8E7748-B805-43BE-8E0B-05A56525D6C0}" ShortID="843698046">
+						<Sound Name="sfx_GM_unlock" ID="{24ECEDDD-36A4-41DC-91C7-D9196236E7AE}" ShortID="1037192479">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -332,13 +332,160 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="sfx_GM_unlock" ID="{E1E2BA72-B0F3-492E-AECA-7B95F17CE0A5}" ShortID="592181689">
+								<AudioFileSource Name="dextra_sfx_GM_unlock_b" ID="{938137AB-683A-4C81-8A2F-2C461C6C48BF}" ShortID="836308678">
 									<Language>SFX</Language>
-									<AudioFile>sfx_GM_unlock.wav</AudioFile>
+									<AudioFile>dextra_sfx_GM_unlock_b.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="sfx_GM_unlock" ID="{E1E2BA72-B0F3-492E-AECA-7B95F17CE0A5}" Platform="Linked"/>
+								<ActiveSource Name="dextra_sfx_GM_unlock_b" ID="{938137AB-683A-4C81-8A2F-2C461C6C48BF}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="sfx_GM_switch" ID="{C9CFD4AF-0C0B-4CA6-8DDB-ECD8342FC95B}" ShortID="1071911447">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="dextra_sfx_GM_switch (1)" ID="{2B566513-8861-4D00-80E1-FFDF9CCCC89B}" ShortID="152901374">
+									<Language>SFX</Language>
+									<AudioFile>dextra_sfx_GM_switch (1).wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="dextra_sfx_GM_switch (1)" ID="{2B566513-8861-4D00-80E1-FFDF9CCCC89B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<RandomSequenceContainer Name="sfx_fire" ID="{309C8A3E-BB86-4DDE-981D-398E8E1E0D64}" ShortID="653013592">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="dextra_sfx_fire_attack_01" ID="{9EFFECF1-745B-4DD2-A97B-E6242193C76C}" ShortID="384115050">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_sfx_fire_attack_1" ID="{0731C7ED-C518-4E07-A658-A16D3F9566E6}" ShortID="39039820">
+											<Language>SFX</Language>
+											<AudioFile>dextra_sfx_fire_attack_1.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_sfx_fire_attack_1" ID="{0731C7ED-C518-4E07-A658-A16D3F9566E6}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="dextra_sfx_fire_attack_02" ID="{A63BF2CE-0259-4D23-A496-96116AC652B0}" ShortID="379126218">
+									<PropertyList>
+										<Property Name="Inclusion" Type="bool">
+											<ValueList>
+												<Value>False</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_sfx_fire_attack_2" ID="{A75CB951-C76B-4C53-879D-EF3858B9EC5F}" ShortID="1003367313">
+											<Language>SFX</Language>
+											<AudioFile>dextra_sfx_fire_attack_2.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_sfx_fire_attack_2" ID="{A75CB951-C76B-4C53-879D-EF3858B9EC5F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="dextra_sfx_fire_attack_03" ID="{E2270C2E-7644-4132-B0B4-A2F4E4B99018}" ShortID="230833997">
+									<PropertyList>
+										<Property Name="Inclusion" Type="bool">
+											<ValueList>
+												<Value>False</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_sfx_fire_attack_3" ID="{D94D89F8-FE7E-4DB9-9085-357688031CA4}" ShortID="167386524">
+											<Language>SFX</Language>
+											<AudioFile>dextra_sfx_fire_attack_3.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_sfx_fire_attack_3" ID="{D94D89F8-FE7E-4DB9-9085-357688031CA4}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="dextra_sfx_fire_attack_04" ID="{274A2004-CCFA-49D3-8313-520F97BFD654}" ShortID="197252045">
+									<PropertyList>
+										<Property Name="Inclusion" Type="bool">
+											<ValueList>
+												<Value>False</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="dextra_sfx_fire_attack_4" ID="{623E6B17-88C3-4B4E-8AFC-2FCC9BB10EAC}" ShortID="930805707">
+											<Language>SFX</Language>
+											<AudioFile>dextra_sfx_fire_attack_4.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="dextra_sfx_fire_attack_4" ID="{623E6B17-88C3-4B4E-8AFC-2FCC9BB10EAC}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+						<Sound Name="sfx_rpg_attack" ID="{F6E6467A-C707-4A49-98B2-A20D5AE0B3FB}" ShortID="231033217">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="dextra_sfx_enemy_attack_1" ID="{52E52D15-A731-4732-A544-0D8090D1A103}" ShortID="104478694">
+									<Language>SFX</Language>
+									<AudioFile>dextra_sfx_enemy_attack_1.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="dextra_sfx_enemy_attack_1" ID="{52E52D15-A731-4732-A544-0D8090D1A103}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

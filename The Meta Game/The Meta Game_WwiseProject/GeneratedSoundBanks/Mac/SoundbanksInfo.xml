@@ -36,10 +36,13 @@
 				<Event Id="332969635" Name="RPG_Battle" ObjectPath="\Events\Default Work Unit\MX\RPG_Battle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 				<Event Id="673464333" Name="sfx_collectable" ObjectPath="\Events\Default Work Unit\SFX\sfx_collectable" DurationType="OneShot" DurationMin="1.861338" DurationMax="1.861338"/>
 				<Event Id="2688667465" Name="sfx_flagcheckpoint" ObjectPath="\Events\Default Work Unit\SFX\sfx_flagcheckpoint" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
+				<Event Id="832314226" Name="sfx_game_mode_switch" ObjectPath="\Events\Default Work Unit\SFX\sfx_game_mode_switch" DurationType="OneShot" DurationMin="1.662521" DurationMax="1.662521"/>
 				<Event Id="2587904569" Name="sfx_game_mode_unlocked" ObjectPath="\Events\Default Work Unit\SFX\sfx_game_mode_unlocked" DurationType="OneShot" DurationMin="3.875000" DurationMax="3.875000"/>
 				<Event Id="3695098761" Name="sfx_jump" ObjectPath="\Events\Default Work Unit\SFX\sfx_jump" DurationType="OneShot" DurationMin="0.184014" DurationMax="0.214671"/>
 				<Event Id="1803239799" Name="sfx_knight_talk" ObjectPath="\Events\Default Work Unit\SFX\sfx_knight_talk" DurationType="OneShot" DurationMin="1.929342" DurationMax="1.929342"/>
 				<Event Id="2518317382" Name="sfx_knightcharge" ObjectPath="\Events\Default Work Unit\SFX\sfx_knightcharge" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
+				<Event Id="1965088569" Name="sfx_magic_fire" ObjectPath="\Events\Default Work Unit\SFX\sfx_magic_fire" DurationType="OneShot" DurationMin="2.000000" DurationMax="2.000000"/>
+				<Event Id="4013886705" Name="sfx_rpg_attack" ObjectPath="\Events\Default Work Unit\SFX\sfx_rpg_attack" DurationType="OneShot" DurationMin="2.000000" DurationMax="2.000000"/>
 				<Event Id="527172796" Name="sfx_start_game" ObjectPath="\Events\Default Work Unit\SFX\sfx_start_game" DurationType="OneShot" DurationMin="6.000000" DurationMax="6.000000"/>
 				<Event Id="2405914575" Name="sfx_ui_back" ObjectPath="\Events\Default Work Unit\SFX\sfx_ui_back" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
 				<Event Id="3875906189" Name="sfx_walljump" ObjectPath="\Events\Default Work Unit\SFX\sfx_walljump" DurationType="OneShot" DurationMin="4.000000" DurationMax="4.000000"/>
@@ -47,6 +50,14 @@
 				<Event Id="2420110896" Name="Sundered_Castle" ObjectPath="\Events\Default Work Unit\MX\Sundered_Castle" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="39039820" Language="SFX">
+					<ShortName>dextra_sfx_fire_attack_1.wav</ShortName>
+					<Path>SFX/dextra_sfx_fire_attack_1_10C4C929.wem</Path>
+				</File>
+				<File Id="104478694" Language="SFX">
+					<ShortName>dextra_sfx_enemy_attack_1.wav</ShortName>
+					<Path>SFX/dextra_sfx_enemy_attack_1_10C4C929.wem</Path>
+				</File>
 				<File Id="110204337" Language="SFX">
 					<ShortName>dextra_talk_option1.wav</ShortName>
 					<Path>SFX/dextra_talk_option1_10C4C929.wem</Path>
@@ -54,6 +65,10 @@
 				<File Id="130448338" Language="SFX">
 					<ShortName>Dextra Death Jingle.wav</ShortName>
 					<Path>SFX/Dextra Death Jingle_D79FB2B7.wem</Path>
+				</File>
+				<File Id="152901374" Language="SFX">
+					<ShortName>dextra_sfx_GM_switch (1).wav</ShortName>
+					<Path>SFX/dextra_sfx_GM_switch (1)_10C4C929.wem</Path>
 				</File>
 				<File Id="157873061" Language="SFX">
 					<ShortName>sfx_knightcharge_03.wav</ShortName>
@@ -119,10 +134,6 @@
 					<ShortName>Dextra Crystal Caverns.wav</ShortName>
 					<Path>SFX/Dextra Crystal Caverns_D79FB2B7.wem</Path>
 				</File>
-				<File Id="592181689" Language="SFX">
-					<ShortName>sfx_GM_unlock.wav</ShortName>
-					<Path>SFX/sfx_GM_unlock_10C4C929.wem</Path>
-				</File>
 				<File Id="702299705" Language="SFX">
 					<ShortName>dextra_jump_C.wav</ShortName>
 					<Path>SFX/dextra_jump_C_10C4C929.wem</Path>
@@ -134,6 +145,10 @@
 				<File Id="815115313" Language="SFX">
 					<ShortName>sfx_knightcharge_04.wav</ShortName>
 					<Path>SFX/sfx_knightcharge_04_10C4C929.wem</Path>
+				</File>
+				<File Id="836308678" Language="SFX">
+					<ShortName>dextra_sfx_GM_unlock_b.wav</ShortName>
+					<Path>SFX/dextra_sfx_GM_unlock_b_10C4C929.wem</Path>
 				</File>
 				<File Id="889196030" Language="SFX">
 					<ShortName>Dextra Final Boss.wav</ShortName>

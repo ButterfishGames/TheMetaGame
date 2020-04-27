@@ -98,7 +98,40 @@
 								<Action Name="" ID="{DBCF6BA8-E922-4327-82FF-E736004CB548}" ShortID="886826444">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="sfx_GM_unlock" ID="{EA8E7748-B805-43BE-8E0B-05A56525D6C0}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+											<ObjectRef Name="sfx_GM_unlock" ID="{24ECEDDD-36A4-41DC-91C7-D9196236E7AE}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_game_mode_switch" ID="{FC9A95A5-4BCF-4AB5-A845-09FF2CE2AE5C}">
+							<ChildrenList>
+								<Action Name="" ID="{298B3C7A-A927-4FA0-BA4F-7F1A9DE7F614}" ShortID="591340935">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_GM_switch" ID="{C9CFD4AF-0C0B-4CA6-8DDB-ECD8342FC95B}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_magic_fire" ID="{B3C3AD39-DF87-42F3-9B7E-2FC67F846DDC}">
+							<ChildrenList>
+								<Action Name="" ID="{A09FE47B-2272-4ECB-84CC-8784A76A129A}" ShortID="573407984">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_fire" ID="{309C8A3E-BB86-4DDE-981D-398E8E1E0D64}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="sfx_rpg_attack" ID="{29BD215E-9DD4-4166-9A88-7710C532D965}">
+							<ChildrenList>
+								<Action Name="" ID="{3E5FDC43-B3CB-4D98-87F8-69AA038A3FFC}" ShortID="230447854">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="sfx_rpg_attack" ID="{F6E6467A-C707-4A49-98B2-A20D5AE0B3FB}" WorkUnitID="{8B9FF029-1809-462C-9BC4-AB0D4C37FB70}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -143,24 +176,9 @@
 								<Action Name="" ID="{7BA6B6F2-754E-4570-B099-028826CF68E5}" ShortID="513280209"/>
 							</ChildrenList>
 						</Event>
-						<Event Name="sfx_mode_switch" ID="{FC9A95A5-4BCF-4AB5-A845-09FF2CE2AE5C}">
-							<ChildrenList>
-								<Action Name="" ID="{298B3C7A-A927-4FA0-BA4F-7F1A9DE7F614}" ShortID="591340935"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_magic_fire" ID="{B3C3AD39-DF87-42F3-9B7E-2FC67F846DDC}">
-							<ChildrenList>
-								<Action Name="" ID="{A09FE47B-2272-4ECB-84CC-8784A76A129A}" ShortID="573407984"/>
-							</ChildrenList>
-						</Event>
 						<Event Name="sfx_ui_rpg_menu_confirm" ID="{EBB9E1BA-CB52-4396-A9D4-51D669E0C815}">
 							<ChildrenList>
 								<Action Name="" ID="{B56B0EAE-2E95-4048-A9FE-CE1FFC97EE5F}" ShortID="1036466816"/>
-							</ChildrenList>
-						</Event>
-						<Event Name="sfx_magic_ice" ID="{29BD215E-9DD4-4166-9A88-7710C532D965}">
-							<ChildrenList>
-								<Action Name="" ID="{3E5FDC43-B3CB-4D98-87F8-69AA038A3FFC}" ShortID="230447854"/>
 							</ChildrenList>
 						</Event>
 						<Event Name="sfx_magic_lightning" ID="{D2861E28-ED28-4CCF-A37F-369C65FFD636}">
