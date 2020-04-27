@@ -28,10 +28,13 @@ namespace AK
         static const AkUniqueID RPG_BATTLE = 332969635U;
         static const AkUniqueID SFX_COLLECTABLE = 673464333U;
         static const AkUniqueID SFX_FLAGCHECKPOINT = 2688667465U;
+        static const AkUniqueID SFX_GAME_MODE_SWITCH = 832314226U;
         static const AkUniqueID SFX_GAME_MODE_UNLOCKED = 2587904569U;
         static const AkUniqueID SFX_JUMP = 3695098761U;
         static const AkUniqueID SFX_KNIGHT_TALK = 1803239799U;
         static const AkUniqueID SFX_KNIGHTCHARGE = 2518317382U;
+        static const AkUniqueID SFX_MAGIC_FIRE = 1965088569U;
+        static const AkUniqueID SFX_RPG_ATTACK = 4013886705U;
         static const AkUniqueID SFX_START_GAME = 527172796U;
         static const AkUniqueID SFX_UI_BACK = 2405914575U;
         static const AkUniqueID SFX_WALLJUMP = 3875906189U;

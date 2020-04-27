@@ -695,7 +695,8 @@ public class GameController : MonoBehaviour
         GameObject staff;
         AudioSource source;
 
-        // TODO: Add Switch Mode SFX Event
+       //This effect is triggering on start for some reason 
+        //AkSoundEngine.PostEvent("sfx_game_mode_switch", gameObject);
 
         switch (equipped)
         {
@@ -1714,7 +1715,7 @@ public class GameController : MonoBehaviour
                 }
                 unlockText.text = "You lost \n" + mode + " mode!";
                 found = true;
-                // TODO: Add Unlock Mode SFX Event
+                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
                 StartCoroutine(UnlockFade());
             }
         }
