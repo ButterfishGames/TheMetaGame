@@ -17,4 +17,12 @@ public class RPGDreadKnight : EnemyBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.name == "Player")
+        {
+            GameController.singleton.Battle();
+        }
+    }
 }
