@@ -210,8 +210,8 @@ public class SettingsController : MonoBehaviour
 
     public void InitAudio()
     {
-        MixLevels.SetSfxLvl(sfxVolume);
-        MixLevels.SetMxLvl(musicVolume);
+        MixLevels.SetSfxLvl(sfxVolume * 50);
+        MixLevels.SetMxLvl(musicVolume * 50);
     }
 
     public void OnControlsChanged(PlayerInput pIn)
@@ -497,8 +497,7 @@ public class SettingsController : MonoBehaviour
 
                 PlayerPrefs.Save();
 
-                MixLevels.SetSfxLvl(sfxVolume);
-                MixLevels.SetMxLvl(musicVolume);
+                InitAudio();
                 break;
 
             case Panel.controls:
@@ -525,8 +524,7 @@ public class SettingsController : MonoBehaviour
                 musicVolume = musicVolumeSlider.value;
                 sfxVolume = sfxVolumeSlider.value;
 
-                MixLevels.SetSfxLvl(sfxVolume);
-                MixLevels.SetMxLvl(musicVolume);
+                InitAudio();
                 break;
         }
     }
@@ -560,8 +558,7 @@ public class SettingsController : MonoBehaviour
                 musicVolumeSlider.value = musicVolume;
                 sfxVolumeSlider.value = sfxVolume;
 
-                MixLevels.SetSfxLvl(sfxVolume);
-                MixLevels.SetMxLvl(musicVolume);
+                InitAudio();
                 break;
 
             case Panel.controls:
@@ -619,9 +616,8 @@ public class SettingsController : MonoBehaviour
                 PlayerPrefs.SetFloat("sfxVolume", 0.6f);
 
                 PlayerPrefs.Save();
-                
-                MixLevels.SetSfxLvl(sfxVolume);
-                MixLevels.SetMxLvl(musicVolume);
+
+                InitAudio();
                 break;
 
             case Panel.controls:

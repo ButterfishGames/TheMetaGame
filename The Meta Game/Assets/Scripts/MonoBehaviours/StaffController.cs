@@ -70,10 +70,14 @@ public class StaffController : MonoBehaviour
         source.clip = songs[0].song;
     }
 
+    private void OnDisable()
+    {
+        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
+    }
+
     public void StartSong()
     {
-        source.volume = SettingsController.singleton.musicVolume;
-        source.Play();
+        AkSoundEngine.PostEvent("Rhythm_Mode", gameObject);
     }
 
     public bool ProcInput(int d, int note)

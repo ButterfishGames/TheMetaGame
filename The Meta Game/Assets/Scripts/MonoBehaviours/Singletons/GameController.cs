@@ -1649,7 +1649,7 @@ public class GameController : MonoBehaviour
                 }
                 unlockText.text = "You unlocked \n" + mode + " mode!";
                 found = true;
-                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
+                // TODO: Add Unlock Mode SFX Event
                 StartCoroutine(UnlockFade());
             }
         }
@@ -1764,8 +1764,9 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+        // Uncomment the below lines when the death jingle isn't deafening
+        //AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle", gameObject);
 
         dying = true;
         paused = true;
@@ -1782,9 +1783,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
-
+        // TODO: Post Death jingle event
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(fall));
@@ -2009,6 +2008,7 @@ public class GameController : MonoBehaviour
         battling = true;
         ToggleSwitchPanel(false);
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("RPG_Battle", gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1, LoadSceneMode.Additive);
         DialogueManager.singleton.EndDialogue(false);
@@ -2049,6 +2049,7 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
 
         int temp = SceneManager.GetActiveScene().buildIndex;
