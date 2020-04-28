@@ -159,6 +159,7 @@ public class GameController : MonoBehaviour
     public SkillStr[] skillList;
     public ArtStr[] artList;
     public SongStr[] songList;
+    public Achievement[] achievements;
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
@@ -374,21 +375,22 @@ public class GameController : MonoBehaviour
 
     public void OnCancel (InputValue value)
     {
-        AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
-
         if (switchMenu.activeInHierarchy)
         {
+            AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
             ToggleSwitchMenu();
         }
 
         if (settingsPanel.activeInHierarchy)
         {
+            AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
             CloseSettingsMenu();
             waitAGoddamnSecond = true;
         }
 
         if (quitPanel.activeInHierarchy)
         {
+            AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
             CloseQuitMenu();
             waitAGoddamnSecond = true;
         }
@@ -1489,7 +1491,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
-        if (DialogueManager.singleton.GetDisplaying())
+        if (DialogueManager.singleton.GetDisplaying() || DialogueManager.singleton.GetBranching())
         {
             DialogueManager.singleton.EndDialogue(false);
         }
@@ -1585,7 +1587,7 @@ public class GameController : MonoBehaviour
                         img.sprite = mode.sprite;
                     }
 
-                    if (EventSystem.current.currentSelectedGameObject == null)
+                    if (mode.name.Equals("Platformer"))
                     {
                         EventSystem.current.SetSelectedGameObject(button);
                     }
@@ -1647,9 +1649,9 @@ public class GameController : MonoBehaviour
                     mode += " Sim";
                     dated = false;
                 }
-                unlockText.text = "You unlocked \n" + mode + " mode!";
+                unlockText.text = "You unlocked \n" + mode + "!";
                 found = true;
-                // TODO: Add Unlock Mode SFX Event
+                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
                 StartCoroutine(UnlockFade());
             }
         }
@@ -1715,7 +1717,7 @@ public class GameController : MonoBehaviour
                 }
                 unlockText.text = "You lost \n" + mode + " mode!";
                 found = true;
-                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
+                // TODO: Add Lock Mode SFX Event
                 StartCoroutine(UnlockFade());
             }
         }

@@ -130,9 +130,7 @@ public class CutsceneManager : MonoBehaviour
                     break;
 
                 case StepType.song:
-                    AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-                    source.clip = currentScene.steps[i].song;
-                    source.Play();
+                    AkSoundEngine.PostEvent(currentScene.steps[i].songEvent, gameObject);
                     break;
 
                 case StepType.lockCam:

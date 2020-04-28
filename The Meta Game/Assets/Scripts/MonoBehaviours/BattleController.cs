@@ -203,7 +203,25 @@ public class BattleController : MonoBehaviour
     private IEnumerator EnemyTurn(Enemy enemy)
     {
         enemy.img.GetComponent<RectTransform>().anchoredPosition += new Vector2(30, 0);
-        Attack attack = enemy.source.attacks[Random.Range(0, enemy.source.attacks.Length)];
+
+        int i = 0;
+        float threshold = 0;
+        Attack? temp = null;
+        float det = Random.Range(0.0f, 1.0f);
+        Debug.Log(det);
+        while (temp == null)
+        {
+            threshold += enemy.source.attacks[i].chance;
+            if (det <= threshold)
+            {
+                temp = enemy.source.attacks[i];
+            }
+            else
+            {
+                i++;
+            }
+        }
+        Attack attack = (Attack)temp;
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = attack.name;
@@ -1588,9 +1606,10 @@ public struct Attack
 {
     public string name;
     public int baseDmg;
+    
+    [Range(0, 1)] public float var;
+    [Range(0, 1)] public float chance;
 
-    [Range(0, 1)]
-    public float var;
     public string anim;
     public string effect;
 

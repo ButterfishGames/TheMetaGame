@@ -42,7 +42,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 5
@@ -54,7 +54,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 8300000, guid: 2db6ca2e82e54174e8d3053d368f5f99, type: 3}
+    songEvent: Boss_1
     scene: 0
     mode: 0
   - stepType: 3
@@ -66,7 +66,7 @@ MonoBehaviour:
     animInd: 0
     state: 1
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 2
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 2
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 4
@@ -102,7 +102,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 2
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 3
@@ -114,7 +114,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 2
@@ -126,7 +126,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 4
@@ -138,7 +138,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 1
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 2
@@ -150,9 +150,9 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   stepsSize: 10
   stepsExpanded: 1
-  stepExpanded: 00000000010101010101
+  stepExpanded: 01010000010101010101

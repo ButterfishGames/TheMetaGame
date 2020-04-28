@@ -204,6 +204,10 @@ public class FGController : Mover
         medium.canceled -= MedCancHandle;
         heavy.performed -= HeavyPerfHandle;
         heavy.canceled -= HeavyCancHandle;
+
+        light.Disable();
+        medium.Disable();
+        heavy.Disable();
     }
 
     private void OnControlsChanged(PlayerInput pIn)
@@ -212,12 +216,19 @@ public class FGController : Mover
         medium = pIn.actions["Medium"];
         heavy = pIn.actions["Heavy"];
 
-        light.performed += LightPerfHandle;
-        light.canceled += LightCancHandle;
-        medium.performed += MedPerfHandle;
-        medium.canceled += MedCancHandle;
-        heavy.performed += HeavyPerfHandle;
-        heavy.canceled += HeavyCancHandle;
+        if (enabled)
+        {
+            light.performed += LightPerfHandle;
+            light.canceled += LightCancHandle;
+            medium.performed += MedPerfHandle;
+            medium.canceled += MedCancHandle;
+            heavy.performed += HeavyPerfHandle;
+            heavy.canceled += HeavyCancHandle;
+
+            light.Enable();
+            medium.Enable();
+            heavy.Enable();
+        }
     }
 
     private void OnJump (InputValue value)
@@ -781,6 +792,7 @@ public class FGController : Mover
     private IEnumerator Death()
     {
         dying = true;
+        Debug.Log("Died");
         animator.SetBool("dead", true);
         GameController.singleton.SetPaused(true);
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();
