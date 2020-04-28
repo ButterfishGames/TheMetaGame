@@ -72,14 +72,8 @@ public class PFController : Mover
 
     private void Start()
     {
-        if (GameController.singleton != null && !GameController.singleton.onMenu)
-        {
-            SaveManager.singleton.InitScene();
-        }
-        if (SettingsController.singleton != null)
-        {
-            SettingsController.singleton.InitAudio();
-        }
+        StartCoroutine(InitScene());
+        StartCoroutine(InitAudio());
 
         dying = false;
 
@@ -430,5 +424,24 @@ public class PFController : Mover
     public bool GetDying()
     {
         return dying;
+    }
+
+    private IEnumerator InitScene()
+    {
+        if (GameController.singleton.onMenu)
+        {
+            yield return null;
+        }
+        else
+        {
+            yield return new WaitUntil(() => GameController.singleton != null);
+            SaveManager.singleton.InitScene();
+        }
+    }
+
+    private IEnumerator InitAudio()
+    {
+        yield return new WaitUntil(() => SettingsController.singleton != null);
+        SettingsController.singleton.InitAudio();
     }
 }

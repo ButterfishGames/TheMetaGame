@@ -93407,7 +93407,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1890874983}
-  - component: {fileID: 1890874982}
   - component: {fileID: 1890874981}
   m_Layer: 0
   m_Name: WwiseGlobal
@@ -93441,34 +93440,6 @@ MonoBehaviour:
   unloadTriggerList: 958ca0ea
   bankNameInternal: 
   valueGuidInternal: 
---- !u!114 &1890874982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890874980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8a50af3fcb840cf89c8ac905bf581c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InitializationSettings: {fileID: 11400000, guid: dd2a080fbf2b84755b7fa9bf6c747192,
-    type: 2}
-  basePath: 
-  language: 
-  defaultPoolSize: 0
-  lowerPoolSize: 0
-  streamingPoolSize: 0
-  preparePoolSize: 0
-  memoryCutoffThreshold: 0
-  monitorPoolSize: 0
-  monitorQueuePoolSize: 0
-  callbackManagerBufferSize: 0
-  spatialAudioPoolSize: 0
-  maxSoundPropagationDepth: 0
-  diffractionFlags: 11
-  engineLogging: 0
 --- !u!4 &1890874983
 Transform:
   m_ObjectHideFlags: 0
@@ -93513,7 +93484,7 @@ Transform:
   - {fileID: 1873022335}
   - {fileID: 91152440}
   m_Father: {fileID: 0}
-  m_RootOrder: 90
+  m_RootOrder: 91
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1898784297
 PrefabInstance:
@@ -94754,11 +94725,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1814747856, guid: 9b40e746262972446a4c231183cf4cdb, type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 557076582491962640, guid: 9b40e746262972446a4c231183cf4cdb,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6836962810818612567, guid: 9b40e746262972446a4c231183cf4cdb,
