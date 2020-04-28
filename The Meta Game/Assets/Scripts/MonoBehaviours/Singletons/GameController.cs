@@ -2002,6 +2002,7 @@ public class GameController : MonoBehaviour
                 currentBGM = clip;
             }
         }
+        dying = false;
     }
 
     public IEnumerator Battle()
