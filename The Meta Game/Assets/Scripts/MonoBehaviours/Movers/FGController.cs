@@ -166,6 +166,14 @@ public class FGController : Mover
     private Slider healthSlider;
 
     private Slider hitstunSlider;
+
+    private Slider enemyHealthSlider;
+
+    private Slider enemyHitstunSlider;
+
+    private GameObject closestEnemy;
+
+    private List<GameObject> enemiesInView = new List<GameObject>();
     #endregion
 
     protected override void OnEnable()
@@ -179,6 +187,14 @@ public class FGController : Mover
         if (hitstunSlider != null)
         {
             hitstunSlider.gameObject.SetActive(true);
+        }
+        if (enemyHealthSlider != null)
+        {
+            enemyHealthSlider.gameObject.SetActive(true);
+        }
+        if (enemyHitstunSlider != null)
+        {
+            enemyHitstunSlider.gameObject.SetActive(true);
         }
 
         dying = false;
@@ -196,6 +212,14 @@ public class FGController : Mover
         if (hitstunSlider != null)
         {
             hitstunSlider.gameObject.SetActive(false);
+        }
+        if (enemyHealthSlider != null)
+        {
+            enemyHealthSlider.gameObject.SetActive(false);
+        }
+        if (enemyHitstunSlider != null)
+        {
+            enemyHitstunSlider.gameObject.SetActive(false);
         }
 
         light.performed -= LightPerfHandle;
@@ -411,6 +435,26 @@ public class FGController : Mover
                 hitstunSlider.gameObject.SetActive(false);
             }
         }
+
+        if (enemyHealthSlider == null)
+        {
+            GameObject healthBarTemp = GameObject.Find("EnemyHealthBar");
+            if (healthBarTemp != null)
+            {
+                enemyHealthSlider = healthBarTemp.GetComponent<Slider>();
+                enemyHealthSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (enemyHitstunSlider == null)
+        {
+            GameObject hitstunSliderTemp = GameObject.Find("EnemyHitstunBar");
+            if (hitstunSliderTemp != null)
+            {
+                enemyHitstunSlider = hitstunSliderTemp.GetComponent<Slider>();
+                enemyHitstunSlider.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void Start()
@@ -436,8 +480,77 @@ public class FGController : Mover
 
     protected override void Update()
     {
+        #region healthBarStuff
+        healthSlider.maxValue = GameController.singleton.maxHP;
         healthSlider.value = GameController.singleton.GetHP();
         hitstunSlider.value = hitstun;
+        if (!CutsceneManager.singleton.scening)
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if (enemies.Length != 0)
+            {
+                foreach (GameObject enemy in enemies)
+                {
+                    if (enemy.gameObject.GetComponent<FGEnemy>().fighting == true)
+                    {
+                        if (!enemiesInView.Contains(enemy))
+                        {
+                            if (!enemy.GetComponent<FGEnemy>().dying)
+                            {
+                                enemiesInView.Add(enemy);
+                            }
+                        }
+                        else
+                        {
+                            if (enemy.GetComponent<FGEnemy>().dying)
+                            {
+                                enemiesInView.Remove(enemy);
+                            }
+                        }
+                    }
+                }
+                if (enemiesInView.Count != 0)
+                {
+                    //https://answers.unity.com/questions/790508/remove-missing-objects-from-list.html
+                    for (int i = enemiesInView.Count - 1; i > -1; i--)
+                    {
+                        if (enemiesInView[i] == null)
+                            enemiesInView.RemoveAt(i);
+                    }
+                    for (int i = 0; i < enemiesInView.Count; i++)
+                    {
+                        if (closestEnemy != null)
+                        {
+                            if (Mathf.Sqrt(Mathf.Pow(transform.position.x - enemiesInView[i].transform.position.x, 2)) < Mathf.Sqrt(Mathf.Pow(transform.position.x - closestEnemy.transform.position.x, 2)))
+                            {
+                                closestEnemy = enemiesInView[i];
+                            }
+                        }
+                        else
+                        {
+                            if (enemiesInView[i] != null)
+                            {
+                                closestEnemy = enemiesInView[i];
+                            }
+                        }
+                    }
+                }
+            }
+            if (closestEnemy != null)
+            {
+                enemyHealthSlider.maxValue = closestEnemy.GetComponent<FGEnemy>().maxHP;
+                enemyHealthSlider.value = closestEnemy.GetComponent<FGEnemy>().currHP;
+                enemyHitstunSlider.value = closestEnemy.GetComponent<FGEnemy>().hitstun;
+            }
+            else
+            {
+                enemyHealthSlider.maxValue = 1.0f;
+                enemyHealthSlider.value = 0.0f;
+                enemyHitstunSlider.value = 0.0f;
+            }
+        }
+        #endregion
+
         if (GameController.singleton.GetHP() <= 0)
         {
             if (!dead)
