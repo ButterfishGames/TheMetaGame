@@ -135,7 +135,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>5</Value>
+										<Value>-4</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -272,6 +272,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" ShortID="807498282">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -291,6 +298,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_walljump_NEW" ID="{079B8F2A-507F-4E9C-880B-C04369ADFD17}" ShortID="247601343">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -339,7 +353,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-11</Value>
+										<Value>-12</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -365,7 +379,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-11</Value>
+										<Value>-13</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -504,6 +518,13 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<Sound Name="sfx_rpg_attack" ID="{F6E6467A-C707-4A49-98B2-A20D5AE0B3FB}" ShortID="231033217">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
