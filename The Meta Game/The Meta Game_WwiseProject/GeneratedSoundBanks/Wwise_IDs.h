@@ -91,9 +91,9 @@ namespace AK
     {
         static const AkUniqueID LD_BUS = 879536147U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
-        static const AkUniqueID MX = 1685527054U;
+        static const AkUniqueID MX_BUS = 3027868960U;
         static const AkUniqueID NORMAL_BUS = 3243272242U;
-        static const AkUniqueID SFX = 393239870U;
+        static const AkUniqueID SFX_BUS = 1502772432U;
     } // namespace BUSSES
 
     namespace AUDIO_DEVICES

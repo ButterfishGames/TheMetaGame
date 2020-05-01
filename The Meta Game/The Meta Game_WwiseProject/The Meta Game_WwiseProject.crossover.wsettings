@@ -170,6 +170,15 @@
 				</Property>
 				<Property Name="Soundcaster\PreviousSession" Type="string" Value="{9B3C2A97-98E6-425C-B1A4-97269F6CCAAD}"/>
 			</PropertyList>
+			<PluginInnerObjectList>
+				<List Name="BatchRenameSettings">
+					<PluginInnerObject Name="" ID="{DE7976F0-23F4-4516-9752-DB481E5A225E}" PluginName="BatchRenameSettings" CompanyID="0" PluginID="992">
+						<PropertyList>
+							<Property Name="ReplaceFindWhat" Type="string" Value="sfx_"/>
+						</PropertyList>
+					</PluginInnerObject>
+				</List>
+			</PluginInnerObjectList>
 		</UserProjectSettings>
 	</UserProjectSettingsInfo>
 </WwiseDocument>
