@@ -42,6 +42,14 @@
 							<Position X="1" Y="3"/>
 						</Module>
 						<Module>
+							<ObjectRef Name="Start_Game" ID="{A1AC27DE-7FC4-4E2F-8A0A-78C202F426F6}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="4"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_uppercut" ID="{42FED730-04DE-4ADA-A09B-1BDFE94B3770}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="1" Y="5"/>
+						</Module>
+						<Module>
 							<ObjectRef Name="Rhythm_Mode" ID="{2D2011C7-C915-41AC-AD35-A95CBFBC97F4}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="2" Y="0"/>
 						</Module>
@@ -72,6 +80,10 @@
 						<Module>
 							<ObjectRef Name="sfx_ui_back" ID="{33ED5F24-55D0-4E38-AE4B-499B763F2C71}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
 							<Position X="2" Y="7"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="sfx_punch" ID="{CCE695FD-26B4-4626-9B7A-721A365A5B98}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
+							<Position X="3" Y="0"/>
 						</Module>
 						<Module>
 							<ObjectRef Name="Castle_Rose" ID="{AC8EEBCE-AE49-4179-9226-33E56E86E8AF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}"/>
@@ -109,11 +121,11 @@
 						</RTPCValue>
 						<RTPCValue>
 							<GameParameterRef Name="SFX_Volume" ID="{BABB477F-A993-4826-BE0B-EDF66D5BF21D}"/>
-							<Value>7.3342693361526E-316</Value>
+							<Value>50</Value>
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="Rhythm_Mode" ID="{8FC2C513-B3F6-4A68-B09B-BF1E0F0E5348}"/>
+						<CurrentStateRef Name="None" ID="{BB5498D0-D437-4933-8812-F6EE3A04563E}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>
