@@ -550,6 +550,11 @@
 										<Value>23</Value>
 									</ValueList>
 								</Property>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.4</Value>
+									</ValueList>
+								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
 										<Value>-12</Value>
@@ -579,6 +584,11 @@
 								<Property Name="Highpass" Type="int16">
 									<ValueList>
 										<Value>31</Value>
+									</ValueList>
+								</Property>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.1</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Pitch" Type="int32">
@@ -656,6 +666,11 @@
 								<Property Name="Highpass" Type="int16">
 									<ValueList>
 										<Value>25</Value>
+									</ValueList>
+								</Property>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.3</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Lowpass" Type="int16">
