@@ -670,7 +670,7 @@
 								</Property>
 								<Property Name="InitialDelay" Type="Real64">
 									<ValueList>
-										<Value>0.3</Value>
+										<Value>0.26</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Lowpass" Type="int16">
@@ -725,6 +725,9 @@
 									</ReferenceList>
 									<ChildrenList>
 										<AudioFileSource Name="CHAR_kick_a" ID="{698E04D1-7DEC-47F8-83C4-A4642DB8349E}" ShortID="406822242">
+											<PropertyList>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>CHAR_uppercut_a.wav</AudioFile>
 										</AudioFileSource>
