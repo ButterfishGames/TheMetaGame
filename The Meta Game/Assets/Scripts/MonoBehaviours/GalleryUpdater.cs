@@ -23,7 +23,7 @@ public class GalleryUpdater : MonoBehaviour
 
         artImg = GetComponent<Image>();
 
-        artInd = int.Parse(transform.parent.parent.name.Substring(7, 1));
+        artInd = int.Parse(transform.parent.parent.name.Substring(7, transform.parent.parent.name.Length-8));
     }
 
     public void SetUnlocked (bool val)
