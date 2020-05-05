@@ -10,13 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4322cccb2152f174f8887e0777dc16b8, type: 3}
-  m_Name: CavesStartingCutscene
+  m_Name: DreadKnightStart
   m_EditorClassIdentifier: 
   lines:
-  - name: Kiira
-    line: "Finally, I am free of that cursed room. I think I am in the crystal mines.
-      I....I think they were closed around the time S\xE9bastien was taken."
+  - name: Dread Knight
+    line: You should not have come here, for you shall find nothing but despair.
+    sprite: {fileID: 3723367367073977862, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
+  - name: Dextra
+    line: You are wrong, I will not falter. The fear and suffering you have caused
+      must be stopped, and I cannot afford to fail.
     sprite: {fileID: -5684622053680141831, guid: 987fb30f9faef2348b6630ee6428ea29,
+      type: 3}
+  - name: Dread Knight
+    line: So be it then, you have sealed your fate.
+    sprite: {fileID: 3723367367073977862, guid: 987fb30f9faef2348b6630ee6428ea29,
       type: 3}
   type: 1
   branches: []
