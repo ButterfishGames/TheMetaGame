@@ -19,12 +19,14 @@ MonoBehaviour:
   - name: Bump
     baseDmg: 7
     var: 0.15
+    chance: 0
     anim: 
     effect: 
     target: 0
   - name: Charge
     baseDmg: 12
     var: 0.6
+    chance: 0
     anim: 
     effect: 
     target: 0

@@ -1765,9 +1765,6 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-        
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
 
         dying = true;
         paused = true;
@@ -2005,6 +2002,11 @@ public class GameController : MonoBehaviour
         dying = false;
     }
 
+    public void SpecBattle(int ind)
+    {
+        StartCoroutine(SpecBattleRtn(ind));
+    }
+
     public IEnumerator Battle()
     {
         battling = true;
@@ -2016,9 +2018,25 @@ public class GameController : MonoBehaviour
         DialogueManager.singleton.EndDialogue(false);
         yield return new WaitForEndOfFrame();
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = rpgCombatBGM;
-        source.Play();
+        GameObject attackBtn = null;
+        while (attackBtn == null)
+        {
+            attackBtn = GameObject.Find("AttackButton");
+            yield return new WaitForEndOfFrame();
+        }
+        EventSystem.current.SetSelectedGameObject(attackBtn);
+        StartCoroutine(LevelFade(true));
+    }
+
+    public IEnumerator SpecBattleRtn(int ind)
+    {
+        battling = true;
+        ToggleSwitchPanel(false);
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(ind, LoadSceneMode.Additive);
+        DialogueManager.singleton.EndDialogue(false);
+        yield return new WaitForEndOfFrame();
 
         GameObject attackBtn = null;
         while (attackBtn == null)
@@ -2035,7 +2053,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         DialogueManager.singleton.EndDialogue(false);
-        SceneManager.LoadScene(12, LoadSceneMode.Additive);
+        SceneManager.LoadScene(11, LoadSceneMode.Additive);
         yield return new WaitForEndOfFrame();
         GameObject caButton = null;
         while (caButton == null)

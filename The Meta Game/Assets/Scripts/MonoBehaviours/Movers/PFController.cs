@@ -242,7 +242,7 @@ public class PFController : Mover
         }
 
         dying = true;
-        GameObject.Find("Song").GetComponent<AudioSource>().Stop();
+        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
 
         if (hit)
         {
@@ -264,6 +264,7 @@ public class PFController : Mover
 
         if (!CutsceneManager.singleton.scening)
         {
+            AkSoundEngine.PostEvent("Death_Jingle", gameObject);
             yield return new WaitForSeconds(deathWait);
             GameController.singleton.Die(!hit);
         }
