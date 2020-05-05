@@ -7,6 +7,9 @@ public class GameModePickup : MonoBehaviour
     [Tooltip("Name of gamemode unlocked by pickup. Must match a mode in GameController.singleton.modes")]
     public string mode;
 
+    public Cutscene scene;
+    public bool playScene;
+
     /// <summary>
     /// Used to check whether or not the script has been able to check if its associated mode has already been unlocked yet
     /// </summary>
@@ -52,6 +55,10 @@ public class GameModePickup : MonoBehaviour
             GameController.singleton.Unlock(mode);
             GameController.singleton.ToggleSwitchPanel(true);
             SaveManager.singleton.UpdatePlayerData();
+            if (playScene && scene != null)
+            {
+                CutsceneManager.singleton.StartScene(scene);
+            }
             Destroy(gameObject);
         }
     }

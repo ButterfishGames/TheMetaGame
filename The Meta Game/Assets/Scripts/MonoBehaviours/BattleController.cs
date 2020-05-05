@@ -231,10 +231,10 @@ public class BattleController : MonoBehaviour
         {
             case Attack.Target.player:
                 Animator effectAnim = null;
-                Animator[] animators = GameObject.Find("").GetComponentsInChildren<Animator>();
+                Animator[] animators = GameObject.Find("PlayerImage").GetComponentsInChildren<Animator>();
                 foreach (Animator animator in animators)
                 {
-                    if (animator.gameObject.name.Equals(""))
+                    if (animator.gameObject.name.Equals("PlayerImage"))
                     {
                         // TODO: trigger damage animation
                     }

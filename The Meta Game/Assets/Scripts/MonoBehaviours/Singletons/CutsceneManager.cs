@@ -9,6 +9,9 @@ public class CutsceneManager : MonoBehaviour
     public Cutscene currentScene;
     public bool scening;
 
+    private CameraScroll scroller;
+    private bool shouldScroll;
+
     private void Start()
     {
         if (singleton == null)
@@ -21,7 +24,17 @@ public class CutsceneManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        scroller = Camera.main.GetComponent<CameraScroll>();
         scening = false;
+        shouldScroll = false;
+    }
+
+    private void Update()
+    {
+        if (!shouldScroll && scening && scroller.enabled)
+        {
+            scroller.enabled = false;
+        }
     }
 
     public void StartScene(Cutscene cutscene)
@@ -32,12 +45,14 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator RunCutscene()
     {
+        shouldScroll = false;
+
         bool lockCam = false;
         bool glitching = false;
 
         scening = true;
         GameController.singleton.ToggleSwitchPanel(false);
-
+        
         Camera.main.GetComponent<CameraScroll>().enabled = false;
         
         GameObject gTemp;
@@ -178,6 +193,11 @@ public class CutsceneManager : MonoBehaviour
                     glitching = !glitching;
                     GameController.singleton.SetGlitching(glitching);
                     break;
+
+                case StepType.scrollCam:
+                    shouldScroll = true;
+                    scroller.enabled = true;
+                    break;
             }
         }
 
@@ -262,6 +282,7 @@ public class CutsceneManager : MonoBehaviour
         yDiff = -Camera.main.transform.position.y;
 
         Camera.main.transform.position = mov;
+        Debug.Log(Camera.main.transform.position);
 
         xDiff += Camera.main.transform.position.x;
         yDiff += Camera.main.transform.position.y;

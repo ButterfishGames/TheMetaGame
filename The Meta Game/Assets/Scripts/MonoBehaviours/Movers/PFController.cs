@@ -240,33 +240,36 @@ public class PFController : Mover
         {
             yield return null;
         }
-
-        dying = true;
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-
-        if (hit)
+        else
         {
-            animator.SetBool("dying", true);
-            GameController.singleton.SetPaused(true);
-            rb.gravityScale = 0;
-            rb.velocity = Vector2.zero;
-            GameObject lavamap = GameObject.Find("Lavamap");
-            if (lavamap != null)
+
+            dying = true;
+            AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+
+            if (hit)
             {
-                lavamap.GetComponent<Renderer>().sortingOrder = 0;
+                animator.SetBool("dying", true);
+                GameController.singleton.SetPaused(true);
+                rb.gravityScale = 0;
+                rb.velocity = Vector2.zero;
+                GameObject lavamap = GameObject.Find("Lavamap");
+                if (lavamap != null)
+                {
+                    lavamap.GetComponent<Renderer>().sortingOrder = 0;
+                }
+                yield return new WaitForSeconds(1);
+                animator.SetBool("dead", true);
+                rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
+                rb.gravityScale = GameController.singleton.GetGScale();
+                col.enabled = false;
             }
-            yield return new WaitForSeconds(1);
-            animator.SetBool("dead", true);
-            rb.AddForce(Vector2.up * deathForce, ForceMode2D.Impulse);
-            rb.gravityScale = GameController.singleton.GetGScale();
-            col.enabled = false;
-        }
 
-        if (!CutsceneManager.singleton.scening)
-        {
-            AkSoundEngine.PostEvent("Death_Jingle", gameObject);
-            yield return new WaitForSeconds(deathWait);
-            GameController.singleton.Die(!hit);
+            if (!CutsceneManager.singleton.scening)
+            {
+                AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+                yield return new WaitForSeconds(deathWait);
+                GameController.singleton.Die(!hit);
+            }
         }
     }
 
@@ -281,7 +284,7 @@ public class PFController : Mover
 
     private void GroundWallCheck()
     {
-        if (coyote)
+        if (coyote || !enabled)
         {
             return;
         }
