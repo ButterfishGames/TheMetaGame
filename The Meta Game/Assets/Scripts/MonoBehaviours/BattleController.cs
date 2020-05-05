@@ -227,7 +227,27 @@ public class BattleController : MonoBehaviour
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = attack.name;
         yield return new WaitForSeconds(0.75f);
 
-        enemy.source.UseAttack(attack, guarding);
+        switch (attack.target)
+        {
+            case Attack.Target.player:
+                Animator effectAnim = null;
+                Animator[] animators = GameObject.Find("PlayerImage").GetComponentsInChildren<Animator>();
+                foreach (Animator animator in animators)
+                {
+                    if (animator.gameObject.name.Equals("PlayerImage"))
+                    {
+                        // TODO: trigger damage animation
+                    }
+                    else
+                    {
+                        effectAnim = animator;
+                        animator.SetBool(attack.effect, true);
+                    }
+                }
+                yield return new WaitUntil(() => !effectAnim.GetBool("slash"));
+                yield return new WaitForSeconds(0.1f);
+                enemy.source.UseAttack(attack, guarding);
+                break;
 
         if (GameController.singleton.GetHP() <= 0)
         {

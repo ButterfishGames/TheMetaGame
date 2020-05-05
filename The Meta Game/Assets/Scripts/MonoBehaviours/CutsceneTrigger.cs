@@ -16,8 +16,14 @@ public class CutsceneTrigger : MonoBehaviour
             if (oneTime)
             {
                 triggerable = false;
-                SaveManager.singleton.UpdateSceneData();
+                StartCoroutine(UpdateSave());
             }
         }
+    }
+
+    private IEnumerator UpdateSave()
+    {
+        yield return new WaitUntil(() => NPC.shopkeeper != null);
+        SaveManager.singleton.UpdateSceneData();
     }
 }
