@@ -16249,10 +16249,10 @@ MonoBehaviour:
   - skill: {fileID: 11400000, guid: dac6955b66c3d87489772286a304be34, type: 2}
     unlocked: 0
   artList:
-  - name: The Protagonist
-    img: {fileID: 21300000, guid: 7b06e828072c73444811019f003b4914, type: 3}
+  - name: Platformer Mode
+    img: {fileID: 21300000, guid: 1e318c1cb731c0147a41ae854ad67632, type: 3}
     unlocked: 0
-    desc: Maybe her name is Dextra. Maybe it's Kiira. We can't keep track anymore.
+    desc: Animations are hard when you have stubby, four-pixel limbs.
   - name: Charger
     img: {fileID: 21300000, guid: ce92b3c1a055fca4080759c1bcddd0a2, type: 3}
     unlocked: 0
@@ -16269,7 +16269,95 @@ MonoBehaviour:
   - name: TMG
     img: {fileID: 21300000, guid: 2cc50b612456fe741a0ee7c1716fb6e5, type: 3}
     unlocked: 0
-    desc: Where it all began.
+    desc: Where it all began. Back before the game had an original name.
+  - name: Fighting Game Mode
+    img: {fileID: 21300000, guid: df522b946ca1ac145ab2556fd969addc, type: 3}
+    unlocked: 0
+    desc: Punching is also hard when you have stubby four-pixel limbs.
+  - name: The Protagonist
+    img: {fileID: 21300000, guid: 7b06e828072c73444811019f003b4914, type: 3}
+    unlocked: 0
+    desc: Dextra almost looked pretty different. So did Kiira, for that matter.
+  - name: Castle Rose
+    img: {fileID: 21300000, guid: 1c9e8c943be9dac4f9f6bb33d5d6af75, type: 3}
+    unlocked: 0
+    desc: It is said there was once a single rose growing on what is now the castle
+      grounds. Now there's a castle instead.
+  - name: Lava and Water
+    img: {fileID: 21300000, guid: 53e87621a2db8d34d86896b854344429, type: 3}
+    unlocked: 0
+    desc: Some people wonder why there's water in the game. To look pretty, that's
+      why.
+  - name: The Menu
+    img: {fileID: 21300000, guid: e2b4fa620760a4a41acc514e316fc997, type: 3}
+    unlocked: 0
+    desc: The only menu you can play. Except for all the other ones.
+  - name: RPG Mode
+    img: {fileID: 21300000, guid: dc268720c60ff3f40ac8efac40e95837, type: 3}
+    unlocked: 0
+    desc: Changing perspective is hard regardless of how stubby your limbs are.
+  - name: Combat Effects
+    img: {fileID: 21300000, guid: 2fffb6e0bf08ee74f8f23da267204d4c, type: 3}
+    unlocked: 0
+    desc: RPG combat looks much worse without them.
+  - name: Sundered Castle
+    img: {fileID: 21300000, guid: eacf4628dbaf99e4381d7080aa3c988e, type: 3}
+    unlocked: 0
+    desc: Like Castle Rose, but more... sundered.
+  - name: NPCs
+    img: {fileID: 21300000, guid: 609b59a31be30504b9c5741ba9f2e5de, type: 3}
+    unlocked: 0
+    desc: You can tell the different NPCs apart by their outfits and props!
+  - name: Dialogue Portraits
+    img: {fileID: 21300000, guid: 093f2d18ff0e69e41b1a80129c1f647d, type: 3}
+    unlocked: 0
+    desc: Ready for your closeup?
+  - name: Rhythm Game Mode
+    img: {fileID: 21300000, guid: d9e964f3251f0144a99411686cdf1583, type: 3}
+    unlocked: 0
+    desc: Dancing is hard when you have stubby, four-pixel limbs.
+  - name: Date Map
+    img: {fileID: 21300000, guid: d1e459c9f99483d4bbbfe078102c5793, type: 3}
+    unlocked: 0
+    desc: A map of all the most popular dating locations in the vicinity of the castle.
+      Wait, these look familiar...
+  - name: Crystal Caves
+    img: {fileID: 21300000, guid: ec097199c5077934394d9084e0247635, type: 3}
+    unlocked: 0
+    desc: The magic crystals mined here allow things to float. Things like platforms.
+      How convenient!
+  - name: Enemy Colors
+    img: {fileID: 21300000, guid: f45ea73d589a864469323cd468a86eda, type: 3}
+    unlocked: 0
+    desc: They weren't always grey.
+  - name: Dating Sim Mode
+    img: {fileID: 21300000, guid: d013036b0930da44e91af3ad3ab9dfa1, type: 3}
+    unlocked: 0
+    desc: Romancing knights is easy with these long, high-res arms.
+  - name: Racing Mode
+    img: {fileID: 21300000, guid: cfc03d974a7038245a79049d57a70de4, type: 3}
+    unlocked: 0
+    desc: Motorcycle racing is... actually pretty unaffected by arm length.
+  - name: Sebastian
+    img: {fileID: 21300000, guid: 3d8a5a0a11bbddb46a3ac99c2a1e6275, type: 3}
+    unlocked: 0
+    desc: The dread knight unmasked!
+  - name: ?????
+    img: {fileID: 21300000, guid: 424ac56e242e92646a4d41edf5880c12, type: 3}
+    unlocked: 0
+    desc: ????????????????????????
+  - name: Tar
+    img: {fileID: 21300000, guid: e310bab10650926419ccf8748a5b34db, type: 3}
+    unlocked: 0
+    desc: Wait, why is there concept art for broken assets?
+  - name: The Devs
+    img: {fileID: 21300000, guid: d88ecb5406b73764cb16a1c0533c6dc1, type: 3}
+    unlocked: 0
+    desc: The creators of the game, here in pixel format.
+  - name: The Dev Boss
+    img: {fileID: 21300000, guid: 702ebc17a20749949afba016ecb6dfb0, type: 3}
+    unlocked: 0
+    desc: Wait, the what?
   songList:
   - name: The Menu
     img: {fileID: -6716097629584414818, guid: c5a4dc00189f3cd47a06a477fc6057a6, type: 3}
@@ -16282,12 +16370,12 @@ MonoBehaviour:
   achievements:
   - name: The Story Begins
     desc: Start the game
-    img: {fileID: 0}
+    img: {fileID: -3844371107048519191, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 0
   - name: Reunion
     desc: Defeat the Dread Knight
-    img: {fileID: 0}
+    img: {fileID: 2170224788380057239, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 0
   - name: Gods Among Pixels
@@ -16302,22 +16390,22 @@ MonoBehaviour:
     secret: 1
   - name: Something of a Collector
     desc: Unlock all game modes
-    img: {fileID: 0}
+    img: {fileID: 3236177270434507952, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Happily Ever After
     desc: Complete the game
-    img: {fileID: 0}
+    img: {fileID: -5063889475709088186, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Oh, That's Meta
     desc: Find the screenshot of the original pitch level
-    img: {fileID: 0}
+    img: {fileID: -8440788097817162226, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Art Connoisseur
     desc: Collect every piece of concept art
-    img: {fileID: 0}
+    img: {fileID: -4735315971374085667, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 0
   - name: What Boss?
@@ -16327,17 +16415,17 @@ MonoBehaviour:
     secret: 1
   - name: Music Aficionado
     desc: Collect every music track
-    img: {fileID: 0}
+    img: {fileID: 3255906780544928586, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 0
   - name: Nuclear Option
     desc: Cast the Nuke spell
-    img: {fileID: 0}
+    img: {fileID: 7064136596007776286, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Master of Magic
     desc: Unlock every spell
-    img: {fileID: 0}
+    img: {fileID: -790752164327577075, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 0
   - name: Great, Another Swordfighter
@@ -16347,27 +16435,27 @@ MonoBehaviour:
     secret: 1
   - name: Skilled Combatant
     desc: Unlock every skill
-    img: {fileID: 0}
+    img: {fileID: 3041062010042383244, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 0
   - name: Not a Plumber
     desc: Try to jump on an enemy's head
-    img: {fileID: 0}
+    img: {fileID: -4275147759336951612, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: World Warrior
     desc: Defeat an enemy in every level using Fighting Game mode
-    img: {fileID: 0}
+    img: {fileID: -3086680761477404351, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: It's Dangerous to Go Alone
     desc: Talk to every type of NPC in RPG mode
-    img: {fileID: 0}
+    img: {fileID: 1313584481989637463, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Full Combo Finish
     desc: Complete a track in Rhythm Game mode without missing any notes
-    img: {fileID: 0}
+    img: {fileID: -5459596750524390680, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Ren'ai Master
@@ -16377,47 +16465,47 @@ MonoBehaviour:
     secret: 1
   - name: Blue Shell
     desc: Crash while in first place in Racing Game mode
-    img: {fileID: 0}
+    img: {fileID: 3648816959021789329, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Friendly Fire
     desc: Shoot yourself with FPS mode
-    img: {fileID: 0}
+    img: {fileID: 2491413216254447603, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Short Story
     desc: Die in the first pit in Castle Approach
-    img: {fileID: 0}
+    img: {fileID: -2158599409400403773, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Shorter Story
     desc: Die on the Main Menu
-    img: {fileID: 0}
+    img: {fileID: 1420379212581620169, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Serving Time
     desc: Spend 10 minutes in your cage at the beginning of Crystal Caverns
-    img: {fileID: 0}
+    img: {fileID: 369325047987311047, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Sit Back and Relax
     desc: End a race in first place without tilting forward
-    img: {fileID: 0}
+    img: {fileID: 5751003579270330505, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Do a Flip!
     desc: Do a frontflip or backflip in Racing Game mode
-    img: {fileID: 0}
+    img: {fileID: -8483961728422101504, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: Nuclear Deterrent
     desc: Kill the NPC who teaches you Nuke
-    img: {fileID: 0}
+    img: {fileID: 4382014746767267097, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   - name: You Heathen
     desc: View the You Heathen message
-    img: {fileID: 0}
+    img: {fileID: -3608201296431132435, guid: a9eb226f577d2554cb9c6023aaccdec0, type: 3}
     unlocked: 0
     secret: 1
   keyword: {r: 0.26666668, g: 0.6117647, b: 0.8392157, a: 1}

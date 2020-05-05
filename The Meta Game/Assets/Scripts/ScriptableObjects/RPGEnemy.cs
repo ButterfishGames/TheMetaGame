@@ -19,12 +19,29 @@ public class RPGEnemy : ScriptableObject
 
     public void UseAttack(Attack attack, bool guarding)
     {
-        int damage = attack.baseDmg;
-        damage = Mathf.FloorToInt(damage * Random.Range(1 - attack.var, 1 + attack.var));
-        if (guarding)
+        UseAttack(attack, guarding, 0);
+    }
+
+    public void UseAttack(Attack attack, bool guarding, int allyInd)
+    {
+        int damage;
+        switch (attack.target)
         {
-            damage = Mathf.FloorToInt(damage / 2);
+            case Attack.Target.player:
+                damage = attack.baseDmg;
+                damage = Mathf.FloorToInt(damage * Random.Range(1 - attack.var, 1 + attack.var));
+                if (guarding)
+                {
+                    damage = Mathf.FloorToInt(damage / 2);
+                }
+                GameController.singleton.Damage(damage);
+                break;
+
+            case Attack.Target.ally:
+                damage = attack.baseDmg;
+                damage = Mathf.FloorToInt(damage * Random.Range(1 - attack.var, 1 + attack.var));
+                FindObjectOfType<BattleController>().EnemySkill(attack, allyInd, damage);
+                break;
         }
-        GameController.singleton.Damage(damage);
     }
 }
