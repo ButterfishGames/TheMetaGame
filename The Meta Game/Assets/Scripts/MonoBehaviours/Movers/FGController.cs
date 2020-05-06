@@ -666,6 +666,13 @@ public class FGController : Mover
 
     protected override void Move(float h, float v)
     {
+        if (GameController.singleton.GetPaused() 
+            || DialogueManager.singleton.GetDisplaying() 
+            || CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         if (!attacking)
         {
             if (hitstun <= 0)

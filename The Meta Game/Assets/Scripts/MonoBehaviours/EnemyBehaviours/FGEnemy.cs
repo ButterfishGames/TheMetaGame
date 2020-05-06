@@ -274,6 +274,11 @@ public class FGEnemy : EnemyBehaviour
         {
             return;
         }
+        
+        if (CutsceneManager.singleton.scening)
+        {
+            return;
+        }
 
         animator.SetInteger("level", difficultyLevel);
         hitThisFrame = false;

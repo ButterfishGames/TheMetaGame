@@ -255,7 +255,7 @@ public class PFController : Mover
                 GameObject lavamap = GameObject.Find("Lavamap");
                 if (lavamap != null)
                 {
-                    lavamap.GetComponent<Renderer>().sortingOrder = 0;
+                    lavamap.GetComponent<Renderer>().sortingOrder = 2;
                 }
                 yield return new WaitForSeconds(1);
                 animator.SetBool("dead", true);

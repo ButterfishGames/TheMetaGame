@@ -57,7 +57,7 @@ public class GameModePickup : MonoBehaviour
             SaveManager.singleton.UpdatePlayerData();
             if (playScene && scene != null)
             {
-                CutsceneManager.singleton.StartScene(scene);
+                CutsceneManager.singleton.StartScene(scene, true);
             }
             Destroy(gameObject);
         }

@@ -281,6 +281,11 @@ public class FGDreadKnight : DreadKnightBehavior
 
     void Update()
     {
+        if (player.transform.position.x < 528)
+        {
+            return;
+        }
+
         if (GameController.singleton.GetPaused())
         {
             return;

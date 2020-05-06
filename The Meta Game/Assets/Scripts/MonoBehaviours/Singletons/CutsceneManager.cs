@@ -11,6 +11,8 @@ public class CutsceneManager : MonoBehaviour
 
     private CameraScroll scroller;
     private bool shouldScroll;
+    private BoxCollider2D[] cameraWalls;
+    private bool shouldWall;
 
     private void Start()
     {
@@ -27,6 +29,9 @@ public class CutsceneManager : MonoBehaviour
         scroller = Camera.main.GetComponent<CameraScroll>();
         scening = false;
         shouldScroll = false;
+        
+        cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        shouldWall = true;
     }
 
     private void Update()
@@ -35,15 +40,23 @@ public class CutsceneManager : MonoBehaviour
         {
             scroller.enabled = false;
         }
+
+        if (!shouldWall && scening && cameraWalls[0].gameObject.activeInHierarchy)
+        {
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                col.gameObject.SetActive(false);
+            }
+        }
     }
 
-    public void StartScene(Cutscene cutscene)
+    public void StartScene(Cutscene cutscene, bool walled)
     {
         currentScene = Instantiate(cutscene);
-        StartCoroutine(RunCutscene());
+        StartCoroutine(RunCutscene(walled));
     }
 
-    private IEnumerator RunCutscene()
+    private IEnumerator RunCutscene(bool walled)
     {
         shouldScroll = false;
 
@@ -90,6 +103,15 @@ public class CutsceneManager : MonoBehaviour
                 temp.velocity = Vector2.zero;
             }
         }
+
+        if (!walled)
+        {
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                col.gameObject.SetActive(false);
+            }
+        }
+        shouldWall = walled;
 
         for (int i = 0; i < currentScene.stepsSize; i++)
         {
@@ -210,6 +232,8 @@ public class CutsceneManager : MonoBehaviour
                 currentScene.animators[i].SetBool("moving", false);
             }
         }
+
+        GameController.singleton.SwitchMode(GameController.singleton.equipped);
 
         if (!glitching)
         {
