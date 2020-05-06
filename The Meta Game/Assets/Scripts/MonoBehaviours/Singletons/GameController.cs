@@ -121,6 +121,8 @@ public class GameController : MonoBehaviour
 
     private bool battling;
 
+    public float zoomTime;
+
     [System.Serializable]
     public struct SpellStr
     {
@@ -1195,9 +1197,9 @@ public class GameController : MonoBehaviour
                 }
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
+                StartCoroutine(FighterZoom());
 
                 staff = GameObject.Find("MusicalStaff(Clone)");
                 if (staff != null)
@@ -1453,6 +1455,21 @@ public class GameController : MonoBehaviour
         if (switchMenu.activeInHierarchy)
         {
             ToggleSwitchMenu();
+        }
+    }
+
+    private IEnumerator FighterZoom()
+    {
+        float aspect = (float)Screen.width / (float)Screen.height;
+        float d = 1;
+
+        float zoomInc = 1.0f / zoomTime;
+
+        while (d < 2)
+        {
+            Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize / d * aspect, camSize / d * aspect, -camSize / d, camSize / d, 0.3f, 1000.0f);
+            d += zoomInc*Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 
