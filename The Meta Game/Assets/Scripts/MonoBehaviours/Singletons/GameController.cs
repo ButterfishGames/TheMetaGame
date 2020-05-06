@@ -238,6 +238,8 @@ public class GameController : MonoBehaviour
 
     private bool dying;
 
+    private float wallLDef, wallRDef, wallUDef, wallDDef;
+
     /*private void OnEnable()
     {
         controls = new Controls();
@@ -479,6 +481,29 @@ public class GameController : MonoBehaviour
 
         currentBGM = GameObject.Find("Song").GetComponent<AudioSource>().clip;
 
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
+        foreach (BoxCollider2D col in cameraWalls)
+        {
+            Debug.Log(col.name);
+            if (col.name.Contains("_L"))
+            {
+                wallLDef = col.transform.localPosition.x;
+            }
+            else if (col.name.Contains("_R"))
+            {
+                wallRDef = col.transform.localPosition.x;
+            }
+            else if (col.name.Contains("_U"))
+            {
+                wallUDef = col.transform.localPosition.y;
+            }
+            else
+            {
+                wallDDef = col.transform.localPosition.y;
+            }
+        }
+
         StartCoroutine(Switch());
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -687,7 +712,26 @@ public class GameController : MonoBehaviour
             StartCoroutine(DatingUntransition());
         }
 
-        BoxCollider2D[] cameraWalls;
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        foreach (BoxCollider2D col in cameraWalls)
+        {
+            if (col.name.Contains("_L"))
+            {
+                col.transform.localPosition = new Vector3(wallLDef, 0, 1);
+            }
+            else if (col.name.Contains("_R"))
+            {
+                col.transform.localPosition = new Vector3(wallRDef, 0, 1);
+            }
+            else if (col.name.Contains("_U"))
+            {
+                col.transform.localPosition = new Vector3(0, wallUDef, 1);
+            }
+            else
+            {
+                col.transform.localPosition = new Vector3(0, wallDDef, 1);
+            }
+        }
         GameObject player;
         Mover[] movers;
 
@@ -718,7 +762,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     if (col.name.Equals("CameraWall_L"))
@@ -846,7 +890,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     col.gameObject.SetActive(true);
@@ -1086,7 +1130,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Untagged";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     if (col.name.Equals("CameraWall_L") || col.name.Equals("CameraWall_R"))
@@ -1465,9 +1509,32 @@ public class GameController : MonoBehaviour
 
         float zoomInc = 1.0f / zoomTime;
 
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
         while (d < 2)
         {
             Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize / d * aspect, camSize / d * aspect, -camSize / d, camSize / d, 0.3f, 1000.0f);
+
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                if (col.name.Contains("_L"))
+                {
+                    col.transform.localPosition = new Vector3(wallLDef / d, 0, 1);
+                }
+                else if (col.name.Contains("_R"))
+                {
+                    col.transform.localPosition = new Vector3(wallRDef / d, 0, 1);
+                }
+                else if (col.name.Contains("_U"))
+                {
+                    col.transform.localPosition = new Vector3(0, wallUDef / d, 1);
+                }
+                else
+                {
+                    col.transform.localPosition = new Vector3(0, wallDDef / d, 1);
+                }
+            }
+            
             d += zoomInc*Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }

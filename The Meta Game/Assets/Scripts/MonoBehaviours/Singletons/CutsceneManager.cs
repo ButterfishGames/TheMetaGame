@@ -232,9 +232,7 @@ public class CutsceneManager : MonoBehaviour
                 currentScene.animators[i].SetBool("moving", false);
             }
         }
-
-        GameController.singleton.SwitchMode(GameController.singleton.equipped);
-
+        
         if (!glitching)
         {
             GameController.singleton.SetGlitching(false);
@@ -248,6 +246,44 @@ public class CutsceneManager : MonoBehaviour
         if (GameController.singleton.GetNumUnlocked() != 1)
         {
             GameController.singleton.ToggleSwitchPanel(true);
+        }
+        switch (GameController.singleton.equipped)
+        {
+            case GameController.GameMode.platformer:
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.gameObject.name.Equals("CameraWall_L"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+                break;
+
+            case GameController.GameMode.fighting:
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.gameObject.name.Equals("CameraWall_L")
+                        || col.gameObject.name.Equals("CameraWall_R"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+                break;
+
+            case GameController.GameMode.rpg:
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    col.gameObject.SetActive(true);
+                }
+                break;
         }
         yield return null;
     }
