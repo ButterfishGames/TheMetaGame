@@ -932,7 +932,7 @@ public class GameController : MonoBehaviour
 
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
                 
-                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Cutscene"))));
                 if (hit.collider != null)
                 {
                     player.transform.position += Vector3.up;

@@ -314,6 +314,7 @@ public class SaveManager : MonoBehaviour
             if (!firstTime)
             {
                 GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint (0)").transform.position;
+                CutsceneManager.singleton.StopAllCoroutines();
             }
         }
     }

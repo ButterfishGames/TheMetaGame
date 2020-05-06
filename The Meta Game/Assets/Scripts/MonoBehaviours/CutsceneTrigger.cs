@@ -19,14 +19,19 @@ public class CutsceneTrigger : MonoBehaviour
             if (!modeReq || GameController.singleton.equipped == reqMode)
             {
                 CutsceneManager.singleton.StartScene(scene, walled);
+                if (oneTime)
+                {
+                    triggerable = false;
+                    if (linked != null)
+                    {
+                        linked.triggerable = false;
+                    }
+                    StartCoroutine(UpdateSave());
+                }
             }
-            if (oneTime)
+            else if (oneTime)
             {
                 triggerable = false;
-                if (linked != null)
-                {
-                    linked.triggerable = false;
-                }
                 StartCoroutine(UpdateSave());
             }
         }
