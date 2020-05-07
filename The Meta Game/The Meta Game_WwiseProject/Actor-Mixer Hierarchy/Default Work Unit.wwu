@@ -327,7 +327,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>1</Value>
+										<Value>2</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -552,7 +552,7 @@
 								</Property>
 								<Property Name="InitialDelay" Type="Real64">
 									<ValueList>
-										<Value>0.1</Value>
+										<Value>0.06</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Pitch" Type="int32">
@@ -569,7 +569,7 @@
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-13</Value>
+										<Value>-14</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -638,9 +638,14 @@
 						</RandomSequenceContainer>
 						<Sound Name="sfx_CHAR_kick" ID="{D1BA7DDF-D3BE-4F40-9F40-C710965A41AE}" ShortID="423769781">
 							<PropertyList>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.4</Value>
+									</ValueList>
+								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-14</Value>
+										<Value>-15</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -664,9 +669,14 @@
 						</Sound>
 						<Sound Name="sfx_CHAR_uppercut" ID="{55A99D9E-20F3-437A-8F49-E0F557DB0F88}" ShortID="959421537">
 							<PropertyList>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.275</Value>
+									</ValueList>
+								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-16</Value>
+										<Value>-15.5</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
