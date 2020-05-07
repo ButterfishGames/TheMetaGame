@@ -2117,6 +2117,7 @@ public class GameController : MonoBehaviour
         battling = true;
         ToggleSwitchPanel(false);
         StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("RPG_Battle", gameObject);
         yield return new WaitForSeconds(levelFadeTime);
         SceneManager.LoadScene(ind, LoadSceneMode.Additive);
         DialogueManager.singleton.EndDialogue(false);
@@ -2153,12 +2154,17 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         StartCoroutine(LevelFade(false));
-        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
+        //AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
 
         int temp = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(temp);
 
-        if (temp % 2 == 0)
+        if(SceneManager.GetSceneByName("RPGCombatDK").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(temp + 7);
+        }
+        else if (temp % 2 == 0)
         {
             SceneManager.UnloadSceneAsync(temp);
         }
