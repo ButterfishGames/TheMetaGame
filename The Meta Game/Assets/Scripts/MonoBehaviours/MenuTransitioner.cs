@@ -23,6 +23,7 @@ public class MenuTransitioner : MonoBehaviour
                 collision.enabled = false;
                 GameController.singleton.onMenu = false;
                 AkSoundEngine.PostEvent("sfx_start_game", gameObject);
+                GameController.singleton.achievements[0].Unlock();
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(sceneInd));
             }
             else if (function == 2)

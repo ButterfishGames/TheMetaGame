@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5c18e8735352e40aee87ab1e3666d1, type: 3}
+  m_Name: DreadKnight
+  m_EditorClassIdentifier: 
+  name: Dread Knight
+  sprite: {fileID: -2208906308446049603, guid: abd38a4b64d097943a6d4b049ff1af67, type: 3}
+  maxHP: 100
+  attacks:
+  - name: Bump
+    baseDmg: 7
+    var: 0.15
+    chance: 0
+    anim: 
+    effect: 
+    target: 0
+  - name: Charge
+    baseDmg: 12
+    var: 0.6
+    chance: 0
+    anim: 
+    effect: 
+    target: 0
+  goldReward: 300

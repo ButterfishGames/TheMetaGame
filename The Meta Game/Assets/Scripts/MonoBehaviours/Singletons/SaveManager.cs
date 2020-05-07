@@ -247,6 +247,8 @@ public class SaveManager : MonoBehaviour
             CreateSave();
         }
 
+        bool firstTime;
+
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneData temp;
 
@@ -263,10 +265,14 @@ public class SaveManager : MonoBehaviour
         if (saveData.SceneExists(buildIndex))
         {
             temp = saveData.GetSceneData(buildIndex);
+
+            firstTime = false;
         }
         else
         {
             temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length, NPC.shopkeeper.boostsPurchased.Length);
+
+            firstTime = true;
         }
 
         for (int i = 0; i < npcs.Length; i++)
@@ -283,6 +289,19 @@ public class SaveManager : MonoBehaviour
             int ind = int.Parse(triggers[i].gameObject.name.Substring(7, 1));
             triggers[i].triggerable = temp.cutsceneTriggerable[ind];
         }
+        
+        Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
+        foreach (Checkpoint checkpoint in checkpoints)
+        {
+            if (checkpoint.transform.position == saveData.GetCheckpointPos())
+            {
+                if (Checkpoint.active != null)
+                {
+                    Checkpoint.active.Deactivate();
+                }
+                checkpoint.Activate();
+            }
+        }
 
         NPC.shopkeeper.boostsPurchased = temp.boostsPurchased;
 
@@ -292,19 +311,10 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint (0)").transform.position;
-        }
-
-        Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
-        foreach(Checkpoint checkpoint in checkpoints)
-        {
-            if (checkpoint.transform.position == saveData.GetCheckpointPos())
+            if (!firstTime)
             {
-                if (Checkpoint.active != null)
-                {
-                    Checkpoint.active.Deactivate();
-                }
-                checkpoint.Activate();
+                GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint (0)").transform.position;
+                CutsceneManager.singleton.StopAllCoroutines();
             }
         }
     }

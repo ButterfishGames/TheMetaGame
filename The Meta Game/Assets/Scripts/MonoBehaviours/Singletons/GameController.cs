@@ -121,6 +121,8 @@ public class GameController : MonoBehaviour
 
     private bool battling;
 
+    public float zoomTime;
+
     [System.Serializable]
     public struct SpellStr
     {
@@ -235,6 +237,8 @@ public class GameController : MonoBehaviour
     private GameMode prev;
 
     private bool dying;
+
+    private float wallLDef, wallRDef, wallUDef, wallDDef;
 
     /*private void OnEnable()
     {
@@ -477,6 +481,29 @@ public class GameController : MonoBehaviour
 
         currentBGM = GameObject.Find("Song").GetComponent<AudioSource>().clip;
 
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
+        foreach (BoxCollider2D col in cameraWalls)
+        {
+            Debug.Log(col.name);
+            if (col.name.Contains("_L"))
+            {
+                wallLDef = col.transform.localPosition.x;
+            }
+            else if (col.name.Contains("_R"))
+            {
+                wallRDef = col.transform.localPosition.x;
+            }
+            else if (col.name.Contains("_U"))
+            {
+                wallUDef = col.transform.localPosition.y;
+            }
+            else
+            {
+                wallDDef = col.transform.localPosition.y;
+            }
+        }
+
         StartCoroutine(Switch());
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -685,7 +712,26 @@ public class GameController : MonoBehaviour
             StartCoroutine(DatingUntransition());
         }
 
-        BoxCollider2D[] cameraWalls;
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        foreach (BoxCollider2D col in cameraWalls)
+        {
+            if (col.name.Contains("_L"))
+            {
+                col.transform.localPosition = new Vector3(wallLDef, 0, 1);
+            }
+            else if (col.name.Contains("_R"))
+            {
+                col.transform.localPosition = new Vector3(wallRDef, 0, 1);
+            }
+            else if (col.name.Contains("_U"))
+            {
+                col.transform.localPosition = new Vector3(0, wallUDef, 1);
+            }
+            else
+            {
+                col.transform.localPosition = new Vector3(0, wallDDef, 1);
+            }
+        }
         GameObject player;
         Mover[] movers;
 
@@ -716,7 +762,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     if (col.name.Equals("CameraWall_L"))
@@ -844,7 +890,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     col.gameObject.SetActive(true);
@@ -932,7 +978,7 @@ public class GameController : MonoBehaviour
 
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
                 
-                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Cutscene"))));
                 if (hit.collider != null)
                 {
                     player.transform.position += Vector3.up;
@@ -1084,7 +1130,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Untagged";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     if (col.name.Equals("CameraWall_L") || col.name.Equals("CameraWall_R"))
@@ -1195,9 +1241,9 @@ public class GameController : MonoBehaviour
                 }
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
+                StartCoroutine(FighterZoom());
 
                 staff = GameObject.Find("MusicalStaff(Clone)");
                 if (staff != null)
@@ -1453,6 +1499,44 @@ public class GameController : MonoBehaviour
         if (switchMenu.activeInHierarchy)
         {
             ToggleSwitchMenu();
+        }
+    }
+
+    private IEnumerator FighterZoom()
+    {
+        float aspect = (float)Screen.width / (float)Screen.height;
+        float d = 1;
+
+        float zoomInc = 1.0f / zoomTime;
+
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
+        while (d < 2)
+        {
+            Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize / d * aspect, camSize / d * aspect, -camSize / d, camSize / d, 0.3f, 1000.0f);
+
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                if (col.name.Contains("_L"))
+                {
+                    col.transform.localPosition = new Vector3(wallLDef / d, 0, 1);
+                }
+                else if (col.name.Contains("_R"))
+                {
+                    col.transform.localPosition = new Vector3(wallRDef / d, 0, 1);
+                }
+                else if (col.name.Contains("_U"))
+                {
+                    col.transform.localPosition = new Vector3(0, wallUDef / d, 1);
+                }
+                else
+                {
+                    col.transform.localPosition = new Vector3(0, wallDDef / d, 1);
+                }
+            }
+            
+            d += zoomInc*Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -1765,9 +1849,6 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-        
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
 
         dying = true;
         paused = true;
@@ -2005,6 +2086,11 @@ public class GameController : MonoBehaviour
         dying = false;
     }
 
+    public void SpecBattle(int ind)
+    {
+        StartCoroutine(SpecBattleRtn(ind));
+    }
+
     public IEnumerator Battle()
     {
         battling = true;
@@ -2016,9 +2102,25 @@ public class GameController : MonoBehaviour
         DialogueManager.singleton.EndDialogue(false);
         yield return new WaitForEndOfFrame();
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = rpgCombatBGM;
-        source.Play();
+        GameObject attackBtn = null;
+        while (attackBtn == null)
+        {
+            attackBtn = GameObject.Find("AttackButton");
+            yield return new WaitForEndOfFrame();
+        }
+        EventSystem.current.SetSelectedGameObject(attackBtn);
+        StartCoroutine(LevelFade(true));
+    }
+
+    public IEnumerator SpecBattleRtn(int ind)
+    {
+        battling = true;
+        ToggleSwitchPanel(false);
+        StartCoroutine(LevelFade(false));
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(ind, LoadSceneMode.Additive);
+        DialogueManager.singleton.EndDialogue(false);
+        yield return new WaitForEndOfFrame();
 
         GameObject attackBtn = null;
         while (attackBtn == null)
@@ -2035,7 +2137,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         DialogueManager.singleton.EndDialogue(false);
-        SceneManager.LoadScene(12, LoadSceneMode.Additive);
+        SceneManager.LoadScene(11, LoadSceneMode.Additive);
         yield return new WaitForEndOfFrame();
         GameObject caButton = null;
         while (caButton == null)

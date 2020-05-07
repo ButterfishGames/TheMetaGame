@@ -30,7 +30,7 @@ public class MenuSwitcher : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            CutsceneManager.singleton.StartScene(transition);
+            CutsceneManager.singleton.StartScene(transition, false);
             SaveManager.singleton.LoadGame(false);
             active = other;
         }

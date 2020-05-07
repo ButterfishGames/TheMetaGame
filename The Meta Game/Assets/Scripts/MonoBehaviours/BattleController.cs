@@ -227,7 +227,34 @@ public class BattleController : MonoBehaviour
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = attack.name;
         yield return new WaitForSeconds(0.75f);
 
-        enemy.source.UseAttack(attack, guarding);
+        switch (attack.target)
+        {
+            case Attack.Target.player:
+                Animator effectAnim = null;
+                Animator[] animators = GameObject.Find("PlayerImage").GetComponentsInChildren<Animator>();
+                foreach (Animator animator in animators)
+                {
+                    if (animator.gameObject.name.Equals("PlayerImage"))
+                    {
+                        // TODO: trigger damage animation
+                    }
+                    else
+                    {
+                        effectAnim = animator;
+                        animator.SetBool(attack.effect, true);
+                    }
+                }
+                yield return new WaitUntil(() => !effectAnim.GetBool("slash"));
+                yield return new WaitForSeconds(0.1f);
+                enemy.source.UseAttack(attack, guarding);
+                break;
+
+            case Attack.Target.ally:
+                int ind = Random.Range(0, currTroop.enemies.Length);
+                enemy.source.UseAttack(attack, guarding, ind);
+                yield return new WaitUntil(() => !attacking);
+                break;
+        }
 
         if (GameController.singleton.GetHP() <= 0)
         {
@@ -1582,6 +1609,35 @@ public class BattleController : MonoBehaviour
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = "You received " + reward + "G!";
         yield return new WaitForSeconds(0.5f);
         GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
+    }
+
+    public void EnemySkill(Attack attack, int target, int damage)
+    {
+        StartCoroutine(EnemySkillRtn(attack, target, damage));
+    }
+
+    private IEnumerator EnemySkillRtn(Attack attack, int target, int damage)
+    {
+        attacking = true;
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[target].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[target].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(attack.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(attack.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        currTroop.enemies[target].currHP -= damage;
     }
 }
 

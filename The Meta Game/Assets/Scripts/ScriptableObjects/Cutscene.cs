@@ -76,7 +76,8 @@ public enum StepType
     unlockMode,
     lockMode,
     deleteTile,
-    glitch
+    glitch,
+    scrollCam
 }
 
 #if UNITY_EDITOR
