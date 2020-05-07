@@ -4,6 +4,13 @@
 		<WorkUnit Name="Default Work Unit" ID="{AA4E8381-0120-40EB-AE84-09A6AC679469}" PersistMode="Standalone">
 			<ChildrenList>
 				<SoundBank Name="Dextra_Soundbank" ID="{762BFFF1-364D-4AC4-BA3B-A315FD9D94B6}">
+					<PropertyList>
+						<Property Name="Maximum" Type="int32">
+							<ValueList>
+								<Value>75000000</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ObjectInclusionList>
 						<ObjectRef Name="sfx_rpg_attack" ID="{29BD215E-9DD4-4166-9A88-7710C532D965}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Castle_Rose" ID="{AC8EEBCE-AE49-4179-9226-33E56E86E8AF}" WorkUnitID="{A42E96BD-5221-4EBE-A0B2-8A48F06727DA}" Filter="7" Origin="Manual"/>
