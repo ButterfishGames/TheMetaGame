@@ -240,6 +240,8 @@ public class GameController : MonoBehaviour
 
     private float wallLDef, wallRDef, wallUDef, wallDDef;
 
+    private IEnumerator zoomRtn;
+
     /*private void OnEnable()
     {
         controls = new Controls();
@@ -504,6 +506,8 @@ public class GameController : MonoBehaviour
             }
         }
 
+        zoomRtn = FighterZoom();
+
         StartCoroutine(Switch());
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -704,6 +708,8 @@ public class GameController : MonoBehaviour
             }
         }
 
+        StopCoroutine(zoomRtn);
+
         prev = equipped;
         equipped = newMode;
 
@@ -743,7 +749,7 @@ public class GameController : MonoBehaviour
         GameObject staff;
         AudioSource source;
 
-       //This effect is triggering on start for some reason 
+        //This effect is triggering on start for some reason 
         //AkSoundEngine.PostEvent("sfx_game_mode_switch", gameObject);
 
         switch (equipped)
@@ -1243,7 +1249,7 @@ public class GameController : MonoBehaviour
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
-                StartCoroutine(FighterZoom());
+                StartCoroutine(zoomRtn);
 
                 staff = GameObject.Find("MusicalStaff(Clone)");
                 if (staff != null)
@@ -2317,7 +2323,7 @@ public class GameController : MonoBehaviour
                 found = true;
             }
         }
-
+        
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -2354,7 +2360,7 @@ public class GameController : MonoBehaviour
             button.interactable = false;
         }
 
-        SettingsController.singleton.ShowGameplaySettings();
+        SettingsController.singleton.ShowGameplaySettings(true);
     }
 
     public void CloseSettingsMenu()

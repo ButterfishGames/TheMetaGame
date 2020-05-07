@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
@@ -69,6 +70,8 @@ public class SettingsController : MonoBehaviour
     private string[] actions = { "Jump", "Pause", "Menu", "SwitchModeNeg", "SwitchModePos",
         "Light", "Medium", "Heavy", "Fire", "Zoom" };
 
+    InputActionRebindingExtensions.RebindingOperation op;
+
     private enum Panel
     {
         gameplay,
@@ -83,6 +86,15 @@ public class SettingsController : MonoBehaviour
 
     private PlayerInput pInput;
     private TMP_SpriteAsset current;
+    
+    private void SubmitCancHandle(InputAction.CallbackContext context)
+    {
+        if (op != null)
+        {
+            op.Start();
+            op = null;
+        }
+    }
 
     private void Awake()
     {
@@ -208,6 +220,16 @@ public class SettingsController : MonoBehaviour
         OnControlsChanged(pInput);
     }
 
+    private void OnEnable()
+    {
+        OnControlsChanged(pInput);
+    }
+
+    private void OnDisable()
+    {
+        pInput.actions["Submit"].canceled -= SubmitCancHandle;
+    }
+
     public void InitAudio()
     {
         MixLevels.SetSfxLvl(sfxVolume * 50);
@@ -246,6 +268,8 @@ public class SettingsController : MonoBehaviour
         {
             InitControlText(pIn);
         }
+
+        pIn.actions["Submit"].canceled += SubmitCancHandle;
     }
 
     private void Update()
@@ -255,7 +279,12 @@ public class SettingsController : MonoBehaviour
 
     public void ShowGameplaySettings()
     {
-        if (gameplayPanel.activeInHierarchy)
+        ShowGameplaySettings(false);
+    }
+
+    public void ShowGameplaySettings(bool fromPause)
+    {
+        if (!fromPause && gameplayPanel.activeInHierarchy)
         {
             return;
         }
@@ -270,10 +299,18 @@ public class SettingsController : MonoBehaviour
         currentPanel = Panel.gameplay;
         panelImg.sprite = gameplaySprite;
 
+        bool pfActive = true;
+
         if (GameController.singleton.modes[0].unlocked)
         {
             pfLabel.SetActive(true);
             pfUpJumpHolder.SetActive(true);
+
+            if (fromPause)
+            {
+                EventSystem.current.SetSelectedGameObject(pfujToggle.gameObject);
+            }
+
             if (PlayerPrefs.HasKey("pfUpJump"))
             {
                 pfujToggle.isOn = bool.Parse(PlayerPrefs.GetString("pfUpJump"));
@@ -290,12 +327,19 @@ public class SettingsController : MonoBehaviour
         {
             pfLabel.SetActive(false);
             pfUpJumpHolder.SetActive(false);
+            pfActive = false;
         }
 
         if (GameController.singleton.modes[1].unlocked)
         {
             fgLabel.SetActive(true);
             fgUpJumpHolder.SetActive(true);
+
+            if (fromPause && !pfActive)
+            {
+                EventSystem.current.SetSelectedGameObject(fgujToggle.gameObject);
+            }
+
             if (PlayerPrefs.HasKey("fgUpJump"))
             {
                 fgujToggle.isOn = bool.Parse(PlayerPrefs.GetString("fgUpJump"));
@@ -682,7 +726,7 @@ public class SettingsController : MonoBehaviour
 
         int ind = GetBindingIndex(pIn.actions[action], key);
 
-        InputActionRebindingExtensions.RebindingOperation op = pIn.actions[action].PerformInteractiveRebinding(ind);
+        op = pIn.actions[action].PerformInteractiveRebinding(ind);
         op.WithBindingGroup(pIn.currentControlScheme);
         op.OnApplyBinding((operation, path) =>
         {
@@ -765,7 +809,11 @@ public class SettingsController : MonoBehaviour
             }
         });
 
-        op.Start();
+        if (pInput.currentControlScheme.Equals("KeyboardAndMouse"))
+        {
+            op.Start();
+            op = null;
+        }
     }
 
     private void Setup(string action)
@@ -988,6 +1036,7 @@ public class SettingsController : MonoBehaviour
     {
         jumpText.spriteAsset = current;
         jumpText.text = ButtonsLib.singleton.DialogueSingleAction("Jump");
+        Debug.Log(ButtonsLib.singleton.DialogueSingleAction("Jump"));
 
         pauseText.spriteAsset = current;
         pauseText.text = ButtonsLib.singleton.DialogueSingleAction("Pause");
