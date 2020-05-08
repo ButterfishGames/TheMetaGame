@@ -688,7 +688,7 @@
 								</MusicPlaylistItem>
 							</Playlist>
 						</MusicPlaylistContainer>
-						<MusicPlaylistContainer Name="Boss_1" ID="{C83734B9-008C-4F14-B17A-D512A165CBA8}" ShortID="188847832">
+						<MusicPlaylistContainer Name="Boss_Fight" ID="{C83734B9-008C-4F14-B17A-D512A165CBA8}" ShortID="188847832">
 							<PropertyList>
 								<Property Name="OverrideClockSettings" Type="bool" Value="True"/>
 								<Property Name="Tempo" Type="Real64" Value="158"/>
@@ -1539,7 +1539,7 @@
 								<PathElementRef Name="Boss_1" ID="{94787BE6-2B8B-48E5-8B72-2BE476479489}"/>
 							</Path>
 							<AudioNodeInfo>
-								<AudioNodeRef Name="Boss_1" ID="{C83734B9-008C-4F14-B17A-D512A165CBA8}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
+								<AudioNodeRef Name="Boss_Fight" ID="{C83734B9-008C-4F14-B17A-D512A165CBA8}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}" Platform="Linked"/>
 							</AudioNodeInfo>
 						</Entry>
 						<Entry>
