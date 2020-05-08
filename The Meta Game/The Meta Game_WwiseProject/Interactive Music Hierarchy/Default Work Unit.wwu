@@ -6,10 +6,10 @@
 				<MusicSwitchContainer Name="Dextra_GameplaySwitch" ID="{82D156A4-255B-4FC6-AA31-EDB64248AA57}" ShortID="617312078">
 					<ReferenceList>
 						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+							<ObjectRef Name="MX Conversion Settings" ID="{DE5E78FF-F495-453A-BB4A-825C49EE1572}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="MX" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+							<ObjectRef Name="MX Bus" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -1352,7 +1352,7 @@
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
 										</Reference>
 										<Reference Name="OutputBus">
-											<ObjectRef Name="MX" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+											<ObjectRef Name="MX Bus" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
@@ -1639,10 +1639,10 @@
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+							<ObjectRef Name="MX Conversion Settings" ID="{DE5E78FF-F495-453A-BB4A-825C49EE1572}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="MX" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+							<ObjectRef Name="MX Bus" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>

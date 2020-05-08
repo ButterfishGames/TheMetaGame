@@ -496,6 +496,7 @@ public class FGEnemy : EnemyBehaviour
                                     {
                                         if (!attackCoRoutineRunning)
                                         {
+                                            AkSoundEngine.PostEvent("sfx_uppercut", gameObject);
                                             comboed = true;
                                             animator.SetBool("comboed", true);
                                             BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
@@ -535,6 +536,7 @@ public class FGEnemy : EnemyBehaviour
                                         animator.SetBool("close", true);
                                         if (!attackCoRoutineRunning && !usedAttack[2])
                                         {
+                                            AkSoundEngine.PostEvent("sfx_kick", gameObject);
                                             BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
                                             usedAttack[2] = true;
                                             attackCoRoutineRunning = true;
@@ -588,6 +590,7 @@ public class FGEnemy : EnemyBehaviour
                                         {
                                             if (!usedAttack[0])
                                             {
+                                                AkSoundEngine.PostEvent("sfx_punch", gameObject);
                                                 BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
                                                 usedAttack[0] = true;
                                                 attackCoRoutineRunning = true;
@@ -595,6 +598,7 @@ public class FGEnemy : EnemyBehaviour
                                             }
                                             else if (!usedAttack[1])
                                             {
+                                                AkSoundEngine.PostEvent("sfx_uppercut", gameObject);
                                                 BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
                                                 usedAttack[1] = true;
                                                 attackCoRoutineRunning = true;
@@ -602,6 +606,7 @@ public class FGEnemy : EnemyBehaviour
                                             }
                                             else if (!usedAttack[2])
                                             {
+                                                AkSoundEngine.PostEvent("sfx_kick", gameObject);
                                                 BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
                                                 usedAttack[2] = true;
                                                 attackCoRoutineRunning = true;

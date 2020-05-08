@@ -6,18 +6,31 @@
 				<ActorMixer Name="SFX" ID="{4CE2B0A1-EDEC-4152-A4A8-A0342EB20F53}" ShortID="34297417">
 					<ReferenceList>
 						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+							<ObjectRef Name="SFX Conversion Settings" ID="{A1BB4913-EEF2-4E5C-9802-F1847BD28082}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="SFX" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+							<ObjectRef Name="SFX Bus" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
 						<RandomSequenceContainer Name="sfx_jump" ID="{E97DDF91-C53B-4C47-AD74-31E8DAFF7CDE}" ShortID="432001650">
 							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{7DCD2688-FDF5-449D-9376-FF7DB15356EE}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="50"/>
+													<Property Name="Min" Type="Real64" Value="-100"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-6</Value>
+										<Value>-13</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -96,7 +109,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>5</Value>
+										<Value>-6</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -122,7 +135,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>5</Value>
+										<Value>-4</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -145,13 +158,6 @@
 							</ActiveSourceList>
 						</Sound>
 						<RandomSequenceContainer Name="sfx_knightcharge" ID="{3C201239-58E9-4BF7-8885-8D1CEAA35F60}" ShortID="757184683">
-							<PropertyList>
-								<Property Name="Volume" Type="Real64">
-									<ValueList>
-										<Value>9</Value>
-									</ValueList>
-								</Property>
-							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -240,6 +246,13 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<Sound Name="sfx_flagcheckpoint" ID="{B05BF534-4BA9-4574-A2AD-C89160B9393A}" ShortID="229445105">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -259,6 +272,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_startgame" ID="{79528944-7B43-413D-9EB2-4772D403DED6}" ShortID="807498282">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -278,6 +298,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_walljump_NEW" ID="{079B8F2A-507F-4E9C-880B-C04369ADFD17}" ShortID="247601343">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -300,7 +327,7 @@
 							<PropertyList>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>10</Value>
+										<Value>2</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -323,6 +350,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_GM_unlock" ID="{24ECEDDD-36A4-41DC-91C7-D9196236E7AE}" ShortID="1037192479">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-12</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -342,6 +376,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_GM_switch" ID="{C9CFD4AF-0C0B-4CA6-8DDB-ECD8342FC95B}" ShortID="1071911447">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-13</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -361,6 +402,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<RandomSequenceContainer Name="sfx_fire" ID="{309C8A3E-BB86-4DDE-981D-398E8E1E0D64}" ShortID="653013592">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -470,6 +518,13 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<Sound Name="sfx_rpg_attack" ID="{F6E6467A-C707-4A49-98B2-A20D5AE0B3FB}" ShortID="231033217">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
@@ -486,6 +541,161 @@
 							</ChildrenList>
 							<ActiveSourceList>
 								<ActiveSource Name="dextra_sfx_enemy_attack_1" ID="{52E52D15-A731-4732-A544-0D8090D1A103}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<RandomSequenceContainer Name="sfx_CHAR_punch" ID="{5412012C-B21C-4C2E-844E-E201E7185BC6}" ShortID="444816389">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>31</Value>
+									</ValueList>
+								</Property>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.06</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{0722BD17-0806-4BEF-9AD4-01EA081DFC81}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="250"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-14</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="sfx_CHAR_punch_a" ID="{5BE0B215-61A4-413A-B939-091B22E89CCB}" ShortID="607637116">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-2</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="SFX Bus" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_CHAR_punch_a" ID="{6F52AF6D-8943-49ED-BB79-46A0D717FEF1}" ShortID="438715661">
+											<Language>SFX</Language>
+											<AudioFile>sfx_CHAR_punch_a.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_CHAR_punch_a" ID="{6F52AF6D-8943-49ED-BB79-46A0D717FEF1}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_CHAR_punch_b" ID="{386096C0-B87C-4EA1-8098-C70221AC13C5}" ShortID="584132897">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-2</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="SFX Bus" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_CHAR_punch_b" ID="{E1CD1D9C-9A7E-4700-8FE8-DED2FB27A118}" ShortID="1045294736">
+											<Language>SFX</Language>
+											<AudioFile>sfx_CHAR_punch_b.wav</AudioFile>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_CHAR_punch_b" ID="{E1CD1D9C-9A7E-4700-8FE8-DED2FB27A118}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+						<Sound Name="sfx_CHAR_kick" ID="{D1BA7DDF-D3BE-4F40-9F40-C710965A41AE}" ShortID="423769781">
+							<PropertyList>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.4</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-15</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="sfx_CHAR_kick" ID="{961D8829-1350-4780-9887-7FD98A3B67C7}" ShortID="692710125">
+									<Language>SFX</Language>
+									<AudioFile>sfx_CHAR_kick.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="sfx_CHAR_kick" ID="{961D8829-1350-4780-9887-7FD98A3B67C7}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="sfx_CHAR_uppercut" ID="{55A99D9E-20F3-437A-8F49-E0F557DB0F88}" ShortID="959421537">
+							<PropertyList>
+								<Property Name="InitialDelay" Type="Real64">
+									<ValueList>
+										<Value>0.275</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-15.5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{66B76899-AA1D-44D5-9EC8-D0366CF59137}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3220ACCD-F6FC-469E-8D36-4161C3F11912}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="sfx_CHAR_uppercut" ID="{D5A572BE-5CD7-491C-A628-8087137B28C7}" ShortID="46186613">
+									<Language>SFX</Language>
+									<AudioFile>sfx_CHAR_uppercut.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="sfx_CHAR_uppercut" ID="{D5A572BE-5CD7-491C-A628-8087137B28C7}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

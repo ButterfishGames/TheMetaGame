@@ -10,7 +10,7 @@
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<Bus Name="SFX" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}">
+						<Bus Name="SFX Bus" ID="{6390A2B8-665C-4B9F-B2EA-9DEFDF73ECF9}">
 							<PropertyList>
 								<Property Name="BusVolume" Type="Real64">
 									<ValueList>
@@ -44,8 +44,12 @@
 									</RTPCList>
 								</Property>
 							</PropertyList>
+							<ChildrenList>
+								<Bus Name="Normal Bus" ID="{E3486073-0575-42CA-B21F-C596E4E97AD6}"/>
+								<Bus Name="LD Bus" ID="{6054788F-A67F-4576-A246-2067AAAE0ED1}"/>
+							</ChildrenList>
 						</Bus>
-						<Bus Name="MX" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}">
+						<Bus Name="MX Bus" ID="{BD4F1BB2-2D61-4E17-8457-4263597DA857}">
 							<PropertyList>
 								<Property Name="BusVolume" Type="Real64">
 									<ValueList>

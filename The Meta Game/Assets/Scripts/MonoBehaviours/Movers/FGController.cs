@@ -313,6 +313,7 @@ public class FGController : Mover
         }
         else
         {
+            AkSoundEngine.PostEvent("sfx_punch", gameObject);
             heldAttackButton[0] = true;
             BasicAttack(Attack.light, lightAttackStats.hitboxActivationTime, lightAttackStats.moveLag, lightAttackStats.xVelocity, lightAttackStats.yVelocity, lightAttackStats.hitstun, lightAttackStats.damage, lightAttackStats.startup, "lightattack");
         }
@@ -355,6 +356,7 @@ public class FGController : Mover
         }
         else
         {
+            AkSoundEngine.PostEvent("sfx_uppercut", gameObject);
             heldAttackButton[1] = true;
             BasicAttack(Attack.medium, mediumAttackStats.hitboxActivationTime, mediumAttackStats.moveLag, mediumAttackStats.xVelocity, mediumAttackStats.yVelocity, mediumAttackStats.hitstun, mediumAttackStats.damage, mediumAttackStats.startup, "mediumattack");
         }
@@ -397,6 +399,7 @@ public class FGController : Mover
         }
         else
         {
+            AkSoundEngine.PostEvent("sfx_kick", gameObject);
             heldAttackButton[2] = true;
             BasicAttack(Attack.heavy, heavyAttackStats.hitboxActivationTime, heavyAttackStats.moveLag, heavyAttackStats.xVelocity, heavyAttackStats.yVelocity, heavyAttackStats.hitstun, heavyAttackStats.damage, heavyAttackStats.startup, "heavyattack");
         }
