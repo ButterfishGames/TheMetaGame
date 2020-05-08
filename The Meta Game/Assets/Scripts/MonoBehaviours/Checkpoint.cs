@@ -29,9 +29,15 @@ public class Checkpoint : MonoBehaviour
 
     public void Activate()
     {
+        StartCoroutine(ActivateRtn());
+    }
+
+    public IEnumerator ActivateRtn()
+    {
         active = this;
         Vector3 loadPos = transform.position;
         loadPos.y += 0.5f;
+        yield return new WaitUntil(() => NPC.shopkeeper != null);
         SaveManager.singleton.UpdateCheckpointPos(loadPos);
         SaveManager.singleton.SaveGame(true);
         animator.SetBool("active", true);

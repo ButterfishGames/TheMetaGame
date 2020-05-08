@@ -252,6 +252,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue(bool normal)
     {
+        Debug.Log(normal);
         if (normal)
         {
             switch (currentDialogue.type)
@@ -365,7 +366,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-
+        if (output.Contains("|*JUMP*|")) output = output.Replace("|*JUMP*|", ButtonsLib.singleton.DialogueAction("Jump"));
         if (output.Contains("|*PAUSE*|")) output = output.Replace("|*PAUSE*|", ButtonsLib.singleton.DialogueAction("Pause"));
         if (output.Contains("|*MENU*|")) output = output.Replace("|*MENU*|", ButtonsLib.singleton.DialogueAction("Menu"));
         if (output.Contains("|*SWITCH_L*|")) output = output.Replace("|*SWITCH_L*|", ButtonsLib.singleton.DialogueAction("SwitchModeNeg"));

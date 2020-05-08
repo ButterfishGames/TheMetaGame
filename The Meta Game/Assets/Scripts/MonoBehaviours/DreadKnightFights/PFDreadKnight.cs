@@ -133,6 +133,8 @@ public class PFDreadKnight : DreadKnightBehavior
         currHP = maxHP;
 
         inverseDamageFadeTime = 1.0f / damageFadeTime;
+
+        playerTransform = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
@@ -148,7 +150,7 @@ public class PFDreadKnight : DreadKnightBehavior
             return;
         }
 
-        if (CutsceneManager.singleton.scening)
+        if (CutsceneManager.singleton.scening && playerTransform.position.x > 210)
         {
             bossCutsceneBegun = true;
         }
