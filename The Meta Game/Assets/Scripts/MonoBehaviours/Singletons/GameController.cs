@@ -1870,8 +1870,8 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-
-        // TODO: Post Death jingle event
+     //it works wahoo
+       AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(fall));

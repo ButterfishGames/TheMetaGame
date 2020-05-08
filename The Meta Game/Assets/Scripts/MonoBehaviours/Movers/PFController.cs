@@ -244,7 +244,7 @@ public class PFController : Mover
         {
 
             dying = true;
-            AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+            //AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
 
             if (hit)
             {

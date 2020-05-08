@@ -457,12 +457,25 @@
 						</Event>
 						<Event Name="Death_Jingle" ID="{1D43698C-D838-4A87-A6A1-DD0FB9C77E40}">
 							<ChildrenList>
+								<Action Name="" ID="{8C4280DB-969D-4A4A-B219-46F7B220067E}" ShortID="770721247">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="8"/>
+									</PropertyList>
+									<ReferenceList/>
+								</Action>
 								<Action Name="" ID="{9D02B4B7-D1DB-4A64-903A-7AB2C8375A27}" ShortID="850380456">
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="ST_Death_Jingle" ID="{7B070110-8BF1-4C74-8B45-6B78F45D510E}" WorkUnitID="{37018DAF-1471-4B24-A8D5-1EB86FD52426}"/>
 										</Reference>
 									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{1A715677-945C-492E-B0CB-E823125FB0C3}" ShortID="254698270">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="10"/>
+										<Property Name="Delay" Type="Real64" Value="4"/>
+									</PropertyList>
+									<ReferenceList/>
 								</Action>
 							</ChildrenList>
 						</Event>
