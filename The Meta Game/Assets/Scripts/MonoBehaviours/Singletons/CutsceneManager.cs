@@ -41,6 +41,11 @@ public class CutsceneManager : MonoBehaviour
             scroller = FindObjectOfType<CameraScroll>();
         }
 
+        if (cameraWalls[0] == null)
+        {
+            cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        }
+
         if (!shouldScroll && scening && scroller.enabled)
         {
             scroller.enabled = false;

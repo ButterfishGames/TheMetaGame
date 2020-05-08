@@ -145,7 +145,6 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(NPC.shopkeeper);
             temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length, NPC.shopkeeper.boostsPurchased.Length);
         }
 
@@ -457,7 +456,7 @@ public class SaveData
 
     public SaveData()
     {
-        currentScene = 1;
+        currentScene = 0;
         scenes = new Dictionary<int, SceneData>();
 
         if (GameController.singleton != null)
