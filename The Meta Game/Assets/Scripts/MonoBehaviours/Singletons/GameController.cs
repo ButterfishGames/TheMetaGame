@@ -1855,7 +1855,7 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-
+        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
         dying = true;
         paused = true;
         StartCoroutine(ReloadLevel(false));
