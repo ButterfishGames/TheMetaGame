@@ -24,14 +24,14 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: cdac2032fcf69e468d364161c3f11912
     GuidInternal: 
-    m_lastTime: -8586136479064775808
+    m_lastTime: -8586126376734775808
     List: []
   BankWwu:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
     ParentPhysicalPath: 
     guid: 81834eaa2001eb40ae8409a6ac679469
     GuidInternal: 
-    m_lastTime: -8586136461284775808
+    m_lastTime: -8586126376734775808
     List:
     - name: Dextra_Soundbank
       guid: f1ff2b764d36c44aba3ba315fd9d94b6
@@ -47,7 +47,7 @@ MonoBehaviour:
     ParentPhysicalPath: 
     guid: bd962ea42152be4ea0b28a48f06727da
     GuidInternal: 
-    m_lastTime: -8586136463554775808
+    m_lastTime: -8586126368284775808
     List:
     - name: Boss_Fight
       guid: 1bf700cd4a2b704ba5848cefdf854d9e
@@ -61,8 +61,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Boss_Fight
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Castle_Approach
       guid: 9e5da5c4d6c42d44a6a1116d56a4d7ab
       id: 2926820552
@@ -75,8 +75,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Castle_Approach
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Castle_Rose
       guid: ceeb8eac49ae7941922633e56e86e8af
       id: 491254729
@@ -89,8 +89,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Castle_Rose
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Crystal_Caverns
       guid: 1dcaa974c6fcb749bdd8b64ce50d2e8d
       id: 2294576446
@@ -103,8 +103,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Crystal_Caverns
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Dating_Sim
       guid: 6b10f33e0b6d47438aa0402fddfbce3a
       id: 3625439640
@@ -117,8 +117,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Dating_Sim
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Death_Jingle
       guid: 8c69431d38d8874aa6a1dd0fb9c77e40
       id: 3131203835
@@ -131,8 +131,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Death_Jingle
       maxAttenuation: 0
-      maxDuration: 4.310204
-      minDuration: 4.310204
+      maxDuration: -1
+      minDuration: -1
     - name: Death_Jingle_MuteMusic
       guid: 12c20c25fbce964bb13e9352c8355651
       id: 4150336450
@@ -159,8 +159,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Dev_Room
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: End_Credits
       guid: fa34be16032d8842905ce745814175d8
       id: 3797583859
@@ -173,8 +173,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/End_Credits
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Final_Boss
       guid: ecb79db02bc7ee4d8d1ab38012a5a3a3
       id: 2345047989
@@ -187,8 +187,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Final_Boss
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Main_Menu
       guid: ec277456bd04384d9c9bd9de2389a4ce
       id: 2005704188
@@ -201,8 +201,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Main_Menu
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Rhythm_Mode
       guid: c711202d15c9ac41ad35a95cbfbc97f4
       id: 1431648729
@@ -215,8 +215,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Rhythm_Mode
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: RPG_Battle
       guid: 3741c8ba63f8ee4696122992ff41f8b4
       id: 332969635
@@ -229,8 +229,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/RPG_Battle
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_collectable
       guid: f13ab63d9365eb4faafb9814e52b1558
       id: 673464333
@@ -243,8 +243,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_collectable
       maxAttenuation: 0
-      maxDuration: 1.861338
-      minDuration: 1.861338
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_flagcheckpoint
       guid: 44e4d57f9a048846bcc77a5f340cc934
       id: 2688667465
@@ -257,8 +257,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_flagcheckpoint
       maxAttenuation: 0
-      maxDuration: 4
-      minDuration: 4
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_flee_failure
       guid: e6d7852fadfe3a49b7332b53b4e358b9
       id: 2940090998
@@ -327,8 +327,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_game_mode_switch
       maxAttenuation: 0
-      maxDuration: 1.662521
-      minDuration: 1.662521
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_game_mode_unlocked
       guid: 35ae942bf1155347ac22dedd4ecf6536
       id: 2587904569
@@ -341,8 +341,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_game_mode_unlocked
       maxAttenuation: 0
-      maxDuration: 3.875
-      minDuration: 3.875
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_jump
       guid: 340cca551a938d47adacab9f4d3f4836
       id: 3695098761
@@ -355,19 +355,19 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_jump
       maxAttenuation: 0
-      maxDuration: 0.214671
-      minDuration: 0.184014
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_kick
       guid: 642cfad6dc60d545b6751cb6623c9627
       id: 2043286607
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Empty Events
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_kick
         ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_kick
+      Path: Default Work Unit/SFX/sfx_kick
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -383,8 +383,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_knight_talk
       maxAttenuation: 0
-      maxDuration: 1.929342
-      minDuration: 1.929342
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_knightcharge
       guid: 65c3d0d7ee4f724aa19ca4bf82a1167f
       id: 2518317382
@@ -397,8 +397,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_knightcharge
       maxAttenuation: 0
-      maxDuration: 6
-      minDuration: 6
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_magic_fire
       guid: 39adc3b387dff3429b7e2fc67f846ddc
       id: 1965088569
@@ -411,8 +411,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_magic_fire
       maxAttenuation: 0
-      maxDuration: 2
-      minDuration: 2
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_magic_heal
       guid: 94bbf14462a2b3499bdc29480c1ebe7d
       id: 2156021983
@@ -489,11 +489,11 @@ MonoBehaviour:
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Empty Events
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_punch
         ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_punch
+      Path: Default Work Unit/SFX/sfx_punch
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -509,8 +509,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_rpg_attack
       maxAttenuation: 0
-      maxDuration: 2
-      minDuration: 2
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_rpg_battle_death
       guid: 103e4ad45bc21940a190ee3340d67065
       id: 3654319392
@@ -551,8 +551,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_start_game
       maxAttenuation: 0
-      maxDuration: 6
-      minDuration: 6
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_ui_back
       guid: 245fed33d055384eae4b499b763f2c71
       id: 2405914575
@@ -565,8 +565,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_ui_back
       maxAttenuation: 0
-      maxDuration: 4
-      minDuration: 4
+      maxDuration: -1
+      minDuration: -1
     - name: sfx_ui_rpg_menu_confirm
       guid: bae1b9eb52cb9643a9d451d669e0c815
       id: 323185506
@@ -601,11 +601,11 @@ MonoBehaviour:
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: Empty Events
+      - ElementName: SFX
         ObjectType: 4
       - ElementName: sfx_uppercut
         ObjectType: 3
-      Path: Default Work Unit/Empty Events/sfx_uppercut
+      Path: Default Work Unit/SFX/sfx_uppercut
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -621,8 +621,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/SFX/sfx_walljump
       maxAttenuation: 0
-      maxDuration: 4
-      minDuration: 4
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Game
       guid: de27aca1c47f2f4e8a0a78c202f426f6
       id: 1114964412
@@ -649,8 +649,8 @@ MonoBehaviour:
         ObjectType: 3
       Path: Default Work Unit/MX/Sundered_Castle
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
     ParentPhysicalPath: 
