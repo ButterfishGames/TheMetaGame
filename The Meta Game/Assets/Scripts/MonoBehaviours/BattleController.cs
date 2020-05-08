@@ -258,7 +258,8 @@ public class BattleController : MonoBehaviour
 
         if (GameController.singleton.GetHP() <= 0)
         {
-            GameObject.Find("Player").GetComponent<AudioSource>().Play();
+            AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+            AkSoundEngine.PostEvent("Death_Jingle", gameObject);
             playerStats.text = "Dextra\n"
             + GameController.singleton.GetHP() + "/" + GameController.singleton.maxHP + " HP\n"
             + GameController.singleton.GetMP() + "/" + GameController.singleton.maxMP + " MP\n"

@@ -30,12 +30,12 @@ MonoBehaviour:
   animatorsExpanded: 1
   gameplayControllers:
   - {fileID: 9100000, guid: d1cb57b650790de4da5318f644cc6ed3, type: 2}
-  - {fileID: 9100000, guid: e0aa2cf837eefb248a16a50fe7eb3edc, type: 2}
+  - {fileID: 9100000, guid: 007f8730d2360fa42a83485096b3ccd7, type: 2}
   gameplayControllersSize: 2
   gameplayControllersExpanded: 1
   cutsceneControllers:
   - {fileID: 9100000, guid: 419a6acdb93c1e04e920d6547453550d, type: 2}
-  - {fileID: 9100000, guid: bd6a25add83902a47a0d1d2d895f292a, type: 2}
+  - {fileID: 9100000, guid: 007f8730d2360fa42a83485096b3ccd7, type: 2}
   cutsceneControllersSize: 2
   cutsceneControllersExpanded: 1
   steps:
@@ -48,7 +48,7 @@ MonoBehaviour:
     animInd: 0
     state: 1
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 2
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 3
@@ -72,7 +72,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 3
@@ -84,7 +84,7 @@ MonoBehaviour:
     animInd: 1
     state: 1
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 2
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 3
@@ -108,7 +108,7 @@ MonoBehaviour:
     animInd: 1
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 2
@@ -120,7 +120,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 9
@@ -132,7 +132,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 3
   - stepType: 4
@@ -144,7 +144,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 2
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 3
@@ -156,7 +156,7 @@ MonoBehaviour:
     animInd: 0
     state: 1
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 4
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 4
@@ -180,7 +180,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 3.5
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 6
@@ -192,7 +192,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 0
     mode: 0
   - stepType: 7
@@ -204,7 +204,7 @@ MonoBehaviour:
     animInd: 0
     state: 0
     wait: 0
-    song: {fileID: 0}
+    songEvent: 
     scene: 3
     mode: 0
   stepsSize: 14

@@ -456,7 +456,7 @@ public class SaveData
 
     public SaveData()
     {
-        currentScene = 0;
+        currentScene = 1;
         scenes = new Dictionary<int, SceneData>();
 
         if (GameController.singleton != null)
