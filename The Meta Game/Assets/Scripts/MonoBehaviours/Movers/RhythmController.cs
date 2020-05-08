@@ -393,8 +393,8 @@ public class RhythmController : Mover
     {
         dying = true;
         rb.velocity = Vector2.zero;
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle", gameObject);
         yield return new WaitForSeconds(1);
         GameController.singleton.Die();
     }

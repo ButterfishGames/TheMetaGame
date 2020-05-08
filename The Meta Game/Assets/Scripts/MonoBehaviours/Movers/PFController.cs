@@ -266,7 +266,7 @@ public class PFController : Mover
 
             if (!CutsceneManager.singleton.scening)
             {
-                AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+                //AkSoundEngine.PostEvent("Death_Jingle", gameObject);
                 yield return new WaitForSeconds(deathWait);
                 GameController.singleton.Die(!hit);
             }

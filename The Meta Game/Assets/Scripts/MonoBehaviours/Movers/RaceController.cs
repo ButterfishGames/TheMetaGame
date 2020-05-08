@@ -376,8 +376,8 @@ public class RaceController : Mover
         transform.Find("BikeBomb").GetComponent<BikeBoom>().enabled = true;
         transform.Find("BikeBomb").transform.SetParent(null);
         
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle", gameObject);
 
         float t = 0;
         float timer = 0;
