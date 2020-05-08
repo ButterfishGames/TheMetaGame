@@ -68,6 +68,19 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator RunCutscene(bool walled)
     {
+        GameObject player = GameObject.Find("Player");
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(0, rb.velocity.y);
+
+        Mover[] movers = player.GetComponents<Mover>();
+        foreach (Mover mover in movers)
+        {
+            mover.hRaw = 0;
+            mover.hor = 0;
+            mover.vRaw = 0;
+            mover.ver = 0;
+        }
+
         shouldScroll = false;
 
         bool lockCam = false;
