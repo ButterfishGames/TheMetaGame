@@ -33,6 +33,18 @@ MonoBehaviour:
   cutsceneControllersSize: 1
   cutsceneControllersExpanded: 1
   steps:
+  - stepType: 1
+    tranInd: 0
+    mov: {x: 287.1, y: 11.70622, z: -10}
+    rot: {x: 0, y: 0, z: 0}
+    scl: {x: 1, y: 1, z: 1}
+    dialogue: {fileID: 0}
+    animInd: 0
+    state: 0
+    wait: 0
+    songEvent: 
+    scene: 0
+    mode: 0
   - stepType: 3
     tranInd: 0
     mov: {x: 0, y: 0, z: 0}
@@ -93,6 +105,6 @@ MonoBehaviour:
     songEvent: 
     scene: 0
     mode: 0
-  stepsSize: 5
+  stepsSize: 6
   stepsExpanded: 1
-  stepExpanded: 0101010101
+  stepExpanded: 010101010101
