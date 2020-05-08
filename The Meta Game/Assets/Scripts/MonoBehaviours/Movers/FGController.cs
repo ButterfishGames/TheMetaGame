@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class FGController : Mover
 {
@@ -161,11 +162,40 @@ public class FGController : Mover
     private float moveVelY;
 
     private bool dying;
+
+    private Slider healthSlider;
+
+    private Slider hitstunSlider;
+
+    private Slider enemyHealthSlider;
+
+    private Slider enemyHitstunSlider;
+
+    private GameObject closestEnemy;
+
+    private List<GameObject> enemiesInView = new List<GameObject>();
     #endregion
 
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        if (healthSlider != null)
+        {
+            healthSlider.gameObject.SetActive(true);
+        }
+        if (hitstunSlider != null)
+        {
+            hitstunSlider.gameObject.SetActive(true);
+        }
+        if (enemyHealthSlider != null)
+        {
+            enemyHealthSlider.gameObject.SetActive(true);
+        }
+        if (enemyHitstunSlider != null)
+        {
+            enemyHitstunSlider.gameObject.SetActive(true);
+        }
 
         dying = false;
         OnControlsChanged(GetComponent<PlayerInput>());
@@ -175,12 +205,33 @@ public class FGController : Mover
     {
         base.OnDisable();
 
+        if (healthSlider != null)
+        {
+            healthSlider.gameObject.SetActive(false);
+        }
+        if (hitstunSlider != null)
+        {
+            hitstunSlider.gameObject.SetActive(false);
+        }
+        if (enemyHealthSlider != null)
+        {
+            enemyHealthSlider.gameObject.SetActive(false);
+        }
+        if (enemyHitstunSlider != null)
+        {
+            enemyHitstunSlider.gameObject.SetActive(false);
+        }
+
         light.performed -= LightPerfHandle;
         light.canceled -= LightCancHandle;
         medium.performed -= MedPerfHandle;
         medium.canceled -= MedCancHandle;
         heavy.performed -= HeavyPerfHandle;
         heavy.canceled -= HeavyCancHandle;
+
+        light.Disable();
+        medium.Disable();
+        heavy.Disable();
     }
 
     private void OnControlsChanged(PlayerInput pIn)
@@ -189,12 +240,19 @@ public class FGController : Mover
         medium = pIn.actions["Medium"];
         heavy = pIn.actions["Heavy"];
 
-        light.performed += LightPerfHandle;
-        light.canceled += LightCancHandle;
-        medium.performed += MedPerfHandle;
-        medium.canceled += MedCancHandle;
-        heavy.performed += HeavyPerfHandle;
-        heavy.canceled += HeavyCancHandle;
+        if (enabled)
+        {
+            light.performed += LightPerfHandle;
+            light.canceled += LightCancHandle;
+            medium.performed += MedPerfHandle;
+            medium.canceled += MedCancHandle;
+            heavy.performed += HeavyPerfHandle;
+            heavy.canceled += HeavyCancHandle;
+
+            light.Enable();
+            medium.Enable();
+            heavy.Enable();
+        }
     }
 
     private void OnJump (InputValue value)
@@ -357,6 +415,51 @@ public class FGController : Mover
         heldAttackButton[2] = false;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (healthSlider == null)
+        {
+            GameObject healthBarTemp = GameObject.Find("PlayerHealthBar");
+            if (healthBarTemp != null)
+            {
+                healthSlider = healthBarTemp.GetComponent<Slider>();
+                healthSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (hitstunSlider == null)
+        {
+            GameObject hitstunSliderTemp = GameObject.Find("PlayerHitstunBar");
+            if (hitstunSliderTemp != null)
+            {
+                hitstunSlider = hitstunSliderTemp.GetComponent<Slider>();
+                hitstunSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (enemyHealthSlider == null)
+        {
+            GameObject healthBarTemp = GameObject.Find("EnemyHealthBar");
+            if (healthBarTemp != null)
+            {
+                enemyHealthSlider = healthBarTemp.GetComponent<Slider>();
+                enemyHealthSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (enemyHitstunSlider == null)
+        {
+            GameObject hitstunSliderTemp = GameObject.Find("EnemyHitstunBar");
+            if (hitstunSliderTemp != null)
+            {
+                enemyHitstunSlider = hitstunSliderTemp.GetComponent<Slider>();
+                enemyHitstunSlider.gameObject.SetActive(false);
+            }
+        }
+    }
+
     private void Start()
     {
         inputs = new InputDirection[3];
@@ -380,6 +483,77 @@ public class FGController : Mover
 
     protected override void Update()
     {
+        #region healthBarStuff
+        healthSlider.maxValue = GameController.singleton.maxHP;
+        healthSlider.value = GameController.singleton.GetHP();
+        hitstunSlider.value = hitstun;
+        if (!CutsceneManager.singleton.scening)
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if (enemies.Length != 0)
+            {
+                foreach (GameObject enemy in enemies)
+                {
+                    if (enemy.gameObject.GetComponent<FGEnemy>().fighting == true)
+                    {
+                        if (!enemiesInView.Contains(enemy))
+                        {
+                            if (!enemy.GetComponent<FGEnemy>().dying)
+                            {
+                                enemiesInView.Add(enemy);
+                            }
+                        }
+                        else
+                        {
+                            if (enemy.GetComponent<FGEnemy>().dying)
+                            {
+                                enemiesInView.Remove(enemy);
+                            }
+                        }
+                    }
+                }
+                if (enemiesInView.Count != 0)
+                {
+                    //https://answers.unity.com/questions/790508/remove-missing-objects-from-list.html
+                    for (int i = enemiesInView.Count - 1; i > -1; i--)
+                    {
+                        if (enemiesInView[i] == null)
+                            enemiesInView.RemoveAt(i);
+                    }
+                    for (int i = 0; i < enemiesInView.Count; i++)
+                    {
+                        if (closestEnemy != null)
+                        {
+                            if (Mathf.Sqrt(Mathf.Pow(transform.position.x - enemiesInView[i].transform.position.x, 2)) < Mathf.Sqrt(Mathf.Pow(transform.position.x - closestEnemy.transform.position.x, 2)))
+                            {
+                                closestEnemy = enemiesInView[i];
+                            }
+                        }
+                        else
+                        {
+                            if (enemiesInView[i] != null)
+                            {
+                                closestEnemy = enemiesInView[i];
+                            }
+                        }
+                    }
+                }
+            }
+            if (closestEnemy != null)
+            {
+                enemyHealthSlider.maxValue = closestEnemy.GetComponent<FGEnemy>().maxHP;
+                enemyHealthSlider.value = closestEnemy.GetComponent<FGEnemy>().currHP;
+                enemyHitstunSlider.value = closestEnemy.GetComponent<FGEnemy>().hitstun;
+            }
+            else
+            {
+                enemyHealthSlider.maxValue = 1.0f;
+                enemyHealthSlider.value = 0.0f;
+                enemyHitstunSlider.value = 0.0f;
+            }
+        }
+        #endregion
+
         if (GameController.singleton.GetHP() <= 0)
         {
             if (!dead)
@@ -495,6 +669,13 @@ public class FGController : Mover
 
     protected override void Move(float h, float v)
     {
+        if (GameController.singleton.GetPaused() 
+            || DialogueManager.singleton.GetDisplaying() 
+            || CutsceneManager.singleton.scening)
+        {
+            return;
+        }
+
         if (!attacking)
         {
             if (hitstun <= 0)
@@ -734,6 +915,7 @@ public class FGController : Mover
     private IEnumerator Death()
     {
         dying = true;
+        Debug.Log("Died");
         animator.SetBool("dead", true);
         GameController.singleton.SetPaused(true);
         GameObject.Find("Song").GetComponent<AudioSource>().Stop();

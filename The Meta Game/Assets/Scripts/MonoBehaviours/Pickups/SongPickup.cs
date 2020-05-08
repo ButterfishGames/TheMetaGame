@@ -49,7 +49,7 @@ public class SongPickup : MonoBehaviour
         {
             GameController.singleton.songList[songInd].unlocked = true;
             SaveManager.singleton.UpdatePlayerData();
-            // TODO: Add Collectible SFX Event
+            AkSoundEngine.PostEvent("sfx_collectable", gameObject);
             Destroy(gameObject);
         }
     }

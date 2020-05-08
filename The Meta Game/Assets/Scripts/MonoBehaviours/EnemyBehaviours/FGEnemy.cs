@@ -13,7 +13,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// Fighting variable to determine whether the enemy should be fighting the player ot not.
     /// </summary>
-    private bool fighting;
+    [HideInInspector] public bool fighting;
 
     /// <summary>
     /// Players X position so the sprite can face towardsthe player depending on what side they are on.
@@ -48,7 +48,7 @@ public class FGEnemy : EnemyBehaviour
     /// <summary>
     /// The current HP a given enemy has
     /// </summary>
-    private int currHP;
+    [HideInInspector] public int currHP;
 
     /// <summary>
     /// Used to determine current direction; 1 is right, -1 is left
@@ -232,7 +232,7 @@ public class FGEnemy : EnemyBehaviour
 
     private MobRoomController mrc;
 
-    private bool dying;
+    [HideInInspector] public bool dying;
     #endregion
 
     private void Start()
@@ -271,6 +271,11 @@ public class FGEnemy : EnemyBehaviour
     void Update()
     {
         if (GameController.singleton.GetPaused())
+        {
+            return;
+        }
+        
+        if (CutsceneManager.singleton.scening)
         {
             return;
         }
@@ -479,7 +484,10 @@ public class FGEnemy : EnemyBehaviour
                                     if (hitF.collider != null)
                                     {
                                         animator.SetBool("moving", true);
-                                        rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                        if (rb != null)
+                                        {
+                                            rb.velocity = new Vector2(dir * speed, rb.velocity.y);
+                                        }
                                     }
                                     else {
                                         Jump(100);
@@ -727,7 +735,10 @@ public class FGEnemy : EnemyBehaviour
         endLagTime = lag;
         if (grounded)
         {
-            rb.velocity = new Vector2(xVelocity, yVelocity);
+            if (rb != null)
+            {
+                rb.velocity = new Vector2(xVelocity, yVelocity);
+            }
         }
         hitbox.gameObject.GetComponent<FightingHitbox>().hitstun = hitstunGiven/60;
         hitbox.gameObject.GetComponent<FightingHitbox>().damage = damage;
@@ -857,7 +868,10 @@ public class FGEnemy : EnemyBehaviour
                 if (ray2.collider != null)
                 {
                     animator.SetBool("moving", true);
-                    rb.velocity = new Vector2(-directionInt * speed, rb.velocity.y);
+                    if (rb != null)
+                    {
+                        rb.velocity = new Vector2(-directionInt * speed, rb.velocity.y);
+                    }
                 }
                 else
                 {
@@ -888,7 +902,10 @@ public class FGEnemy : EnemyBehaviour
             if (Mathf.Sqrt(Mathf.Pow(transform.position.x - player.transform.position.x, 2)) <= distanceFromPlayer)
             {
                 animator.SetBool("moving", true);
-                rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                if (rb != null)
+                {
+                    rb.velocity = new Vector2(-dir * speed, rb.velocity.y);
+                }
             }
             else
             {
@@ -907,5 +924,10 @@ public class FGEnemy : EnemyBehaviour
     public void SetMRC(MobRoomController newMRC)
     {
         mrc = newMRC;
+    }
+
+    private void OnDestroy()
+    {
+        dying = true;
     }
 }

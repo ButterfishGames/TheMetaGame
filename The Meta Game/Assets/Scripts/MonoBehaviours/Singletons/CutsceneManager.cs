@@ -9,6 +9,11 @@ public class CutsceneManager : MonoBehaviour
     public Cutscene currentScene;
     public bool scening;
 
+    private CameraScroll scroller;
+    private bool shouldScroll;
+    private BoxCollider2D[] cameraWalls;
+    private bool shouldWall;
+
     private void Start()
     {
         if (singleton == null)
@@ -21,23 +26,46 @@ public class CutsceneManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        scroller = Camera.main.GetComponent<CameraScroll>();
         scening = false;
+        shouldScroll = false;
+        
+        cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        shouldWall = true;
     }
 
-    public void StartScene(Cutscene cutscene)
+    private void Update()
+    {
+        if (!shouldScroll && scening && scroller.enabled)
+        {
+            scroller.enabled = false;
+        }
+
+        if (!shouldWall && scening && cameraWalls[0].gameObject.activeInHierarchy)
+        {
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                col.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void StartScene(Cutscene cutscene, bool walled)
     {
         currentScene = Instantiate(cutscene);
-        StartCoroutine(RunCutscene());
+        StartCoroutine(RunCutscene(walled));
     }
 
-    private IEnumerator RunCutscene()
+    private IEnumerator RunCutscene(bool walled)
     {
+        shouldScroll = false;
+
         bool lockCam = false;
         bool glitching = false;
 
         scening = true;
         GameController.singleton.ToggleSwitchPanel(false);
-
+        
         Camera.main.GetComponent<CameraScroll>().enabled = false;
         
         GameObject gTemp;
@@ -75,6 +103,15 @@ public class CutsceneManager : MonoBehaviour
                 temp.velocity = Vector2.zero;
             }
         }
+
+        if (!walled)
+        {
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                col.gameObject.SetActive(false);
+            }
+        }
+        shouldWall = walled;
 
         for (int i = 0; i < currentScene.stepsSize; i++)
         {
@@ -130,9 +167,7 @@ public class CutsceneManager : MonoBehaviour
                     break;
 
                 case StepType.song:
-                    AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-                    source.clip = currentScene.steps[i].song;
-                    source.Play();
+                    AkSoundEngine.PostEvent(currentScene.steps[i].songEvent, gameObject);
                     break;
 
                 case StepType.lockCam:
@@ -180,6 +215,11 @@ public class CutsceneManager : MonoBehaviour
                     glitching = !glitching;
                     GameController.singleton.SetGlitching(glitching);
                     break;
+
+                case StepType.scrollCam:
+                    shouldScroll = true;
+                    scroller.enabled = true;
+                    break;
             }
         }
 
@@ -192,7 +232,7 @@ public class CutsceneManager : MonoBehaviour
                 currentScene.animators[i].SetBool("moving", false);
             }
         }
-
+        
         if (!glitching)
         {
             GameController.singleton.SetGlitching(false);
@@ -206,6 +246,44 @@ public class CutsceneManager : MonoBehaviour
         if (GameController.singleton.GetNumUnlocked() != 1)
         {
             GameController.singleton.ToggleSwitchPanel(true);
+        }
+        switch (GameController.singleton.equipped)
+        {
+            case GameController.GameMode.platformer:
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.gameObject.name.Equals("CameraWall_L"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+                break;
+
+            case GameController.GameMode.fighting:
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.gameObject.name.Equals("CameraWall_L")
+                        || col.gameObject.name.Equals("CameraWall_R"))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
+                }
+                break;
+
+            case GameController.GameMode.rpg:
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    col.gameObject.SetActive(true);
+                }
+                break;
         }
         yield return null;
     }
@@ -264,6 +342,7 @@ public class CutsceneManager : MonoBehaviour
         yDiff = -Camera.main.transform.position.y;
 
         Camera.main.transform.position = mov;
+        Debug.Log(Camera.main.transform.position);
 
         xDiff += Camera.main.transform.position.x;
         yDiff += Camera.main.transform.position.y;

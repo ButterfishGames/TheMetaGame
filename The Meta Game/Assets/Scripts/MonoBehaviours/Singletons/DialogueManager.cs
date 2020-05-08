@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
     private Queue<Sprite> sprites;
 
     private bool displaying;
+    private bool branching;
     private Dialogue currentDialogue;
 
     private bool primed;
@@ -217,6 +218,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.spriteAsset = current;
 
         displaying = true;
+        branching = false;
         DisplayNextLine();
     }
 
@@ -296,6 +298,7 @@ public class DialogueManager : MonoBehaviour
                     }
 
                     displaying = false;
+                    branching = true;
                     break;
 
                 default:
@@ -327,6 +330,11 @@ public class DialogueManager : MonoBehaviour
     public bool GetDisplaying()
     {
         return displaying;
+    }
+
+    public bool GetBranching()
+    {
+        return branching;
     }
 
     public string DialogueParser(string input)

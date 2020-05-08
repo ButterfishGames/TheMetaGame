@@ -22,24 +22,14 @@ public class MenuTransitioner : MonoBehaviour
                 int sceneInd = SaveManager.singleton.GetCurrentScene();
                 collision.enabled = false;
                 GameController.singleton.onMenu = false;
-                StartCoroutine(SongFade());
                 AkSoundEngine.PostEvent("sfx_start_game", gameObject);
+                GameController.singleton.achievements[0].Unlock();
                 GameController.singleton.StartCoroutine(GameController.singleton.FadeAndLoad(sceneInd));
             }
             else if (function == 2)
             {
                 SaveManager.singleton.DeleteSave();
             }
-        }
-    }
-
-    private IEnumerator SongFade()
-    {
-        AudioSource song = GameObject.Find("Song").GetComponent<AudioSource>();
-        while (song.volume > 0)
-        {
-            song.volume = Mathf.Clamp01(song.volume - (Time.deltaTime * GameController.singleton.levelFadeTime * 0.5f));
-            yield return new WaitForEndOfFrame();
         }
     }
 }

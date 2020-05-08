@@ -203,13 +203,58 @@ public class BattleController : MonoBehaviour
     private IEnumerator EnemyTurn(Enemy enemy)
     {
         enemy.img.GetComponent<RectTransform>().anchoredPosition += new Vector2(30, 0);
-        Attack attack = enemy.source.attacks[Random.Range(0, enemy.source.attacks.Length)];
+
+        int i = 0;
+        float threshold = 0;
+        Attack? temp = null;
+        float det = Random.Range(0.0f, 1.0f);
+        Debug.Log(det);
+        while (temp == null)
+        {
+            threshold += enemy.source.attacks[i].chance;
+            if (det <= threshold)
+            {
+                temp = enemy.source.attacks[i];
+            }
+            else
+            {
+                i++;
+            }
+        }
+        Attack attack = (Attack)temp;
 
         messagePanel.SetActive(true);
         messagePanel.GetComponentInChildren<TextMeshProUGUI>().text = attack.name;
         yield return new WaitForSeconds(0.75f);
 
-        enemy.source.UseAttack(attack, guarding);
+        switch (attack.target)
+        {
+            case Attack.Target.player:
+                Animator effectAnim = null;
+                Animator[] animators = GameObject.Find("PlayerImage").GetComponentsInChildren<Animator>();
+                foreach (Animator animator in animators)
+                {
+                    if (animator.gameObject.name.Equals("PlayerImage"))
+                    {
+                        // TODO: trigger damage animation
+                    }
+                    else
+                    {
+                        effectAnim = animator;
+                        animator.SetBool(attack.effect, true);
+                    }
+                }
+                yield return new WaitUntil(() => !effectAnim.GetBool("slash"));
+                yield return new WaitForSeconds(0.1f);
+                enemy.source.UseAttack(attack, guarding);
+                break;
+
+            case Attack.Target.ally:
+                int ind = Random.Range(0, currTroop.enemies.Length);
+                enemy.source.UseAttack(attack, guarding, ind);
+                yield return new WaitUntil(() => !attacking);
+                break;
+        }
 
         if (GameController.singleton.GetHP() <= 0)
         {
@@ -1565,6 +1610,35 @@ public class BattleController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GameController.singleton.StartCoroutine(GameController.singleton.UnloadBattle());
     }
+
+    public void EnemySkill(Attack attack, int target, int damage)
+    {
+        StartCoroutine(EnemySkillRtn(attack, target, damage));
+    }
+
+    private IEnumerator EnemySkillRtn(Attack attack, int target, int damage)
+    {
+        attacking = true;
+
+        Animator effectAnim = null;
+        Animator[] animators = currTroop.enemies[target].img.GetComponentsInChildren<Animator>();
+        foreach (Animator animator in animators)
+        {
+            if (animator.gameObject == currTroop.enemies[target].img)
+            {
+                // TODO: trigger damage animation
+            }
+            else
+            {
+                effectAnim = animator;
+                animator.SetBool(attack.effect, true);
+            }
+        }
+        yield return new WaitUntil(() => !effectAnim.GetBool(attack.effect));
+        yield return new WaitForSeconds(0.1f);
+
+        currTroop.enemies[target].currHP -= damage;
+    }
 }
 
 [System.Serializable]
@@ -1588,9 +1662,10 @@ public struct Attack
 {
     public string name;
     public int baseDmg;
+    
+    [Range(0, 1)] public float var;
+    [Range(0, 1)] public float chance;
 
-    [Range(0, 1)]
-    public float var;
     public string anim;
     public string effect;
 

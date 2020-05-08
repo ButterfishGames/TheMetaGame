@@ -116,16 +116,19 @@ public class ButtonsLib : MonoBehaviour
                 {
                     if (binding.name.Equals("positive") && positive)
                     {
-                        path = binding.path;
+                        path = binding.overridePath == null ?
+                            binding.path : binding.overridePath;
                     }
                     else if (binding.name.Equals("negative") && !positive)
                     {
-                        path = binding.path;
+                        path = binding.overridePath == null ?
+                            binding.path : binding.overridePath;
                     }
                 }
                 else
                 {
-                    path = binding.path;
+                    path = binding.overridePath == null ?
+                            binding.path : binding.overridePath;
                 }
             }
         }
@@ -381,11 +384,11 @@ public class ButtonsLib : MonoBehaviour
 
         if (output.Equals("LeftButton"))
         {
-            output = "<sprite=0>  LMB";
+            output = "<sprite=0>   LMB";
         }
         else if (output.Equals("RightButton"))
         {
-            output = "<sprite=1>  RMB";
+            output = "<sprite=1>   RMB";
         }
 
         return output;

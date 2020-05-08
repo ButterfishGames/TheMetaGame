@@ -52,7 +52,7 @@ public struct CutsceneStep
     public float wait;
 
     // Song parameters
-    public AudioClip song;
+    public string songEvent;
 
     // Load Scene parameters
     public int scene;
@@ -76,7 +76,8 @@ public enum StepType
     unlockMode,
     lockMode,
     deleteTile,
-    glitch
+    glitch,
+    scrollCam
 }
 
 #if UNITY_EDITOR
@@ -261,7 +262,7 @@ public class CutsceneEditor : Editor
 
                     SerializedProperty waitProp = stepsProp.GetArrayElementAtIndex(i).FindPropertyRelative("wait");
 
-                    SerializedProperty songProp = stepsProp.GetArrayElementAtIndex(i).FindPropertyRelative("song");
+                    SerializedProperty songProp = stepsProp.GetArrayElementAtIndex(i).FindPropertyRelative("songEvent");
 
                     SerializedProperty sceneProp = stepsProp.GetArrayElementAtIndex(i).FindPropertyRelative("scene");
 
@@ -280,7 +281,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             EditorGUILayout.PropertyField(waitProp, new GUIContent("Move Time"));
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -294,7 +295,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             EditorGUILayout.PropertyField(waitProp, new GUIContent("Move Time"));
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -308,7 +309,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -322,7 +323,7 @@ public class CutsceneEditor : Editor
                             EditorGUILayout.PropertyField(animIndProp, new GUIContent("Animator Index"));
                             EditorGUILayout.PropertyField(stateProp, new GUIContent("Animation State"));
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -336,7 +337,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             EditorGUILayout.PropertyField(waitProp, new GUIContent("Wait Time"));
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -350,7 +351,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            EditorGUILayout.PropertyField(songProp, new GUIContent("Song Clip"));
+                            EditorGUILayout.PropertyField(songProp, new GUIContent("Song Event Name"));
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -364,7 +365,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             EditorGUILayout.PropertyField(sceneProp, new GUIContent("Scene Index"));
                             modeProp.enumValueIndex = 0;
                             break;
@@ -378,7 +379,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             EditorGUILayout.PropertyField(modeProp, new GUIContent("Mode"));
                             break;
@@ -392,7 +393,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             EditorGUILayout.PropertyField(modeProp, new GUIContent("Mode"));
                             break;
@@ -406,7 +407,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             EditorGUILayout.PropertyField(modeProp, new GUIContent("Mode"));
                             break;
@@ -420,7 +421,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;
@@ -434,7 +435,7 @@ public class CutsceneEditor : Editor
                             animIndProp.intValue = 0;
                             stateProp.intValue = 0;
                             waitProp.floatValue = 0;
-                            songProp.objectReferenceValue = null;
+                            songProp.stringValue = null;
                             sceneProp.intValue = 0;
                             modeProp.enumValueIndex = 0;
                             break;

@@ -121,6 +121,8 @@ public class GameController : MonoBehaviour
 
     private bool battling;
 
+    public float zoomTime;
+
     [System.Serializable]
     public struct SpellStr
     {
@@ -159,6 +161,7 @@ public class GameController : MonoBehaviour
     public SkillStr[] skillList;
     public ArtStr[] artList;
     public SongStr[] songList;
+    public Achievement[] achievements;
 
     [Header("Code Highlight Colors")]
     public Color keyword, type, comment, literal, stringLiteral, other;
@@ -234,6 +237,10 @@ public class GameController : MonoBehaviour
     private GameMode prev;
 
     private bool dying;
+
+    private float wallLDef, wallRDef, wallUDef, wallDDef;
+
+    private IEnumerator zoomRtn;
 
     /*private void OnEnable()
     {
@@ -374,21 +381,22 @@ public class GameController : MonoBehaviour
 
     public void OnCancel (InputValue value)
     {
-        AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
-
         if (switchMenu.activeInHierarchy)
         {
+            AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
             ToggleSwitchMenu();
         }
 
         if (settingsPanel.activeInHierarchy)
         {
+            AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
             CloseSettingsMenu();
             waitAGoddamnSecond = true;
         }
 
         if (quitPanel.activeInHierarchy)
         {
+            AkSoundEngine.PostEvent("sfx_ui_back", gameObject);
             CloseQuitMenu();
             waitAGoddamnSecond = true;
         }
@@ -474,6 +482,31 @@ public class GameController : MonoBehaviour
         }
 
         currentBGM = GameObject.Find("Song").GetComponent<AudioSource>().clip;
+
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
+        foreach (BoxCollider2D col in cameraWalls)
+        {
+            Debug.Log(col.name);
+            if (col.name.Contains("_L"))
+            {
+                wallLDef = col.transform.localPosition.x;
+            }
+            else if (col.name.Contains("_R"))
+            {
+                wallRDef = col.transform.localPosition.x;
+            }
+            else if (col.name.Contains("_U"))
+            {
+                wallUDef = col.transform.localPosition.y;
+            }
+            else
+            {
+                wallDDef = col.transform.localPosition.y;
+            }
+        }
+
+        zoomRtn = FighterZoom();
 
         StartCoroutine(Switch());
 
@@ -675,6 +708,8 @@ public class GameController : MonoBehaviour
             }
         }
 
+        StopCoroutine(zoomRtn);
+
         prev = equipped;
         equipped = newMode;
 
@@ -683,7 +718,26 @@ public class GameController : MonoBehaviour
             StartCoroutine(DatingUntransition());
         }
 
-        BoxCollider2D[] cameraWalls;
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        foreach (BoxCollider2D col in cameraWalls)
+        {
+            if (col.name.Contains("_L"))
+            {
+                col.transform.localPosition = new Vector3(wallLDef, 0, 1);
+            }
+            else if (col.name.Contains("_R"))
+            {
+                col.transform.localPosition = new Vector3(wallRDef, 0, 1);
+            }
+            else if (col.name.Contains("_U"))
+            {
+                col.transform.localPosition = new Vector3(0, wallUDef, 1);
+            }
+            else
+            {
+                col.transform.localPosition = new Vector3(0, wallDDef, 1);
+            }
+        }
         GameObject player;
         Mover[] movers;
 
@@ -695,7 +749,7 @@ public class GameController : MonoBehaviour
         GameObject staff;
         AudioSource source;
 
-       //This effect is triggering on start for some reason 
+        //This effect is triggering on start for some reason 
         //AkSoundEngine.PostEvent("sfx_game_mode_switch", gameObject);
 
         switch (equipped)
@@ -714,7 +768,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     if (col.name.Equals("CameraWall_L"))
@@ -842,7 +896,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Killbox";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     col.gameObject.SetActive(true);
@@ -930,7 +984,7 @@ public class GameController : MonoBehaviour
 
                 player.transform.position = new Vector3(GridLocker(player.transform.position.x), GridLocker(player.transform.position.y), 0);
                 
-                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor"))));
+                hit = Physics2D.BoxCast(player.transform.position, Vector2.one * 0.975f, 0, Vector2.zero, 0, ~((1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("DamageFloor")) + (1 << LayerMask.NameToLayer("Cutscene"))));
                 if (hit.collider != null)
                 {
                     player.transform.position += Vector3.up;
@@ -1082,7 +1136,7 @@ public class GameController : MonoBehaviour
                 {
                     GameObject.Find("Killbox").tag = "Untagged";
                 }
-                cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     if (col.name.Equals("CameraWall_L") || col.name.Equals("CameraWall_R"))
@@ -1193,9 +1247,9 @@ public class GameController : MonoBehaviour
                 }
 
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
-                Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize * aspect, camSize * aspect, -camSize, camSize, 0.3f, 1000.0f);
                 Camera.main.GetComponent<FPSController>().enabled = false;
                 Camera.main.GetComponent<CameraScroll>().enabled = true;
+                StartCoroutine(zoomRtn);
 
                 staff = GameObject.Find("MusicalStaff(Clone)");
                 if (staff != null)
@@ -1454,6 +1508,44 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private IEnumerator FighterZoom()
+    {
+        float aspect = (float)Screen.width / (float)Screen.height;
+        float d = 1;
+
+        float zoomInc = 1.0f / zoomTime;
+
+        BoxCollider2D[] cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+
+        while (d < 2)
+        {
+            Camera.main.projectionMatrix = Matrix4x4.Ortho(-camSize / d * aspect, camSize / d * aspect, -camSize / d, camSize / d, 0.3f, 1000.0f);
+
+            foreach (BoxCollider2D col in cameraWalls)
+            {
+                if (col.name.Contains("_L"))
+                {
+                    col.transform.localPosition = new Vector3(wallLDef / d, 0, 1);
+                }
+                else if (col.name.Contains("_R"))
+                {
+                    col.transform.localPosition = new Vector3(wallRDef / d, 0, 1);
+                }
+                else if (col.name.Contains("_U"))
+                {
+                    col.transform.localPosition = new Vector3(0, wallUDef / d, 1);
+                }
+                else
+                {
+                    col.transform.localPosition = new Vector3(0, wallDDef / d, 1);
+                }
+            }
+            
+            d += zoomInc*Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
     private IEnumerator DatingTransition()
     {
         dating = true;
@@ -1489,7 +1581,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
-        if (DialogueManager.singleton.GetDisplaying())
+        if (DialogueManager.singleton.GetDisplaying() || DialogueManager.singleton.GetBranching())
         {
             DialogueManager.singleton.EndDialogue(false);
         }
@@ -1585,7 +1677,7 @@ public class GameController : MonoBehaviour
                         img.sprite = mode.sprite;
                     }
 
-                    if (EventSystem.current.currentSelectedGameObject == null)
+                    if (mode.name.Equals("Platformer"))
                     {
                         EventSystem.current.SetSelectedGameObject(button);
                     }
@@ -1647,9 +1739,9 @@ public class GameController : MonoBehaviour
                     mode += " Sim";
                     dated = false;
                 }
-                unlockText.text = "You unlocked \n" + mode + " mode!";
+                unlockText.text = "You unlocked \n" + mode + "!";
                 found = true;
-                // TODO: Add Unlock Mode SFX Event
+                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
                 StartCoroutine(UnlockFade());
             }
         }
@@ -1715,7 +1807,7 @@ public class GameController : MonoBehaviour
                 }
                 unlockText.text = "You lost \n" + mode + " mode!";
                 found = true;
-                AkSoundEngine.PostEvent("sfx_game_mode_unlocked", gameObject);
+                // TODO: Add Lock Mode SFX Event
                 StartCoroutine(UnlockFade());
             }
         }
@@ -1763,9 +1855,6 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-        
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
 
         dying = true;
         paused = true;
@@ -2000,6 +2089,12 @@ public class GameController : MonoBehaviour
                 currentBGM = clip;
             }
         }
+        dying = false;
+    }
+
+    public void SpecBattle(int ind)
+    {
+        StartCoroutine(SpecBattleRtn(ind));
     }
 
     public IEnumerator Battle()
@@ -2013,9 +2108,26 @@ public class GameController : MonoBehaviour
         DialogueManager.singleton.EndDialogue(false);
         yield return new WaitForEndOfFrame();
 
-        AudioSource source = GameObject.Find("Song").GetComponent<AudioSource>();
-        source.clip = rpgCombatBGM;
-        source.Play();
+        GameObject attackBtn = null;
+        while (attackBtn == null)
+        {
+            attackBtn = GameObject.Find("AttackButton");
+            yield return new WaitForEndOfFrame();
+        }
+        EventSystem.current.SetSelectedGameObject(attackBtn);
+        StartCoroutine(LevelFade(true));
+    }
+
+    public IEnumerator SpecBattleRtn(int ind)
+    {
+        battling = true;
+        ToggleSwitchPanel(false);
+        StartCoroutine(LevelFade(false));
+        AkSoundEngine.PostEvent("RPG_Battle", gameObject);
+        yield return new WaitForSeconds(levelFadeTime);
+        SceneManager.LoadScene(ind, LoadSceneMode.Additive);
+        DialogueManager.singleton.EndDialogue(false);
+        yield return new WaitForEndOfFrame();
 
         GameObject attackBtn = null;
         while (attackBtn == null)
@@ -2032,7 +2144,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(LevelFade(false));
         yield return new WaitForSeconds(levelFadeTime);
         DialogueManager.singleton.EndDialogue(false);
-        SceneManager.LoadScene(12, LoadSceneMode.Additive);
+        SceneManager.LoadScene(11, LoadSceneMode.Additive);
         yield return new WaitForEndOfFrame();
         GameObject caButton = null;
         while (caButton == null)
@@ -2048,12 +2160,17 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         StartCoroutine(LevelFade(false));
-        AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
+        //AkSoundEngine.PostEvent((uint)GameObject.Find("AudioPlayer").GetComponent<AkAmbient>().eventID, gameObject);
         yield return new WaitForSeconds(levelFadeTime);
 
         int temp = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(temp);
 
-        if (temp % 2 == 0)
+        if(SceneManager.GetSceneByName("RPGCombatDK").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(temp + 7);
+        }
+        else if (temp % 2 == 0)
         {
             SceneManager.UnloadSceneAsync(temp);
         }
@@ -2206,7 +2323,7 @@ public class GameController : MonoBehaviour
                 found = true;
             }
         }
-
+        
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -2243,7 +2360,7 @@ public class GameController : MonoBehaviour
             button.interactable = false;
         }
 
-        SettingsController.singleton.ShowGameplaySettings();
+        SettingsController.singleton.ShowGameplaySettings(true);
     }
 
     public void CloseSettingsMenu()
