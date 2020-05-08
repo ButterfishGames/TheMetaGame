@@ -36,6 +36,16 @@ public class CutsceneManager : MonoBehaviour
 
     private void Update()
     {
+        if (scroller == null)
+        {
+            scroller = FindObjectOfType<CameraScroll>();
+        }
+
+        if (cameraWalls[0] == null)
+        {
+            cameraWalls = Camera.main.GetComponentsInChildren<BoxCollider2D>(true);
+        }
+
         if (!shouldScroll && scening && scroller.enabled)
         {
             scroller.enabled = false;
@@ -58,6 +68,19 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator RunCutscene(bool walled)
     {
+        GameObject player = GameObject.Find("Player");
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(0, rb.velocity.y);
+
+        Mover[] movers = player.GetComponents<Mover>();
+        foreach (Mover mover in movers)
+        {
+            mover.hRaw = 0;
+            mover.hor = 0;
+            mover.vRaw = 0;
+            mover.ver = 0;
+        }
+
         shouldScroll = false;
 
         bool lockCam = false;

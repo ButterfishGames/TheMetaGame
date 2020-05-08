@@ -26,6 +26,7 @@ public class RPGDreadKnight : EnemyBehaviour
         if (fightEnded)
         {
             secondCutscene.SetActive(true);
+            Destroy(GameObject.Find("Killbox"));
             Destroy(gameObject);
         }
     }
@@ -34,9 +35,15 @@ public class RPGDreadKnight : EnemyBehaviour
     {
         if(other.name == "Player" && hitTrigger == false)
         {
-            hitTrigger = true;
-            GameController.singleton.SetPaused(true);
-            GameController.singleton.SpecBattle(12);
+            StartCoroutine(WaitToFight());
         }
+    }
+
+    private IEnumerator WaitToFight()
+    {
+        yield return new WaitUntil(() => !CutsceneManager.singleton.scening);
+        hitTrigger = true;
+        GameController.singleton.SetPaused(true);
+        GameController.singleton.SpecBattle(12);
     }
 }

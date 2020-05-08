@@ -432,13 +432,13 @@ public class PFController : Mover
 
     private IEnumerator InitScene()
     {
+        yield return new WaitUntil(() => GameController.singleton != null);
         if (GameController.singleton.onMenu)
         {
             yield return null;
         }
         else
         {
-            yield return new WaitUntil(() => GameController.singleton != null);
             SaveManager.singleton.InitScene();
         }
     }

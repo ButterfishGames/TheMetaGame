@@ -1888,6 +1888,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            Debug.Log("Does this happen here?");
             loading = true;
             if (fall)
             {

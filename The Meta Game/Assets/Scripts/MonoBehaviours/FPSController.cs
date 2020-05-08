@@ -161,6 +161,7 @@ public class FPSController : MonoBehaviour
             return;
         }
 
+        // TOOD: Post SFX Event for fire
         RaycastHit hit;
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, mask);
 
@@ -170,10 +171,12 @@ public class FPSController : MonoBehaviour
         }
         else if (hit.collider.CompareTag("Player"))
         {
+            // TODO: Post SFX Event for hit Player
             GameController.singleton.Hit(damage);
         }
         else
         {
+            // TODO: Post SFX Event for hit Enemy
             hit.collider.GetComponentInParent<PFEnemy>().Hit(damage);
         }
     }

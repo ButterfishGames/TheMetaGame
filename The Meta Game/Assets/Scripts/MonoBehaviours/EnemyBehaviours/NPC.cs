@@ -56,6 +56,7 @@ public class NPC : EnemyBehaviour
     {
         if (npcType == NPCType.shop)
         {
+            Debug.Log("Why not work?");
             shopkeeper = this;
         }
 
@@ -122,7 +123,7 @@ public class NPC : EnemyBehaviour
 
     private IEnumerator InteractRtn()
     {
-        if (interacted)
+        if (interacted && otherDialogue != null)
         {
             DialogueManager.singleton.StartDialogue(otherDialogue);
         }
