@@ -918,8 +918,8 @@ public class FGController : Mover
         Debug.Log("Died");
         animator.SetBool("dead", true);
         GameController.singleton.SetPaused(true);
-        AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
-        AkSoundEngine.PostEvent("Death_Jingle", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle_MuteMusic", gameObject);
+        //AkSoundEngine.PostEvent("Death_Jingle", gameObject);
         yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length + 2);
         GameController.singleton.Die();
     }
