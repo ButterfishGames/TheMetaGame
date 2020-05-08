@@ -145,6 +145,7 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
+            Debug.Log(NPC.shopkeeper);
             temp = saveData.CreateSceneData(buildIndex, npcs.Length, triggers.Length, NPC.shopkeeper.boostsPurchased.Length);
         }
 

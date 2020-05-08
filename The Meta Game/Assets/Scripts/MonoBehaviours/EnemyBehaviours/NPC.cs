@@ -56,6 +56,7 @@ public class NPC : EnemyBehaviour
     {
         if (npcType == NPCType.shop)
         {
+            Debug.Log("Why not work?");
             shopkeeper = this;
         }
 

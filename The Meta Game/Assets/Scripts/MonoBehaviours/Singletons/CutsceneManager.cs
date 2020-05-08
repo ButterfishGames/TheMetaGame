@@ -36,6 +36,11 @@ public class CutsceneManager : MonoBehaviour
 
     private void Update()
     {
+        if (scroller == null)
+        {
+            scroller = FindObjectOfType<CameraScroll>();
+        }
+
         if (!shouldScroll && scening && scroller.enabled)
         {
             scroller.enabled = false;
