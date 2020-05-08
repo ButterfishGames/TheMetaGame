@@ -709,6 +709,7 @@ public class GameController : MonoBehaviour
         }
 
         StopCoroutine(zoomRtn);
+        zoomRtn = FighterZoom();
 
         prev = equipped;
         equipped = newMode;
@@ -1151,8 +1152,10 @@ public class GameController : MonoBehaviour
 
                 Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Bounds"), false);
 
+                Debug.Log(enemies.Length);
                 foreach (GameObject enemy in enemies)
                 {
+                    Debug.Log(enemy.name);
                     enemy.transform.Find("EnemyHitbox").gameObject.SetActive(true);
                     enemy.GetComponent<FGEnemy>().hitstun = 0;
 
@@ -2258,7 +2261,10 @@ public class GameController : MonoBehaviour
         {
             try
             {
-                SwitchMode(equipped);
+                if (!CutsceneManager.singleton.scening)
+                {
+                    SwitchMode(equipped);
+                }
                 success = true;
             }
             catch
