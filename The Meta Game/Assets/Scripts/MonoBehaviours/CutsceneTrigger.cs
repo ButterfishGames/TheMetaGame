@@ -9,6 +9,7 @@ public class CutsceneTrigger : MonoBehaviour
     public bool oneTime;
     public bool triggerable;
     public bool walled = true;
+    public bool tutorial = false;
     public bool modeReq = false;
     public GameController.GameMode reqMode;
 
@@ -41,5 +42,9 @@ public class CutsceneTrigger : MonoBehaviour
     {
         yield return new WaitUntil(() => NPC.shopkeeper != null);
         SaveManager.singleton.UpdateSceneData();
+        if (tutorial)
+        {
+            SaveManager.singleton.SaveGame(false);
+        }
     }
 }
