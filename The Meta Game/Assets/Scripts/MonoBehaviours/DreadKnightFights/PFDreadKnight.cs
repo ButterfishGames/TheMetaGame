@@ -100,6 +100,8 @@ public class PFDreadKnight : DreadKnightBehavior
     private bool bossCutsceneBegun;
 
     private Transform playerTransform;
+
+    private bool hitWallThisFrame;
     #endregion
 
     // Start is called before the first frame update
@@ -186,6 +188,7 @@ public class PFDreadKnight : DreadKnightBehavior
         if (!inCutscene)
         {
             animator.SetBool("cutscene", false);
+            hitWallThisFrame = false;
             if (timeGettingUp <= 0)
             {
                 animator.SetBool("hitWall", false);
@@ -352,8 +355,9 @@ public class PFDreadKnight : DreadKnightBehavior
             grounded = true;
         }
 
-        if (collision.collider.CompareTag("Bound"))
+        if (collision.collider.CompareTag("Bound") && hitWallThisFrame == false)
         {
+            hitWallThisFrame = true;
             if (animator.GetBool("charging"))
             {
                 animator.SetBool("charging", false);
