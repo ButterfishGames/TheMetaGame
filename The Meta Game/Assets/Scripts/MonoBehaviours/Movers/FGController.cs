@@ -174,6 +174,10 @@ public class FGController : Mover
     private GameObject closestEnemy;
 
     private List<GameObject> enemiesInView = new List<GameObject>();
+
+    private Image enemyImage;
+
+    public Sprite[] enemySprites;
     #endregion
 
     protected override void OnEnable()
@@ -195,6 +199,10 @@ public class FGController : Mover
         if (enemyHitstunSlider != null)
         {
             enemyHitstunSlider.gameObject.SetActive(true);
+        }
+        if (enemyImage != null)
+        {
+            enemyImage.gameObject.SetActive(true);
         }
 
         dying = false;
@@ -220,6 +228,10 @@ public class FGController : Mover
         if (enemyHitstunSlider != null)
         {
             enemyHitstunSlider.gameObject.SetActive(false);
+        }
+        if (enemyImage != null)
+        {
+            enemyImage.gameObject.SetActive(false);
         }
 
         light.performed -= LightPerfHandle;
@@ -446,6 +458,15 @@ public class FGController : Mover
             {
                 enemyHealthSlider = healthBarTemp.GetComponent<Slider>();
                 enemyHealthSlider.gameObject.SetActive(false);
+                Image[] images = healthBarTemp.GetComponentsInChildren<Image>();
+                for(int i = 0; i < images.Length - 1; i++) {
+                    if (images[i].gameObject.name == "EnemyImage")
+                    {
+                        enemyImage = images[i];
+                        enemyImage.gameObject.SetActive(false);
+                        break;
+                    }
+                }
             }
         }
 
@@ -494,18 +515,38 @@ public class FGController : Mover
             {
                 foreach (GameObject enemy in enemies)
                 {
-                    if (enemy.gameObject.GetComponent<FGEnemy>().fighting == true)
+                    if (enemy.gameObject.GetComponent<FGEnemy>() != null)
+                    {
+                        if (enemy.gameObject.GetComponent<FGEnemy>().fighting == true)
+                        {
+                            if (!enemiesInView.Contains(enemy))
+                            {
+                                if (!enemy.GetComponent<FGEnemy>().dying)
+                                {
+                                    enemiesInView.Add(enemy);
+                                }
+                            }
+                            else
+                            {
+                                if (enemy.GetComponent<FGEnemy>().dying)
+                                {
+                                    enemiesInView.Remove(enemy);
+                                }
+                            }
+                        }
+                    }
+                    else if (enemy.name == "DreadKnight")
                     {
                         if (!enemiesInView.Contains(enemy))
                         {
-                            if (!enemy.GetComponent<FGEnemy>().dying)
+                            if (enemy.GetComponent<FGDreadKnight>().inCutscene == false)
                             {
                                 enemiesInView.Add(enemy);
                             }
                         }
                         else
                         {
-                            if (enemy.GetComponent<FGEnemy>().dying)
+                            if (enemy.GetComponent<FGDreadKnight>().inCutscene == true)
                             {
                                 enemiesInView.Remove(enemy);
                             }
@@ -541,9 +582,20 @@ public class FGController : Mover
             }
             if (closestEnemy != null)
             {
-                enemyHealthSlider.maxValue = closestEnemy.GetComponent<FGEnemy>().maxHP;
-                enemyHealthSlider.value = closestEnemy.GetComponent<FGEnemy>().currHP;
-                enemyHitstunSlider.value = closestEnemy.GetComponent<FGEnemy>().hitstun;
+                if (closestEnemy.gameObject.GetComponent<FGEnemy>() != null)
+                {
+                    enemyHealthSlider.maxValue = closestEnemy.GetComponent<FGEnemy>().maxHP;
+                    enemyHealthSlider.value = closestEnemy.GetComponent<FGEnemy>().currHP;
+                    enemyHitstunSlider.value = closestEnemy.GetComponent<FGEnemy>().hitstun;
+                    enemyImage.sprite = enemySprites[0];
+                }
+                else
+                {
+                    enemyHealthSlider.maxValue = closestEnemy.GetComponent<FGDreadKnight>().maxHP;
+                    enemyHealthSlider.value = closestEnemy.GetComponent<FGDreadKnight>().currHP;
+                    enemyHitstunSlider.value = closestEnemy.GetComponent<FGDreadKnight>().hitstun;
+                    enemyImage.sprite = enemySprites[1];
+                }
             }
             else
             {
