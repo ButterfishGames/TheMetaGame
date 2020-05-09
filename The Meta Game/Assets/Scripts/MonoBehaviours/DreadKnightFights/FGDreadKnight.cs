@@ -43,7 +43,7 @@ public class FGDreadKnight : DreadKnightBehavior
     /// <summary>
     /// The current HP a given enemy has
     /// </summary>
-    private int currHP;
+    [HideInInspector] public int currHP;
 
     /// <summary>
     /// Used to determine current direction; 1 is right, -1 is left
@@ -211,7 +211,7 @@ public class FGDreadKnight : DreadKnightBehavior
 
     private BoxCollider2D groundTrigger;
 
-    private bool inCutscene;
+    [HideInInspector] public bool inCutscene;
 
     /// <summary>
     /// How much time until Dread Knight charges
@@ -314,9 +314,12 @@ public class FGDreadKnight : DreadKnightBehavior
             {
                 if (!animator.GetBool("hitWall"))
                 {
+                    gameObject.tag = "Untagged";
                     barriers.SetActive(false);
                     endCutscene.SetActive(true);
+                    Debug.Log(rb.gravityScale + " e");
                     rb.gravityScale = 0.0f;
+                    Debug.Log(rb.gravityScale + " i");
                     col.enabled = false;
                     inCutscene = true;
                 }
