@@ -281,8 +281,12 @@ public class RaceController : Mover
         }
         stoplight.sprite = redLight;
         stoplight.gameObject.SetActive(true);
+        
+        if (CutsceneManager.singleton.scening)
+        {
+            yield return new WaitUntil(() => !CutsceneManager.singleton.scening);
+        }
 
-        // Replace with countdown;
         yield return new WaitForSeconds(1);
         stoplight.sprite = yellowLight;
         yield return new WaitForSeconds(1);

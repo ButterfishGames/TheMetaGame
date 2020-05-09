@@ -38,6 +38,31 @@ public class CutsceneTrigger : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (triggerable && collision.CompareTag("Player"))
+        {
+            if (!modeReq || GameController.singleton.equipped == reqMode)
+            {
+                CutsceneManager.singleton.StartScene(scene, walled);
+                if (oneTime)
+                {
+                    triggerable = false;
+                    if (linked != null)
+                    {
+                        linked.triggerable = false;
+                    }
+                    StartCoroutine(UpdateSave());
+                }
+            }
+            else if (oneTime)
+            {
+                triggerable = false;
+                StartCoroutine(UpdateSave());
+            }
+        }
+    }
+
     private IEnumerator UpdateSave()
     {
         yield return new WaitUntil(() => NPC.shopkeeper != null);

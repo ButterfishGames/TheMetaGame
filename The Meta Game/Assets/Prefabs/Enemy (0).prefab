@@ -177,6 +177,23 @@ MonoBehaviour:
   amt: 0
   spell: {fileID: 0}
   skill: {fileID: 0}
+  shopPanel: {fileID: 0}
+  shopContent: {fileID: 0}
+  shopButton: {fileID: 6543010195431109238, guid: 7f3f7ab95543a1a4a89e8082fb527fa2,
+    type: 3}
+  coinSprite: {fileID: 21300000, guid: 3c3ba99b7e2634e4f99d8761ae2e8b61, type: 3}
+  powerUpSprite: {fileID: 21300000, guid: 0d5e0c62e7f736e47a5d297853d96e1a, type: 3}
+  conceptArtSprite: {fileID: 21300000, guid: a34f3ca0b1cef1a44a13927fe394ca49, type: 3}
+  songSprite: {fileID: 21300000, guid: ab8e3b8dae65ea14b9aef503f2314ee4, type: 3}
+  containsSpell: 0
+  boostTypes: 
+  boostAmts: 
+  boostsPurchased: 
+  boostCosts: 
+  artInds: 
+  artCosts: 
+  songInds: 
+  songCosts: 
 --- !u!114 &1499245470291664175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,9 +206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822a56343f87116419e719420cbb7ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fighting: 0
   speed: 1.5
   maxHP: 5
   damageFadeTime: 0.5
+  currHP: 0
   dir: 0
   changedInView: 0
   difficultyLevel: 1
@@ -244,6 +263,7 @@ MonoBehaviour:
   hadoDistanceFromEnemy: 0.15
   hadoStartup: 30
   hadoEndLag: 20
+  dying: 0
 --- !u!114 &-7641582720494922741
 MonoBehaviour:
   m_ObjectHideFlags: 0

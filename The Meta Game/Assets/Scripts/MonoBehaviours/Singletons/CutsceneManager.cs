@@ -50,6 +50,10 @@ public class CutsceneManager : MonoBehaviour
         {
             scroller.enabled = false;
         }
+        else if (shouldScroll && scening && !scroller.enabled)
+        {
+            scroller.enabled = true;
+        }
 
         if (!shouldWall && scening && cameraWalls[0].gameObject.activeInHierarchy)
         {
@@ -305,6 +309,30 @@ public class CutsceneManager : MonoBehaviour
                 foreach (BoxCollider2D col in cameraWalls)
                 {
                     col.gameObject.SetActive(true);
+                }
+                break;
+
+            case GameController.GameMode.racing:
+                RaceController rc = FindObjectOfType<RaceController>();
+                string add = "";
+                if (rc.GetDir() == 1)
+                {
+                    add = "_L";
+                }
+                else
+                {
+                    add = "_R";
+                }
+                foreach (BoxCollider2D col in cameraWalls)
+                {
+                    if (col.gameObject.name.Equals("CameraWall" + add))
+                    {
+                        col.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        col.gameObject.SetActive(false);
+                    }
                 }
                 break;
         }
