@@ -1901,7 +1901,10 @@ public class GameController : MonoBehaviour
                 levelFadeTime = 2;
             }
             StartCoroutine(LevelFade(false));
-            SaveManager.singleton.LoadGame();
+            if (!onMenu)
+            {
+                SaveManager.singleton.LoadGame();
+            }
             SaveManager.singleton.InitGameController();
             yield return new WaitForSeconds(levelFadeTime);
 
